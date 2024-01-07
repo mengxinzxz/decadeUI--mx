@@ -1,0 +1,374 @@
+#arena>.equips-wrap {
+	bottom: 1%;
+	height: 100%;
+	left: auto;
+	min-width: 130px;
+	right: -16px;
+	top: auto;
+}
+
+#arena[data-right-layout='on']>.equips-wrap {/*右手布局*/
+	left: 90px;
+	right: auto;
+}
+
+#arena[data-alone-equip='off']>.equips-wrap {
+	opacity: 0;
+	left: auto;
+}
+
+.equips-wrap>.equips-back {
+	align-content: center;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	justify-content: flex-end;
+	position: absolute;
+	row-gap: 3px;
+	width: 100%;
+}
+
+.equips-wrap>.equips {
+	align-items: center;
+	bottom: 0px;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	justify-content: flex-end;
+	left: 0px;
+	position: absolute;
+	right: 0px;
+	row-gap: 3px;
+	top: 0px;
+	width: 100%;
+}
+
+.equips-wrap>.equips-back>div {
+	background: rgba(0, 0, 0, 0.4);
+	box-shadow: 0 0 6px rgb(200, 150, 80) inset;
+	height: 27px;
+	left: 3px;
+	position: initial;
+	right: 3px;
+	width: 100%;
+}
+
+.equips-wrap>.equips>div {
+	left: 3px;
+	right: 3px;
+	height: 27px;
+	width: 100%;
+	position: initial;
+	box-shadow: none;
+	border-radius: 0px;
+	background: rgb(53, 38, 32) !important;
+	display: flex;
+	align-items: center;
+	align-content: center;
+	justify-content: center;
+	-webkit-text-size-adjust: none;
+	z-index: 1;
+}
+
+.equips-wrap>.equips>div::before {
+	border: initial;
+	height: inherit;
+	left: auto;
+	top: auto;
+	width: inherit;
+}
+
+.equips-wrap>.equips>div::after {
+	display: block;
+	background: 
+		linear-gradient(to left, red, red) left top no-repeat, 
+		linear-gradient(to bottom, red, red) left top no-repeat, 
+		linear-gradient(to left, red, red) right top no-repeat,
+		linear-gradient(to bottom, red, red) right top no-repeat, 
+		linear-gradient(to left, red, red) left bottom no-repeat,
+		linear-gradient(to bottom, red, red) left bottom no-repeat,
+		linear-gradient(to left, red, red) right bottom no-repeat,
+		linear-gradient(to left, red, red) right bottom no-repeat !important;
+	background-size: 1px 4px, 5px 1px, 1px 4px, 5px 1px !important;
+	opacity: 1;
+	border-radius: 0px;
+	box-shadow: none;
+	z-index: auto;
+}
+
+.equips-wrap>.equips>div.selected {
+	box-shadow: 0 0 10px yellow;
+}
+
+.equips-wrap>.equips>div.selectable {
+	cursor: pointer;
+	transform: translateX(-10px);
+}
+
+.equips-wrap>.equips>div.selectable::before {
+	animation: fade-in-out-selectable 1s infinite;
+}
+
+#arena[data-right-layout='on']>.equips-wrap>.equips>div.selectable {
+	transform: translateX(10px);
+}
+
+.mobile-phone .equips-wrap>.equips>div.selected {
+	box-shadow: 0 0 2px yellow, 0 0 4px yellow, 0 0 8px yellow;
+}
+
+.equips-wrap .equips>div[data-card-subype='equip5'] .equips-wrap>.equips-back>div.equip0 {
+	opacity: 1;
+}
+
+.equips-wrap>.equips>.card {
+	top: 0px;
+}
+
+.equips-wrap>.equips-back>div.equip0,
+.equips-wrap>.equips>div.equip5{
+	top: 27px;
+}
+
+.equips-wrap>.equips-back>div.equip1,
+.equips-wrap>.equips>div.equip1{
+	top: 51px;
+}
+
+.equips-wrap>.equips-back>div.equip2,
+.equips-wrap>.equips>div.equip2{
+	top: 75px;
+}
+
+.equips-wrap>.equips-back>div.equip3,
+.equips-wrap>.equips>div.equip3,
+.equips-wrap>.equips>div.equip6 {
+	top: 99px;
+}
+
+.equips-wrap>.equips-back>div.equip4,
+.equips-wrap>.equips>div.equip4{
+	top: 123px;
+}
+
+.equips-wrap>.equips-back>div>.icon,
+.equips-wrap>.equips>div>.icon { /*装备类型标识*/
+	display: block;
+	top: 2px;
+	left: 2px;
+	width: 17px;
+	height: 17px;
+	transition: opacity 0.5s;
+}
+
+.equips-wrap>.equips>.card>div {
+	text-shadow: none;
+	position: absolute;
+}
+
+.equips-wrap>.equips>.card>.name2 {
+	display: flex;
+	align-items: center;
+	align-content: center;
+	justify-content: center;
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	position: static;
+	width: calc(100% - 4px);
+	height: calc(100% - 4px);
+	background-color: rgb(255, 255, 200);
+	border: 1px solid rgb(190, 50, 33);
+	border-radius: 0px;
+	box-sizing: border-box;
+	font-weight: bold;
+	font-family: "shousha" !important;
+	white-space: pre-wrap;
+	pointer-events: none;
+	z-index: 1;
+}
+
+.equips-wrap>.equips>.card[data-suit='heart']>.name2,
+.equips-wrap>.equips>.card[data-suit='diamond']>.name2 {
+	color: #8B0000;
+}
+
+.equips-wrap>.equips>.card[data-suit='spade']>.name2,
+.equips-wrap>.equips>.card[data-suit='club']>.name2 {
+	color: #181818;
+}
+
+.equips-wrap>.equips>.card.feichu>.name2 {
+	background-color: rgb(57, 48, 33);
+	color: white;
+	font-weight: normal;
+}
+
+.equips-wrap>.equips>.card>.image { /*装备图片效果*/
+	display: block;
+	left: 3px;
+	top: 4.5px;
+	bottom: 3px;
+	width: 17px;
+	height: 17px;
+	position: absolute;
+	visibility: visible !important;
+	z-index: 2;
+}
+
+.equips-wrap>.equips>.card:not(.fullskin)>.image {
+	display: block !important;
+}
+
+
+/*其他玩家装备栏*/
+.player>.equips, 
+#arena>.player:not(.minskin)>.equips {
+	left: 8%;/*右边距*/
+	right: 13.8%;/*左边距*/
+	width: auto;/*宽度，自动匹配*/
+	height: 80px;/*高度*/
+	bottom: 3%;/*整体上移*/
+	box-shadow: none;
+	background: none;
+	background-image: none;
+	border-radius: 0px;
+	pointer-events: none;
+	z-index: 90;
+	transform: none;
+	transform-origin: center;
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	/* flex-wrap: wrap-reverse; */
+}
+
+#arena[data-new-decade-style='on']>.player>.equips, 
+#arena[data-new-decade-style='on']>.player:not(.minskin)>.equips {
+	left: 8%;
+	right: 13.8%;
+}
+
+#arena[data-new-decade-style='off']>.player>.equips, 
+#arena[data-new-decade-style='off']>.player:not(.minskin)>.equips {
+	left: 17.5%;
+	right: 0.5%;
+}
+
+#arena[data-new-decade-style='othersOn']>.player>.equips, 
+#arena[data-new-decade-style='othersOn']>.player:not(.minskin)>.equips {
+	left: 13.8%;
+	right: 0.4%;
+}
+
+/*
+.player>.equips>div,
+.player>.equips>.card {
+	position: absolute;
+}
+
+.player>.equips>.card {
+	top: -16px;
+}
+
+.player>.equips>div.equip1 {
+	top: 16px;
+}
+
+.player>.equips>div.equip2 {
+	top: 32px;
+}
+
+.player>.equips>div.equip3,
+.player>.equips>div.equip6 {
+	top: 48px;
+}
+
+.player>.equips>div.equip4 {
+	top: auto;
+	bottom: 0;
+}
+
+.player>.equips>div.equip5 {
+	top: 0;
+}
+*/
+
+#arena.decadeUI:not(.long).mobile:not(.oldlayout) .player.unseen:not([data-position="0"]) .equips:not(*:empty),
+#arena.decadeUI:not(.long):not(.mobile):not(.oldlayout) .player.unseen .equips:not(*:empty),
+#arena.decadeUI.long.mobile:not(.oldlayout) .player.unseen2:not([data-position="0"]) .equips:not(*:empty),
+#arena.decadeUI.long:not(.mobile):not(.oldlayout) .player.unseen2 .equips:not(*:empty){
+	background: none;
+	border-radius: 0;
+	overflow: hidden;
+	box-shadow: none;
+}
+
+.player>.equips>.card,
+.player.unseen>.equips>.card,
+.player.unseen2>.equips>.card {/*AI装备栏*/
+	display: flex;
+	align-items: center;
+	align-content: flex-start;
+	justify-content: center;
+	/* background: rgba(228, 207, 166, 0.8) !important;/*底色*/
+	border-image:linear-gradient(to right, rgba(0, 0, 0,0.4) 70%,transparent) 100% 0 0;
+	background:linear-gradient(to right,rgba(0, 0, 0,0.3),transparent),
+			linear-gradient(135deg,rgba(0, 0, 0,0.5) ,transparent 100%,transparent) !important;
+	box-shadow:none;
+	border: 0px solid rgb(95, 55, 45); /*边框*/
+	/*border-image: none !important;*/
+	box-sizing: border-box;
+	border-radius: 1px;/*圆角*/
+	width: 100%;
+	height: 16px;
+	text-shadow: none;
+}
+
+#arena.decadeUI:not(.long).mobile:not(.oldlayout) .player.unseen:not([data-position="0"]) .equips:not(*:empty)>.card,
+#arena.decadeUI:not(.long):not(.mobile):not(.oldlayout) .player.unseen .equips:not(*:empty)>.card:not(.selected),
+#arena.decadeUI.long.mobile:not(.oldlayout) .player.unseen2:not([data-position="0"]) .equips:not(*:empty)>.card,
+#arena.decadeUI.long:not(.mobile):not(.oldlayout) .player.unseen2 .equips:not(*:empty)>.card:not(.selected){
+	background: rgba(228, 207, 166, 0.8) !important;/*玩家装备栏底色*/
+}
+
+
+.player:not(.selectable)>.equips>.card,
+.player:not(.selectable)>.equips>.card>div {
+	pointer-events: auto;
+}
+
+.player>.equips>.card>div {
+	position: static;
+}
+
+.player>.equips>.card>.name2 {/*AI装备名*/
+	position: absolute;
+	left: 5px;
+	top: 0;
+	display: flex;
+	align-items: center;
+	align-content: center;
+	justify-content: flex-start;
+	width: 100%;
+	height: 100%;
+	line-height: 15px;
+	color: #E9E8E3;/*颜色*/
+	font-size: 14px;/*字体大小*/
+	font-weight: bolder;/*加粗*/
+	font-family: shousha, xinwei, xinkai !important;
+	text-shadow: none;
+	text-align: center;
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	pointer-events: none;
+}
+
+.player>.equips>.card[data-suit='heart']>.name2,
+.player>.equips>.card[data-suit='diamond']>.name2 {
+	color: #8B0000;
+}

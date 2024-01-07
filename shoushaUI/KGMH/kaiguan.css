@@ -1,0 +1,20 @@
+/*手杀样式*/
+.config.config.toggle>div{
+   background-color: rgba(0,0,0,0);
+   background-image: url("./pub_btn_check_001_b.png");
+   background-position: center center;
+   background-repeat: no-repeat;
+   background-size: 100% 100%;
+   border-radius:0px;
+   box-shadow: none;
+}
+
+.config.config.toggle.on>div{
+   background-image: url("./pub_btn_check_001_a.png");
+   box-shadow: none;/*去除透明框*/
+
+}
+
+.config.config.toggle>div>div{
+      visibility:hidden;  
+}
