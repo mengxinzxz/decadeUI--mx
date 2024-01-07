@@ -13474,7 +13474,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			intro: (function () {
 				var log = [
 					'魔改十周年 萌修 0.1.8',
-					'新版适配',
+					'<a href="https://github.com/mengxinzxz/decadeUI--mx.git">点击前往萌修十周年Github仓库</a>',
 					'修复手杀样式阵亡素材路径错误导致无法加载素材的bug',
 					'修复游戏时间显示一次加2s的bug',
 					'修复某些情况下的概率弹窗bug',
@@ -13484,7 +13484,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			author: "萌新（转型中）<br>十周年UI原作者：短歌<br>手杀UI原名：界面美化<br>手杀UI原作者：橙续缘",
 			diskURL: "",
 			forumURL: "",
-			version: "0.1.7.1",
+			version: "0.1.8",
 		},
 		files: {
 			"character": [],
