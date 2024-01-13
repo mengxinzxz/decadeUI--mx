@@ -5188,10 +5188,10 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							if (ui.confirm && ui.confirm.lastChild.link == 'cancel') {
 								if (_status.event.type == 'phase' && !_status.event.skill) {
 									// 弹出按钮 根据手杀ui选项开关调用不同样式
-									if (lib.config['extension_手杀ui_yangShi'] == 'on') {
+									if (lib.config['extension_十周年UI_decadeLayout'] == 'off') {
 										ui.confirm.lastChild.innerHTML = '结束出牌';
 									}
-									else if (lib.config['extension_手杀ui_yangShi'] == 'off') {
+									else if (lib.config['extension_十周年UI_decadeLayout'] == 'on') {
 										ui.confirm.lastChild.innerHTML = '回合结束';
 									}
 									else {
@@ -9443,7 +9443,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 						var tipbanlist = ["_recasting", "jiu"];//过滤部分触发技能，可以自己添加
 
-						if (!tipbanlist.contains(name) && lib.config.extension_十周年UI_yangshi == "on") {
+						if (!tipbanlist.contains(name) && lib.config.extension_十周年UI_decadeLayout == "off") {
 							var tipskillbox = document.createElement('div');//盒子
 							var tipshow = document.createElement("img");//图片思考中
 							var tipskilltext = document.createElement('div');//技能文本
@@ -9585,7 +9585,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				catch (err) {
 					mark.dk = false;
 				};
-				if (mark && lib.config.extension_十周年UI_yangshi == "on") {
+				if (mark && lib.config.extension_十周年UI_decadeLayout == "off") {
 					if (mark.dd == true) {
 						this.yingSkill(skill);
 						mark.dd = false;
@@ -9607,7 +9607,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						}
 					}
 				}
-				if (mark && lib.config.extension_十周年UI_yangshi == "off") {
+				if (mark && lib.config.extension_十周年UI_decadeLayout == "on") {
 					if (mark.classList.contains('yin')) {
 						mark.classList.remove('yin');
 						mark.classList.toggle('yang');
@@ -9814,7 +9814,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							for (var i = 0; i < list.length; i++) {
 								list[i].childNodes[0].classList.add('choice');	/*添加类名*/
 								//--------背水-----//
-								if (list[i].childNodes[0].innerText.indexOf('背水') != -1 && lib.config.extension_十周年UI_yangshi == "on") {
+								if (list[i].childNodes[0].innerText.indexOf('背水') != -1 && lib.config.extension_十周年UI_decadeLayout == "off") {
 									/*list[i].childNodes[0].setBackgroundImage('extension/无名补丁/image/beishui.png');*/
 									list[i].childNodes[0].setBackgroundImage('extension/十周年UI/shoushaUI/lbtn/images/uibutton/beishui.png');
 									list[i].childNodes[0].innerText = '背水';
@@ -9974,7 +9974,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						var boxTime = document.createElement('div')
 						var imgBg = document.createElement('img')
 						boxContent.classList.add("timeai");
-						if (lib.config.extension_十周年UI_yangshi == "on") {
+						if (lib.config.extension_十周年UI_decadeLayout == "off") {
 							//--------手杀样式-------------//  
 							boxContent.style.cssText =
 								"display:block;position:absolute;z-index:90;--w: 122px;--h: calc(var(--w) *4/145);width: var(--w);height: var(--h);left:3.5px;bottom:-6.2px;"
@@ -10056,7 +10056,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						var boxTime = document.createElement('div')
 						var imgBg = document.createElement('img')
 						boxContent.classList.add("timeai");
-						if (lib.config.extension_十周年UI_yangshi == "on") {
+						if (lib.config.extension_十周年UI_decadeLayout == "off") {
 							//--------手杀样式-------------//  
 							boxContent.style.cssText =
 								"display:block;position:absolute;z-index:90;--w: 122px;--h: calc(var(--w) *4/145);width: var(--w);height: var(--h);left:3.5px;bottom:-6.2px;"
@@ -10159,11 +10159,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					if (a.length <= 0) {
 						var tipAB = document.createElement("img");
 						tipAB.classList.add("tipshow");//设置统一类名
-						if (lib.config.extension_十周年UI_yangshi == "on") {
+						if (lib.config.extension_十周年UI_decadeLayout == "off") {
 							tipAB.src = lib.assetURL + 'extension/十周年UI/shoushaUI/lbtn/images/shoushatip/tip.png';
 							tipAB.classList.add("playertip")
 							tipAB.style.cssText = "display:block;position:absolute;z-index:91;--w: 133px;--h: calc(var(--w) * 50/431);width: var(--w);height: var(--h);bottom:-22px;";
-						} else {
+						}
+						else {
 							tipAB.src = lib.assetURL + 'extension/十周年UI/shoushaUI/lbtn/images/shoushatip/phasetip.png';
 							tipAB.classList.add("playertip")
 							tipAB.style.cssText = "display:block;position:absolute;z-index:92;--w: 129px;--h: calc(var(--w) * 50/431);width: var(--w);height: var(--h);bottom:-9.2px;transform:scale(1.2);";
@@ -10211,7 +10212,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					if (a.length <= 0) {
 						var tipCD = document.createElement("img");
 						tipCD.classList.add("tipshow");//设置统一类名
-						if (lib.config.extension_十周年UI_yangshi == "on") {
+						if (lib.config.extension_十周年UI_decadeLayout == "off") {
 							tipCD.src = lib.assetURL + 'extension/十周年UI/shoushaUI/lbtn/images/shoushatip/tipQP.png';
 							tipCD.classList.add("playertipQP")
 							tipCD.style.cssText = "display:block;position:absolute;z-index:91;--w: 133px;--h: calc(var(--w) * 50/431);width: var(--w);height: var(--h);bottom:-22px;";
@@ -10256,7 +10257,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				charlotte: true,
 				filter: function (event, player) {
 					// if(!player.countCards('h','shan')) return false;
-					return event.card.name == 'shan' && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_yangshi == "on";
+					return event.card.name == 'shan' && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_decadeLayout == "off";
 				},
 				content: function () {
 					var tipss = player.getElementsByClassName("tipskill");
@@ -10302,7 +10303,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				charlotte: true,
 				filter: function (event, player) {
 					// if(!player.countCards('h','sha')) return false;
-					return event.card.name == 'sha' && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_yangshi == "on";
+					return event.card.name == 'sha' && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_decadeLayout == "off";
 				},
 				content: function () {
 					var tipss = player.getElementsByClassName("tipskill");
@@ -10350,7 +10351,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				charlotte: true,
 				filter: function (event, player) {
 					// if(!player.countCards('h','sha')) return false;
-					return event.card.name == 'tao' && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_yangshi == "on";
+					return event.card.name == 'tao' && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_decadeLayout == "off";
 				},
 				content: function () {
 					var tipss = player.getElementsByClassName("tipskill");
@@ -10398,7 +10399,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				charlotte: true,
 				filter: function (event, player) {
 					// if(!player.countCards('h','sha')) return false;
-					return event.card.name == 'jiu' && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_yangshi == "on";
+					return event.card.name == 'jiu' && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_decadeLayout == "off";
 				},
 				content: function () {
 					var tipss = player.getElementsByClassName("tipskill");
@@ -10452,7 +10453,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					var info = get.info(card);
 					if (info.wuxieable === false) return false;
 
-					return event.card.name == 'wuxie' && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_yangshi == "on";
+					return event.card.name == 'wuxie' && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_decadeLayout == "off";
 				},
 				content: function () {
 					var tipss = player.getElementsByClassName("tipskill");
@@ -10506,7 +10507,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 						var tipKL = document.createElement("img");
 						tipKL.classList.add("tipshow");//设置统一类名
-						if (lib.config.extension_十周年UI_yangshi == "on") {
+						if (lib.config.extension_十周年UI_decadeLayout == "off") {
 							tipKL.src = lib.assetURL + 'extension/十周年UI/shoushaUI/lbtn/images/shoushatip/tipplay.png';
 							tipKL.classList.add("playertipplay")
 							tipKL.style.cssText = "display:block;position:absolute;z-index:91;--w: 133px;--h: calc(var(--w) * 50/431);width: var(--w);height: var(--h);bottom:-22px;";
@@ -10542,7 +10543,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				forced: true,
 				charlotte: true,
 				filter: function (event, player) {
-					return _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_yangshi == "off";
+					return _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_decadeLayout == "on";
 				},
 				content: function () {
 					var tipss = player.getElementsByClassName("tipskill");
@@ -11227,7 +11228,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					var layoutPath = decadeUIPath + 'shoushaUI/';
 					if (lib.config.extension_十周年UI_KGMH == '1') this.css(layoutPath + 'KGMH/' + 'kaiguan.css');
 					if (lib.config.extension_十周年UI_KGMH == '2') this.css(layoutPath + 'KGMH/' + 'kaiguan_new.css');
-					var bool = (lib.config.extension_十周年UI_yangshi == 'on');
+					var bool = (lib.config.extension_十周年UI_decadeLayout == 'off');
 					if (!(get.mode() == 'chess' || get.mode() == 'tafang')) {
 						var list = ['character', 'lbtn', 'skill'];
 						list.forEach(pack => {
@@ -11484,7 +11485,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							}
 						};
 						floders.forEach(function (dir) {
-							if (lib.config.extension_十周年UI_yangshi == "on") {
+							if (lib.config.extension_十周年UI_decadeLayout == "off") {
 								game.readFile('extension/' + app.name + '/' + dir + '/main1.js',
 									function (data) {
 										var binarry = new Uint8Array(data);
@@ -11684,7 +11685,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			if (lib.config.extension_十周年UI_KGMH == '2') lib.init.css(layoutPath, 'KGMH/kaiguan_new');
 			if (!(get.mode() == 'chess' || get.mode() == 'tafang')) {
 				for (var pack of [/*'card',*/'character', 'lbtn', 'skill']) {
-					var bool = (lib.config.extension_十周年UI_yangshi == 'on');
+					var bool = (lib.config.extension_十周年UI_decadeLayout == 'off');
 					lib.init.js(layoutPath + pack + '/' + (bool ? 'main1.js' : 'main2.js'), null, function () { }, function () { });
 					switch (pack) {
 						case 'card':
@@ -11857,7 +11858,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				window.boxContentAI = document.createElement('div');
 				window.boxTimeAI = document.createElement('div');
 				window.boxContentAI.setAttribute('id', 'jindutiaoAI');
-				if (lib.config.extension_十周年UI_yangshi == "on") {
+				if (lib.config.extension_十周年UI_decadeLayout == "off") {
 					//--------手杀样式-------------//  
 					window.boxContentAI.style.cssText =
 						"display:block;position:absolute;z-index:90;--w: 122px;--h: calc(var(--w) *4/145);width: var(--w);height: var(--h);left:3.5px;bottom:-6.2px;"
@@ -13410,15 +13411,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					};
 				}
 			},
-			yangshi: {
-				name: '<b><font color=\"#00FFFF\">界面布局',
-				init: 'on',
-				intro: '切换十周年UI界面样式，初始为手杀样式，可根据个人喜好切换手杀样式或十周年样式，切换后重启生效',
-				item: {
-					on: '<b><font color=\"#80FF80\">手杀样式',
-					off: '<b><font color=\"#FFFF00\">十周年样式',
-				},
-			},
 			XPJ: {
 				name: "小配件（十周年）",
 				init: "on",
@@ -13473,18 +13465,18 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			},
 			intro: (function () {
 				var log = [
-					'魔改十周年 萌修 0.1.8',
+					'魔改十周年 萌修 0.1.9',
 					'<a href="https://github.com/mengxinzxz/decadeUI--mx.git">点击前往萌修十周年Github仓库</a>',
-					'修复手杀样式阵亡素材路径错误导致无法加载素材的bug',
-					'修复游戏时间显示一次加2s的bug',
-					'修复某些情况下的概率弹窗bug',
+					'新版适配（by-寰宇星城）',
+					'修复部分按钮显示异常bug',
+					'合并原分离十周年UI和手杀UI的“界面布局”选项按钮',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>') + '</p>';
 			})(),
 			author: "萌新（转型中）<br>十周年UI原作者：短歌<br>手杀UI原名：界面美化<br>手杀UI原作者：橙续缘",
 			diskURL: "",
 			forumURL: "",
-			version: "0.1.8",
+			version: "0.1.9",
 		},
 		files: {
 			"character": [],
