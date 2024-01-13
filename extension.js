@@ -9065,7 +9065,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							var format = duicfg.cardPrettify;
 							var prefix = decadeUIPath + 'image/card/';
 							cards.READ_OK = true;
-							if (format == null)
+							if (typeof format != 'string')
 								format = 'webp';
 							if (format === 'off')
 								return;
