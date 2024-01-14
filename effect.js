@@ -260,7 +260,11 @@ decadeModule.import(function(lib, game, ui, get, ai, _status){
 				bgImage.src = decadeUIPath + 'assets/image/bg_xianding_' + camp + '.png';
 			};
 			
-			image.src = url.replace(/url\(|\)|'|"/ig, '');
+			if(url.indexOf("url(\"") == 0){
+                image.src = url.slice(5, url.indexOf("\")"));
+            }else if(url.indexOf("url('") == 0){
+                image.src = url.slice(5, url.indexOf("\')"));
+            }
 		},
 
 	};
