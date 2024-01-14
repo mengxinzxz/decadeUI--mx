@@ -13465,18 +13465,16 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			},
 			intro: (function () {
 				var log = [
-					'魔改十周年 萌修 0.1.9',
+					'魔改十周年 萌修 0.2.0',
 					'<a href="https://github.com/mengxinzxz/decadeUI--mx.git">点击前往萌修十周年Github仓库</a>',
-					'新版适配（by-寰宇星城）',
-					'修复部分按钮显示异常bug',
-					'合并原分离十周年UI和手杀UI的“界面布局”选项按钮',
+					'修复旧于吉【蛊惑】质疑假牌不摸牌的bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>') + '</p>';
 			})(),
 			author: "萌新（转型中）<br>十周年UI原作者：短歌<br>手杀UI原名：界面美化<br>手杀UI原作者：橙续缘",
 			diskURL: "",
 			forumURL: "",
-			version: "0.1.9",
+			version: "0.2.0",
 		},
 		files: {
 			"character": [],

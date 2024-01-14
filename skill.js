@@ -2313,6 +2313,7 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
                     for (var target of event.betrayers) {
                         target.popup('质疑正确', 'wood');
                     }
+                    game.asyncDraw(event.betrayers);
                     event.goon = false;
                 }
                 else {
