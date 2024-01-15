@@ -9467,6 +9467,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					}
 				}
 			};
+			/*
 			//武将搜索代码摘抄至扩展ol
 			var kzol_create_characterDialog = ui.create.characterDialog;
 			ui.create.characterDialog = function () {
@@ -9561,6 +9562,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				switch_con.insertBefore(div, switch_con.firstChild);
 				return dialog;
 			};
+			*/
 			/*-------转换技，阴阳标记等----*/
 			//修改changezhuanhuanji函数
 			var originchangeZhuanhuanji = lib.element.player.$changeZhuanhuanji;
@@ -13468,6 +13470,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'魔改十周年 萌修 0.2.0',
 					'<a href="https://github.com/mengxinzxz/decadeUI--mx.git">点击前往萌修十周年Github仓库</a>',
 					'修复旧于吉【蛊惑】质疑假牌不摸牌的bug',
+					'修复skillAnimation技能显示空白bug',
+					'注释本体已有的特定武将搜索框',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>') + '</p>';
 			})(),
