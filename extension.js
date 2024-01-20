@@ -13519,6 +13519,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				var log = [
 					'魔改十周年 萌修 0.2.0',
 					'<a href="https://github.com/mengxinzxz/decadeUI--mx.git">点击前往萌修十周年Github仓库</a>',
+					'新版适配',
 					'修复旧于吉【蛊惑】质疑假牌不摸牌的bug',
 					'修复skillAnimation技能显示空白bug',
 					'注释本体已有的特定武将搜索框',
