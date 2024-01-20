@@ -15,6 +15,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				trigger: {
 					global: "gameStart"
 				},
+				silent:true,
 				forced: true,
 				filter: function (event, player) {
 					return (lib.config.extension_十周年UI_longLevel == 'sex') || (lib.config.extension_十周年UI_longLevel == 'seven');
@@ -6127,6 +6128,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						trigger: { global: 'useCardAfter' },
 						forced: true,
 						popup: false,
+						silent:true,
 						priority: -100,
 						filter: function (event) {
 							return ui.clear.delay === 'usecard' && event.card.name != 'wuxie';
@@ -6144,6 +6146,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						forced: true,
 						popup: false,
 						priority: -100,
+						silent:true,
 						filter: function (event) {
 							return !ui.clear.delay && event.card.name != 'wuxie';
 						},
@@ -6158,6 +6161,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							return ui.todiscard[event.discardid] ? true : false;
 						},
 						forced: true,
+						silent:true,
 						popup: false,
 						priority: -100,
 						content: function () {
@@ -6193,6 +6197,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						popup: false,
 						priority: -100,
 						lastDo: true,
+						silent:true,
 						content: function () {
 							if (!(trigger.source && trigger.player)) return;
 							game.broadcastAll(function (source, player) {
@@ -9886,6 +9891,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						return player != game.me && _status.currentPhase == player;
 					},
 					forced: true,
+					silent:true,
 					charlotte: true,
 					content: function () {
 						var ab = player.getElementsByClassName("timePhase");
@@ -9925,6 +9931,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						player: ['useCardBegin', 'respondBegin', 'chooseToRespondBegin', 'damageEnd', 'judgeEnd'],
 					},
+					silent:true,
 					forced: true,
 					charlotte: true,
 					filter: function (event, player) {
@@ -9966,6 +9973,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						player: 'useCardToPlayered',
 					},
 					forced: true,
+					silent:true,
 					priority: -10,
 					charlotte: true,
 					filter: function (event, player) {
@@ -10047,6 +10055,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						global: 'gameStart',
 					},
+					silent:true,
 					forced: true,
 					priority: -1,
 					charlotte: true,
@@ -10126,6 +10135,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				//------------回合外进度条消失------------//
 				lib.skill._jindutiao_close = {
 					close: {
+						silent:true,
 						trigger: {
 							player: ['phaseEnd', 'useCardAfter', 'gainEnd', 'loseEnd', 'damageAfter'],
 						},
@@ -10147,6 +10157,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				trigger: {
 					player: ['phaseUseBegin', 'useCardEnd', 'loseEnd'],
 				},
+				silent:true,
 				forced: true,
 				charlotte: true,
 				filter: function (event, player) {
@@ -10179,6 +10190,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				trigger: {
 					global: ['phaseUseEnd', 'dieBegin', 'phaseBegin'],
 				},
+				silent:true,
 				forced: true,
 				priority: -1,
 				charlotte: true,
@@ -10202,6 +10214,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				trigger: {
 					player: 'phaseDiscardBegin'
 				},
+				silent:true,
 				forced: true,
 				charlotte: true,
 				filter: function (event, player) {
@@ -10233,6 +10246,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				trigger: {
 					global: ['phaseDiscardEnd', 'dieBegin'],
 				},
+				silent:true,
 				forced: true,
 				charlotte: true,
 				filter: function (event, player) {
@@ -10255,6 +10269,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				trigger: {
 					player: ['useCardBegin', 'respondBegin']
 				},
+				silent:true,
 				forced: true,
 				charlotte: true,
 				filter: function (event, player) {
@@ -10279,6 +10294,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				trigger: {
 					global: ['useCardEnd', 'respondEnd', 'dieBegin', 'phaseBegin', 'phaseEnd']
 				},
+				silent:true,
 				forced: true,
 				charlotte: true,
 				filter: function (event, player) {
@@ -10301,6 +10317,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				trigger: {
 					player: ['useCardBegin', 'respondBegin']
 				},
+				silent:true,
 				forced: true,
 				charlotte: true,
 				filter: function (event, player) {
@@ -10328,6 +10345,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					global: ['useCardEnd', 'respondEnd', 'dieBegin', 'phaseBegin', 'phaseEnd']
 				},
 				forced: true,
+				silent:true,
 				charlotte: true,
 				filter: function (event, player) {
 					event.respondix = 0;
@@ -10349,6 +10367,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				trigger: {
 					player: ['useCardBegin', 'respondBegin']
 				},
+				silent:true,
 				forced: true,
 				charlotte: true,
 				filter: function (event, player) {
@@ -10376,6 +10395,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					global: ['useCardEnd', 'respondEnd', 'dieBegin', 'phaseBegin', 'phaseEnd']
 				},
 				forced: true,
+				silent:true,
 				charlotte: true,
 				filter: function (event, player) {
 					event.respondix = 0;
@@ -10399,6 +10419,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				},
 				forced: true,
 				charlotte: true,
+				silent:true,
 				filter: function (event, player) {
 					// if(!player.countCards('h','sha')) return false;
 					return event.card.name == 'jiu' && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_decadeLayout == "off";
@@ -10424,6 +10445,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				},
 				forced: true,
 				charlotte: true,
+				silent:true,
 				filter: function (event, player) {
 					event.respondix = 0;
 					for (var i = 0; i < game.players.length; i++) {
@@ -10446,6 +10468,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				},
 				forced: true,
 				charlotte: true,
+				silent:true,
 				filter: function (event, player) {
 					if (event.card.storage && event.card.storage.nowuxie) return false;
 					var card = event.card;
@@ -10481,6 +10504,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					player: ['useCardEnd', 'respondEnd', 'dieBegin', 'phaseEnd']
 				},
 				forced: true,
+				silent:true,
 				charlotte: true,
 				filter: function (event, player) {
 					var h = event.player.getElementsByClassName("playertipwuxie")
@@ -10497,6 +10521,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					player: ['phaseJudgeBegin', 'phaseDrawBegin']
 				},
 				forced: true,
+				silent:true,
 				charlotte: true,
 				filter: function (event, player) {
 					return player != game.me;
@@ -10528,6 +10553,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				},
 				forced: true,
 				charlotte: true,
+				silent:true,
 				filter: function (event, player) {
 					var m = event.player.getElementsByClassName("playertipplay")
 					return m.length > 0 && player != game.me;
@@ -10543,6 +10569,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					player: ['useCardBegin', 'respondBegin']
 				},
 				forced: true,
+				silent:true,
 				charlotte: true,
 				filter: function (event, player) {
 					return _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_decadeLayout == "on";
@@ -10568,6 +10595,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					player: ['useCardEnd', 'respondEnd', 'dieBegin']
 				},
 				forced: true,
+				silent:true,
 				charlotte: true,
 				filter: function (event, player) {
 					var e = event.player.getElementsByClassName("playertipthink")
@@ -10583,6 +10611,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				trigger: {
 					global: ['phaseUseEnd', 'dieBegin', 'dying', 'phaseBegin', 'useCardAfter', 'loseAfter', 'phaseEnd'],
 				},
+				silent:true,
 				forced: true,
 				priority: -2,
 				charlotte: true,
@@ -10706,6 +10735,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						player: ['chooseToRespondBegin'],
 					},
+					silent:true,
 					direct: true,
 					filter: function (event, player) {
 						return player == game.me && _status.auto == false;
@@ -10727,6 +10757,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						target: 'shaBegin',
 					},
+					silent:true,
 					filter: function (event, player) {
 						return game.me == event.target;
 					},
@@ -10748,6 +10779,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						player: ['useCardToBegin', 'phaseJudge']
 					},
+					silent:true,
 					filter: function (event, player) {
 						if (event.card.storage && event.card.storage.nowuxie) return false;
 						var card = event.card;
@@ -10789,6 +10821,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						player: ["useCard", "respondAfter"],
 					},
+					silent:true,
 					filter: function (event, player) {
 						return player == game.me && event.card.name == 'shan';
 					},
@@ -10814,6 +10847,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							'shanBegin'
 						],
 					},
+					silent:true,
 					filter: function (event, player) {
 						return player == game.me && _status.auto == false;
 					},
@@ -10838,7 +10872,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						global: ['phaseEnd', 'useCardAfter']
 					},
-
+					silent:true,
 					filter: function (event, player) {
 						return _status.currentPhase != game.me && player != game.me;
 					},
@@ -10852,6 +10886,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						global: ['dieAfter']
 					},
+					silent:true,
 					forced: true,
 					charlotte: true,
 					filter: function (event, player) {
@@ -10872,6 +10907,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							'phaseUseBegin', 'phaseDiscardBegin'
 						],
 					},
+					silent:true,
 					charlotte: true,
 					forced: true,
 					filter: function (event, player) {
@@ -10896,6 +10932,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						player: ['phaseBefore', 'phaseBegin'],
 					},
+					silent:true,
 					filter: function (event, player) {
 						return player == game.me && _status.currentPhase == player && _status.auto == false;
 					},
@@ -10925,6 +10962,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						player: ['phaseJudgeBegin', 'phaseJudgeEnd'],
 					},
+					silent:true,
 					filter: function (event, player) {
 						return player == game.me && _status.currentPhase == player && _status.auto == false;
 					},
@@ -10954,6 +10992,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						player: ['phaseDrawBegin', 'phaseDrawEnd'],
 					},
+					silent:true,
 					filter: function (event, player) {
 						return player == game.me && _status.currentPhase == player && _status.auto == false;
 					},
@@ -10983,6 +11022,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						player: ['phaseUseBegin', 'phaseUseEnd'],
 					},
+					silent:true,
 					filter: function (event, player) {
 						return player == game.me && _status.currentPhase == player && _status.auto == false;
 					},
@@ -11012,6 +11052,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						player: ['phaseDiscardBegin', 'phaseDiscardEnd'],
 					},
+					silent:true,
 					filter: function (event, player) {
 						return player == game.me && _status.currentPhase == player && _status.auto == false;
 					},
@@ -11041,6 +11082,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						player: ['phaseEnd', 'phaseAfter']
 					},
+					silent:true,
 					filter: function (event, player) {
 						return player == game.me && _status.currentPhase == player && _status.auto == false;
 					},
@@ -11078,6 +11120,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						player: ['phaseZhunbeiBegin', 'phaseBegin', 'phaseJudgeBegin', 'phaseDrawBegin', 'useCardAfter', 'phaseDiscardBegin', 'useSkillBefore', 'loseAfter']
 					},
+					silent:true,
 					filter: function (event, player) {
 						if (document.querySelector("#jindutiaopl") && lib.config.extension_十周年UI_jindutiaoUpdata == false) return false;
 						return player == game.me && _status.currentPhase == player;
@@ -11123,6 +11166,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						player: ['useCardToBegin', 'respondBegin', 'chooseToRespondBegin', 'damageEnd', 'damageAfter', 'judgeEnd'],
 						target: "useCardToTargeted",
 					},
+					silent:true,
 					forced: true,
 					charlotte: true,
 					filter: function (event, player) {
@@ -12686,6 +12730,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					global: ["gameStart", "phaseBegin", "phaseAfter", "useCardAfter"],
 				},
 				forced: true,
+				silent:true,
 				filter: function (event, player) {
 					return player.change_sayFunction != true;
 				},
