@@ -6239,7 +6239,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						cards[0]._transform = null;
 
 						var viewAs = typeof card == 'string' ? card : card.name;
-						if (!lib.card[viewAs] || !lib.card[viewAs].effect) {
+						if (!lib.card[viewAs] || (!lib.card[viewAs].effect && !lib.card[viewAs].noEffect) ) {
 							game.cardsDiscard(cards[0]);
 						}
 						else {
@@ -6294,7 +6294,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							if (cards[0].viewAs && cards[0].viewAs != cards[0].name) {
 								cards[0].classList.add('fakejudge');
 								cards[0].node.judgeMark.node.judge.innerHTML = get.translation(cards[0].viewAs)[0];
-								game.log(player, '被贴上了<span class="yellowtext">' + get.translation(cards[0].viewAs) + '</span>（', cards, '）');
+								if(lib.card[viewAs].blankCard){
+									game.log(player, '被扣置了<span class="yellowtext">' + get.translation(cards[0].viewAs) + '</span>');
+								}
+								else {
+									game.log(player, '被贴上了<span class="yellowtext">' + get.translation(cards[0].viewAs) + '</span>（', cards, '）');
+								}
 							}
 							else {
 								cards[0].classList.remove('fakejudge');
