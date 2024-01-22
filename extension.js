@@ -5711,6 +5711,23 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						var realIdentity = ui.create.div(player.node.identity);
 						realIdentity.player = player;
 
+						if(lib.config.equip_span){
+							let observer = new MutationObserver(mutationsList=>{
+								for (let mutation of mutationsList) {
+									if (mutation.type === 'childList') {
+										const addedNodes = Array.from(mutation.addedNodes);
+										const removedNodes = Array.from(mutation.removedNodes);
+										if(addedNodes.some(card=>!card.classList.contains('emptyequip')) || 
+										removedNodes.some(card=>!card.classList.contains('emptyequip'))){
+											player.$handleEquipChange();
+										}
+									}
+								}
+							});
+							const config = { childList: true };
+							observer.observe(playerExtend.node.equips, config);
+						}
+
 						Object.defineProperties(realIdentity, {
 							innerHTML: {
 								configurable: true,
@@ -13519,6 +13536,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				var log = [
 					'魔改十周年 萌修 0.2.1',
 					'<a href="https://github.com/mengxinzxz/decadeUI--mx.git">点击前往萌修十周年Github仓库</a>',
+					'新版适配',
 					'修复含有blankCard标签的牌置入判定区（例如“蓄谋”牌）对所有角色可见原卡牌的bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>') + '</p>';
