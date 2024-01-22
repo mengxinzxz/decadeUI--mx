@@ -200,7 +200,10 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
             ui.create.div('.xcaption', '判定区域', rightPane.firstChild);
             judges.forEach(function (card) {
               if (card.viewAs && card.viewAs != card.name) {
-                ui.create.div('.xskill', '<div data-color>' + get.translation(card.viewAs) + '（' + get.translation(card) + '）' + '</div><div>' + get.translation(card.viewAs + '_info') + '</div>', rightPane.firstChild);
+                if (lib.card[card.viewAs].blankCard && !player.isUnderControl(true)) {
+                  ui.create.div('.xskill', '<div data-color>' + get.translation(card.viewAs) + '</div><div>' + get.translation(card.viewAs + '_info') + '</div>', rightPane.firstChild);
+                }
+                else ui.create.div('.xskill', '<div data-color>' + get.translation(card.viewAs) + '（' + get.translation(card) + '）' + '</div><div>' + get.translation(card.viewAs + '_info') + '</div>', rightPane.firstChild);
               }
               else ui.create.div('.xskill', '<div data-color>' + get.translation(card) + '</div><div>' + get.translation(card.name + '_info') + '</div>', rightPane.firstChild);
             });

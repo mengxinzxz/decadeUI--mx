@@ -13517,19 +13517,16 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			},
 			intro: (function () {
 				var log = [
-					'魔改十周年 萌修 0.2.0',
+					'魔改十周年 萌修 0.2.1',
 					'<a href="https://github.com/mengxinzxz/decadeUI--mx.git">点击前往萌修十周年Github仓库</a>',
-					'新版适配',
-					'修复旧于吉【蛊惑】质疑假牌不摸牌的bug',
-					'修复skillAnimation技能显示空白bug',
-					'注释本体已有的特定武将搜索框',
+					'修复含有blankCard标签的牌置入判定区（例如“蓄谋”牌）对所有角色可见原卡牌的bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>') + '</p>';
 			})(),
 			author: "萌新（转型中）<br>十周年UI原作者：短歌<br>手杀UI原名：界面美化<br>手杀UI原作者：橙续缘",
 			diskURL: "",
 			forumURL: "",
-			version: "0.2.0",
+			version: "0.2.1",
 		},
 		files: {
 			"character": [],
