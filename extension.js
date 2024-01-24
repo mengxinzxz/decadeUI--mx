@@ -5065,6 +5065,19 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										if (info.usable && get.skillCount(skills2[i]) >= info.usable) enable = false;
 										if (info.chooseButton && _status.event.noButton) enable = false;
 										if (info.round && (info.round - (game.roundNumber - player.storage[skills2[i] + '_roundcount']) > 0)) enable = false;
+										for (const item in player.storage) {
+											if (item.startsWith('temp_ban_')) {
+												if(player.storage[item] !== true) continue;
+												const skillName = item.slice(9);
+												if (lib.skill[skillName]) {
+													const skills=game.expandSkills([skillName]);
+													if(skills.includes(skills2[i])) {
+														enable = false; break;
+													}
+												}
+											}
+										}
+				
 									}
 
 									if (enable) {
@@ -13538,6 +13551,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'<a href="https://github.com/mengxinzxz/decadeUI--mx.git">点击前往萌修十周年Github仓库</a>',
 					'新版适配',
 					'修复含有blankCard标签的牌置入判定区（例如“蓄谋”牌）对所有角色可见原卡牌的bug',
+					'修复tempBanSkill机制失效bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>') + '</p>';
 			})(),
