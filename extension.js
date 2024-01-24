@@ -1118,7 +1118,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								event.hujia = Math.min(-num, player.hujia);
 								event.getParent().hujia = event.hujia;
 								event.num += event.hujia;
-								game.log(player, '的护甲抵挡了' + get.cnNumber(event.hujia) + '点伤害');
+								//game.log(player, '的护甲抵挡了' + get.cnNumber(event.hujia) + '点伤害');
 								player.changeHujia(-event.hujia).type = 'damage';
 							}
 							num = event.num;
