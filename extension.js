@@ -15,7 +15,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				trigger: {
 					global: "gameStart"
 				},
-				silent:true,
+				silent: true,
 				forced: true,
 				filter: function (event, player) {
 					return (lib.config.extension_十周年UI_longLevel == 'sex') || (lib.config.extension_十周年UI_longLevel == 'seven');
@@ -238,7 +238,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 					var Player = (function (Player) {
 						Player.$init = function (character, character2) {
-							this._super.$init.apply(this,arguments);
+							this._super.$init.apply(this, arguments);
 							this.doubleAvatar = (character2 && lib.character[character2]) != undefined;
 
 							var CUR_DYNAMIC = decadeUI.CUR_DYNAMIC;
@@ -306,51 +306,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							}
 							return this;
 						};
-						Player.uninit=function(){
-							this.expandedSlots={};
-							this.disabledSlots={};
-							
-							delete this.name;
-							delete this.name1;
-							delete this.tempname;
-							delete this.sex;
-							this.group=undefined;
-							delete this.hp;
-							delete this.maxHp;
-							delete this.hujia;
-							this.clearSkills(true);
-							
-							if(this.name2){
-								delete this.singleHp;
-								delete this.name2;
-							}
-							for(var mark in this.marks){
-								this.marks[mark].remove();
-							}
-							ui.updatem(this);
-		
-							this.skipList=[];
-							this.skills=this.skills.filter(skill=>{
-								return lib.skill[skill]&&lib.skill[skill].superCharlotte;
-							});
-							this.initedSkills=[];
-							this.additionalSkills={};
-							this.disabledSkills={};
-							this.hiddenSkills=[];
-							this.awakenedSkills=[];
-							this.forbiddenSkills={};
-							this.phaseNumber=0;
-							this.stat=[{card:{},skill:{}}];
-							this.tempSkills={};
-							this.storage={};
-							this.marks={};
-							this.ai={friend:[],enemy:[],neutral:[]};
-		
-							this.$uninit();
-		
-							return this;
-						};
-						Player.$uninit=function(){
+						Player.$uninit = function () {
 							this.stopDynamic();
 							this.doubleAvatar = false;
 							delete this.node.campWrap.dataset.camp;
@@ -359,16 +315,16 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								campName.removeChild(campName.lastChild);
 							}
 							campName.style.removeProperty('background-image');
-							this._super.$uninit.apply(this,arguments);
+							this._super.$uninit.apply(this, arguments);
 							return this;
 						};
-						Player.setSeatNum=function(){
-							this._super.setSeatNum.apply(this,arguments);
-							this.seat=this.getSeatNum();
-							game.broadcastAll(function(player){
-								if(!player.node.seat) player.node.seat=decadeUI.element.create('seat',player);
-								player.node.seat.innerHTML=get.cnNumber(player.seat,true);
-							},this);
+						Player.setSeatNum = function () {
+							this._super.setSeatNum.apply(this, arguments);
+							this.seat = this.getSeatNum();
+							game.broadcastAll(function (player) {
+								if (!player.node.seat) player.node.seat = decadeUI.element.create('seat', player);
+								player.node.seat.innerHTML = get.cnNumber(player.seat, true);
+							}, this);
 						};
 						Player.update = function (count, hp, hpMax, hujia) {
 							if (!_status.video) {
@@ -2262,7 +2218,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								var time = event.animate(event);
 								game.pause();
 								setTimeout(function () {
-									gainTo(cards,true);
+									gainTo(cards, true);
 									game.resume();
 								}, get.delayx(time, time));
 							}
@@ -3092,7 +3048,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 											item = ui.create.caption(item, this.content);
 										}
 									}
-									else if(['div','fragment'].includes(get.objtype(item))){
+									else if (['div', 'fragment'].includes(get.objtype(item))) {
 										this.content.appendChild(item);
 									}
 									else if (get.itemtype(item) == 'cards') {
@@ -4043,17 +3999,17 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 									if (!this.node.dieidentity) this.node.dieidentity = ui.create.div('died-identity', this);
 									this.node.dieidentity.classList.add('died-identity');
-		
+
 									var that = this;
 									var image = new Image();
 									var identity = decadeUI.getPlayerIdentity(this);
-									var url = decadeUIPath + 'image/decoration' + (decadeUI.config.newDecadeStyle == 'on'?'':'s') + '/dead' + (decadeUI.config.newDecadeStyle == 'on'?'':'2') + '_' + identity + '.png';
+									var url = decadeUIPath + 'image/decoration' + (decadeUI.config.newDecadeStyle == 'on' ? '' : 's') + '/dead' + (decadeUI.config.newDecadeStyle == 'on' ? '' : '2') + '_' + identity + '.png';
 									image.onerror = function () {
 										that.node.dieidentity.innerHTML = decadeUI.getPlayerIdentity(that, that.identity, true) + '<br>阵亡';
 									};
 
 									// 随机离开效果
-									if ((that._trueMe||that)!=game.me&&that!=game.me&&Math.random()<0.5) {
+									if ((that._trueMe || that) != game.me && that != game.me && Math.random() < 0.5) {
 										if (lib.config.extension_十周年UI_newDecadeStyle == 'on') {
 											that.node.dieidentity.innerHTML = '<div style="width:40.2px; height:20px; left:0px; top:-32px; position:absolute; background-image: url(' + lib.assetURL + 'extension/十周年UI/assets/image/likai_1.png);background-size: 100% 100%;"></div>';
 										}
@@ -4275,7 +4231,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										group: decadeUI.element.create('identity', node),
 										intro: decadeUI.element.create('intro', node),
 									};
-									var infoitem=get.character(item);
+									var infoitem = get.character(item);
 
 									node.node.name.innerHTML = get.slimName(item);
 									if (lib.config.buttoncharacter_style == 'default' || lib.config.buttoncharacter_style == 'simple') {
@@ -4643,8 +4599,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					override(get, ride.get);
 
 					decadeUI.get.extend(decadeUI, duilib);
-					if (decadeModule.modules){
-						for (var i = 0; i < decadeModule.modules.length; i++){
+					if (decadeModule.modules) {
+						for (var i = 0; i < decadeModule.modules.length; i++) {
 							decadeModule.modules[i](lib, game, ui, get, ai, _status);
 						}
 					}
@@ -5067,17 +5023,17 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										if (info.round && (info.round - (game.roundNumber - player.storage[skills2[i] + '_roundcount']) > 0)) enable = false;
 										for (const item in player.storage) {
 											if (item.startsWith('temp_ban_')) {
-												if(player.storage[item] !== true) continue;
+												if (player.storage[item] !== true) continue;
 												const skillName = item.slice(9);
 												if (lib.skill[skillName]) {
-													const skills=game.expandSkills([skillName]);
-													if(skills.includes(skills2[i])) {
+													const skills = game.expandSkills([skillName]);
+													if (skills.includes(skills2[i])) {
 														enable = false; break;
 													}
 												}
 											}
 										}
-				
+
 									}
 
 									if (enable) {
@@ -5237,10 +5193,10 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								cards[j].classList.remove('selected');
 								cards[j].classList.remove('selectable');
 								if (cards[j]._tempName) {
-									if(lib.config.extension_十周年UI_showTemp){
+									if (lib.config.extension_十周年UI_showTemp) {
 										cards[j]._tempName.textContent = '';
 									}
-									else{
+									else {
 										cards[j]._tempName.delete();
 										delete cards[j]._tempName;
 									}
@@ -5724,14 +5680,14 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						var realIdentity = ui.create.div(player.node.identity);
 						realIdentity.player = player;
 
-						if(lib.config.equip_span){
-							let observer = new MutationObserver(mutationsList=>{
+						if (lib.config.equip_span) {
+							let observer = new MutationObserver(mutationsList => {
 								for (let mutation of mutationsList) {
 									if (mutation.type === 'childList') {
 										const addedNodes = Array.from(mutation.addedNodes);
 										const removedNodes = Array.from(mutation.removedNodes);
-										if(addedNodes.some(card=>!card.classList.contains('emptyequip')) || 
-										removedNodes.some(card=>!card.classList.contains('emptyequip'))){
+										if (addedNodes.some(card => !card.classList.contains('emptyequip')) ||
+											removedNodes.some(card => !card.classList.contains('emptyequip'))) {
 											player.$handleEquipChange();
 										}
 									}
@@ -5994,32 +5950,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 						decadeUI.get.extend(node.gainSkill, properties.gainSkill);
 						decadeUI.get.extend(player.node, node);
-					
-						Object.defineProperties(player, {
-							group: {
-								configurable: true,
-								get: function () {
-									return this._decadeGroup;
-								},
-								set: function (group) {
-									if (!group) return;
-									this._decadeGroup = group;
-									this.node.campWrap.dataset.camp = get.bordergroup(this.name, true) || group;
-									if (!decadeUI.config.campIdentityImageMode) {
-										this.node.campWrap.node.campName.innerHTML = group ? get.translation(group)[0] : '';
-										return;
-									}
-									var image = new Image();
-									var url;
-									if (decadeUI.config.newDecadeStyle=='off') url = extensionPath + 'image/decorations/name2_' + group + '.png';
-									else url = extensionPath + 'image/decoration/name_' + group + '.png';
-									this._finalGroup = group;
-									image.onerror = () => this.node.campWrap.node.campName.innerHTML = this._finalGroup ? get.translation(this._finalGroup)[0] : '';
-									this.node.campWrap.node.campName.style.backgroundImage = `url("${url}")`;
-									image.src = url;
-								}
-							},
-						});
 
 						return player;
 					};
@@ -6158,7 +6088,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						trigger: { global: 'useCardAfter' },
 						forced: true,
 						popup: false,
-						silent:true,
+						silent: true,
 						priority: -100,
 						filter: function (event) {
 							return ui.clear.delay === 'usecard' && event.card.name != 'wuxie';
@@ -6176,7 +6106,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						forced: true,
 						popup: false,
 						priority: -100,
-						silent:true,
+						silent: true,
 						filter: function (event) {
 							return !ui.clear.delay && event.card.name != 'wuxie';
 						},
@@ -6191,7 +6121,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							return ui.todiscard[event.discardid] ? true : false;
 						},
 						forced: true,
-						silent:true,
+						silent: true,
 						popup: false,
 						priority: -100,
 						content: function () {
@@ -6227,7 +6157,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						popup: false,
 						priority: -100,
 						lastDo: true,
-						silent:true,
+						silent: true,
 						content: function () {
 							if (!(trigger.source && trigger.player)) return;
 							game.broadcastAll(function (source, player) {
@@ -6269,7 +6199,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						cards[0]._transform = null;
 
 						var viewAs = typeof card == 'string' ? card : card.name;
-						if (!lib.card[viewAs] || (!lib.card[viewAs].effect && !lib.card[viewAs].noEffect) ) {
+						if (!lib.card[viewAs] || (!lib.card[viewAs].effect && !lib.card[viewAs].noEffect)) {
 							game.cardsDiscard(cards[0]);
 						}
 						else {
@@ -6324,7 +6254,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							if (cards[0].viewAs && cards[0].viewAs != cards[0].name) {
 								cards[0].classList.add('fakejudge');
 								cards[0].node.judgeMark.node.judge.innerHTML = get.translation(cards[0].viewAs)[0];
-								if(lib.card[viewAs].blankCard){
+								if (lib.card[viewAs].blankCard) {
 									game.log(player, '被扣置了<span class="yellowtext">' + get.translation(cards[0].viewAs) + '</span>');
 								}
 								else {
@@ -7022,6 +6952,32 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						return state;
 					};
 
+					Object.defineProperties(lib.element.player, {
+						group: {
+							configurable: true,
+							get: function () {
+								return this._group;
+							},
+							set: function (group) {
+								if (!group) return;
+								this._group = group;
+								this.node.campWrap.dataset.camp = get.bordergroup(this.name, true) || group;
+								if (!decadeUI.config.campIdentityImageMode) {
+									this.node.campWrap.node.campName.innerHTML = group ? get.translation(group)[0] : '';
+									return;
+								}
+								var image = new Image();
+								var url;
+								if (decadeUI.config.newDecadeStyle=='off') url = extensionPath + 'image/decorations/name2_' + group + '.png';
+								else url = extensionPath + 'image/decoration/name_' + group + '.png';
+								this._finalGroup = group;
+								image.onerror = () => this.node.campWrap.node.campName.innerHTML = this._finalGroup ? get.translation(this._finalGroup)[0] : '';
+								this.node.campWrap.node.campName.style.backgroundImage = `url("${url}")`;
+								image.src = url;
+							}
+						},
+					});
+
 					lib.element.player.setModeState = function (info) {
 						if (info && info.seat) {
 							if (!this.node.seat) this.node.seat = decadeUI.element.create('seat', this);
@@ -7715,8 +7671,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							else {
 								sheet = sheetList[j];
 							}
-							
-							if(sheet&&sheet.cssRules){
+
+							if (sheet && sheet.cssRules) {
 								for (var i = 0; i < sheet.cssRules.length; i++) {
 									if (!(sheet.cssRules[i] instanceof CSSMediaRule)) {
 										if (sheet.cssRules[i].selectorText == selector) {
@@ -9926,7 +9882,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						return player != game.me && _status.currentPhase == player;
 					},
 					forced: true,
-					silent:true,
+					silent: true,
 					charlotte: true,
 					content: function () {
 						var ab = player.getElementsByClassName("timePhase");
@@ -9966,7 +9922,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						player: ['useCardBegin', 'respondBegin', 'chooseToRespondBegin', 'damageEnd', 'judgeEnd'],
 					},
-					silent:true,
+					silent: true,
 					forced: true,
 					charlotte: true,
 					filter: function (event, player) {
@@ -10008,7 +9964,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						player: 'useCardToPlayered',
 					},
 					forced: true,
-					silent:true,
+					silent: true,
 					priority: -10,
 					charlotte: true,
 					filter: function (event, player) {
@@ -10090,7 +10046,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						global: 'gameStart',
 					},
-					silent:true,
+					silent: true,
 					forced: true,
 					priority: -1,
 					charlotte: true,
@@ -10170,7 +10126,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				//------------回合外进度条消失------------//
 				lib.skill._jindutiao_close = {
 					close: {
-						silent:true,
+						silent: true,
 						trigger: {
 							player: ['phaseEnd', 'useCardAfter', 'gainEnd', 'loseEnd', 'damageAfter'],
 						},
@@ -10192,7 +10148,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				trigger: {
 					player: ['phaseUseBegin', 'useCardEnd', 'loseEnd'],
 				},
-				silent:true,
+				silent: true,
 				forced: true,
 				charlotte: true,
 				filter: function (event, player) {
@@ -10225,7 +10181,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				trigger: {
 					global: ['phaseUseEnd', 'dieBegin', 'phaseBegin'],
 				},
-				silent:true,
+				silent: true,
 				forced: true,
 				priority: -1,
 				charlotte: true,
@@ -10249,7 +10205,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				trigger: {
 					player: 'phaseDiscardBegin'
 				},
-				silent:true,
+				silent: true,
 				forced: true,
 				charlotte: true,
 				filter: function (event, player) {
@@ -10281,7 +10237,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				trigger: {
 					global: ['phaseDiscardEnd', 'dieBegin'],
 				},
-				silent:true,
+				silent: true,
 				forced: true,
 				charlotte: true,
 				filter: function (event, player) {
@@ -10304,7 +10260,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				trigger: {
 					player: ['useCardBegin', 'respondBegin']
 				},
-				silent:true,
+				silent: true,
 				forced: true,
 				charlotte: true,
 				filter: function (event, player) {
@@ -10329,7 +10285,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				trigger: {
 					global: ['useCardEnd', 'respondEnd', 'dieBegin', 'phaseBegin', 'phaseEnd']
 				},
-				silent:true,
+				silent: true,
 				forced: true,
 				charlotte: true,
 				filter: function (event, player) {
@@ -10352,7 +10308,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				trigger: {
 					player: ['useCardBegin', 'respondBegin']
 				},
-				silent:true,
+				silent: true,
 				forced: true,
 				charlotte: true,
 				filter: function (event, player) {
@@ -10380,7 +10336,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					global: ['useCardEnd', 'respondEnd', 'dieBegin', 'phaseBegin', 'phaseEnd']
 				},
 				forced: true,
-				silent:true,
+				silent: true,
 				charlotte: true,
 				filter: function (event, player) {
 					event.respondix = 0;
@@ -10402,7 +10358,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				trigger: {
 					player: ['useCardBegin', 'respondBegin']
 				},
-				silent:true,
+				silent: true,
 				forced: true,
 				charlotte: true,
 				filter: function (event, player) {
@@ -10430,7 +10386,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					global: ['useCardEnd', 'respondEnd', 'dieBegin', 'phaseBegin', 'phaseEnd']
 				},
 				forced: true,
-				silent:true,
+				silent: true,
 				charlotte: true,
 				filter: function (event, player) {
 					event.respondix = 0;
@@ -10454,7 +10410,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				},
 				forced: true,
 				charlotte: true,
-				silent:true,
+				silent: true,
 				filter: function (event, player) {
 					// if(!player.countCards('h','sha')) return false;
 					return event.card.name == 'jiu' && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_decadeLayout == "off";
@@ -10480,7 +10436,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				},
 				forced: true,
 				charlotte: true,
-				silent:true,
+				silent: true,
 				filter: function (event, player) {
 					event.respondix = 0;
 					for (var i = 0; i < game.players.length; i++) {
@@ -10503,7 +10459,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				},
 				forced: true,
 				charlotte: true,
-				silent:true,
+				silent: true,
 				filter: function (event, player) {
 					if (event.card.storage && event.card.storage.nowuxie) return false;
 					var card = event.card;
@@ -10539,7 +10495,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					player: ['useCardEnd', 'respondEnd', 'dieBegin', 'phaseEnd']
 				},
 				forced: true,
-				silent:true,
+				silent: true,
 				charlotte: true,
 				filter: function (event, player) {
 					var h = event.player.getElementsByClassName("playertipwuxie")
@@ -10556,7 +10512,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					player: ['phaseJudgeBegin', 'phaseDrawBegin']
 				},
 				forced: true,
-				silent:true,
+				silent: true,
 				charlotte: true,
 				filter: function (event, player) {
 					return player != game.me;
@@ -10588,7 +10544,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				},
 				forced: true,
 				charlotte: true,
-				silent:true,
+				silent: true,
 				filter: function (event, player) {
 					var m = event.player.getElementsByClassName("playertipplay")
 					return m.length > 0 && player != game.me;
@@ -10604,7 +10560,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					player: ['useCardBegin', 'respondBegin']
 				},
 				forced: true,
-				silent:true,
+				silent: true,
 				charlotte: true,
 				filter: function (event, player) {
 					return _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_decadeLayout == "on";
@@ -10630,7 +10586,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					player: ['useCardEnd', 'respondEnd', 'dieBegin']
 				},
 				forced: true,
-				silent:true,
+				silent: true,
 				charlotte: true,
 				filter: function (event, player) {
 					var e = event.player.getElementsByClassName("playertipthink")
@@ -10646,7 +10602,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				trigger: {
 					global: ['phaseUseEnd', 'dieBegin', 'dying', 'phaseBegin', 'useCardAfter', 'loseAfter', 'phaseEnd'],
 				},
-				silent:true,
+				silent: true,
 				forced: true,
 				priority: -2,
 				charlotte: true,
@@ -10770,7 +10726,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						player: ['chooseToRespondBegin'],
 					},
-					silent:true,
+					silent: true,
 					direct: true,
 					filter: function (event, player) {
 						return player == game.me && _status.auto == false;
@@ -10792,7 +10748,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						target: 'shaBegin',
 					},
-					silent:true,
+					silent: true,
 					filter: function (event, player) {
 						return game.me == event.target;
 					},
@@ -10814,7 +10770,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						player: ['useCardToBegin', 'phaseJudge']
 					},
-					silent:true,
+					silent: true,
 					filter: function (event, player) {
 						if (event.card.storage && event.card.storage.nowuxie) return false;
 						var card = event.card;
@@ -10856,7 +10812,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						player: ["useCard", "respondAfter"],
 					},
-					silent:true,
+					silent: true,
 					filter: function (event, player) {
 						return player == game.me && event.card.name == 'shan';
 					},
@@ -10882,7 +10838,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							'shanBegin'
 						],
 					},
-					silent:true,
+					silent: true,
 					filter: function (event, player) {
 						return player == game.me && _status.auto == false;
 					},
@@ -10907,7 +10863,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						global: ['phaseEnd', 'useCardAfter']
 					},
-					silent:true,
+					silent: true,
 					filter: function (event, player) {
 						return _status.currentPhase != game.me && player != game.me;
 					},
@@ -10921,7 +10877,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						global: ['dieAfter']
 					},
-					silent:true,
+					silent: true,
 					forced: true,
 					charlotte: true,
 					filter: function (event, player) {
@@ -10942,7 +10898,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							'phaseUseBegin', 'phaseDiscardBegin'
 						],
 					},
-					silent:true,
+					silent: true,
 					charlotte: true,
 					forced: true,
 					filter: function (event, player) {
@@ -10967,7 +10923,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						player: ['phaseBefore', 'phaseBegin'],
 					},
-					silent:true,
+					silent: true,
 					filter: function (event, player) {
 						return player == game.me && _status.currentPhase == player && _status.auto == false;
 					},
@@ -10997,7 +10953,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						player: ['phaseJudgeBegin', 'phaseJudgeEnd'],
 					},
-					silent:true,
+					silent: true,
 					filter: function (event, player) {
 						return player == game.me && _status.currentPhase == player && _status.auto == false;
 					},
@@ -11027,7 +10983,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						player: ['phaseDrawBegin', 'phaseDrawEnd'],
 					},
-					silent:true,
+					silent: true,
 					filter: function (event, player) {
 						return player == game.me && _status.currentPhase == player && _status.auto == false;
 					},
@@ -11057,7 +11013,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						player: ['phaseUseBegin', 'phaseUseEnd'],
 					},
-					silent:true,
+					silent: true,
 					filter: function (event, player) {
 						return player == game.me && _status.currentPhase == player && _status.auto == false;
 					},
@@ -11087,7 +11043,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						player: ['phaseDiscardBegin', 'phaseDiscardEnd'],
 					},
-					silent:true,
+					silent: true,
 					filter: function (event, player) {
 						return player == game.me && _status.currentPhase == player && _status.auto == false;
 					},
@@ -11117,7 +11073,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						player: ['phaseEnd', 'phaseAfter']
 					},
-					silent:true,
+					silent: true,
 					filter: function (event, player) {
 						return player == game.me && _status.currentPhase == player && _status.auto == false;
 					},
@@ -11155,7 +11111,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					trigger: {
 						player: ['phaseZhunbeiBegin', 'phaseBegin', 'phaseJudgeBegin', 'phaseDrawBegin', 'useCardAfter', 'phaseDiscardBegin', 'useSkillBefore', 'loseAfter']
 					},
-					silent:true,
+					silent: true,
 					filter: function (event, player) {
 						if (document.querySelector("#jindutiaopl") && lib.config.extension_十周年UI_jindutiaoUpdata == false) return false;
 						return player == game.me && _status.currentPhase == player;
@@ -11201,7 +11157,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						player: ['useCardToBegin', 'respondBegin', 'chooseToRespondBegin', 'damageEnd', 'damageAfter', 'judgeEnd'],
 						target: "useCardToTargeted",
 					},
-					silent:true,
+					silent: true,
 					forced: true,
 					charlotte: true,
 					filter: function (event, player) {
@@ -12765,7 +12721,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					global: ["gameStart", "phaseBegin", "phaseAfter", "useCardAfter"],
 				},
 				forced: true,
-				silent:true,
+				silent: true,
 				filter: function (event, player) {
 					return player.change_sayFunction != true;
 				},
@@ -13073,18 +13029,18 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				name: '视为卡牌显示',
 				init: false,
 				intro: '开启此选项后，视为卡牌显示将会替换为十周年UI内置替换显示',
-				onclick:function(bool){
+				onclick: function (bool) {
 					game.saveConfig('extension_十周年UI_showTemp', bool);
-					if(game.me&&game.me.getCards&&lib.config.cardtempname!='off'){
+					if (game.me && game.me.getCards && lib.config.cardtempname != 'off') {
 						var cards = game.me.getCards('h');
 						for (var j = 0; j < cards.length; j++) {
 							var card = cards[j];
 							if (card._tempName) {
-								if(!bool){
+								if (!bool) {
 									card._tempName.textContent = '';
 									card.updateTransform();
 								}
-								else{
+								else {
 									card._tempName.delete();
 									delete card._tempName;
 								}
