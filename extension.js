@@ -1,4 +1,4 @@
-'use strict';
+import {ChildNodesWatcher} from '../../noname/library/cache/childNodesWatcher.js';
 game.import("extension", function (lib, game, ui, get, ai, _status) {
 	return {
 		name: "十周年UI",
@@ -5670,7 +5670,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							$cardCount: playerExtend.node.count,
 							$dynamicWrap: decadeUI.element.create('dynamic-wrap'),
 						}
-
+						playerExtend.node.handcards1._childNodesWatcher = new ChildNodesWatcher(playerExtend.node.handcards1);
+						playerExtend.node.handcards2._childNodesWatcher = new ChildNodesWatcher(playerExtend.node.handcards2);
 						decadeUI.get.extend(player, extend);
 						decadeUI.get.extend(player, playerExtend);
 						//decadeUI.get.extend(player, lib.element.player);
