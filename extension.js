@@ -1494,7 +1494,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										return;
 									}
 									var ok = game.check();
-									if (!ok) {
+									if (!ok || !lib.config.auto_confirm) {
 										game.pause();
 										var tipText;
 										var handTip = event.handTip = dui.showHandTip();
