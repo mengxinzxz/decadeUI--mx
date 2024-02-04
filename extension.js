@@ -13822,7 +13822,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			},
 			intro: (function () {
 				var log = [
-					'魔改十周年 萌修 0.2.2',
+					'魔改十周年 萌修 0.2.3',
 					'<a href="https://github.com/mengxinzxz/decadeUI--mx.git">点击前往萌修十周年Github仓库</a>',
 					'阶段显示优化（by-Fire.win）',
 					'个人装备栏显示优化（by-Fire.win）',
@@ -13838,7 +13838,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			author: "萌新（转型中）<br>十周年UI原作者：短歌<br>手杀UI原名：界面美化<br>手杀UI原作者：橙续缘",
 			diskURL: "",
 			forumURL: "",
-			version: "0.2.2",
+			version: "0.2.3",
 		},
 		files: {
 			"character": [],
