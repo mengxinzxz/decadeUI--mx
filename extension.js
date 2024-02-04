@@ -126,7 +126,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					function override(dest, src) {
 						var ok = true;
 						var key;
-						for (key in src) {
+						for (const key in src) {
 							if (dest[key]) {
 								ok = override(dest[key], src[key]);
 								if (ok) {
@@ -4396,9 +4396,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								var control = document.createElement('div');
 								control.className = 'control';
 								control.style.opacity = 1;
-								//for (i in lib.element.control) control[i] = lib.element.control[i];
+								//for (let i in lib.element.control) control[i] = lib.element.control[i];
 								Object.setPrototypeOf(control, lib.element.Control.prototype);
-								for (i = 0; i < controls.length; i++) {
+								for (let i = 0; i < controls.length; i++) {
 									if (typeof controls[i] == 'function') {
 										control.custom = controls[i];
 									}
@@ -4428,9 +4428,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								dialog.contentContainer = decadeUI.element.create('content-container', dialog);
 								dialog.content = decadeUI.element.create('content', dialog.contentContainer);
 								dialog.buttons = [];
-								//for (i in lib.element.dialog) dialog[i] = lib.element.dialog[i];
+								//for (let i in lib.element.dialog) dialog[i] = lib.element.dialog[i];
 								Object.setPrototypeOf(dialog, lib.element.Dialog.prototype);
-								for (i = 0; i < arguments.length; i++) {
+								for (let i = 0; i < arguments.length; i++) {
 									if (typeof arguments[i] == 'boolean') dialog.static = arguments[i];
 									else if (arguments[i] == 'hidden') hidden = true;
 									else if (arguments[i] == 'notouchscroll') notouchscroll = true;
@@ -4754,7 +4754,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							var selectableButtons = false;
 							if (event.forceAuto && ui.selected.buttons.length == range[1]) auto = true;
 							else if (range[0] != range[1] || range[0] > 1) auto = false;
-							for (i = 0; i < dialog.buttons.length; i++) {
+							for (let i = 0; i < dialog.buttons.length; i++) {
 								if (dialog.buttons[i].classList.contains('unselectable')) continue;
 								if (event.filterButton(dialog.buttons[i], player) && lib.filter.buttonIncluded(dialog.buttons[i])) {
 									if (ui.selected.buttons.length < range[1]) {
@@ -4823,7 +4823,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 								var selectableCards = false;
 								if (range[0] != range[1] || range[0] > 1) auto = false;
-								for (i = 0; i < cards.length; i++) {
+								for (let i = 0; i < cards.length; i++) {
 									if (lib.config.cardtempname != 'off') {
 										var cardname = get.name(cards[i]);
 										var cardnature = get.nature(cards[i]);
@@ -4933,7 +4933,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								range = get.select(event.selectTarget);
 								var selectableTargets = false;
 								if (range[0] != range[1] || range[0] > 1) auto = false;
-								for (i = 0; i < players.length; i++) {
+								for (let i = 0; i < players.length; i++) {
 									var nochess = true;
 									if (game.chess && !event.chessForceAll && player && get.distance(player, players[i], 'pure') > 7) {
 										nochess = false;
@@ -5039,7 +5039,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								skills2 = game.filterSkills(skills2.concat(lib.skill.global), player, player.getSkills('e').concat(lib.skill.global));
 								event._skillChoice = [];
 								game.expandSkills(skills2);
-								for (i = 0; i < skills2.length; i++) {
+								for (let i = 0; i < skills2.length; i++) {
 									info = get.info(skills2[i]);
 									enable = false;
 									if (typeof info.enable == 'function') enable = info.enable(event);
@@ -5224,7 +5224,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						for (var i = 0; i < args.length; i++) args[i] = arguments[i];
 						if ((args.length == 0 || args.includes('card')) && _status.event.player) {
 							var cards = _status.event.player.getCards('hejsx');
-							for (j = 0; j < cards.length; j++) {
+							for (let j = 0; j < cards.length; j++) {
 								cards[j].classList.remove('selected');
 								cards[j].classList.remove('selectable');
 								if (cards[j]._tempName) {
@@ -5244,7 +5244,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						var players = game.players.slice(0);
 						if (_status.event.deadTarget) players.addArray(game.dead);
 						if ((args.length == 0 || args.includes('target'))) {
-							for (j = 0; j < players.length; j++) {
+							for (let j = 0; j < players.length; j++) {
 								players[j].classList.remove('selected');
 								players[j].classList.remove('selectable');
 								players[j].classList.remove('un-selectable');
@@ -5256,7 +5256,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							ui.selected.targets.length = 0;
 						}
 						if ((args.length == 0 || args.includes('button')) && _status.event.dialog && _status.event.dialog.buttons) {
-							for (j = 0; j < _status.event.dialog.buttons.length; j++) {
+							for (let j = 0; j < _status.event.dialog.buttons.length; j++) {
 								_status.event.dialog.buttons[j].classList.remove('selectable');
 								_status.event.dialog.buttons[j].classList.remove('selected');
 							}
@@ -5431,7 +5431,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							var key;
 							var current = this.firstChild.innerText;
 
-							for (key in identityList) {
+							for (const key in identityList) {
 								if (theNext == null || getNext) {
 									theNext = key;
 									if (getNext) break;
@@ -5468,7 +5468,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							var index = 0;
 							var node;
 							var nodes = dui.$identityMarkBox.childNodes;
-							for (key in identityList) {
+							for (const key in identityList) {
 								node = nodes[index];
 								if (!node) {
 									node = decadeUI.element.create('identity-mark-item', dui.$identityMarkBox);
@@ -12473,7 +12473,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					//打开美酒函数
 					//这里
 					var list = game.players;
-					for (i = 0; i < game.players.length; i++) {
+					for (let i = 0; i < game.players.length; i++) {
 						list[i].onclick = function () {
 							var target = this;
 							if (window.meijiu.thrownn == true) {
@@ -12510,7 +12510,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					//打开鲜花函数
 					//这里
 					var list = game.players;
-					for (i = 0; i < game.players.length; i++) {
+					for (let i = 0; i < game.players.length; i++) {
 						list[i].onclick = function () {
 							if (window.xianhua.thrownn == true)
 								game.me.throwEmotion(this, 'flower');
@@ -12535,7 +12535,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					//这里
 					var list = game.players;
 					var num = 10;
-					for (i = 0; i < game.players.length; i++) {
+					for (let i = 0; i < game.players.length; i++) {
 						list[i].onclick = function () {
 							var target = this;
 							if (window.tuoxie.thrownn == true) {
@@ -12576,7 +12576,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					//打开鸡蛋函数
 					//这里
 					var list = game.players;
-					for (i = 0; i < game.players.length; i++) {
+					for (let i = 0; i < game.players.length; i++) {
 						list[i].onclick = function () {
 							if (window.jidan.thrownn == true) {
 								game.me.throwEmotion(this, 'egg');
@@ -12603,7 +12603,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				game.open_cailan = function () {
 					//打开菜篮函数
 					var list = game.players;
-					for (i = 0; i < game.players.length; i++) {
+					for (let i = 0; i < game.players.length; i++) {
 						list[i].onclick = function () {
 							var target = this;
 							if (window.cailan.thrownn == true) {
@@ -12638,7 +12638,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				game.open_qicai = function () {
 					//打开七彩函数
 					var list = game.players;
-					for (i = 0; i < game.players.length; i++) {
+					for (let i = 0; i < game.players.length; i++) {
 						list[i].onclick = function () {
 							var target = this;
 							if (window.qicai.thrownn == true) {
@@ -13824,7 +13824,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				var log = [
 					'魔改十周年 萌修 0.2.4',
 					'<a href="https://github.com/mengxinzxz/decadeUI--mx.git">点击前往萌修十周年Github仓库</a>',
-					'bugfix',
+					'修复dialog.css某个属性拼写错误bug',
+					'修复文件内未声明即使用的变量导致的bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>') + '</p>';
 			})(),
