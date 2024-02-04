@@ -13822,23 +13822,16 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			},
 			intro: (function () {
 				var log = [
-					'魔改十周年 萌修 0.2.3',
+					'魔改十周年 萌修 0.2.4',
 					'<a href="https://github.com/mengxinzxz/decadeUI--mx.git">点击前往萌修十周年Github仓库</a>',
-					'阶段显示优化（by-Fire.win）',
-					'个人装备栏显示优化（by-Fire.win）',
-					'部分特定美化适配现版本',
-					'修复护甲技能标记仍显示的bug',
-					'十周年UI的js文件非classList的contains全部改为includes',
-					'合并边框和界面布局+修改此设置游戏自动重启',
-					'player1-3.css从6个文件简化到3个文件（不再区分电脑端和手机端）',
-					'手杀样式下个人装备栏显示问题修复+颜色调整',
+					'bugfix',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>') + '</p>';
 			})(),
 			author: "萌新（转型中）<br>十周年UI原作者：短歌<br>手杀UI原名：界面美化<br>手杀UI原作者：橙续缘",
 			diskURL: "",
 			forumURL: "",
-			version: "0.2.3",
+			version: "0.2.4",
 		},
 		files: {
 			"character": [],
