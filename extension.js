@@ -13473,8 +13473,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				}
 			},
 			newDecadeStyle: {
-				name: '<b><font color=\"#FF0000\">边框样式/界面布局(需重启)',
-				intro: '<b><font color=\"#FF0000\">此选项可以切换武将边框样式和界面布局，初始为十周年样式，根据个人喜好自行切换，游戏会自动重启生效新的设置',
+				name: '<b><font color=\"#FF0000\">边框样式/界面布局',
+				intro: '<b><font color=\"#FF0000\">切换武将边框样式和界面布局，初始为十周年样式，根据个人喜好自行切换，选择不同的设置后游戏会自动重启以生效新的设置',
 				init: 'off',
 				item: {
 					on: '十周年',
