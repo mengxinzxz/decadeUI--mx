@@ -2,7 +2,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
   var plugin = {
     name: 'skill',
     filter: function () {
-      return !['chess', 'tafang'].contains(get.mode());
+      return !['chess', 'tafang'].includes(get.mode());
     },
     content: function (next) {
     },
@@ -48,18 +48,18 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
         updateSkillControl: function (player, clear) {
           var eSkills = player.getSkills('e', true, false).slice(0);
           var skills = app.get.playerSkills(player, true);
-          
+
           for (var i = 0; i < skills.length; i++) {
             var info = get.info(skills[i]);
-            if (info&&info.nopop) skills.splice(i--, 1);
+            if (info && info.nopop) skills.splice(i--, 1);
           }
-          
+
           var iSkills = player.invisibleSkills.slice(0);
           game.expandSkills(iSkills);
-          
+
           skills.addArray(iSkills.filter(function (skill) {
             var info = get.info(skill);
-            return info&&info.enable;
+            return info && info.enable;
           }));
 
           if (player === game.me) {
@@ -77,9 +77,9 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
             if (info.zhuSkill && !player.hasZhuSkill(skill)) return;
             //这里修改1{这里是分离转换技，限定技，觉醒技，使命技
             if (info.zhuanhuanji || info.limited || (info.intro && info.intro.content === 'limited')) {
-              xiandingji[skill] = player.awakenedSkills.contains(skill);
+              xiandingji[skill] = player.awakenedSkills.includes(skill);
             }
-            if (info.juexingji || info.dutySkill) juexingji[skill] = player.awakenedSkills.contains(skill);
+            if (info.juexingji || info.dutySkill) juexingji[skill] = player.awakenedSkills.includes(skill);
             //这里结束1}
           });
           plugin.updateSkillMarks(player, xiandingji, juexingji);
@@ -164,7 +164,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 
           baibanSkillBlocker.forEach(function (item) {
 
-            if (Array.isArray(skill) && !skill.contains(item)) {
+            if (Array.isArray(skill) && !skill.includes(item)) {
               skill.unshift(item);
             }
           })
@@ -174,7 +174,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
           fengyinSkillBlocker = game.me.getSkills(null, false, false).filter(skill => lib.skill.fengyin.skillBlocker(skill, game.me));
           fengyinSkillBlocker.sort();
           fengyinSkillBlocker.forEach(function (item) {
-            if (Array.isArray(skill) && !skill.contains(item)) {
+            if (Array.isArray(skill) && !skill.includes(item)) {
               skill.unshift(item);
             }
           })
@@ -206,13 +206,13 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 
           //技能锁，不需要加数字
           var showAddSpan = true;
-          if (game.me.hasSkill('baiban') && baibanSkillBlocker && baibanSkillBlocker.contains(item.id)) {
+          if (game.me.hasSkill('baiban') && baibanSkillBlocker && baibanSkillBlocker.includes(item.id)) {
             showAddSpan = false;
           }
-          if (game.me.hasSkill('fengyin') && fengyinSkillBlocker && fengyinSkillBlocker.contains(item.id)) {
+          if (game.me.hasSkill('fengyin') && fengyinSkillBlocker && fengyinSkillBlocker.includes(item.id)) {
             showAddSpan = false;
           }
-          if (game.me.shixiaoedSkills.contains(item.id)) {
+          if (game.me.shixiaoedSkills.includes(item.id)) {
             showAddSpan = false;
           }
 
@@ -284,11 +284,13 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
           if (item.type === 'enable') {
             let name = get.translation(item.name)/*.slice(0, 4)*/
             //修改司马徽技能单独分离
-            if (item.id == 'smh_huoji') {
+            if (item.id.indexOf('jianjie_huoji') != -1) {
               node = ui.create.div('.skillitem_smh_huoji', self.node.enable, name);
-            } else if (item.id == 'smh_lianhuan') {
+            }
+            else if (item.id.indexOf('jianjie_lianhuan') != -1) {
               node = ui.create.div('.skillitem_smh_lianhuan', self.node.enable, name);
-            } else if (item.id == 'smh_yeyan') {
+            }
+            else if (item.id.indexOf('jianjie_yeyan') != -1) {
               node = ui.create.div('.skillitem_smh_yeyan', self.node.enable, name);
             }
             else {
@@ -390,19 +392,19 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 
             //这里修改2{//这里是主动技失效上锁和转换技阴阳按钮
             if (item.id) {
-              if (game.me.hasSkill('baiban') && baibanSkillBlocker && baibanSkillBlocker.contains(item.id)) {
+              if (game.me.hasSkill('baiban') && baibanSkillBlocker && baibanSkillBlocker.includes(item.id)) {
                 //白板锁
                 var img = ui.create.div('.suo1.baibansuo', node, "");
                 img.style.position = "absolute";
                 node.style['-webkit-text-fill-color'] = 'silver';//失效变灰
                 node.style['-webkit-text-stroke'] = '0.8px rgba(0,0,0,0.55)';
-              } else if (game.me.hasSkill('fengyin') && fengyinSkillBlocker && fengyinSkillBlocker.contains(item.id)) {
+              } else if (game.me.hasSkill('fengyin') && fengyinSkillBlocker && fengyinSkillBlocker.includes(item.id)) {
                 //封印锁
                 var img = ui.create.div('.suo1.fengyinsuo', node, "");
                 img.style.position = "absolute";
                 node.style['-webkit-text-fill-color'] = 'silver';//失效变灰
                 node.style['-webkit-text-stroke'] = '0.8px rgba(0,0,0,0.55)';
-              } else if (game.me.shixiaoedSkills.contains(item.id)) {
+              } else if (game.me.shixiaoedSkills.includes(item.id)) {
                 //技能锁
                 var img = ui.create.div('.suo1.jinengsuo', node, "");
                 img.style.position = "absolute";
@@ -411,13 +413,13 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
               };
 
               //这是定义的失效函数，在使命技成功或者失败，芳踪，滔乱，竣攻等技能的函数里补上一个shixiao，按钮就会检测到自动上锁		
-              if (item.info.zhuanhuanji && !game.me.yangedSkills.contains(item.id)) {
+              if (item.info.zhuanhuanji && !game.me.yangedSkills.includes(item.id)) {
                 var img = ui.create.div('.yang', node, "");
                 //	console.log(node);
                 img.style.position = "absolute";
               };
               //这是定义的阳按钮函数，如果一个技能是转换技，并且不在阴按钮函数里就给他创建一个阳按钮，这种检测是为了开局能正常显示
-              if (game.me.yangedSkills.contains(item.id)) {
+              if (game.me.yangedSkills.includes(item.id)) {
                 var img = ui.create.div('.ying', node, "");
                 img.style.position = "absolute";
               };
@@ -436,24 +438,24 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
           if (!item.info) return;
           if (!item.translation) return;
           if (item.id == 'jiu') return false;//--------改酒
-          if (eSkills && eSkills.contains(item.id)) return;
+          if (eSkills && eSkills.includes(item.id)) return;
           node = ui.create.div('.skillitem', self.node.trigger, item.name/*.slice(0, 4)*/);
 
           if (item.id) {//这里修改5{//这是被动技能的上锁和按钮切换
 
-            if (game.me.hasSkill('baiban') && baibanSkillBlocker && baibanSkillBlocker.contains(item.id)) {
+            if (game.me.hasSkill('baiban') && baibanSkillBlocker && baibanSkillBlocker.includes(item.id)) {
               //白板锁
               var img = ui.create.div('.suo1.baibansuo', node, "");
               img.style.position = "absolute";
               node.style['-webkit-text-fill-color'] = 'silver';//失效变灰
               node.style['-webkit-text-stroke'] = '0.8px rgba(0,0,0,0.55)';
-            } else if (game.me.hasSkill('fengyin') && fengyinSkillBlocker && fengyinSkillBlocker.contains(item.id)) {
+            } else if (game.me.hasSkill('fengyin') && fengyinSkillBlocker && fengyinSkillBlocker.includes(item.id)) {
               //封印锁
               var img = ui.create.div('.suo1.fengyinsuo', node, "");
               img.style.position = "absolute";
               node.style['-webkit-text-fill-color'] = 'silver';//失效变灰
               node.style['-webkit-text-stroke'] = '0.8px rgba(0,0,0,0.55)';
-            } else if (game.me.shixiaoedSkills.contains(item.id)) {
+            } else if (game.me.shixiaoedSkills.includes(item.id)) {
               //技能锁
               var img = ui.create.div('.suo1.jinengsuo', node, "");
               img.style.position = "absolute";
@@ -461,12 +463,12 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
               node.style['-webkit-text-stroke'] = '0.8px rgba(0,0,0,0.55)';
             };
 
-            if (item.info.zhuanhuanji && !game.me.yangedSkills.contains(item.id)) {
+            if (item.info.zhuanhuanji && !game.me.yangedSkills.includes(item.id)) {
               var img = ui.create.div('.yang', node, "");
               img.style.position = "absolute";
               //	console.log(node);
             };
-            if (game.me.yangedSkills.contains(item.id)) {
+            if (game.me.yangedSkills.includes(item.id)) {
               var img = ui.create.div('.ying', node, "");
               img.style.position = "absolute";
             };
@@ -579,7 +581,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 
         Array.from(this.node.enable.childNodes).forEach(function (item) {
 
-          if (skills.contains(item.dataset.id)) {
+          if (skills.includes(item.dataset.id)) {
             item.classList.add('usable');
 
           } else {

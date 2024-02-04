@@ -360,7 +360,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
   var plugin = {
     name: 'lbtn',
     filter: function () {
-      return !['chess', 'tafang'].contains(get.mode());
+      return !['chess', 'tafang'].includes(get.mode());
     },
     content: function (next) {
       lib.skill._uicardupdate = {
@@ -562,7 +562,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
             var item = document.createElement('div');
             item.link = skills[i];
 
-            if (skills[i] == "_chongzhu") {
+            if (skills[i] == "_recasting") {
               item.innerHTML = "<img style=width:70px height:15px src=" + lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/uibutton/CZ.png>";
             } else {
               item.innerHTML = get.translation(skills[i]);
@@ -831,7 +831,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
               type: '点数',
             }
 
-          if (ui.cardPile.contains(card.link)) {
+          if (ui.cardPile.includes(card.link)) {
             cardStatistics[card.translate].num++;
             cardStatistics[get.translation(card.suit)].num++;
             cardStatistics[card.number].num++;
@@ -854,7 +854,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
                 num: 0,
                 type: card.type,
               }
-            if (ui.cardPile.contains(card.link)) {
+            if (ui.cardPile.includes(card.link)) {
               cardStatistics[card.nature + card.translate].num++;
             }
           }

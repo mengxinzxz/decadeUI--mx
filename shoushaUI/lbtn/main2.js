@@ -196,7 +196,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
   var plugin = {
     name: 'lbtn',
     filter: function () {
-      return !['chess', 'tafang'].contains(get.mode());
+      return !['chess', 'tafang'].includes(get.mode());
     },
     content: function (next) {
       lib.skill._uicardupdate = {

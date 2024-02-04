@@ -45,13 +45,33 @@
 }
 
 .equips-wrap>.equips-back>div {
-	background: rgba(0, 0, 0, 0.4);
-	box-shadow: 0 0 6px rgb(200, 150, 80) inset;
+	/*background: rgba(0, 0, 0, 0.4);
+	box-shadow: 0 0 6px rgb(200, 150, 80) inset;*/
 	height: 27px;
 	left: 3px;
 	position: initial;
 	right: 3px;
 	width: 100%;
+}
+
+.equips-wrap>.equips-back>div[data-type='0']{
+	background-image: url("image/decoration/equip1.png");
+}
+
+.equips-wrap>.equips-back>div[data-type='1']{
+	background-image: url("image/decoration/equip2.png");
+}
+
+.equips-wrap>.equips-back>div[data-type='2']{
+	background-image: url("image/decoration/equip3.png");
+}
+
+.equips-wrap>.equips-back>div[data-type='3']{
+	background-image: url("image/decoration/equip4.png");
+}
+
+.equips-wrap>.equips-back>div[data-type='4']{
+	background-image: url("image/decoration/equip5.png");
 }
 
 .equips-wrap>.equips>div {
@@ -80,8 +100,8 @@
 }
 
 .equips-wrap>.equips>div::after {
-	display: block;
 	background: 
+		/*
 		linear-gradient(to left, red, red) left top no-repeat, 
 		linear-gradient(to bottom, red, red) left top no-repeat, 
 		linear-gradient(to left, red, red) right top no-repeat,
@@ -90,11 +110,26 @@
 		linear-gradient(to bottom, red, red) left bottom no-repeat,
 		linear-gradient(to left, red, red) right bottom no-repeat,
 		linear-gradient(to left, red, red) right bottom no-repeat !important;
-	background-size: 1px 4px, 5px 1px, 1px 4px, 5px 1px !important;
-	opacity: 1;
-	border-radius: 0px;
-	box-shadow: none;
-	z-index: auto;
+		*/
+		linear-gradient(to left, yellow, yellow) left top no-repeat,
+		linear-gradient(to bottom, yellow, yellow) left top no-repeat,
+		linear-gradient(to left, yellow, yellow) right top no-repeat,
+		linear-gradient(to bottom, yellow, yellow) right top no-repeat,
+		linear-gradient(to left, yellow, yellow) left bottom no-repeat,
+		linear-gradient(to bottom, yellow, yellow) left bottom no-repeat,
+		linear-gradient(to left, yellow, yellow) right bottom no-repeat,
+		linear-gradient(to left, yellow, yellow) right bottom no-repeat !important;
+		/*个人独立装备栏配色改黄色*/
+		background-size: 2px 8px, 10px 2px, 2px 8px, 10px 2px !important;
+		border-radius: 0px;
+		box-shadow: none;
+		display: block;
+		height: inherit;
+		left: auto;
+		opacity: 1;
+		top: auto;
+		width: inherit;
+		z-index: auto;
 }
 
 .equips-wrap>.equips>div.selected {
@@ -179,8 +214,8 @@
 	position: static;
 	width: calc(100% - 4px);
 	height: calc(100% - 4px);
-	background-color: rgb(255, 255, 200);
-	border: 1px solid rgb(190, 50, 33);
+	background-color: rgb(228, 207, 166);
+	border: 1px solid rgb(90, 50, 33);
 	border-radius: 0px;
 	box-sizing: border-box;
 	font-weight: bold;
@@ -190,14 +225,22 @@
 	z-index: 1;
 }
 
+/*红色装备牌颜色显示*/
 .equips-wrap>.equips>.card[data-suit='heart']>.name2,
 .equips-wrap>.equips>.card[data-suit='diamond']>.name2 {
 	color: #8B0000;
 }
 
+/*黑色装备牌颜色显示*/
 .equips-wrap>.equips>.card[data-suit='spade']>.name2,
 .equips-wrap>.equips>.card[data-suit='club']>.name2 {
 	color: #181818;
+}
+
+/*无色装备牌颜色显示*/
+.equips-wrap>.equips>.card[data-suit='none']>.name2 {
+	background-color: black;
+	color: white;
 }
 
 .equips-wrap>.equips>.card.feichu>.name2 {
@@ -206,15 +249,14 @@
 	font-weight: normal;
 }
 
-.equips-wrap>.equips>.card>.image { /*装备图片效果*/
+.equips-wrap>.equips>.card>.image {
+	bottom: auto;
 	display: block;
+	height: 20px;
 	left: 3px;
-	top: 4.5px;
-	bottom: 3px;
-	width: 17px;
-	height: 17px;
 	position: absolute;
 	visibility: visible !important;
+	width: 20px;
 	z-index: 2;
 }
 

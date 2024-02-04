@@ -2,7 +2,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
   var plugin = {
     name: 'character',
     filter: function () {
-      return !['chess', 'tafang'].contains(get.mode());
+      return !['chess', 'tafang'].includes(get.mode());
     },
     content: function (next) {
     },
@@ -217,7 +217,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
           var allShown = (player.isUnderControl() || (!game.observe && game.me && game.me.hasSkillTag('viewHandcard', null, player, true)));
           var shownHs = player.getShownCards();
           if (shownHs.length) {
-            ui.create.div('.xcaption', (player.getCards('h').some(card => !shownHs.contains(card)) ? '明置的手牌' : '手牌区域'), rightPane.firstChild);
+            ui.create.div('.xcaption', (player.getCards('h').some(card => !shownHs.includes(card)) ? '明置的手牌' : '手牌区域'), rightPane.firstChild);
             shownHs.forEach(function (item) {
               var card = game.createCard(get.name(item, false), get.suit(item, false), get.number(item, false), get.nature(item, false));
               card.style.zoom = '0.6';
@@ -255,35 +255,35 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
                 if (player.forbiddenSkills[name].length) ui.create.div('.xskill', '<div data-color>' + '<span style="opacity:0.5">' + '【' + lib.translate[name] + '】' + '</span>' + '</div>' + '<div>' + '<span style="opacity:0.5">' + '（与' + get.translation(player.forbiddenSkills[name]) + '冲突）' + get.skillInfoTranslation(name, player) + '</span>' + '</div>', rightPane.firstChild);
                 else ui.create.div('.xskill', '<div data-color>' + '<span style="opacity:0.5">' + '【' + lib.translate[name] + '】' + '</span>' + '</div>' + '<div>' + '<span style="opacity:0.5">' + '（双将禁用）' + get.skillInfoTranslation(name, player) + '</span>' + '</div>', rightPane.firstChild);
               }
-              else if (player.hiddenSkills.contains(name)) {
+              else if (player.hiddenSkills.includes(name)) {
                 if (lib.skill[name].preHidden && get.mode() == 'guozhan') {
                   var id = name + '_idx';
                   id = ui.create.div('.xskill', '<div data-color>' + '<span style="opacity:0.5">' + '【' + lib.translate[name] + '】' + '</span>' + '</div>' + '<div>' + '<span style="opacity:0.5">' + get.skillInfoTranslation(name, player) + '</span>' + '<br><div class="underlinenode on gray" style="position:relative;padding-left:0;padding-top:7px">预亮技能</div>' + '</div>', rightPane.firstChild);
                   var underlinenode = id.querySelector('.underlinenode');
-                  if (_status.prehidden_skills.contains(name)) underlinenode.classList.remove('on');
+                  if (_status.prehidden_skills.includes(name)) underlinenode.classList.remove('on');
                   underlinenode.link = name;
                   underlinenode.listen(ui.click.hiddenskill);
                 }
                 else ui.create.div('.xskill', '<div data-color>' + '<span style="opacity:0.5">' + '【' + lib.translate[name] + '】' + '</span>' + '</div>' + '<div>' + '<span style="opacity:0.5">' + get.skillInfoTranslation(name, player) + '</span>' + '</div>', rightPane.firstChild);
               }
-              else if (!player.getSkills().contains(name) || player.awakenedSkills.contains(name)) ui.create.div('.xskill', '<div data-color>' + '<span style="opacity:0.5">' + '【' + lib.translate[name] + '】' + '</span>' + '</div>' + '<div>' + '<span style="opacity:0.5">' + get.skillInfoTranslation(name, player) + '</span>' + '</div>', rightPane.firstChild);
+              else if (!player.getSkills().includes(name) || player.awakenedSkills.includes(name)) ui.create.div('.xskill', '<div data-color>' + '<span style="opacity:0.5">' + '【' + lib.translate[name] + '】' + '</span>' + '</div>' + '<div>' + '<span style="opacity:0.5">' + get.skillInfoTranslation(name, player) + '</span>' + '</div>', rightPane.firstChild);
               else if (lib.skill[name].frequent || lib.skill[name].subfrequent) {
                 var id = name + '_id';
                 id = ui.create.div('.xskill', '<div data-color>' + '【' + lib.translate[name] + '】' + '</div>' + '<div>' + get.skillInfoTranslation(name, player) + '<br><div class="underlinenode on gray" style="position:relative;padding-left:0;padding-top:7px">自动发动</div>' + '</div>', rightPane.firstChild);
                 var underlinenode = id.querySelector('.underlinenode');
                 if (lib.skill[name].frequent) {
-                  if (lib.config.autoskilllist.contains(name)) {
+                  if (lib.config.autoskilllist.includes(name)) {
                     underlinenode.classList.remove('on');
                   }
                 }
                 if (lib.skill[name].subfrequent) {
                   for (var j = 0; j < lib.skill[name].subfrequent.length; j++) {
-                    if (lib.config.autoskilllist.contains(name + '_' + lib.skill[name].subfrequent[j])) {
+                    if (lib.config.autoskilllist.includes(name + '_' + lib.skill[name].subfrequent[j])) {
                       underlinenode.classList.remove('on');
                     }
                   }
                 }
-                if (lib.config.autoskilllist.contains(name)) underlinenode.classList.remove('on');
+                if (lib.config.autoskilllist.includes(name)) underlinenode.classList.remove('on');
                 underlinenode.link = name;
                 underlinenode.listen(ui.click.autoskill2);
               }

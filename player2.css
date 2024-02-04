@@ -24,9 +24,9 @@
 .hujia{
 top:auto;
 /*上下*/
-bottom:20%;
+bottom:-5%;
 /*左右*/
-left:-5px;
+left:-4px;
 /*指向护甲图片放的位置*/
 background-image: url("image/decoration/shield.png");
 background-size: 100% 100%;
@@ -527,6 +527,10 @@ z-index:100;
 	border-image-source: url('image/decoration/border_hp4.png');
 }
 */
+
+.player[data-max-hp='hujia']>.hp-wrap {
+	height: 78px;
+}
 
 .player>.hp-wrap>.hp,
 #arena.slim_player .player .hp,

@@ -423,9 +423,13 @@
 	height: 65px;
 }
 
+.player[data-max-hp='hujia']>.hp-wrap {
+	height: 78px;
+}
+
 .hujia{
 top:auto;
-bottom:65%;
+bottom:48%;
 /*上下*/
 left:-8.75px;
 /*左右*/
@@ -439,9 +443,9 @@ width:30px;
 text-align: center;
 color:white;
 text-shadow: 0 0 1.5px #ffded4, 0 0 1.5px #ffded4 ,0 0 1.5px #ffded4,0 0 1.5px #ffded4!important;
-font-size:13.5px;
+font-size:12px;
 font-weight:900;
-line-height: 60px;
+line-height: 54px;
 height:65px;
 /*图片高*/
 position:absolute;

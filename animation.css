@@ -7,6 +7,15 @@
 	}
 }
 
+@keyframes left-to-right-out {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+		transform: translateX(100%);
+	}
+}
 
 @keyframes open {
 	from {

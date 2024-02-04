@@ -2,7 +2,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 	var plugin = {
 		name: 'skill',
 		filter: function () {
-			return !['chess', 'tafang'].contains(get.mode());
+			return !['chess', 'tafang'].includes(get.mode());
 		},
 		content: function (next) {
 		},
@@ -79,9 +79,9 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 						if (!info) return;
 						if (info.zhuSkill && !player.hasZhuSkill(skill)) return;
 						if (info.zhuanhuanji || info.limited || (info.intro && info.intro.content === 'limited')) {
-							xiandingji[skill] = player.awakenedSkills.contains(skill);
+							xiandingji[skill] = player.awakenedSkills.includes(skill);
 						}
-						if (info.juexingji || info.dutySkill) juexingji[skill] = player.awakenedSkills.contains(skill);
+						if (info.juexingji || info.dutySkill) juexingji[skill] = player.awakenedSkills.includes(skill);
 					});
 					plugin.updateSkillMarks(player, xiandingji, juexingji);
 				},
@@ -173,7 +173,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 					}
 					if (!item.info) return;
 					if (!item.translation) return;
-					if (eSkills && eSkills.contains(item.id)) return;
+					if (eSkills && eSkills.includes(item.id)) return;
 					node = ui.create.div('.skillitem', self.node.trigger, item.name);
 					node.dataset.id = item.id;
 				});
@@ -187,7 +187,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 
 				Array.from(this.node.enable.childNodes).forEach(function (item) {
 
-					if (skills.contains(item.dataset.id)) {
+					if (skills.includes(item.dataset.id)) {
 						item.classList.add('usable');
 
 					} else {
