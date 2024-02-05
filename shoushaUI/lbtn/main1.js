@@ -99,10 +99,10 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 
   lib.arenaReady.push(function () {
     //更新轮次
-    var originUpdateRoundNumber=game.updateRoundNumber;
-    game.updateRoundNumber=function(){
-      originUpdateRoundNumber.apply(this,arguments);
-      if(ui.cardRoundTime) ui.cardRoundTime.updateRoundCard();
+    var originUpdateRoundNumber = game.updateRoundNumber;
+    game.updateRoundNumber = function () {
+      originUpdateRoundNumber.apply(this, arguments);
+      if (ui.cardRoundTime) ui.cardRoundTime.updateRoundCard();
     };
     /*聊天按钮模块*/
     if (lib.config.extension_十周年UI_LTAN == false) {
@@ -699,34 +699,34 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
         };
 
         ui.time4 = node.node.time;
-        ui.time4.starttime=get.utc();
+        ui.time4.starttime = get.utc();
         ui.time4.interval = setInterval(function () {
-          var num=Math.round((get.utc()-ui.time4.starttime)/1000);
-          if(num>=3600){
-            var num1=Math.floor(num/3600);
-            var num2=Math.floor((num-num1*3600)/60);
-            var num3=num-num1*3600-parseInt(num2)*60;
-            if(num1<10){
-              num1='0'+num1.toString();
+          var num = Math.round((get.utc() - ui.time4.starttime) / 1000);
+          if (num >= 3600) {
+            var num1 = Math.floor(num / 3600);
+            var num2 = Math.floor((num - num1 * 3600) / 60);
+            var num3 = num - num1 * 3600 - parseInt(num2) * 60;
+            if (num1 < 10) {
+              num1 = '0' + num1.toString();
             }
-            if(num2<10){
-              num2='0'+num2.toString();
+            if (num2 < 10) {
+              num2 = '0' + num2.toString();
             }
-            if(num3<10){
-              num3='0'+num3.toString();
+            if (num3 < 10) {
+              num3 = '0' + num3.toString();
             }
-            ui.time4.innerHTML='<span>'+num1+':'+num2+':'+num3+'</span>';
+            ui.time4.innerHTML = '<span>' + num1 + ':' + num2 + ':' + num3 + '</span>';
           }
-          else{
-            var num1=Math.floor(num/60);
-            var num2=num-num1*60;
-            if(num1<10){
-              num1='0'+num1.toString();
+          else {
+            var num1 = Math.floor(num / 60);
+            var num2 = num - num1 * 60;
+            if (num1 < 10) {
+              num1 = '0' + num1.toString();
             }
-            if(num2<10){
-              num2='0'+num2.toString();
+            if (num2 < 10) {
+              num2 = '0' + num2.toString();
             }
-            ui.time4.innerHTML='<span>'+num1+':'+num2+'</span>';
+            ui.time4.innerHTML = '<span>' + num1 + ':' + num2 + '</span>';
           }
         }, 1000);
         game.addVideo('createCardRoundTime');
@@ -831,7 +831,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
               type: '点数',
             }
 
-          if (ui.cardPile.includes(card.link)) {
+          if (ui.cardPile.contains(card.link)) {
             cardStatistics[card.translate].num++;
             cardStatistics[get.translation(card.suit)].num++;
             cardStatistics[card.number].num++;
@@ -854,7 +854,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
                 num: 0,
                 type: card.type,
               }
-            if (ui.cardPile.includes(card.link)) {
+            if (ui.cardPile.contains(card.link)) {
               cardStatistics[card.nature + card.translate].num++;
             }
           }
