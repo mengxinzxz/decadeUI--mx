@@ -4829,7 +4829,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										var cardnature = get.nature(cards[i]);
 										var cardsuit = get.suit(cards[i]);
 										var cardnumber = get.number(cards[i]);
-										if (cards[i].name != cardname || !get.is.sameNature(get.nature(cards[i]), cards[i].nature)/* || cards[i].suit != cardsuit || cards[i].number != cardnumber*/) {
+										if (cards[i].name != cardname || !get.is.sameNature(get.nature(cards[i]), cards[i].nature)) {
 											if (lib.config.extension_十周年UI_showTemp) {
 												if (!cards[i]._tempName) cards[i]._tempName = ui.create.div('.temp-name', cards[i]);
 												var tempname = '';
@@ -8436,19 +8436,27 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							var cardname = event.card.name;
 							var cardnature = event.card.nature;
 							if ((lib.config.cardtempname != 'off') && ((card.name != cardname) || (card.nature != cardnature))) {
-								if (!card._tempName) card._tempName = ui.create.div('.temp-name', card);
-
-								var tempname = get.translation(cardname);
-								if (cardnature && !['huogong'].contains(cardname)) {
-									card._tempName.dataset.nature = cardnature;
-									card._tempName.dataset.name = cardname;
-									if (cardname == 'sha') {
-										tempname = get.translation(cardnature) + tempname;
+								if (card.name != cardname || !get.is.sameNature(get.nature(card), card.nature)) {
+									if (lib.config.extension_十周年UI_showTemp) {
+										if (!card._tempName) card._tempName = ui.create.div('.temp-name', card);
+										var tempname = '';
+										var tempname2 = get.translation(cardname);
+										if (cardnature) {
+											card._tempName.dataset.nature = cardnature;
+											if (cardname == 'sha') {
+												tempname2 = get.translation(cardnature) + tempname2;
+											}
+										}
+										tempname += tempname2;
+								
+										card._tempName.innerHTML = tempname;
+										card._tempName.tempname = tempname;
 									}
-								}
-								if (cardname) {
-									card._tempName.dataset.name = cardname;
-									tempname = get.translation(cardname);
+									else {
+										var node = ui.create.cardTempName(event.card, card);
+										var cardtempnameConfig = lib.config.cardtempname;
+										if (cardtempnameConfig !== 'default') node.classList.remove('vertical');
+									}
 								}
 							}
 
@@ -13830,6 +13838,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'修复dialog.css某个属性拼写错误bug',
 					'修复文件内未声明即使用的变量导致的bug',
 					'tryAddPlayerCardUseTag添加更多适配情况',
+					'添加使用/打出后的转化牌显示',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>') + '</p>';
 			})(),
