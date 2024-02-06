@@ -937,8 +937,19 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									cards = [cards];
 								}
 								else {
-									return;
+									var evt = _status.event;
+									if (evt && evt.card && evt.cards === cards) {
+										var card = ui.create.card().init([
+											evt.card.suit,
+											evt.card.number,
+											evt.card.name,
+											evt.card.nature,
+										]);
+										if (evt.card.suit == 'none') card.node.suitnum.style.display = 'none';
+										cards = [card];
+									}
 								}
+
 							}
 
 							var card;
@@ -2051,11 +2062,22 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 								if (cards2.length) {
 									var next2 = game.cardsGotoOrdering(cards2);
-									if (event.noOrdering)
-										next2.noOrdering = true;
-
-									player.$throw(cards2);
+									if (event.noOrdering) next2.noOrdering = true;
 								}
+								else{
+									var evt = _status.event;
+									if (evt && evt.card && evt.cards === cards) {
+										var card = ui.create.card().init([
+											evt.card.suit,
+											evt.card.number,
+											evt.card.name,
+											evt.card.nature,
+										]);
+										if (evt.card.suit == 'none') card.node.suitnum.style.display = 'none';
+										cards2 = [card];
+									}
+								}
+								player.$throw(cards2);
 							}
 							event.trigger('respond');
 							"step 1"
@@ -13838,7 +13860,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'修复dialog.css某个属性拼写错误bug',
 					'修复文件内未声明即使用的变量导致的bug',
 					'tryAddPlayerCardUseTag添加更多适配情况',
-					'添加使用/打出后的转化牌显示',
+					'添加使用/打出后的转化牌和虚拟牌显示',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>') + '</p>';
 			})(),
