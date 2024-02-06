@@ -992,36 +992,29 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 							if (duiMod && cards.length > 2) {
 								cards.sort(function (a, b) {
-									if (a.tx == undefined && b.tx == undefined)
-										return 0;
+									if (a.tx == undefined && b.tx == undefined) return 0;
 
-									if (a.tx == undefined)
-										return duicfg.rightLayout ? -1 : 1;
+									if (a.tx == undefined) return duicfg.rightLayout ? -1 : 1;
 
-									if (b.tx == undefined)
-										return duicfg.rightLayout ? 1 : -1;
+									if (b.tx == undefined) return duicfg.rightLayout ? 1 : -1;
 
 									return b.tx - a.tx;
 								});
 							}
 
-							for (var i = 0; i < cards.length; i++)
-								player.$throwordered2(cards[i], nosource);
+							for (var i = 0; i < cards.length; i++) player.$throwordered2(cards[i], nosource);
 
-							if (game.chess)
-								this.chessFocus();
+							if (game.chess) this.chessFocus();
 
 							return cards[cards.length - 1];
 						};
 						Player.$throwordered2 = function (card, nosource) {
-							if (_status.connectMode)
-								ui.todiscard = [];
+							if (_status.connectMode) ui.todiscard = [];
 
 							if (card.throwordered == undefined) {
 								var x, y;
 								var bounds = dui.boundsCaches.arena;
-								if (!bounds.updated)
-									bounds.update();
+								if (!bounds.updated) bounds.update();
 
 								this.checkBoundsCache();
 								if (nosource) {
@@ -1046,8 +1039,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								card.throwordered = undefined;
 							}
 
-							if (card.fixed)
-								return ui.arena.appendChild(card);
+							if (card.fixed) return ui.arena.appendChild(card);
 
 							var before;
 							for (var i = 0; i < ui.thrown; i++) {
@@ -1058,15 +1050,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							}
 
 							var tagNode = card.querySelector('.used-info');
-							if (tagNode == null)
-								tagNode = card.appendChild(dui.element.create('used-info'));
+							if (tagNode == null) tagNode = card.appendChild(dui.element.create('used-info'));
 
 							card.$usedtag = tagNode;
 							ui.thrown.unshift(card);
-							if (before)
-								ui.arena.insertBefore(before, card);
-							else
-								ui.arena.appendChild(card);
+							if (before) ui.arena.insertBefore(before, card);
+							else ui.arena.appendChild(card);
 
 							dui.tryAddPlayerCardUseTag(card, this, _status.event);
 							dui.queueNextFrameTick(dui.layoutDiscard, dui);
@@ -1102,8 +1091,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								_status.dying.remove(player);
 								game.broadcast(function (list) {
 									_status.dying = list;
-								},
-									_status.dying);
+								}, _status.dying);
 								var evt = event.getParent('_save');
 								if (evt && evt.finish) evt.finish();
 								evt = event.getParent('dying');
@@ -2065,7 +2053,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									if (event.noOrdering) next2.noOrdering = true;
 								}
 							}
-							else{
+							else {
 								var evt = _status.event;
 								if (evt && evt.card && evt.cards === cards) {
 									var card = ui.create.card().init([
@@ -8426,13 +8414,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					var noname;
 					var tagText = '';
 					var tagNode = card.querySelector('.used-info');
-					if (tagNode == null)
-						tagNode = card.appendChild(dui.element.create('used-info'));
+					if (tagNode == null) tagNode = card.appendChild(dui.element.create('used-info'));
 
 					card.$usedtag = tagNode;
 					var blameEvent;
-					if (event.blameEvent)
-						event = event.blameEvent;
+					if (event.blameEvent) event = event.blameEvent;
 
 					switch (event.name.toLowerCase()) {
 						case 'choosetocomparemultiple':
@@ -8443,17 +8429,14 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							break;
 						case 'usecard':
 							if (event.targets.length == 1) {
-								if (event.targets[0] == event.player)
-									tagText = '对自己';
-								else
-									tagText = '对' + get.translation(event.targets[0]);
+								if (event.targets[0] == event.player) tagText = '对自己';
+								else tagText = '对' + get.translation(event.targets[0]);
 							}
 							else {
 								tagText = '使用';
 							}
 						case 'respond':
-							if (tagText == '')
-								tagText = '打出';
+							if (tagText == '') tagText = '打出';
 
 							var cardname = event.card.name;
 							var cardnature = event.card.nature;
@@ -8470,7 +8453,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 											}
 										}
 										tempname += tempname2;
-								
+
 										card._tempName.innerHTML = tempname;
 										card._tempName.tempname = tempname;
 									}
@@ -8482,7 +8465,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								}
 							}
 
-							if (duicfg.cardUseEffect && event.card && (!event.card.cards || event.card.cards.length == 1)) {
+							if (duicfg.cardUseEffect && event.card && (!event.card.cards || !event.card.cards.length || event.card.cards.length == 1)) {
 								var name = event.card.name;
 								var nature = event.card.nature;
 
@@ -8577,28 +8560,25 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							var skillEvent = event.parent.parent.parent;
 							if (skillEvent) {
 								tagText = lib.translate[skillEvent.name != 'useSkill' ? skillEvent.name : skillEvent.skill];
-								if (!tagText)
-									tagText = '';
+								if (!tagText) tagText = '';
 								tagText += '弃置';
 							}
 							else tagText = '弃置';
 						case 'loseasync':
+							noname = true;
 							var skillEvent = event.parent.parent.parent;
-							if (skillEvent) {
-								tagText = lib.translate[skillEvent.name != 'useSkill' ? skillEvent.name : skillEvent.skill];
-								if (!tagText)
-									tagText = '';
-								tagText += '弃置';
+							tagText += get.translation(player);
+							if (skillEvent && lib.translate[skillEvent.name != 'useSkill' ? skillEvent.name : skillEvent.skill]) {
+								tagText += lib.translate[skillEvent.name != 'useSkill' ? skillEvent.name : skillEvent.skill];
 							}
-							else tagText = '弃置';
+							tagText += '弃置';
 							break;
 						case 'lose':
 							if (event.parent && event.parent.name == 'discard') {
 								var skillEvent = event.parent.parent.parent;
 								if (skillEvent) {
 									tagText = lib.translate[skillEvent.name != 'useSkill' ? skillEvent.name : skillEvent.skill];
-									if (!tagText)
-										tagText = '';
+									if (!tagText) tagText = '';
 									tagText += '弃置';
 								}
 								else tagText = '弃置';
@@ -8608,8 +8588,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								var skillEvent = event.parent.parent.parent;
 								if (skillEvent) {
 									tagText = lib.translate[skillEvent.name != 'useSkill' ? skillEvent.name : skillEvent.skill];
-									if (!tagText || tagText == '重铸')
-										tagText = '';
+									if (!tagText || tagText == '重铸') tagText = '';
 									tagText += '重铸';
 								}
 								else tagText = '重铸';
@@ -8688,8 +8667,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							break;
 						default:
 							tagText = get.translation(event.name);
-							if (tagText == event.name)
-								tagText = '';
+							if (tagText == event.name) tagText = '';
 							break;
 					}
 
