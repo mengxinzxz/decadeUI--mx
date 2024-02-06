@@ -2064,21 +2064,21 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									var next2 = game.cardsGotoOrdering(cards2);
 									if (event.noOrdering) next2.noOrdering = true;
 								}
-								else{
-									var evt = _status.event;
-									if (evt && evt.card && evt.cards === cards) {
-										var card = ui.create.card().init([
-											evt.card.suit,
-											evt.card.number,
-											evt.card.name,
-											evt.card.nature,
-										]);
-										if (evt.card.suit == 'none') card.node.suitnum.style.display = 'none';
-										cards2 = [card];
-									}
-								}
-								player.$throw(cards2);
 							}
+							else{
+								var evt = _status.event;
+								if (evt && evt.card && evt.cards === cards) {
+									var card = ui.create.card().init([
+										evt.card.suit,
+										evt.card.number,
+										evt.card.name,
+										evt.card.nature,
+									]);
+									if (evt.card.suit == 'none') card.node.suitnum.style.display = 'none';
+									cards2 = [card];
+								}
+							}
+							player.$throw(cards2);
 							event.trigger('respond');
 							"step 1"
 							game.delayx(0.5);
