@@ -4829,7 +4829,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										var cardnature = get.nature(cards[i]);
 										var cardsuit = get.suit(cards[i]);
 										var cardnumber = get.number(cards[i]);
-										if (cards[i].name != cardname || !get.is.sameNature(get.nature(cards[i]), cards[i].nature) || cards[i].suit != cardsuit || cards[i].number != cardnumber) {
+										if (cards[i].name != cardname || !get.is.sameNature(get.nature(cards[i]), cards[i].nature)/* || cards[i].suit != cardsuit || cards[i].number != cardnumber*/) {
 											if (lib.config.extension_十周年UI_showTemp) {
 												if (!cards[i]._tempName) cards[i]._tempName = ui.create.div('.temp-name', cards[i]);
 												var tempname = '';
