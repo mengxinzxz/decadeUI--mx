@@ -7806,20 +7806,18 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								sheet = sheetList[j];
 							}
 
-							if (sheet && sheet.cssRules) {
-								for (var i = 0; i < sheet.cssRules.length; i++) {
-									if (!(sheet.cssRules[i] instanceof CSSMediaRule)) {
-										if (sheet.cssRules[i].selectorText == selector) {
-											this.cachedSheet[selector] = sheet.cssRules[i].style;
-											return sheet.cssRules[i].style;
-										}
+							for (var i = 0; i < sheet.cssRules.length; i++) {
+								if (!(sheet.cssRules[i] instanceof CSSMediaRule)) {
+									if (sheet.cssRules[i].selectorText == selector) {
+										this.cachedSheet[selector] = sheet.cssRules[i].style;
+										return sheet.cssRules[i].style;
 									}
-									else {
-										var rules = sheet.cssRules[i].cssRules;
-										for (var j = 0; j < rules.length; j++) {
-											if (rules[j].selectorText == selector) {
-												return rules[j].style;
-											}
+								}
+								else {
+									var rules = sheet.cssRules[i].cssRules;
+									for (var j = 0; j < rules.length; j++) {
+										if (rules[j].selectorText == selector) {
+											return rules[j].style;
 										}
 									}
 								}
@@ -8401,14 +8399,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				},
 
 				tryAddPlayerCardUseTag: function (card, player, event) {
-					if (!card)
-						return;
-
-					if (!player)
-						return;
-
-					if (!event)
-						return;
+					if (!card || !player || !event) return;
 
 					var noname;
 					var tagText = '';
@@ -8422,9 +8413,15 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						event = event.blameEvent;
 
 					switch (event.name.toLowerCase()) {
+						case 'choosetocomparemultiple':
+							tagText = '拼点置入';
+							break;
+						case 'choosetocompare':
+							tagText = '拼点置入';
+							break;
 						case 'usecard':
 							if (event.targets.length == 1) {
-								if (event.targets[0] == player)
+								if (event.targets[0] == event.player)
 									tagText = '对自己';
 								else
 									tagText = '对' + get.translation(event.targets[0]);
@@ -8442,7 +8439,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								if (!card._tempName) card._tempName = ui.create.div('.temp-name', card);
 
 								var tempname = get.translation(cardname);
-								if (cardnature && !['huogong'].includes(cardname)) {
+								if (cardnature && !['huogong'].contains(cardname)) {
 									card._tempName.dataset.nature = cardnature;
 									card._tempName.dataset.name = cardname;
 									if (cardname == 'sha') {
@@ -8502,18 +8499,21 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									case 'wuxie':
 										decadeUI.animation.cap.playSpineTo(card, 'effect_wuxiekeji', { y: [10, 0.5], scale: 0.9 });
 										break;
-									// case 'nanman':
-									// decadeUI.animation.cap.playSpineTo(card, 'effect_nanmanruqin', { scale: 0.45 });
-									// break;
+									case 'juedou':
+										decadeUI.animation.cap.playSpineTo(card, 'SF_eff_jiangling_juedou', { x: [10, 0.4], scale: 1 });
+										break;
+									case 'nanman':
+										decadeUI.animation.cap.playSpineTo(card, 'effect_nanmanruqin', { scale: 0.45 });
+										break;
 									case 'wanjian':
 										decadeUI.animation.cap.playSpineTo(card, 'effect_wanjianqifa', { scale: 0.78 });
 										break;
 									case 'wugu':
 										decadeUI.animation.cap.playSpineTo(card, 'effect_wugufengdeng', { y: [10, 0.5] });
 										break;
-									// case 'taoyuan':
-									// decadeUI.animation.cap.playSpineTo(card, 'effect_taoyuanjieyi', { y:[10, 0.5] });
-									// break;
+									case 'taoyuan':
+										decadeUI.animation.cap.playSpineTo(card, 'SF_kapai_eff_taoyuanjieyi', { y: [10, 0.5] });
+										break;
 									case 'shunshou':
 										decadeUI.animation.cap.playSpineTo(card, 'effect_shunshouqianyang');
 										break;
@@ -8536,29 +8536,56 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							}
 							break;
 						case 'useskill':
-							tagText = '发动';
+							tagText = '发动' + get.skillTranslation(event.skill, event.player);
 							break;
 						case 'die':
 							tagText = '弃置';
 							card.classList.add('invalided');
 							dui.layout.delayClear();
 							break;
+						case 'discardmultiple':
+							var skillEvent = event.parent.parent.parent;
+							if (skillEvent) {
+								tagText = lib.translate[skillEvent.name != 'useSkill' ? skillEvent.name : skillEvent.skill];
+								if (!tagText)
+									tagText = '';
+								tagText += '弃置';
+							}
+							else tagText = '弃置';
+						case 'loseasync':
+							var skillEvent = event.parent.parent.parent;
+							if (skillEvent) {
+								tagText = lib.translate[skillEvent.name != 'useSkill' ? skillEvent.name : skillEvent.skill];
+								if (!tagText)
+									tagText = '';
+								tagText += '弃置';
+							}
+							else tagText = '弃置';
+							break;
 						case 'lose':
-							if (event.parent && event.parent.name == 'discard' && event.parent.parent) {
+							if (event.parent && event.parent.name == 'discard') {
 								var skillEvent = event.parent.parent.parent;
 								if (skillEvent) {
 									tagText = lib.translate[skillEvent.name != 'useSkill' ? skillEvent.name : skillEvent.skill];
 									if (!tagText)
 										tagText = '';
-
 									tagText += '弃置';
-									break;
 								}
+								else tagText = '弃置';
+
 							}
-						case 'discard':
-							tagText = '弃置';
+							else {
+								var skillEvent = event.parent.parent.parent;
+								if (skillEvent) {
+									tagText = lib.translate[skillEvent.name != 'useSkill' ? skillEvent.name : skillEvent.skill];
+									if (!tagText || tagText == '重铸')
+										tagText = '';
+									tagText += '重铸';
+								}
+								else tagText = '重铸';
+							}
 							break;
-						case 'phaseJudge':
+						case 'phasejudge':
 							tagText = '即将生效';
 							break;
 						case 'judge':
@@ -8636,7 +8663,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							break;
 					}
 
-					tagNode.textContent = (noname ? '' : get.translation(player)) + tagText;
+					tagNode.textContent = (noname ? '' : get.translation(event.player)) + tagText;
 				},
 
 				getRandom: function (min, max) {
@@ -13744,30 +13771,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					"300000": "5min/次",
 				},
 			},
-			/*界面样式*/
-			FL4: {
-				"name": "<img style=width:240px src=" + lib.assetURL + "extension/十周年UI/shoushaUI/line.png>",
-				"intro": "",
-				"init": true,
-				"clear": true,
-			},
-			/*界面样式说明*/
-			JMYSSM: {
-				name: '<div class="shousha_menu">界面样式·查看</div>',
-				clear: true,
-				onclick: function () {
-					if (this.JMYSSM == undefined) {
-						var more = ui.create.div('.JMYSSM', '<div class="shousha_text"><li><b>样式选择</b>:分为手杀样式和十周年样式<li><b>手杀布局</b>：点击左上角的小问号可以查看玩家当前身份提示。身份提示，做了多模式的完善。点击牌序可以切换[自动牌序]or[手动牌序]，左下角的菜篮子现在可以点砸蛋送花了。<li><b>十周年布局</b>:在此布局下点击小配件，可以选择切换左下角的素材样式（重启后生效）。点击右上角小问号可以查看玩家当前身份提示<li><b>开关美化</b>:开启后重启，将用美化素材替换掉游戏菜单的所有开关。</div>');
-						this.parentNode.insertBefore(more, this.nextSibling);
-						this.JMYSSM = more;
-						this.innerHTML = '<div class="shousha_menu">界面样式·关闭</div>';
-					} else {
-						this.parentNode.removeChild(this.JMYSSM);
-						delete this.JMYSSM;
-						this.innerHTML = '<div class="shousha_menu">界面样式·查看</div>';
-					};
-				}
-			},
 			XPJ: {
 				name: "小配件（十周年）",
 				init: "on",
@@ -13793,7 +13796,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				},
 			},
 			//手杀UI
-			FL6: {
+			FLInfinity: {
 				"name": "<img style=width:240px src=" + lib.assetURL + "extension/十周年UI/shoushaUI/line.png>",
 				"intro": "",
 				"init": true,
@@ -13826,6 +13829,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'<a href="https://github.com/mengxinzxz/decadeUI--mx.git">点击前往萌修十周年Github仓库</a>',
 					'修复dialog.css某个属性拼写错误bug',
 					'修复文件内未声明即使用的变量导致的bug',
+					'tryAddPlayerCardUseTag添加更多适配情况',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>') + '</p>';
 			})(),
