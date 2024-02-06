@@ -13839,6 +13839,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'修复文件内未声明即使用的变量导致的bug',
 					'tryAddPlayerCardUseTag添加更多适配情况',
 					'添加使用/打出后的转化牌和虚拟牌显示',
+					'挑战模式boss名称方向显示修复',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>') + '</p>';
 			})(),

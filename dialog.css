@@ -15,7 +15,16 @@
 	color: rgb(255, 255, 150);
 }
 
+/*boss显示*/
+#bosslist>.player>.identity{
+	height: 100%;
+	position: absolute;
+	z-index: 9999;
+}
 
+#bosslist>.player>.identity>div{
+	text-align: left;
+}
 
 /*-----------------分割线-----------------*/
 /*选项光标*/
