@@ -162,17 +162,17 @@
     animation: moveout-left-li-big 0.8s linear forwards;
 }
 
-.effect-window>.skill-name {
+.skill-name {
 	display: block;
 	position: absolute;
 	left: 50%;
 	top: calc(50% + 150px + 15px);
 	color: rgb(215, 234, 67);
-	font-size: 60px;
+	font-size: 55px;
 	font-family: xingkai;
 	text-shadow: 0 0 5px rgb(77, 60, 51), 0 0 4px rgb(77, 60, 51);
 	transform: translateX(-50%);
-	z-index: 99;
+	z-index: 99!important;
 	animation: scale-skill-name 2.18s linear forwards;
 }
 

@@ -242,13 +242,12 @@ decadeModule.import(function(lib, game, ui, get, ai, _status){
 					
 					var size = skeleton.bounds.size;
 					sprite.scale = Math.max(animation.canvas.width / size.x, animation.canvas.height / size.y);
-
-					var effect = decadeUI.element.create('effect-window');
-					effect.view.skillName = decadeUI.element.create('skill-name', effect); // 限定/觉醒特效技能文本显示，如需取消，将 'skill-name' 改为 null
-					effect.view.skillName.innerHTML = skillName;
-					effect.view.skillName.style.top = 'calc(50% + ' + 165 * sprite.scale + 'px)';
+					
+					var effect = decadeUI.element.create('skill-name'); // 限定/觉醒特效技能文本显示，如需取消，将 'skill-name' 改为 null
+					effect.innerHTML = skillName;
+					effect.style.top = 'calc(50% + ' + 165 * sprite.scale + 'px)';
 			
-					animation.canvas.parentNode.insertBefore(effect, animation.canvas.nextSibling);
+					ui.arena.appendChild(effect);
 					effect.removeSelf(2180);
 				};
 				
