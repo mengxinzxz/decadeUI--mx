@@ -1,4 +1,5 @@
-import { ChildNodesWatcher } from '../../noname/library/cache/childNodesWatcher.js';
+import { ChildNodesWatcher } from '../../noname/library/cache/childNodesWatcher.js'
+import {nonameInitialized} from '../../noname/util/index.js'
 game.import("extension", function (lib, game, ui, get, ai, _status) {
 	return {
 		name: "十周年UI",
@@ -9260,7 +9261,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							});
 						}
 						else if (window.resolveLocalFileSystemURL) {
-							resolveLocalFileSystemURL(decadeUIPath + 'image/card/', function (entry) {
+							resolveLocalFileSystemURL(decadeUIResolvePath + 'image/card/', function (entry) {
 								var reader = entry.createReader();
 								reader.readEntries(function (entries) {
 									readFiles(entries, true);
@@ -11558,6 +11559,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			if (get.mode() == 'chess' || get.mode() == 'tafang') return;
 			window.decadeUIName = '十周年UI';
 			window.decadeUIPath = lib.assetURL + 'extension/' + decadeUIName + '/';
+			window.decadeUIResolvePath = nonameInitialized + 'extension/' + decadeUIName + '/';
 			if (lib.config['extension_' + decadeUIName + '_eruda']) {
 				var script = document.createElement('script');
 				script.src = decadeUIPath + 'eruda.js';
