@@ -13835,21 +13835,17 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			},
 			intro: (function () {
 				var log = [
-					'魔改十周年 萌修 0.2.4',
+					'魔改十周年 萌修 0.2.5',
 					'<a href="https://github.com/mengxinzxz/decadeUI--mx.git">点击前往萌修十周年Github仓库</a>',
-					'修复dialog.css某个属性拼写错误bug',
-					'修复文件内未声明即使用的变量导致的bug',
-					'tryAddPlayerCardUseTag添加更多适配情况',
-					'添加使用/打出后的转化牌和虚拟牌显示',
-					'挑战模式boss名称方向显示修复',
-					'修复skillAnimation特效文字被遮挡的bug',
+					'修复https协议兼容问题',
+					'修复手杀样式下资料页观看队友手牌报错bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>') + '</p>';
 			})(),
 			author: "萌新（转型中）<br>十周年UI原作者：短歌<br>手杀UI原名：界面美化<br>手杀UI原作者：橙续缘",
 			diskURL: "",
 			forumURL: "",
-			version: "0.2.4",
+			version: "0.2.5",
 		},
 		files: {
 			"character": [],

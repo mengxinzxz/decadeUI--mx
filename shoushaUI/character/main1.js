@@ -237,7 +237,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
             }
           }
           else if (allShown) {
-            var hs = node.getCards('h');
+            var hs = player.getCards('h');
             if (hs.length) {
               ui.create.div('.xcaption', '手牌区域', rightPane.firstChild);
               hs.forEach(function (item) {
