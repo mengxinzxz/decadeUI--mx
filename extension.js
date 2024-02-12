@@ -4838,35 +4838,18 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									if (lib.config.cardtempname != 'off') {
 										var cardname = get.name(cards[i]);
 										var cardnature = get.nature(cards[i]);
-										var cardsuit = get.suit(cards[i]);
-										var cardnumber = get.number(cards[i]);
-										if (cards[i].name != cardname || !get.is.sameNature(get.nature(cards[i]), cards[i].nature)) {
+										if (cards[i].name != cardname || !get.is.sameNature(cardnature, cards[i].nature, true)) {
 											if (lib.config.extension_十周年UI_showTemp) {
 												if (!cards[i]._tempName) cards[i]._tempName = ui.create.div('.temp-name', cards[i]);
 												var tempname = '';
-												if (cards[i].suit != cardsuit) {
-													var suitData = {
-														'heart': "<span style='color:red;text-shadow:black 0 0 3px;'>" + get.translation('heart') + "</span>",
-														'diamond': "<span style='color:red;text-shadow:black 0 0 3px;'>" + get.translation('diamond') + "</span>",
-														'spade': "<span style='color:black;text-shadow:black 0 0 3px;'>" + get.translation('spade') + "</span>",
-														'club': "<span style='color:black;text-shadow:black 0 0 3px;'>" + get.translation('club') + "</span>",
-														'none': "<span style='color:white;text-shadow:black 0 0 3px;'>" + get.translation('none') + "</span>"
-													};
-													tempname += suitData[cardsuit];
-												}
-												if (cards[i].number != cardnumber) {
-													tempname += "<b>" + cardnumber + "</b>";
-												}
-												if ((cards[i].name != cardname) || (cards[i].nature != cardnature)) {
-													var tempname2 = get.translation(cardname);
-													if (cardnature) {
-														cards[i]._tempName.dataset.nature = cardnature;
-														if (cardname == 'sha') {
-															tempname2 = get.translation(cardnature) + tempname2;
-														}
+												var tempname2 = get.translation(cardname);
+												if (cardnature) {
+													cards[i]._tempName.dataset.nature = cardnature;
+													if (cardname == 'sha') {
+														tempname2 = get.translation(cardnature) + tempname2;
 													}
-													tempname += tempname2;
 												}
+												tempname += tempname2;
 
 												cards[i]._tempName.innerHTML = tempname;
 												cards[i]._tempName.tempname = tempname;
@@ -8440,29 +8423,27 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							if (tagText == '') tagText = '打出';
 
 							var cardname = event.card.name;
-							var cardnature = event.card.nature;
-							if ((lib.config.cardtempname != 'off') && ((card.name != cardname) || (card.nature != cardnature))) {
-								if (card.name != cardname || !get.is.sameNature(get.nature(card), card.nature)) {
-									if (lib.config.extension_十周年UI_showTemp) {
-										if (!card._tempName) card._tempName = ui.create.div('.temp-name', card);
-										var tempname = '';
-										var tempname2 = get.translation(cardname);
-										if (cardnature) {
-											card._tempName.dataset.nature = cardnature;
-											if (cardname == 'sha') {
-												tempname2 = get.translation(cardnature) + tempname2;
-											}
+							var cardnature = get.nature(event.card);
+							if ((lib.config.cardtempname != 'off') && ((card.name != cardname) || !get.is.sameNature(cardnature, card.nature, true))) {
+								if (lib.config.extension_十周年UI_showTemp) {
+									if (!card._tempName) card._tempName = ui.create.div('.temp-name', card);
+									var tempname = '';
+									var tempname2 = get.translation(cardname);
+									if (cardnature) {
+										card._tempName.dataset.nature = cardnature;
+										if (cardname == 'sha') {
+											tempname2 = get.translation(cardnature) + tempname2;
 										}
-										tempname += tempname2;
+									}
+									tempname += tempname2;
 
-										card._tempName.innerHTML = tempname;
-										card._tempName.tempname = tempname;
-									}
-									else {
-										var node = ui.create.cardTempName(event.card, card);
-										var cardtempnameConfig = lib.config.cardtempname;
-										if (cardtempnameConfig !== 'default') node.classList.remove('vertical');
-									}
+									card._tempName.innerHTML = tempname;
+									card._tempName.tempname = tempname;
+								}
+								else {
+									var node = ui.create.cardTempName(event.card, card);
+									var cardtempnameConfig = lib.config.cardtempname;
+									if (cardtempnameConfig !== 'default') node.classList.remove('vertical');
 								}
 							}
 
@@ -13419,36 +13400,19 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							}
 							var cardname = get.name(card);
 							var cardnature = get.nature(card);
-							var cardsuit = get.suit(card);
-							var cardnumber = get.number(card);
-							if (card.name != cardname || !get.is.sameNature(get.nature(card), card.nature) || card.suit != cardsuit || card.number != cardnumber) {
+							if (card.name != cardname || !get.is.sameNature(get.nature(card), card.nature, true)) {
 								if (bool) {
 									if (!card._tempName) card._tempName = ui.create.div('.temp-name', card);
 									var tempname = '';
-									if (card.suit != cardsuit) {
-										var suitData = {
-											'heart': "<span style='color:red;text-shadow:black 0 0 3px;'>" + get.translation('heart') + "</span>",
-											'diamond': "<span style='color:red;text-shadow:black 0 0 3px;'>" + get.translation('diamond') + "</span>",
-											'spade': "<span style='color:black;text-shadow:black 0 0 3px;'>" + get.translation('spade') + "</span>",
-											'club': "<span style='color:black;text-shadow:black 0 0 3px;'>" + get.translation('club') + "</span>",
-											'none': "<span style='color:white;text-shadow:black 0 0 3px;'>" + get.translation('none') + "</span>"
-										};
-										tempname += suitData[cardsuit];
-									}
-									if (card.number != cardnumber) {
-										tempname += "<b>" + cardnumber + "</b>";
-									}
-									if ((card.name != cardname) || (card.nature != cardnature)) {
-										var tempname2 = get.translation(cardname);
-										if (cardnature) {
-											card._tempName.dataset.nature = cardnature;
-											if (cardname == 'sha') {
-												tempname2 = get.translation(cardnature) + tempname2;
-											}
+									var tempname2 = get.translation(cardname);
+									if (cardnature) {
+										card._tempName.dataset.nature = cardnature;
+										if (cardname == 'sha') {
+											tempname2 = get.translation(cardnature) + tempname2;
 										}
-										tempname += tempname2;
 									}
-
+									tempname += tempname2;
+									
 									card._tempName.innerHTML = tempname;
 									card._tempName.tempname = tempname;
 								}
