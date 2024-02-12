@@ -13818,6 +13818,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'修复https协议兼容问题',
 					'修复手杀样式下资料页观看队友手牌报错bug',
 					'补充/修正部分tryAddPlayerCardUseTag描述',
+					'修复美化node字符溢出bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>') + '</p>';
 			})(),
