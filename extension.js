@@ -1,5 +1,5 @@
 import { ChildNodesWatcher } from '../../noname/library/cache/childNodesWatcher.js'
-import {nonameInitialized} from '../../noname/util/index.js'
+import { nonameInitialized } from '../../noname/util/index.js'
 game.import("extension", function (lib, game, ui, get, ai, _status) {
 	return {
 		name: "十周年UI",
@@ -8565,6 +8565,14 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								tagText += '弃置';
 							}
 							else tagText = '弃置';
+						case 'choosetoduiben':
+							var skillEvent = event.parent;
+							if (skillEvent) {
+								tagText = lib.translate[skillEvent.name];
+								if (!tagText) tagText = '';
+							}
+							tagText += (event.title || '对策') + '策略';
+							break;
 						case 'loseasync':
 							noname = true;
 							var skillEvent = event.parent.parent.parent;
@@ -8579,21 +8587,26 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								var skillEvent = event.parent.parent.parent;
 								if (skillEvent) {
 									tagText = lib.translate[skillEvent.name != 'useSkill' ? skillEvent.name : skillEvent.skill];
-									if (!tagText) tagText = '';
+									if (!tagText)
+										tagText = '';
 									tagText += '弃置';
 								}
 								else tagText = '弃置';
-
 							}
 							else {
 								var skillEvent = event.parent.parent.parent;
 								if (skillEvent) {
 									tagText = lib.translate[skillEvent.name != 'useSkill' ? skillEvent.name : skillEvent.skill];
-									if (!tagText || tagText == '重铸') tagText = '';
-									tagText += '重铸';
+									if (!tagText || tagText == '重铸')
+										tagText = '';
+									if (event.parent.parent.name != 'recast') tagText += '置入弃牌堆';
+									else tagText += '重铸';
 								}
-								else tagText = '重铸';
+								else tagText = '置入弃牌堆';
 							}
+							break;
+						case 'lose_muniu':
+							tagText = '木牛流马流失';
 							break;
 						case 'phasejudge':
 							tagText = '即将生效';
@@ -8669,6 +8682,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						default:
 							tagText = get.translation(event.name);
 							if (tagText == event.name) tagText = '';
+							else tagText+='效果';
 							break;
 					}
 
@@ -13839,6 +13853,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'<a href="https://github.com/mengxinzxz/decadeUI--mx.git">点击前往萌修十周年Github仓库</a>',
 					'修复https协议兼容问题',
 					'修复手杀样式下资料页观看队友手牌报错bug',
+					'补充/修正部分tryAddPlayerCardUseTag描述',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>') + '</p>';
 			})(),
