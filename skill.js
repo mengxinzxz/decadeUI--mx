@@ -1542,7 +1542,7 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
                     }
                     player.storage.huashen.current2 = skill;
                     if (!player.additionalSkills.huashen || !player.additionalSkills.huashen.contains(skill)) {
-                        player.addAdditionalSkill('huashen', skill);
+                        player.addAdditionalSkills('huashen', skill);
                         player.flashAvatar('huashen', character);
                         game.log(player, '获得了技能', '#g【' + get.translation(skill) + '】');
                         player.popup(skill);
