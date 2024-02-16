@@ -1544,8 +1544,6 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
                     if (!player.additionalSkills.huashen || !player.additionalSkills.huashen.contains(skill)) {
                         player.addAdditionalSkills('huashen', skill);
                         player.flashAvatar('huashen', character);
-                        game.log(player, '获得了技能', '#g【' + get.translation(skill) + '】');
-                        player.popup(skill);
                         player.syncStorage('huashen');
                         player.updateMarks('huashen');
                     }
