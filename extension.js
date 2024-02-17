@@ -13508,8 +13508,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				var log = [
 					'魔改十周年 萌修 0.2.6',
 					'新版适配',
+					'修复十周年UI下左慈【化身】获得失去化身技能非事件化的bug',
+					'修复菜单栏错位bug',
+					'取消对card.init的完全覆写，改为对card.$init的继承性修改',
 				];
-				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>') + '</p>';
+				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
 			author: "萌新（转型中）<br>十周年UI原作者：短歌<br>手杀UI原名：界面美化<br>手杀UI原作者：橙续缘",
 			diskURL: "",
