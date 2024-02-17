@@ -168,6 +168,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						},
 						lib: {
 							element: {
+								card: {
+									$init: lib.element.card.$init,
+								},
 								player: {
 									getState: lib.element.player.getState,
 									setModeState: lib.element.player.setModeState,
@@ -3140,384 +3143,75 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							},
 
 							card: {
-								init: function (card) {
-									if (Array.isArray(card)) {
-										if (card[2] == 'huosha') {
-											card[2] = 'sha';
-											card[3] = ['fire'];
-										}
-										if (card[2] == 'leisha') {
-											card[2] = 'sha';
-											card[3] = ['thunder'];
-										}
-										if (card[2] == 'cisha') {
-											card[2] = 'sha';
-											card[3] = ['stab'];
-										}
-										else if (card[2].length > 3) {
-											let prefix = card[2].slice(0, card[2].lastIndexOf('sha'));
-											if (prefix.length + 3 == card[2].length) {
-												card[2] = 'sha';
-												card[3] = [prefix];
-											}
-										}
-									}
-									else if (typeof card == 'object') {
-										card = [card.suit, card.number, card.name, card.nature];
-									}
-									var cardnum = card[1] || '';
-									var cardsuit = get.translation(card[0]);
-									if (parseInt(cardnum) == cardnum) cardnum = parseInt(cardnum);
-									if ([1, 11, 12, 13].includes(cardnum)) {
-										cardnum = {
-											'1': 'A',
-											'11': 'J',
-											'12': 'Q',
-											'13': 'K'
-										}[cardnum];
-									}
-									if (!lib.card[card[2]]) lib.card[card[2]] = {};
-									var info = lib.card[card[2]];
-									if (info.global && !this.classList.contains('button')) {
-										if (Array.isArray(info.global)) {
-											while (info.global.length) {
-												game.addGlobalSkill(info.global.shift());
-											}
-										}
-										else if (typeof info.global == 'string') {
-											game.addGlobalSkill(info.global);
-										}
-										delete info.global;
-									}
-									if (info.destroy && (typeof info.destroy != 'boolean' && !lib.skill[info.destroy])) {
-										this.destroyed = info.destroy;
-									}
-									if (this.name) {
-										this.classList.remove('epic');
-										this.classList.remove('legend');
-										this.classList.remove('gold');
-										this.classList.remove('unique');
-										this.style.background = '';
-										var subtype = get.subtype(this);
-										if (subtype) {
-											this.classList.remove(subtype);
-										}
-									}
-									if (info.epic) {
-										this.classList.add('epic');
-									}
-									else if (info.legend) {
-										this.classList.add('legend');
-									}
-									else if (info.gold) {
-										this.classList.add('gold');
-									}
-									else if (info.unique) {
-										this.classList.add('unique');
-									}
-									var bg = card[2];
-									if (info.cardimage) {
-										bg = info.cardimage;
-									}
-									var img = lib.card[bg].image;
-									if (img) {
-										if (img.indexOf('db:') == 0) {
-											img = img.slice(3);
-										}
-										else if (img.indexOf('ext:') != 0) {
-											img = null;
-										}
-									}
-									this.classList.remove('fullskin');
-									this.classList.remove('fullimage');
-									this.classList.remove('fullborder');
-									this.dataset.cardName = card[2];
-									this.dataset.cardType = info.type || '';
-									this.dataset.cardSubype = info.subtype || '';
-									this.dataset.cardMultitarget = info.multitarget ? '1' : '0';
-									if (this.node.name.dataset.nature) this.node.name.dataset.nature = '';
-									if (!lib.config.hide_card_image && lib.card[bg].fullskin) {
-										this.classList.add('fullskin');
-										if (img) {
-											if (img.indexOf('ext:') == 0) {
-												this.node.image.setBackgroundImage(img.replace(/ext:/, 'extension/'));
-											}
-											else {
-												this.node.image.setBackgroundDB(img);
-											}
-										}
-										else {
-											if (lib.card[bg].modeimage) {
-												this.node.image.setBackgroundImage('image/mode/' + lib.card[bg].modeimage + '/card/' + bg + '.png');
-											}
-											else {
-												do {
-													let nature = card[3];
-													if (bg == 'sha' && typeof nature == 'string') {
-														let natures = get.natureList(nature), _bg;
-														for (const n of natures) if (lib.natureBg.has(n)) _bg = n;
-														if (_bg) {
-															this.node.image.setBackgroundImage(lib.natureBg.get(_bg));
-															break;
-														}
-													}
-													this.node.image.setBackgroundImage('image/card/' + bg + '.png');
-												}
-												while (0);
-											}
-										}
-									}
-									/*
-									else if(lib.card[bg].image=='background'){
-										if(card[3]) this.node.background.setBackground(bg+'_'+get.natureList(card[3])[0],'card');
-										else this.node.background.setBackground(bg,'card');
-									}
-									*/
-									else if (lib.card[bg].fullimage) {
-										this.classList.add('fullimage');
-										if (img) {
-											if (img.indexOf('ext:') == 0) {
-												this.setBackgroundImage(img.replace(/ext:/, 'extension/'));
-												this.style.backgroundSize = 'cover !important';
-											}
-											else {
-												this.setBackgroundDB(img);
-											}
-										}
-										else if (lib.card[bg].image) {
-											if (lib.card[bg].image.indexOf('character:') == 0) {
-												this.setBackground(lib.card[bg].image.slice(10), 'character');
-											}
-											else {
-												this.setBackground(lib.card[bg].image);
-											}
-										}
-										else {
-											var cardPack = lib.cardPack['mode_' + get.mode()];
-											if (Array.isArray(cardPack) && cardPack.includes(bg)) {
-												this.setBackground('mode/' + get.mode() + '/card/' + bg);
-											}
-											else {
-												this.setBackground('card/' + bg);
-											}
-										}
-									}
-									else if (lib.card[bg].fullborder) {
-										this.classList.add('fullborder');
-										if (lib.card[bg].fullborder == 'gold') {
-											this.node.name.dataset.nature = 'metalmm';
-										}
-										else if (lib.card[bg].fullborder == 'silver') {
-											this.node.name.dataset.nature = 'watermm';
-										}
-										if (!this.node.avatar) {
-											this.node.avatar = ui.create.div('.cardavatar');
-											this.insertBefore(this.node.avatar, this.firstChild);
-										}
-										if (!this.node.framebg) {
-											this.node.framebg = ui.create.div('.cardframebg');
-											this.node.framebg.dataset.auto = lib.card[bg].fullborder;
-											this.insertBefore(this.node.framebg, this.firstChild);
-										}
-										if (img) {
-											if (img.indexOf('ext:') == 0) {
-												this.node.avatar.setBackgroundImage(img.replace(/ext:/, 'extension/'));
-												this.node.avatar.style.backgroundSize = 'cover !important';
-											}
-											else {
-												this.node.avatar.setBackgroundDB(img);
-											}
-										}
-										else if (lib.card[bg].image) {
-											if (lib.card[bg].image.indexOf('character:') == 0) {
-												this.node.avatar.setBackground(lib.card[bg].image.slice(10), 'character');
-											}
-											else {
-												this.node.avatar.setBackground(lib.card[bg].image);
-											}
-										}
-										else {
-											var cardPack = lib.cardPack['mode_' + get.mode()];
-											if (Array.isArray(cardPack) && cardPack.includes(bg)) {
-												this.node.avatar.setBackground('mode/' + get.mode() + '/card/' + bg);
-											}
-											else {
-												this.node.avatar.setBackground('card/' + bg);
-											}
-										}
-									}
-									else if (lib.card[bg].image == 'card') {
-										if (card[3]) this.setBackground(bg + '_' + get.natureList(card[3])[0], 'card');
-										else this.setBackground(bg, 'card');
-									}
-									else if (typeof lib.card[bg].image == 'string' && !lib.card[bg].fullskin) {
-										if (img) {
-											if (img.indexOf('ext:') == 0) {
-												this.setBackgroundImage(img.replace(/ext:/, 'extension/'));
-												this.style.backgroundSize = 'cover !important';
-											}
-											else {
-												this.setBackgroundDB(img);
-											}
-										}
-										else {
-											this.setBackground(lib.card[bg].image);
-										}
-									}
-									else {
-										this.node.background.textContent = lib.translate[bg + '_cbg'] || lib.translate[bg + '_bg'] || get.translation(bg)[0];
-									}
-									if (!lib.card[bg].fullborder && this.node.avatar && this.node.framebg) {
-										this.node.avatar.remove();
-										this.node.framebg.remove();
-										this.node.avatar = undefined;
-										this.node.framebg = undefined;
-									}
-									if (info.noname && !this.classList.contains('button')) {
-										this.node.name.style.display = 'none';
-									}
-									if (info.addinfo) {
-										if (!this.node.addinfo) {
-											this.node.addinfo = ui.create.div('.range', this);
-										}
-										this.node.addinfo.innerHTML = info.addinfo;
-									}
-									else if (this.node.addinfo) {
-										this.node.addinfo.remove();
-										delete this.node.addinfo;
-									}
-
-									if (card[0] == 'heart' || card[0] == 'diamond') {
-										this.node.info.classList.add('red');
-									}
-
-									this.node.image.className = 'image';
-
-									var filename = card[2];
-									var cardname = get.translation(card[2]);
-									this.dataset.suit = card[0];
-									this.$suitnum.$num.textContent = cardnum;
-									this.$suitnum.$suit.textContent = cardsuit;
-
-									if (card[2] == 'sha') {
-										cardname = '';
-										let nature = card[3];
-										if (nature) {
-											let natures = get.natureList(nature);
-											natures.sort(lib.sort.nature);
-											for (let nature of natures) {
-												cardname += lib.translate['nature_' + nature] || lib.translate[nature] || '';
-												if (nature != 'stab') this.node.image.classList.add(nature);
-											}
-										}
-										cardname += '杀';
-									}
-
-									this.$name.innerText = cardname;
-									this.$vertname.innerText = cardname;
-									this.$equip.$suitnum.textContent = cardsuit + cardnum;
-									this.$equip.$name.textContent = ' ' + cardname;
-
-									this.suit = card[0];
-									this.number = parseInt(card[1]) || 0;
-									this.name = card[2];
-									this.classList.add('card');
-									if (card[3]) {
-										let natures = get.natureList(card[3]);
-										natures.forEach(n => { if (n) this.classList.add(n) });
-										this.nature = natures.filter(n => lib.nature.has(n)).sort(lib.sort.nature).join(lib.natureSeparator);
-									}
-									else if (this.nature) {
-										this.classList.remove(this.nature);
-										delete this.nature;
-									}
-									if (info.subtype) this.classList.add(info.subtype);
-									if (this.inits) {
-										for (var i = 0; i < lib.element.card.inits.length; i++) {
-											lib.element.card.inits[i](this);
-										}
-									}
-									if (typeof info.init == 'function') info.init();
-									switch (get.subtype({ card: this.name })) {
-										case 'equip1':
-											var added = false;
-											if (lib.card[this.name] && lib.card[this.name].distance) {
-												var dist = lib.card[this.name].distance;
-												if (dist.attackFrom) {
-													added = true;
-													this.$range.textContent = '范围: ' + (- dist.attackFrom + 1);
-												}
-											}
-											if (!added) this.$range.textContent = '范围: 1';
+								$init:function(card){
+									base.lib.element.card.$init.apply(this,arguments);
+									const verticalName = this.$vertname;
+									this.$name.innerHTML = verticalName.innerHTML;
+									let cardNumber = this.number || '';
+									const parsedCardNumber = parseInt(cardNumber);
+		
+									if (parsedCardNumber == cardNumber) cardNumber = parsedCardNumber;
+		
+									switch (cardNumber) {
+										case 1:
+											this.$suitnum.$num.innerHTML = 'A';
 											break;
-										case 'equip3':
-											if (info.distance && info.distance.globalTo) {
-												this.$range.textContent = '防御: ' + info.distance.globalTo;
-												this.$equip.$name.textContent += '+';
-											}
+										case 11:
+											this.$suitnum.$num.innerHTML = 'J';
 											break;
-										case 'equip4':
-											if (info.distance && info.distance.globalFrom) {
-												this.$range.textContent = '进攻: ' + (- info.distance.globalFrom);
-												this.$equip.$name.textContent += '-';
-											}
+										case 12:
+											this.$suitnum.$num.innerHTML = 'Q';
 											break;
-										default:
-											this.$range.textContent = '';
+										case 13:
+											this.$suitnum.$num.innerHTML = 'K';
 											break;
+										default: this.$suitnum.$num.innerHTML = cardNumber.toString();
 									}
-									if (_status.connectMode && !game.online && lib.cardOL && !this.cardid) {
-										this.cardid = get.id();
-										lib.cardOL[this.cardid] = this;
+		
+									this.$suitnum.$suit.innerHTML = get.translation(this.dataset.suit = this.suit);
+									const equip = this.$equip;
+									const innerHTML = equip.innerHTML;
+									equip.$suitnum.innerHTML = innerHTML.slice(0, innerHTML.indexOf(' '));
+									equip.$name.innerHTML = innerHTML.slice(innerHTML.indexOf(' '));
+									const node = this.node;
+									const background = node.background;
+									node.judgeMark.node.judge.innerHTML = background.innerHTML;
+									const classList = background.classList;
+		
+									if (classList.contains('tight')) classList.remove('tight');
+		
+									const cardStyle = this.style;
+		
+									if (cardStyle.color) cardStyle.removeProperty('color');
+		
+									if (cardStyle.textShadow) cardStyle.removeProperty('text-shadow');
+		
+									const info = node.info;
+									const infoStyle = info.style;
+		
+									if (infoStyle.opacity) infoStyle.removeProperty('opacity');
+		
+									const verticalNameStyle = verticalName.style;
+		
+									if (verticalNameStyle.opacity) verticalNameStyle.removeProperty('opacity');
+		
+									if (info.childElementCount) while (info.firstChild) {
+										info.removeChild(info.lastChild);
 									}
-
-									var tags = [];
-									if (!_status.connectMode && !_status.video) this.cardid = get.id();
-									if (Array.isArray(card[4])) tags.addArray(card[4]);
-
-									if (this.cardid) {
-										if (!_status.cardtag) _status.cardtag = {};
-										for (var i in _status.cardtag) if (_status.cardtag[i].includes(this.cardid)) { tags.add(i); }
-										if (tags.length) {
-											var tagText = '';
-											for (var i = 0; i < tags.length; i++) {
-												var tag = tags[i];
-												if (!_status.cardtag[tag]) {
-													_status.cardtag[tag] = [];
-												}
-												_status.cardtag[tag].add(this.cardid);
-												tagText += lib.translate[tag + '_tag'];
-											}
-
-											this.$range.textContent = tagText;
-											this.$range.classList.add('card-tag');
-										}
+		
+									if (equip.childElementCount) while (equip.firstChild) {
+										equip.removeChild(equip.lastChild);
 									}
-
 									var imgFormat = decadeUI.config.cardPrettify;
 									if (imgFormat != 'off') {
+										let filename=card[2];
 										this.classList.add('decade-card');
 										if (!this.classList.contains('infohidden')) {
 											//不同属性的【杀】的图片素材
 											//仅针对单一属性【杀】
 											if (Array.isArray(card) && card[2] == 'sha' && card[3] && !Array.isArray(card[3])) {
-												switch (card[3]) {
-													case 'fire':
-														filename = 'huosha';
-														break;
-													case 'thunder':
-														filename = 'leisha';
-														break;
-													case 'stab':
-														filename = 'cisha';
-														break;
-													case 'ice':
-														filename = 'bingsha';
-														break;
-													default:
-														filename = card[3] + 'sha';
-														break;
-												}
+												filename+='_';
+												filename+=get.natureList(card[3]).sort(lib.sort.nature).join('_');
 											}
 											var res = dui.statics.cards;
 											var asset = res[filename];
@@ -3575,7 +3269,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									}
 									return this;
 								},
-
 								updateTransform: function (bool, delay) {
 									if (delay) {
 										var that = this;
@@ -13813,19 +13506,15 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			},
 			intro: (function () {
 				var log = [
-					'魔改十周年 萌修 0.2.5',
-					'<a href="https://github.com/mengxinzxz/decadeUI--mx.git">点击前往萌修十周年Github仓库</a>',
-					'修复https协议兼容问题',
-					'修复手杀样式下资料页观看队友手牌报错bug',
-					'补充/修正部分tryAddPlayerCardUseTag描述',
-					'修复美化node字符溢出bug',
+					'魔改十周年 萌修 0.2.6',
+					'新版适配',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>') + '</p>';
 			})(),
 			author: "萌新（转型中）<br>十周年UI原作者：短歌<br>手杀UI原名：界面美化<br>手杀UI原作者：橙续缘",
 			diskURL: "",
 			forumURL: "",
-			version: "0.2.5",
+			version: "0.2.6",
 		},
 		files: {
 			"character": [],
