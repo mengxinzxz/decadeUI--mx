@@ -62,7 +62,10 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				}
 			}
 
+			//菜单栏错位bugfix
+			game.menuZoom = 1;
 
+			//路径确定
 			var extensionName = decadeUIName;
 			var extension = lib.extensionMenu['extension_' + extensionName];
 			var extensionPath = lib.assetURL + 'extension/' + extensionName + '/';
@@ -3143,15 +3146,15 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							},
 
 							card: {
-								$init:function(card){
-									base.lib.element.card.$init.apply(this,arguments);
+								$init: function (card) {
+									base.lib.element.card.$init.apply(this, arguments);
 									const verticalName = this.$vertname;
 									this.$name.innerHTML = verticalName.innerHTML;
 									let cardNumber = this.number || '';
 									const parsedCardNumber = parseInt(cardNumber);
-		
+
 									if (parsedCardNumber == cardNumber) cardNumber = parsedCardNumber;
-		
+
 									switch (cardNumber) {
 										case 1:
 											this.$suitnum.$num.innerHTML = 'A';
@@ -3167,7 +3170,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 											break;
 										default: this.$suitnum.$num.innerHTML = cardNumber.toString();
 									}
-		
+
 									this.$suitnum.$suit.innerHTML = get.translation(this.dataset.suit = this.suit);
 									const equip = this.$equip;
 									const innerHTML = equip.innerHTML;
@@ -3177,41 +3180,41 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									const background = node.background;
 									node.judgeMark.node.judge.innerHTML = background.innerHTML;
 									const classList = background.classList;
-		
+
 									if (classList.contains('tight')) classList.remove('tight');
-		
+
 									const cardStyle = this.style;
-		
+
 									if (cardStyle.color) cardStyle.removeProperty('color');
-		
+
 									if (cardStyle.textShadow) cardStyle.removeProperty('text-shadow');
-		
+
 									const info = node.info;
 									const infoStyle = info.style;
-		
+
 									if (infoStyle.opacity) infoStyle.removeProperty('opacity');
-		
+
 									const verticalNameStyle = verticalName.style;
-		
+
 									if (verticalNameStyle.opacity) verticalNameStyle.removeProperty('opacity');
-		
+
 									if (info.childElementCount) while (info.firstChild) {
 										info.removeChild(info.lastChild);
 									}
-		
+
 									if (equip.childElementCount) while (equip.firstChild) {
 										equip.removeChild(equip.lastChild);
 									}
 									var imgFormat = decadeUI.config.cardPrettify;
 									if (imgFormat != 'off') {
-										let filename=card[2];
+										let filename = card[2];
 										this.classList.add('decade-card');
 										if (!this.classList.contains('infohidden')) {
 											//不同属性的【杀】的图片素材
 											//仅针对单一属性【杀】
 											if (Array.isArray(card) && card[2] == 'sha' && card[3] && !Array.isArray(card[3])) {
-												filename+='_';
-												filename+=get.natureList(card[3]).sort(lib.sort.nature).join('_');
+												filename += '_';
+												filename += get.natureList(card[3]).sort(lib.sort.nature).join('_');
 											}
 											var res = dui.statics.cards;
 											var asset = res[filename];
@@ -8356,7 +8359,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						default:
 							tagText = get.translation(event.name);
 							if (tagText == event.name) tagText = '';
-							else tagText+='效果';
+							else tagText += '效果';
 							break;
 					}
 
@@ -11299,7 +11302,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					this.js(decadeUIPath + 'effect.js');
 					this.js(decadeUIPath + 'animation.js');
 					this.js(decadeUIPath + 'dynamicSkin.js');
-					this.js(decadeUIPath + 'menu.js');
 
 					//原手杀UI内容加载
 					//避免提示是否下载图片和字体素材
@@ -13105,7 +13107,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										}
 									}
 									tempname += tempname2;
-									
+
 									card._tempName.innerHTML = tempname;
 									card._tempName.tempname = tempname;
 								}
@@ -13506,17 +13508,15 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			},
 			intro: (function () {
 				var log = [
-					'魔改十周年 萌修 0.2.6',
-					'新版适配',
-					'修复十周年UI下左慈【化身】获得失去化身技能非事件化的bug',
-					'取消对card.init的完全覆写，改为对card.$init的继承性修改',
+					'魔改十周年 萌修 0.2.7',
+					'菜单栏错位bug修复',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
 			author: "萌新（转型中）<br>十周年UI原作者：短歌<br>手杀UI原名：界面美化<br>手杀UI原作者：橙续缘",
 			diskURL: "",
 			forumURL: "",
-			version: "0.2.6",
+			version: "0.2.7",
 		},
 		files: {
 			"character": [],
