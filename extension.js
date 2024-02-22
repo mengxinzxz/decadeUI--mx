@@ -11,56 +11,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			var extensionPath = lib.assetURL + 'extension/' + extensionName + '/';
 			if (!(extension && extension.enable && extension.enable.init)) return;
 			/*-----------------分割线-----------------*/
-			//龙头
-			lib.skill._longLevel = {
-				trigger: {
-					global: "gameStart"
-				},
-				silent: true,
-				forced: true,
-				filter: function (event, player) {
-					return (lib.config.extension_十周年UI_longLevel == 'sex') || (lib.config.extension_十周年UI_longLevel == 'seven');
-				},
-				content: function () {
-					if (lib.config.extension_十周年UI_longLevel == 'seven') {
-						var rarity = ['silver', 'gold', 'yu', 'bing', 'yan'];
-						switch (game.getRarity(player.name)) {
-							case 'junk': rarity = rarity[0]; break;
-							case 'common': rarity = rarity[1]; break;
-							case 'rare': rarity = rarity[2]; break;
-							case 'epic': rarity = rarity[3]; break;
-							case 'legend': rarity = rarity[4]; break;
-							default: break;
-						};
-					}
-					if (lib.config.extension_十周年UI_longLevel == 'sex') {
-						var rarity = ['silver', 'gold', 'yu', 'bing', 'yan'].randomGet();
-					};
-					var longtou = document.createElement("img");
-					longtou.src = decadeUIPath + "/assets/image/long_" + rarity + "1.png";
-					longtou.style.cssText = "pointer-events:none";
-					longtou.style.position = "absolute";
-					longtou.style.display = "block";
-					longtou.style.top = "-24px";
-					longtou.style.right = "-18px";
-					longtou.style.height = "110";
-					longtou.style.width = "60px";
-					longtou.style.zIndex = "63";
-					player.appendChild(longtou)
-
-					var longwei = document.createElement("img");
-					longwei.src = decadeUIPath + "/assets/image/long_" + rarity + "2.png";
-					longwei.style.cssText = "pointer-events:none";
-					longwei.style.position = "absolute";
-					longwei.style.display = "block";
-					longwei.style.bottom = "-10px";
-					longwei.style.right = "-9px";
-					longwei.style.height = "40";
-					longwei.style.width = "80px";
-					longwei.style.zIndex = "99";
-					player.appendChild(longwei)
-				}
-			}
 
 			//菜单栏错位bugfix
 			game.menuZoom = 1;
@@ -13510,6 +13460,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				var log = [
 					'魔改十周年 萌修 0.2.7',
 					'菜单栏错位bug修复',
+					'刺杀素材命名修改（cisha→sha_stab）',
+					'修复控制身份为bYe的css片段加载失败的bug',
+					'修复判定区废除显示两个“废”字的bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),

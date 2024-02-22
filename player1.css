@@ -957,10 +957,6 @@ z-index:100;
 	text-shadow: #000 1px 0 0, #000 0 1px 0, #000 -1px 0 0, #000 0 -1px 0, 0 0 8px #000;
 }
 
-.player>.judges>.card.feichu>.judge-mark>.judge::before {
-	content:'废';
-}
-
 .player>.judges>.card>.background,
 .judges>.card.fakejudge.fullskin>.background,
 .judges>.card.fakejudge.fullborder>.background {
@@ -1060,7 +1056,7 @@ z-index:100;
 
 
 .player>.identity[data-color='bYe'],
-.player.opposite-camp>.identity, {
+.player.opposite-camp>.identity {
 	text-shadow: 0 0 1px black, 0 0 5px blue, 0 0 10px rgb(100, 100, 250), 0 0 20px rgb(100, 100, 250), 0 0 20px white;
 }
 

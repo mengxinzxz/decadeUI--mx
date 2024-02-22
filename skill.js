@@ -38,6 +38,57 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
                 }
             },
         },
+        //龙头
+        mx_longLevel: {
+            trigger: {
+                global: "gameStart"
+            },
+            silent: true,
+            forced: true,
+            filter: function (event, player) {
+                return (lib.config.extension_十周年UI_longLevel == 'sex') || (lib.config.extension_十周年UI_longLevel == 'seven');
+            },
+            content: function () {
+                game.removeGlobalSkill('mx_longLevel');
+                if (lib.config.extension_十周年UI_longLevel == 'seven') {
+                    var rarity = ['silver', 'gold', 'yu', 'bing', 'yan'];
+                    switch (game.getRarity(player.name)) {
+                        case 'junk': rarity = rarity[0]; break;
+                        case 'common': rarity = rarity[1]; break;
+                        case 'rare': rarity = rarity[2]; break;
+                        case 'epic': rarity = rarity[3]; break;
+                        case 'legend': rarity = rarity[4]; break;
+                        default: break;
+                    };
+                }
+                if (lib.config.extension_十周年UI_longLevel == 'sex') {
+                    var rarity = ['silver', 'gold', 'yu', 'bing', 'yan'].randomGet();
+                };
+                var longtou = document.createElement("img");
+                longtou.src = decadeUIPath + "/assets/image/long_" + rarity + "1.png";
+                longtou.style.cssText = "pointer-events:none";
+                longtou.style.position = "absolute";
+                longtou.style.display = "block";
+                longtou.style.top = "-24px";
+                longtou.style.right = "-18px";
+                longtou.style.height = "110";
+                longtou.style.width = "60px";
+                longtou.style.zIndex = "63";
+                player.appendChild(longtou)
+
+                var longwei = document.createElement("img");
+                longwei.src = decadeUIPath + "/assets/image/long_" + rarity + "2.png";
+                longwei.style.cssText = "pointer-events:none";
+                longwei.style.position = "absolute";
+                longwei.style.display = "block";
+                longwei.style.bottom = "-10px";
+                longwei.style.right = "-9px";
+                longwei.style.height = "40";
+                longwei.style.width = "80px";
+                longwei.style.zIndex = "99";
+                player.appendChild(longwei)
+            }
+        },
     };
     decadeUI.skill = {
         ghujia: {
