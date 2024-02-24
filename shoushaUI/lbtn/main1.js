@@ -110,17 +110,12 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
       liaotian.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/uibutton/liaotian.png"
       liaotian.style.cssText = "display: block;--w: 135px;--h: calc(var(--w) * 699/960);width: var(--w);height: var(--h);position: absolute;top: calc(100% - 97px);right: calc(100% - 125px);background-color: transparent;z-index:3"
       liaotian.onclick = function () {
-
         if (lib.config['extension_说话_enable']) {
-
           game.showChatWordBackground();
-
-        } else {
-
-          game.showChatWordBackgroundX();
-
         }
-
+        else {
+          game.showChatWordBackgroundX();
+        }
       }
       document.body.appendChild(liaotian);
     }
@@ -226,136 +221,130 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
         game.ui_identityShow_update();
       }, 1000);
     }
-  });
-
-
-
-
-
-  var head = ui.create.node('img');
-  head.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/SSCD/button.png"
-  head.style.cssText = "display: block;--w: 130px;--h: calc(var(--w) * 1080/1434);width: var(--w);height: var(--h);position: absolute;bottom: calc(100% - 98px);left: calc(100% - 126.2px);background-color: transparent;z-index:1"
-  document.body.appendChild(head);
-
-
-  var head = ui.create.node('div');
-  head.style.cssText = "display: block;width: 134px;height: 103px;position: absolute;top: 0px;right: -8px;background-color: transparent;z-index:1"
-  head.onclick = function () {
-    game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/SSCD/label.mp3');
-    var popuperContainer = ui.create.div('.popup-container', { background: "rgb(0,0,0,0)" }, ui.window);
-    popuperContainer.addEventListener('click', event => {
-
-      game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/SSCD/caidan.mp3');
-      event.stopPropagation();
-      popuperContainer.delete(200);
-    });
-    var yemian = ui.create.div('.yemian', popuperContainer);
-    var shezhi = ui.create.div('.shezhi', popuperContainer);
-    shezhi.addEventListener('click', event => {
-      game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/SSCD/xuanzhe.mp3');
-      if (!ui.click.configMenu) return;
-      game.closePopped();
-      game.pause2();
-      ui.click.configMenu();
-      ui.system1.classList.remove('shown');
-      ui.system2.classList.remove('shown');
-    });
-    var tuichu = ui.create.div('.tuichu', popuperContainer);
-    tuichu.addEventListener('click', event => {
-      game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/SSCD/xuanzhe.mp3');
-      window.location.reload();
-    });
-    var taopao = ui.create.div('.taopao', popuperContainer);
-    taopao.addEventListener('click', event => {
-
-      game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/SSCD/xuanzhe.mp3');
-
-      game.reload();
-    });
-    var touxiang = ui.create.div('.touxiang', popuperContainer);
-    touxiang.addEventListener('click', event => {
-
-      game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/SSCD/xuanzhe.mp3');
-
-      game.over();
-    });
-    var tuoguan = ui.create.div('.tuoguan', popuperContainer);
-    tuoguan.addEventListener('click', event => {
-
-      game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/SSCD/xuanzhe.mp3');
-
-      ui.click.auto();
-    });
-  }
-  document.body.appendChild(head);
-
-  /*左上角问号框*/
-  var tipshow = ui.create.node('img');
-  if (lib.config.mode == 'doudizhu') tipshow.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/uibutton/doudizhu.png";
-  else tipshow.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/uibutton/shenfen.png";
-  if (lib.config.mode == 'doudizhu') {
-    tipshow.style.cssText = "display: block;width: 360px;height: 35px;position: absolute;top: -1.3px;left: -35px;background-color: transparent;z-index:3"
-  } else tipshow.style.cssText = "display: block;--w: 400px;--h: calc(var(--w) * 279/2139);width: var(--w);height: var(--h);position: absolute;top: -1px;left:-45px;background-color: transparent;z-index:3"
-
-  if (lib.config.mode == 'identity' || lib.config.mode == 'doudizhu' || lib.config.mode == 'versus' || lib.config.mode == 'guozhan') {
-    tipshow.onclick = function () {
-      var popuperContainer = ui.create.div('.popup-container', ui.window);
+    //右上角菜单栏
+    var head = ui.create.node('img');
+    head.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/SSCD/button.png"
+    head.style.cssText = "display: block;--w: 130px;--h: calc(var(--w) * 1080/1434);width: var(--w);height: var(--h);position: absolute;bottom: calc(100% - 98px);left: calc(100% - 126.2px);background-color: transparent;z-index:1"
+    document.body.appendChild(head);
+  
+    var head = ui.create.node('div');
+    head.style.cssText = "display: block;width: 134px;height: 103px;position: absolute;top: 0px;right: -8px;background-color: transparent;z-index:1"
+    head.onclick = function () {
       game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/SSCD/label.mp3');
-      if (lib.config.mode == 'identity') {
-        if (game.me.identity == 'zhu') {
-          ui.create.div('.sfrwzhugong', popuperContainer);
-        }
-        else if (game.me.identity == 'zhong') {
-          ui.create.div('.sfrwchongchen', popuperContainer);
-        }
-        else if (game.me.identity == 'fan') {
-          ui.create.div('.sfrwfanzei', popuperContainer);
-        }
-        else if (game.me.identity == 'nei') {
-          ui.create.div('.sfrwneijian', popuperContainer);
-        }
-      }
-      if (lib.config.mode == 'doudizhu') {
-        if (game.me.identity == 'zhu') {
-          ui.create.div('.sfrwdizhu', popuperContainer);
-        }
-        else if (game.me.identity == 'fan') {
-          ui.create.div('.sfrwnongmin', popuperContainer);
-        }
-      }
-      if (lib.config.mode == 'versus') {
-        ui.create.div('.sfrwhu', popuperContainer);
-      }
-      if (lib.config.mode == 'guozhan') {
-        if (game.me.group == 'unknown' || game.me.group == 'undefined') {
-          ui.create.div('.sfrwundefined', popuperContainer);
-        }
-        else if (game.me.group == 'wei') {
-          ui.create.div('.sfrwweiguo', popuperContainer);
-        }
-        else if (game.me.group == 'shu') {
-          ui.create.div('.sfrwshuguo', popuperContainer);
-        }
-        else if (game.me.group == 'wu') {
-          ui.create.div('.sfrwwuguo', popuperContainer);
-        }
-        else if (game.me.group == 'qun') {
-          ui.create.div('.sfrwqunxiong', popuperContainer);
-        }
-        else if (game.me.group == 'jin') {
-          ui.create.div('.sfrwjinguo', popuperContainer);
-        }
-        else if (game.me.group == 'ye') {
-          ui.create.div('.sfrwyexinjia', popuperContainer);
-        }
-      }
+      var popuperContainer = ui.create.div('.popup-container', { background: "rgb(0,0,0,0)" }, ui.window);
       popuperContainer.addEventListener('click', event => {
+  
         game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/SSCD/caidan.mp3');
+        event.stopPropagation();
         popuperContainer.delete(200);
       });
-    };
-  }
-  document.body.appendChild(tipshow);
+      var yemian = ui.create.div('.yemian', popuperContainer);
+      var shezhi = ui.create.div('.shezhi', popuperContainer);
+      shezhi.addEventListener('click', event => {
+        game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/SSCD/xuanzhe.mp3');
+        if (!ui.click.configMenu) return;
+        game.closePopped();
+        game.pause2();
+        ui.click.configMenu();
+        ui.system1.classList.remove('shown');
+        ui.system2.classList.remove('shown');
+      });
+      var tuichu = ui.create.div('.tuichu', popuperContainer);
+      tuichu.addEventListener('click', event => {
+        game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/SSCD/xuanzhe.mp3');
+        window.location.reload();
+      });
+      var taopao = ui.create.div('.taopao', popuperContainer);
+      taopao.addEventListener('click', event => {
+  
+        game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/SSCD/xuanzhe.mp3');
+  
+        game.reload();
+      });
+      var touxiang = ui.create.div('.touxiang', popuperContainer);
+      touxiang.addEventListener('click', event => {
+  
+        game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/SSCD/xuanzhe.mp3');
+  
+        game.over();
+      });
+      var tuoguan = ui.create.div('.tuoguan', popuperContainer);
+      tuoguan.addEventListener('click', event => {
+  
+        game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/SSCD/xuanzhe.mp3');
+  
+        ui.click.auto();
+      });
+    }
+    document.body.appendChild(head);
+    /*左上角问号框*/
+    var tipshow = ui.create.node('img');
+    if (lib.config.mode == 'doudizhu') tipshow.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/uibutton/doudizhu.png";
+    else tipshow.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/uibutton/shenfen.png";
+    if (lib.config.mode == 'doudizhu') {
+      tipshow.style.cssText = "display: block;width: 360px;height: 35px;position: absolute;top: -1.3px;left: -35px;background-color: transparent;z-index:3"
+    } else tipshow.style.cssText = "display: block;--w: 400px;--h: calc(var(--w) * 279/2139);width: var(--w);height: var(--h);position: absolute;top: -1px;left:-45px;background-color: transparent;z-index:3"
+  
+    if (lib.config.mode == 'identity' || lib.config.mode == 'doudizhu' || lib.config.mode == 'versus' || lib.config.mode == 'guozhan') {
+      tipshow.onclick = function () {
+        var popuperContainer = ui.create.div('.popup-container', ui.window);
+        game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/SSCD/label.mp3');
+        if (lib.config.mode == 'identity') {
+          if (game.me.identity == 'zhu') {
+            ui.create.div('.sfrwzhugong', popuperContainer);
+          }
+          else if (game.me.identity == 'zhong') {
+            ui.create.div('.sfrwchongchen', popuperContainer);
+          }
+          else if (game.me.identity == 'fan') {
+            ui.create.div('.sfrwfanzei', popuperContainer);
+          }
+          else if (game.me.identity == 'nei') {
+            ui.create.div('.sfrwneijian', popuperContainer);
+          }
+        }
+        if (lib.config.mode == 'doudizhu') {
+          if (game.me.identity == 'zhu') {
+            ui.create.div('.sfrwdizhu', popuperContainer);
+          }
+          else if (game.me.identity == 'fan') {
+            ui.create.div('.sfrwnongmin', popuperContainer);
+          }
+        }
+        if (lib.config.mode == 'versus') {
+          ui.create.div('.sfrwhu', popuperContainer);
+        }
+        if (lib.config.mode == 'guozhan') {
+          if (game.me.group == 'unknown' || game.me.group == 'undefined') {
+            ui.create.div('.sfrwundefined', popuperContainer);
+          }
+          else if (game.me.group == 'wei') {
+            ui.create.div('.sfrwweiguo', popuperContainer);
+          }
+          else if (game.me.group == 'shu') {
+            ui.create.div('.sfrwshuguo', popuperContainer);
+          }
+          else if (game.me.group == 'wu') {
+            ui.create.div('.sfrwwuguo', popuperContainer);
+          }
+          else if (game.me.group == 'qun') {
+            ui.create.div('.sfrwqunxiong', popuperContainer);
+          }
+          else if (game.me.group == 'jin') {
+            ui.create.div('.sfrwjinguo', popuperContainer);
+          }
+          else if (game.me.group == 'ye') {
+            ui.create.div('.sfrwyexinjia', popuperContainer);
+          }
+        }
+        popuperContainer.addEventListener('click', event => {
+          game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/SSCD/caidan.mp3');
+          popuperContainer.delete(200);
+        });
+      };
+    }
+    document.body.appendChild(tipshow);
+  });
 
   var plugin = {
     name: 'lbtn',
@@ -747,11 +736,8 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
         }
       },
 
-
       paixu: function () {
-
         var cards = game.me.getCards("hs");
-
         var sort2 = function (b, a) {
           if (a.name != b.name) return lib.sort.card(a.name, b.name);
           else if (a.suit != b.suit) return lib.suit.indexOf(a) - lib.suit.indexOf(b);
