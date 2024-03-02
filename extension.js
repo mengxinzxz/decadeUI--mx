@@ -13464,6 +13464,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'修复控制身份为bYe的css片段加载失败的bug',
 					'修复判定区废除显示两个“废”字的bug',
 					'调整十周年样式右上角菜单，手杀样式左上角问号和右上角菜单于进入游戏后再加载',
+					'修复特殊标签的主公技标记显示问题',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
