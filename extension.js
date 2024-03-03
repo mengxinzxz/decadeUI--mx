@@ -4690,7 +4690,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									if (enable) {
 										if (!game.expandSkills(player.getSkills(false).concat(lib.skill.global)).includes(skills2[i]) && (info.noHidden || get.mode() != 'guozhan' || player.hasSkillTag('nomingzhi', false, null, true))) enable = false;
 										if (info.filter && !info.filter(event, player)) enable = false;
-										if (info.viewAs && typeof info.viewAs != 'function' && event.filterCard && !event.filterCard(info.viewAs, player, event)) enable = false;
+										if (info.viewAs && typeof info.viewAs != 'function' && event.filterCard && !event.filterCard(get.autoViewAs(info.viewAs, 'unsure'), player, event)) enable = false;
 										if (info.viewAs && typeof info.viewAs != 'function' && info.viewAsFilter && info.viewAsFilter(player) == false) enable = false;
 
 										if (info.usable && get.skillCount(skills2[i]) >= info.usable) enable = false;
