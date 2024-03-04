@@ -4414,6 +4414,26 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						},
 					};
 					for (const i in CheckCover) game.Check[i] = CheckCover[i];
+					const OriginCheck = game.check;
+					game.check = function (event = _status.event) {
+						//引用game.uncheck源内容
+						const ok = OriginCheck.apply(this, arguments);
+						//弹出按钮 根据手杀ui选项开关调用不同样式
+						if (ui.confirm && ui.confirm.lastChild.link == 'cancel') {
+							if (_status.event.type == 'phase' && !_status.event.skill) {
+								if (lib.config['extension_十周年UI_newDecadeStyle'] != 'on') {
+									ui.confirm.lastChild.innerHTML = '结束出牌';
+								}
+								else if (lib.config['extension_十周年UI_newDecadeStyle'] == 'on') {
+									ui.confirm.lastChild.innerHTML = '回合结束';
+								}
+								else {
+									ui.confirm.lastChild.innerHTML = '结束';
+								}
+							}
+						}
+						return ok;
+					};
 
 					const OriginUncheck = game.uncheck;
 					game.uncheck = function (...args) {
