@@ -4340,43 +4340,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					ui.updatexr = duilib.throttle(ui.updatex, 100, ui);
 					document.body.onresize = ui.updatexr;
 
-					get.infoHp = function (hp) {
-						if (typeof hp == 'number') {
-							return hp;
-						}
-						else if (typeof hp == 'string') {
-							var index = hp.indexOf('/');
-							if (index >= 0) hp = hp.slice(0, hp.indexOf('/'));
-							if (hp == 'Infinity' || hp == '∞') {
-								return Infinity;
-							}
-							else {
-								return parseInt(hp);
-							}
-						}
-
-						return 0;
-					};
-
-					get.infoMaxHp = function (hp) {
-						if (typeof hp == 'number') {
-							return hp;
-						}
-						else if (typeof hp == 'string') {
-							var index = hp.indexOf('/');
-							if (index >= 0) hp = hp.slice(hp.indexOf('/') + 1);
-							if (hp == 'Infinity' || hp == '∞') {
-								return Infinity;
-							}
-							else {
-								return parseInt(hp);
-							}
-
-						}
-
-						return 0;
-					};
-
+					//十周年UI技能排除
 					get.skillState = function (player) {
 						var skills = base.get.skillState.apply(this, arguments);
 						if (game.me != player) {
