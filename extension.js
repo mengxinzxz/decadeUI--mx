@@ -4388,541 +4388,86 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						return skills;
 					};
 
-					game.check = function (event) {
-						var i, j, range;
-						if (event == undefined) event = _status.event;
-						var custom = event.custom || {};
-						var ok = true,
-							auto = true;
-						var player = event.player;
-						var auto_confirm = lib.config.auto_confirm;
-						var players = game.players.slice(0);
-						if (event.deadTarget) players.addArray(game.dead);
-						if (!event.filterButton && !event.filterCard && !event.filterTarget && (!event.skill || !event._backup)) {
-							if (event.choosing) {
-								_status.imchoosing = true;
+					const CheckCover = {
+						//添加target的un-selectable classList显示
+						target:function(event, useCache) {
+							const player = event.player;
+							const card = get.card();
+							const targets = game.players.slice();
+							if (event.deadTarget) targets.addArray(game.dead);
+							const isSelectable = (target, event) => {
+								if (game.chess && !event.chessForceAll && player && get.distance(player, target, 'pure') > 7) return false;
+								if (target.isOut()) return false;
+								return event.filterTarget(card, player, target);
 							}
-							return;
-						}
-						player.node.equips.classList.remove('popequip');
-						if (event.filterButton) {
-							var dialog = event.dialog;
-							range = get.select(event.selectButton);
-							var selectableButtons = false;
-							if (event.forceAuto && ui.selected.buttons.length == range[1]) auto = true;
-							else if (range[0] != range[1] || range[0] > 1) auto = false;
-							for (let i = 0; i < dialog.buttons.length; i++) {
-								if (dialog.buttons[i].classList.contains('unselectable')) continue;
-								if (event.filterButton(dialog.buttons[i], player) && lib.filter.buttonIncluded(dialog.buttons[i])) {
-									if (ui.selected.buttons.length < range[1]) {
-										dialog.buttons[i].classList.add('selectable');
+							const custom = target => {
+								const list=['selected', 'selectable'];
+								target.classList[list.some(select=>target.classList.contains(select))?'remove':'add']('un-selectable');
+								if(target.instance){
+									for(const className of list){
+										target.instance.classList[target.classList.contains(className)?'add':'remove'](className);
 									}
-									else if (range[1] == -1) {
-										dialog.buttons[i].classList.add('selected');
-										ui.selected.buttons.add(dialog.buttons[i]);
+								}
+							}
+							return game.Check.processSelection({ type: 'target', items: targets, event, useCache, isSelectable, custom });
+						},
+						//对十周年UI和本体的视为卡牌样式的同时适配
+						card:function(event, useCache) {
+							const player = event.player;
+							const players = game.players.slice();
+							if (event.deadTarget) players.addArray(game.dead);
+							const cards = player.getCards(event.position);
+							let firstCheck = false;
+							const range = get.select(event.selectCard);
+							const isSelectable = card => {
+								if (card.classList.contains('uncheck')) return false;
+								if (player.isOut()) return false;
+								if (!lib.filter.cardRespondable(card, player)) return false;
+								return event.filterCard(card, player);
+							}
+							const custom = lib.config.cardtempname === 'off' ? null : card => {
+								if (get.name(card) === card.name && get.is.sameNature(get.nature(card), card.nature, true)) return;
+								const cardname = get.name(card),cardnature = get.nature(card);
+								if (lib.config.extension_十周年UI_showTemp) {
+									if (!card._tempName) card._tempName = ui.create.div('.temp-name', card);
+									let tempname = '',tempname2 = get.translation(cardname);
+									if (cardnature) {
+										card._tempName.dataset.nature = cardnature;
+										if (cardname == 'sha') {
+											tempname2 = get.translation(cardnature) + tempname2;
+										}
 									}
-									else {
-										dialog.buttons[i].classList.remove('selectable');
-									}
+									tempname += tempname2;
+									card._tempName.innerHTML = tempname;
+									card._tempName.tempname = tempname;
 								}
 								else {
-									dialog.buttons[i].classList.remove('selectable');
-									if (range[1] == -1) {
-										dialog.buttons[i].classList.remove('selected');
-										ui.selected.buttons.remove(dialog.buttons[i]);
-									}
-								}
-								if (dialog.buttons[i].classList.contains('selected')) {
-									dialog.buttons[i].classList.add('selectable');
-								}
-								else if (!selectableButtons && dialog.buttons[i].classList.contains('selectable')) {
-									selectableButtons = true;
+									const node = ui.create.cardTempName(card);
+									if (lib.config.cardtempname !== 'default') node.classList.remove('vertical');
 								}
 							}
-							if (ui.selected.buttons.length < range[0]) {
-								if (!event.forced || selectableButtons) {
-									ok = false;
-								}
-								if (event.complexSelect || event.getParent().name == 'chooseCharacter' || event.getParent().name == 'chooseButtonOL') {
-									ok = false;
-								}
-							}
-							if (custom.add.button) {
-								custom.add.button();
-							}
-						}
-						if (event.filterCard) {
-							if (ok == false) {
-								game.uncheck('card');
-							}
-							else {
-								var cards = player.getCards(event.position);
-								var firstCheck = false;
-								range = get.select(event.selectCard);
-								if (!event._cardChoice && typeof event.selectCard != 'function' && !event.complexCard && range[1] != -1 && !lib.config.compatiblemode) {
-									event._cardChoice = [];
-									firstCheck = true;
-								}
-								if (event.isMine() && event.name == 'chooseToUse' && event.parent.name == 'phaseUse' && !event.skill && !event._targetChoice && !firstCheck && window.Map && !lib.config.compatiblemode) {
-									event._targetChoice = new Map();
-									for (var i = 0; i < event._cardChoice.length; i++) {
-										if (!lib.card[event._cardChoice[i].name].complexTarget) {
-											var targets = [];
-											for (var j = 0; j < players.length; j++) {
-												if (event.filterTarget(event._cardChoice[i], player, players[j])) {
-													targets.push(players[j]);
-												}
-											}
-											event._targetChoice.set(event._cardChoice[i], targets);
-										}
-									}
-								}
-
-								var selectableCards = false;
-								if (range[0] != range[1] || range[0] > 1) auto = false;
-								for (let i = 0; i < cards.length; i++) {
-									if (lib.config.cardtempname != 'off') {
-										var cardname = get.name(cards[i]);
-										var cardnature = get.nature(cards[i]);
-										if (cards[i].name != cardname || !get.is.sameNature(cardnature, cards[i].nature, true)) {
-											if (lib.config.extension_十周年UI_showTemp) {
-												if (!cards[i]._tempName) cards[i]._tempName = ui.create.div('.temp-name', cards[i]);
-												var tempname = '';
-												var tempname2 = get.translation(cardname);
-												if (cardnature) {
-													cards[i]._tempName.dataset.nature = cardnature;
-													if (cardname == 'sha') {
-														tempname2 = get.translation(cardnature) + tempname2;
-													}
-												}
-												tempname += tempname2;
-
-												cards[i]._tempName.innerHTML = tempname;
-												cards[i]._tempName.tempname = tempname;
-											}
-											else {
-												var node = ui.create.cardTempName(cards[i]);
-												var cardtempnameConfig = lib.config.cardtempname;
-												if (cardtempnameConfig !== 'default') node.classList.remove('vertical');
-											}
-										}
-									}
-
-									var nochess = true;
-									if (!lib.filter.cardAiIncluded(cards[i])) {
-										nochess = false;
-									}
-									else if (event._cardChoice && !firstCheck) {
-										if (!event._cardChoice.includes(cards[i])) {
-											nochess = false;
-										}
-									}
-									else {
-										if (player.isOut() || !lib.filter.cardRespondable(cards[i], player) || cards[i].classList.contains('uncheck') || !event.filterCard(cards[i], player)) {
-											nochess = false;
-										}
-									}
-									if (nochess) {
-										if (ui.selected.cards.length < range[1]) {
-											cards[i].classList.add('selectable');
-											if (event._cardChoice && firstCheck) {
-												event._cardChoice.push(cards[i]);
-											}
-										}
-										else if (range[1] == -1) {
-											cards[i].classList.add('selected');
-											cards[i].updateTransform(true);
-											ui.selected.cards.add(cards[i]);
-										}
-										else {
-											cards[i].classList.remove('selectable');
-										}
-									}
-									else {
-										cards[i].classList.remove('selectable');
-										if (range[1] == -1) {
-											cards[i].classList.remove('selected');
-											cards[i].updateTransform();
-											ui.selected.cards.remove(cards[i]);
-										}
-									}
-									if (cards[i].classList.contains('selected')) {
-										cards[i].classList.add('selectable');
-									}
-									else if (!selectableCards && cards[i].classList.contains('selectable')) {
-										selectableCards = true;
-									}
-								}
-								if (ui.selected.cards.length < range[0]) {
-									if (!event.forced || selectableCards || event.complexSelect) {
-										ok = false;
-									}
-								}
-							}
-							if (custom.add.card) {
-								custom.add.card();
-							}
-						}
-						if (event.filterTarget) {
-							if (ok == false) {
-								game.uncheck('target');
-							}
-							else {
-								var card = get.card();
-								var firstCheck = false;
-								range = get.select(event.selectTarget);
-								var selectableTargets = false;
-								if (range[0] != range[1] || range[0] > 1) auto = false;
-								for (let i = 0; i < players.length; i++) {
-									var nochess = true;
-									if (game.chess && !event.chessForceAll && player && get.distance(player, players[i], 'pure') > 7) {
-										nochess = false;
-									}
-									else if (players[i].isOut()) {
-										nochess = false;
-									}
-									else if (event._targetChoice && event._targetChoice.has(card)) {
-										var targetChoice = event._targetChoice.get(card);
-										if (!Array.isArray(targetChoice) || !targetChoice.includes(players[i])) {
-											nochess = false;
-										}
-									}
-									else if (!event.filterTarget(card, player, players[i])) {
-										nochess = false;
-									}
-									if (nochess) {
-										if (ui.selected.targets.length < range[1]) {
-											players[i].classList.add('selectable');
-											if (Array.isArray(event._targetChoice)) {
-												event._targetChoice.push(players[i]);
-											}
-										}
-										else if (range[1] <= -1) {
-											players[i].classList.add('selected');
-											ui.selected.targets.add(players[i]);
-										}
-										else {
-											players[i].classList.remove('selectable');
-										}
-									}
-									else {
-										players[i].classList.remove('selectable');
-										if (range[1] <= -1) {
-											players[i].classList.remove('selected');
-											ui.selected.targets.remove(players[i]);
-										}
-									}
-
-									if (players[i].classList.contains('selected')) {
-										players[i].classList.add('selectable');
-									}
-									else if (!selectableTargets && players[i].classList.contains('selectable')) {
-										selectableTargets = true;
-									}
-
-									if (players[i].classList.contains('selected') || players[i].classList.contains('selectable')) {
-										players[i].classList.remove('un-selectable');
-									}
-									else {
-										players[i].classList.add('un-selectable');
-									}
-
-									if (players[i].instance) {
-										if (players[i].classList.contains('selected')) {
-											players[i].instance.classList.add('selected');
-										}
-										else {
-											players[i].instance.classList.remove('selected');
-										}
-										if (players[i].classList.contains('selectable')) {
-											players[i].instance.classList.add('selectable');
-										}
-										else {
-											players[i].instance.classList.remove('selectable');
-										}
-									}
-								}
-								if (ui.selected.targets.length < range[0]) {
-									if (!event.forced || selectableTargets || event.complexSelect) {
-										ok = false;
-									}
-								}
-								if (range[1] <= -1 && ui.selected.targets.length == 0 && event.targetRequired) {
-									ok = false;
-								}
-							}
-							if (custom.add.target) {
-								custom.add.target();
-							}
-						}
-						if (!event.skill && get.noSelected() && !_status.noconfirm) {
-							var skills = [],
-								enable,
-								info;
-							var skills2;
-							if (event._skillChoice) {
-								skills2 = event._skillChoice;
-								for (var i = 0; i < skills2.length; i++) {
-									if (event.isMine() || !event._aiexclude.includes(skills2[i])) {
-										skills.push(skills2[i]);
-									}
-								}
-							}
-							else {
-								var skills2;
-								if (get.mode() == 'guozhan' && player.hasSkillTag('nomingzhi', false, null, true)) {
-									skills2 = player.getSkills(false, true, false);
-								}
-								else {
-									skills2 = player.getSkills('invisible', true, false);
-								}
-								skills2 = game.filterSkills(skills2.concat(lib.skill.global), player, player.getSkills('e').concat(lib.skill.global));
-								event._skillChoice = [];
-								game.expandSkills(skills2);
-								for (let i = 0; i < skills2.length; i++) {
-									info = get.info(skills2[i]);
-									enable = false;
-									if (typeof info.enable == 'function') enable = info.enable(event);
-									else if (typeof info.enable == 'object') enable = info.enable.includes(event.name);
-									else if (info.enable == 'phaseUse') enable = (event.type == 'phase');
-									else if (typeof info.enable == 'string') enable = (info.enable == event.name);
-
-									if (enable) {
-										if (!game.expandSkills(player.getSkills(false).concat(lib.skill.global)).includes(skills2[i]) && (info.noHidden || get.mode() != 'guozhan' || player.hasSkillTag('nomingzhi', false, null, true))) enable = false;
-										if (info.filter && !info.filter(event, player)) enable = false;
-										if (info.viewAs && typeof info.viewAs != 'function' && event.filterCard && !event.filterCard(get.autoViewAs(info.viewAs, 'unsure'), player, event)) enable = false;
-										if (info.viewAs && typeof info.viewAs != 'function' && info.viewAsFilter && info.viewAsFilter(player) == false) enable = false;
-
-										if (info.usable && get.skillCount(skills2[i]) >= info.usable) enable = false;
-										if (info.chooseButton && _status.event.noButton) enable = false;
-										if (info.round && (info.round - (game.roundNumber - player.storage[skills2[i] + '_roundcount']) > 0)) enable = false;
-										for (const item in player.storage) {
-											if (item.startsWith('temp_ban_')) {
-												if (player.storage[item] !== true) continue;
-												const skillName = item.slice(9);
-												if (lib.skill[skillName]) {
-													const skills = game.expandSkills([skillName]);
-													if (skills.includes(skills2[i])) {
-														enable = false; break;
-													}
-												}
-											}
-										}
-
-									}
-
-									if (enable) {
-										if (event.isMine() || !event._aiexclude.includes(skills2[i])) {
-											skills.add(skills2[i]);
-										}
-										event._skillChoice.add(skills2[i]);
-									}
-								}
-							}
-
-							var globalskills = [];
-							var globallist = lib.skill.global.slice(0);
-							game.expandSkills(globallist);
-							for (var i = 0; i < skills.length; i++) {
-								if (globallist.includes(skills[i])) {
-									globalskills.push(skills.splice(i--, 1)[0]);
-								}
-							}
-							var equipskills = [];
-							var ownedskills = player.getSkills('invisible', false);
-							game.expandSkills(ownedskills);
-							for (var i = 0; i < skills.length; i++) {
-								if (!ownedskills.includes(skills[i])) {
-									equipskills.push(skills.splice(i--, 1)[0]);
-								}
-							}
-							if (equipskills.length) {
-								ui.create.skills3(equipskills);
-							}
-							else if (ui.skills3) {
-								ui.skills3.close();
-							}
-							if (skills.length) {
-								ui.create.skills(skills);
-							}
-							else if (ui.skills) {
-								ui.skills.close();
-							}
-							if (globalskills.length) {
-								ui.create.skills2(globalskills);
-							}
-							else if (ui.skills2) {
-								ui.skills2.close();
-							}
-						}
-						else {
-							if (ui.skills) {
-								ui.skills.close()
-							}
-							if (ui.skills2) {
-								ui.skills2.close()
-							}
-							if (ui.skills3) {
-								ui.skills3.close()
-							}
-						}
-						_status.multitarget = false;
-						var skillinfo = get.info(_status.event.skill);
-						if (_status.event.name == 'chooseToUse') {
-							if (skillinfo && skillinfo.multitarget && !skillinfo.multiline) {
-								_status.multitarget = true;
-							}
-							if ((skillinfo && skillinfo.viewAs && typeof skillinfo.viewAs != 'function') || !_status.event.skill) {
-								var cardinfo = get.info(get.card());
-								if (cardinfo && cardinfo.multitarget && !cardinfo.multiline) {
-									_status.multitarget = true;
-								}
-							}
-						}
-						else if (_status.event.multitarget) {
-							_status.multitarget = true;
-						}
-						if (event.isMine()) {
-							if (game.chess && game.me && get.config('show_distance')) {
-								for (var i = 0; i < players.length; i++) {
-									if (players[i] == game.me) {
-										players[i].node.action.hide();
-									}
-									else {
-										players[i].node.action.show();
-										var dist = get.distance(game.me, players[i], 'pure');
-										var dist2 = get.distance(game.me, players[i]);
-										players[i].node.action.innerHTML = '距离：' + dist2 + '/' + dist;
-										if (dist > 7) {
-											players[i].node.action.classList.add('thunder');
-										}
-										else {
-											players[i].node.action.classList.remove('thunder');
-										}
-									}
-								}
-							}
-							if (ok && (!event.filterOk || event.filterOk()) && auto && (auto_confirm || (skillinfo && skillinfo.direct)) && (!_status.mousedragging || !_status.mouseleft) && !_status.mousedown && !_status.touchnocheck) {
-								if (ui.confirm) {
-									if (!skillinfo || !skillinfo.preservecancel) {
-										ui.confirm.close();
-									}
-								}
-								if (skillinfo && skillinfo.preservecancel && !ui.confirm) {
-									ui.create.confirm('c');
-								}
-								if (event.skillDialog == true) event.skillDialog = false;
-								ui.click.ok();
-								_status.mousedragging = null;
-							}
-							else {
-								ui.arena.classList.add('selecting');
-								if (event.filterTarget && (!event.filterCard || !event.position || (typeof event.position == 'string' && event.position.indexOf('e') == -1))) {
-									ui.arena.classList.add('tempnoe');
-								}
-								game.countChoose();
-								if (!_status.noconfirm && !_status.event.noconfirm) {
-									if (!_status.mousedown || _status.mouseleft) {
-										var str = '';
-										if (ok && (!event.filterOk || event.filterOk())) str += 'o';
-										if (!event.forced && !event.fakeforce && get.noSelected()) str += 'c';
-										ui.create.confirm(str);
-									}
-								}
-							}
-							if (ui.confirm && ui.confirm.lastChild.link == 'cancel') {
-								if (_status.event.type == 'phase' && !_status.event.skill) {
-									// 弹出按钮 根据手杀ui选项开关调用不同样式
-									if (lib.config['extension_十周年UI_newDecadeStyle'] != 'on') {
-										ui.confirm.lastChild.innerHTML = '结束出牌';
-									}
-									else if (lib.config['extension_十周年UI_newDecadeStyle'] == 'on') {
-										ui.confirm.lastChild.innerHTML = '回合结束';
-									}
-									else {
-										ui.confirm.lastChild.innerHTML = '结束';
-									}
-								}
-								else {
-									ui.confirm.lastChild.innerHTML = '取消';
-								}
-							}
-						}
-						return ok;
+							return game.Check.processSelection({ type: 'card', items: cards, event, useCache, isSelectable, custom });
+						},
 					};
+					for(const i in CheckCover) game.Check[i]=CheckCover[i];
 
-					game.uncheck = function () {
-						var i, j;
-						if (game.chess) {
-							var shadows = ui.chessContainer.getElementsByClassName('playergrid temp');
-							while (shadows.length) {
-								shadows[0].remove();
-							}
-						}
-
-						var args = new Array(arguments.length);
-						for (var i = 0; i < args.length; i++) args[i] = arguments[i];
-						if ((args.length == 0 || args.includes('card')) && _status.event.player) {
-							var cards = _status.event.player.getCards('hejsx');
+					const OriginUncheck=game.uncheck;
+					game.uncheck = function (...args) {
+						//对十周年UI和本体的视为卡牌样式的同时适配
+						if ((args.length == 0 || args.includes('card')) && _status.event.player&&lib.config.extension_十周年UI_showTemp) {
+							let cards = _status.event.player.getCards('hejsx');
 							for (let j = 0; j < cards.length; j++) {
-								cards[j].classList.remove('selected');
-								cards[j].classList.remove('selectable');
-								if (cards[j]._tempName) {
-									if (lib.config.extension_十周年UI_showTemp) {
-										cards[j]._tempName.textContent = '';
-									}
-									else {
-										cards[j]._tempName.delete();
-										delete cards[j]._tempName;
-									}
-								}
-								cards[j].updateTransform();
+								if (cards[j]._tempName) cards[j]._tempName.textContent = '';
 							}
-							ui.selected.cards.length = 0;
-							_status.event.player.node.equips.classList.remove('popequip');
 						}
-						var players = game.players.slice(0);
+						//移除target的un-selectable classList显示
 						if (_status.event.deadTarget) players.addArray(game.dead);
-						if ((args.length == 0 || args.includes('target'))) {
-							for (let j = 0; j < players.length; j++) {
-								players[j].classList.remove('selected');
-								players[j].classList.remove('selectable');
-								players[j].classList.remove('un-selectable');
-								if (players[j].instance) {
-									players[j].instance.classList.remove('selected');
-									players[j].instance.classList.remove('selectable');
-								}
-							}
-							ui.selected.targets.length = 0;
+						if (args.length == 0 || args.includes('target')) {
+							let players = game.players.slice().concat(_status.event.deadTarget?game.dead.slice():[]);
+							for (let j = 0; j < players.length; j++) players[j].classList.remove('un-selectable');
 						}
-						if ((args.length == 0 || args.includes('button')) && _status.event.dialog && _status.event.dialog.buttons) {
-							for (let j = 0; j < _status.event.dialog.buttons.length; j++) {
-								_status.event.dialog.buttons[j].classList.remove('selectable');
-								_status.event.dialog.buttons[j].classList.remove('selected');
-							}
-							ui.selected.buttons.length = 0;
-						}
-						if (args.length == 0) {
-							ui.arena.classList.remove('selecting');
-							ui.arena.classList.remove('tempnoe');
-							_status.imchoosing = false;
-							_status.lastdragchange.length = 0;
-							_status.mousedragging = null;
-							_status.mousedragorigin = null;
-
-							while (ui.touchlines.length) {
-								ui.touchlines.shift().delete();
-							}
-						}
-
-						for (var i = 0; i < players.length; i++) {
-							players[i].unprompt();
-						}
-						for (var i = 0; i < _status.dragline.length; i++) {
-							if (_status.dragline[i]) _status.dragline[i].remove();
-						}
-						ui.arena.classList.remove('dragging');
-						_status.dragline.length = 0;
+						//引用game.uncheck源内容
+						OriginUncheck.apply(this,arguments);
 					};
 
 					game.swapPlayer = function (player, player2) {
@@ -13459,6 +13004,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			intro: (function () {
 				var log = [
 					'魔改十周年 萌修 0.2.7',
+					'新版适配',
+					'对game.check的修改改为对部分拆分部分的修改',
+					'对game.uncheck的修改改为继承式修改',
 					'菜单栏错位bug修复',
 					'刺杀素材命名修改（cisha→sha_stab）',
 					'修复控制身份为bYe的css片段加载失败的bug',
