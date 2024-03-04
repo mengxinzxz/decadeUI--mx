@@ -4390,7 +4390,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 					const CheckCover = {
 						//添加target的un-selectable classList显示
-						target:function(event, useCache) {
+						target: function (event, useCache) {
 							const player = event.player;
 							const card = get.card();
 							const targets = game.players.slice();
@@ -4401,18 +4401,18 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								return event.filterTarget(card, player, target);
 							}
 							const custom = target => {
-								const list=['selected', 'selectable'];
-								target.classList[list.some(select=>target.classList.contains(select))?'remove':'add']('un-selectable');
-								if(target.instance){
-									for(const className of list){
-										target.instance.classList[target.classList.contains(className)?'add':'remove'](className);
+								const list = ['selected', 'selectable'];
+								target.classList[list.some(select => target.classList.contains(select)) ? 'remove' : 'add']('un-selectable');
+								if (target.instance) {
+									for (const className of list) {
+										target.instance.classList[target.classList.contains(className) ? 'add' : 'remove'](className);
 									}
 								}
 							}
 							return game.Check.processSelection({ type: 'target', items: targets, event, useCache, isSelectable, custom });
 						},
 						//对十周年UI和本体的视为卡牌样式的同时适配
-						card:function(event, useCache) {
+						card: function (event, useCache) {
 							const player = event.player;
 							const players = game.players.slice();
 							if (event.deadTarget) players.addArray(game.dead);
@@ -4427,10 +4427,10 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							}
 							const custom = lib.config.cardtempname === 'off' ? null : card => {
 								if (get.name(card) === card.name && get.is.sameNature(get.nature(card), card.nature, true)) return;
-								const cardname = get.name(card),cardnature = get.nature(card);
+								const cardname = get.name(card), cardnature = get.nature(card);
 								if (lib.config.extension_十周年UI_showTemp) {
 									if (!card._tempName) card._tempName = ui.create.div('.temp-name', card);
-									let tempname = '',tempname2 = get.translation(cardname);
+									let tempname = '', tempname2 = get.translation(cardname);
 									if (cardnature) {
 										card._tempName.dataset.nature = cardnature;
 										if (cardname == 'sha') {
@@ -4449,12 +4449,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							return game.Check.processSelection({ type: 'card', items: cards, event, useCache, isSelectable, custom });
 						},
 					};
-					for(const i in CheckCover) game.Check[i]=CheckCover[i];
+					for (const i in CheckCover) game.Check[i] = CheckCover[i];
 
-					const OriginUncheck=game.uncheck;
+					const OriginUncheck = game.uncheck;
 					game.uncheck = function (...args) {
 						//对十周年UI和本体的视为卡牌样式的同时适配
-						if ((args.length == 0 || args.includes('card')) && _status.event.player&&lib.config.extension_十周年UI_showTemp) {
+						if ((args.length == 0 || args.includes('card')) && _status.event.player && lib.config.extension_十周年UI_showTemp) {
 							let cards = _status.event.player.getCards('hejsx');
 							for (let j = 0; j < cards.length; j++) {
 								if (cards[j]._tempName) cards[j]._tempName.textContent = '';
@@ -4463,11 +4463,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						//移除target的un-selectable classList显示
 						if (_status.event.deadTarget) players.addArray(game.dead);
 						if (args.length == 0 || args.includes('target')) {
-							let players = game.players.slice().concat(_status.event.deadTarget?game.dead.slice():[]);
+							let players = game.players.slice().concat(_status.event.deadTarget ? game.dead.slice() : []);
 							for (let j = 0; j < players.length; j++) players[j].classList.remove('un-selectable');
 						}
 						//引用game.uncheck源内容
-						OriginUncheck.apply(this,arguments);
+						OriginUncheck.apply(this, arguments);
 					};
 
 					game.swapPlayer = function (player, player2) {
