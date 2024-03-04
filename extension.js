@@ -4425,7 +4425,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							}
 						}
 						//移除target的un-selectable classList显示
-						const players = game.players.slice().concat(_status.event.deadTarget ? game.dead.slice() : []);
 						if (args.length == 0 || args.includes('target')) {
 							let players = game.players.slice().concat(_status.event.deadTarget ? game.dead.slice() : []);
 							for (let j = 0; j < players.length; j++) players[j].classList.remove('un-selectable');
