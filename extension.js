@@ -15,6 +15,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			//菜单栏错位bugfix
 			game.menuZoom = 1;
 
+			//单独装备栏
+			_status.nopopequip = lib.config.extension_十周年UI_aloneEquip;
+
 			//路径确定
 			var extensionName = decadeUIName;
 			var extension = lib.extensionMenu['extension_' + extensionName];
@@ -4352,6 +4355,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						return skills;
 					};
 
+					//game.check修改
+					//game.Check块级修改
 					const CheckCover = {
 						//添加target的un-selectable classList显示
 						target: function (event, useCache) {
@@ -4435,6 +4440,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						return ok;
 					};
 
+					//game.uncheck修改
 					const OriginUncheck = game.uncheck;
 					game.uncheck = function (...args) {
 						//对十周年UI和本体的视为卡牌样式的同时适配
@@ -12713,11 +12719,27 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				}
 			},
 			aloneEquip: {
-				name: '<b><font color=\"#99FF75\">单独装备栏(需重启)',
+				name: '<b><font color=\"#99FF75\">单独装备栏',
 				intro: '<b><font color=\"#99FF75\">切换玩家装备栏为单独装备栏或非单独装备栏，初始为单独装备栏，根据个人喜好调整',
 				init: true,
 				update: function () {
-					if (window.decadeUI) ui.arena.dataset.aloneEquip = lib.config['extension_十周年UI_aloneEquip'] ? 'on' : 'off';
+					const config = lib.config['extension_十周年UI_aloneEquip'];
+					if (window.decadeUI) ui.arena.dataset.aloneEquip = config ? 'on' : 'off';
+					_status.nopopequip = config;
+					if (_status.gameStarted && ui && ui.equipSolts) {
+						if (config && game.me != ui.equipSolts.me) {
+							if (ui.equipSolts.me) {
+								ui.equipSolts.me.appendChild(ui.equipSolts.equips);
+							}
+							ui.equipSolts.me = game.me;
+							ui.equipSolts.equips = game.me.node.equips;
+							ui.equipSolts.appendChild(game.me.node.equips);
+						}
+						if (!config && game.me == ui.equipSolts.me) {
+							ui.equipSolts.me.appendChild(ui.equipSolts.equips);
+							ui.equipSolts.me = undefined;
+						}
+					}
 				}
 			},
 			loadingStyle: {
@@ -12996,6 +13018,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'修复判定区废除显示两个“废”字的bug',
 					'调整十周年样式右上角菜单，手杀样式左上角问号和右上角菜单于进入游戏后再加载',
 					'修复特殊标签的主公技标记显示问题',
+					'修改单独装备栏按钮在菜单页面调整可以即时生效',
+					'修复非单独装备栏触碰装备选择按钮失效的bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
