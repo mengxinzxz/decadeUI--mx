@@ -4425,7 +4425,15 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					//对十周年UI和本体的视为卡牌样式的同时适配
 					lib.hooks['checkCard'][0] = function updateTempname(card, event) {
 						if (lib.config.cardtempname === 'off') return;
-						const cardname = get.name(card), cardnature = get.nature(card);
+						const skill = _status.event.skill, goon = (skill && get.info(skill) && get.info(skill).viewAs);
+						let cardname, cardnature, cardskb;
+						if (!goon || !ui.selected.cards.includes(card)) {
+							cardname = get.name(card); cardnature = get.nature(card);
+						}
+						else {
+							cardskb = (typeof get.info(skill).viewAs == 'function' ? get.info(skill).viewAs([card], game.me) : get.info(skill).viewAs);
+							cardname = get.name(cardskb); cardnature = get.nature(cardskb);
+						}
 						if (card.name !== cardname || !get.is.sameNature(card.nature, cardnature, true)) {
 							if (lib.config.extension_十周年UI_showTemp) {
 								if (!card._tempName) card._tempName = ui.create.div('.temp-name', card);
@@ -4441,7 +4449,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								card._tempName.tempname = tempname;
 							}
 							else {
-								const node = ui.create.cardTempName(card);
+								const node = goon ? ui.create.cardTempName(cardskb, card) : ui.create.cardTempName(card);
 								if (lib.config.cardtempname !== 'default') node.classList.remove('vertical');
 							}
 						}
