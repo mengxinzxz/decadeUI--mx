@@ -226,3 +226,37 @@
 	background-size: cover !important;
 }
 
+/*转化花色点数显示*/
+.card>.tempsuitnum {
+	font-size: 25px;
+	color: #351D01;
+	text-align: center;
+	top: -1px;
+	left: -1px;
+	width: 58px;
+	height: 100px;
+	line-height: 42px;
+	text-shadow: 0 0 3px #ffffff;
+	background-image: url('assets/image/viewsuitnum.png');
+	background-size: 70% 60%;
+	background-repeat: no-repeat;
+	letter-spacing: -1px;
+	transform-origin: 0 0;
+	z-index: 2;
+	-webkit-text-size-adjust: none;
+}
+
+.card[data-virtual='1']>.tempsuitnum {
+	display: none;
+}
+
+.card>.tempsuitnum>.num {
+	left: -11px;
+	position: relative;
+}
+
+.card>.tempsuitnum>.suit {
+	left: -10px;
+	top: -22px;
+	position: relative;
+}

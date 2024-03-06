@@ -906,6 +906,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 											evt.card.nature,
 										]);
 										if (evt.card.suit == 'none') card.node.suitnum.style.display = 'none';
+										card.dataset.virtual = 1;
 										cards = [card];
 									}
 								}
@@ -4364,24 +4365,29 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					//对十周年UI和本体的视为卡牌样式的同时适配
 					lib.hooks['checkCard'][0] = function updateTempname(card, event) {
 						if (lib.config.cardtempname === 'off') return;
-						if (get.name(card) === card.name && get.is.sameNature(get.nature(card), card.nature, true)) return;
-						if (lib.config.extension_十周年UI_showTemp) {
-							const cardname = get.name(card), cardnature = get.nature(card);
-							if (!card._tempName) card._tempName = ui.create.div('.temp-name', card);
-							let tempname = '', tempname2 = get.translation(cardname);
-							if (cardnature) {
-								card._tempName.dataset.nature = cardnature;
-								if (cardname == 'sha') {
-									tempname2 = get.translation(cardnature) + tempname2;
+						const cardname = get.name(card), cardnature = get.nature(card);
+						if (card.name !== cardname || !get.is.sameNature(card.nature, cardnature, true)){
+							if (lib.config.extension_十周年UI_showTemp) {
+								if (!card._tempName) card._tempName = ui.create.div('.temp-name', card);
+								let tempname = '', tempname2 = get.translation(cardname);
+								if (cardnature) {
+									card._tempName.dataset.nature = cardnature;
+									if (cardname == 'sha') {
+										tempname2 = get.translation(cardnature) + tempname2;
+									}
 								}
+								tempname += tempname2;
+								card._tempName.innerHTML = tempname;
+								card._tempName.tempname = tempname;
 							}
-							tempname += tempname2;
-							card._tempName.innerHTML = tempname;
-							card._tempName.tempname = tempname;
+							else {
+								const node = ui.create.cardTempName(card);
+								if (lib.config.cardtempname !== 'default') node.classList.remove('vertical');
+							}
 						}
-						else {
-							const node = ui.create.cardTempName(card);
-							if (lib.config.cardtempname !== 'default') node.classList.remove('vertical');
+						const cardnumber = get.number(card), cardsuit = get.suit(card);
+						if (card.dataset.views != 1 && (card.number != cardnumber || card.suit != cardsuit)) {
+							dui.cardTempSuitNum(card, cardsuit, cardnumber);
 						}
 					};
 					//根据手杀ui选项开关调用不同结束出牌阶段的弹出样式
@@ -4397,13 +4403,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					//对十周年UI和本体的视为卡牌样式的同时适配
 					lib.hooks['uncheckCard'][0] = function removeTempname(card, event) {
 						if (card._tempName) {
-							if (lib.config.extension_十周年UI_showTemp) {
-								card._tempName.textContent = '';
-							}
-							else {
-								card._tempName.delete();
-								delete card._tempName;
-							}
+							card._tempName.delete();
+							delete card._tempName;
+						}
+						if (card._tempSuitNum){
+							card._tempSuitNum.delete();
+							delete card._tempSuitNum;
 						}
 					};
 					//移除target的un-selectable classList显示
@@ -7524,6 +7529,27 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					}, delay, cards, delay2)
 				},
 
+				//虚拟卡牌花色点数显示
+				cardTempSuitNum: function (card, cardsuit, cardnumber) {
+					var remain = false;
+					if (card._tempSuitNum) remain = true;
+					let snnode = card._tempSuitNum || ui.create.div('.tempsuitnum', card);
+					card._tempSuitNum = snnode;
+					if (!remain) {
+						snnode.$num = decadeUI.element.create('num', snnode, 'span');
+						snnode.$num.style.fontFamily = '"STHeiti","SimHei","Microsoft JhengHei","Microsoft YaHei","WenQuanYi Micro Hei",Helvetica,Arial,sans-serif';
+						snnode.$br = decadeUI.element.create(null, snnode, 'br');
+						snnode.$suit = decadeUI.element.create('suit', snnode, 'span');
+						snnode.$suit.style.fontFamily = '"STHeiti","SimHei","Microsoft JhengHei","Microsoft YaHei","WenQuanYi Micro Hei",Helvetica,Arial,sans-serif';
+					}
+					if (cardnumber) snnode.$num.innerHTML = get.strNumber(cardnumber);
+					else snnode.$num.innerHTML = '▣';
+					if (cardsuit) snnode.$suit.innerHTML = get.translation(cardsuit);
+					else snnode.$suit.innerHTML = '◈';
+					card.dataset.tempsn = cardsuit;
+				},
+
+
 				tryAddPlayerCardUseTag: function (card, player, event) {
 					if (!card || !player || !event) return;
 
@@ -7734,8 +7760,10 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 								var tagText = '';
 								var tagNode = card.querySelector('.used-info');
-								if (tagNode == null)
-									tagNode = card.appendChild(dui.element.create('used-info'));
+								if (tagNode == null) tagNode = card.appendChild(dui.element.create('used-info'));
+								if (event.result.suit != get.suit(card) || event.result.number != get.number(card)) {
+									dui.cardTempSuitNum(card, event.result.suit, event.result.number);
+								}
 
 								var action;
 								var judgeValue;
@@ -12971,6 +12999,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'修复特殊标签的主公技标记显示问题',
 					'修改单独装备栏按钮在菜单页面调整可以即时生效',
 					'修复非单独装备栏触碰装备选择按钮失效的bug',
+					'加回并优化转化花色点数显示（by-Fire.win）',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
