@@ -12619,14 +12619,14 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					game.saveConfig('extension_十周年UI_showTemp', bool);
 					if (game.me && lib.config.cardtempname != 'off') {
 						let cards = game.me.getCards('h', card => card._tempName);
-						const skill = _status.event.skill, goon = (skill && get.info(skill) && get.info(skill).viewAs);
+						const skill = _status.event.skill, goon = (skill && get.info(skill) && get.info(skill).viewAs && ((ui.selected.cards || []).includes(card)));
 						if (cards.length) {
 							for (let j = 0; j < cards.length; j++) {
 								const card = cards[j];
 								card._tempName.delete();
 								delete card._tempName;
 								let cardname, cardnature, cardskb;
-								if (!goon || !ui.selected.cards.includes(card)) {
+								if (!goon) {
 									cardname = get.name(card); cardnature = get.nature(card);
 								}
 								else {
@@ -12648,7 +12648,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										card._tempName.tempname = tempname;
 									}
 									else {
-										const node = ui.create.cardTempName(cardskb, card);
+										const node = goon ? ui.create.cardTempName(cardskb, card) : ui.create.cardTempName(card);
 										if (lib.config.cardtempname !== 'default') node.classList.remove('vertical');
 									}
 								}
