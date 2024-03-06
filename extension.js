@@ -4238,7 +4238,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 												this._tempName.delete();
 												delete this._tempName;
 											}
-											//1
 											if (lib.config.extension_十周年UI_showTemp) {
 												if (!this._tempName) this._tempName = ui.create.div('.temp-name', this);
 												let tempname = '', tempname2 = get.translation(vname);
