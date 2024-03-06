@@ -4366,7 +4366,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					lib.hooks['checkCard'][0] = function updateTempname(card, event) {
 						if (lib.config.cardtempname === 'off') return;
 						const cardname = get.name(card), cardnature = get.nature(card);
-						if (card.name !== cardname || !get.is.sameNature(card.nature, cardnature, true)){
+						if (card.name !== cardname || !get.is.sameNature(card.nature, cardnature, true)) {
 							if (lib.config.extension_十周年UI_showTemp) {
 								if (!card._tempName) card._tempName = ui.create.div('.temp-name', card);
 								let tempname = '', tempname2 = get.translation(cardname);
@@ -4406,7 +4406,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							card._tempName.delete();
 							delete card._tempName;
 						}
-						if (card._tempSuitNum){
+						if (card._tempSuitNum) {
 							card._tempSuitNum.delete();
 							delete card._tempSuitNum;
 						}
@@ -7580,8 +7580,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						case 'respond':
 							if (tagText == '') tagText = '打出';
 
-							var cardname = event.card.name;
-							var cardnature = get.nature(event.card);
+							const cardname = event.card.name, cardnature = get.nature(event.card);
 							if ((lib.config.cardtempname != 'off') && ((card.name != cardname) || !get.is.sameNature(cardnature, card.nature, true))) {
 								if (lib.config.extension_十周年UI_showTemp) {
 									if (!card._tempName) card._tempName = ui.create.div('.temp-name', card);
@@ -7603,6 +7602,10 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									var cardtempnameConfig = lib.config.cardtempname;
 									if (cardtempnameConfig !== 'default') node.classList.remove('vertical');
 								}
+							}
+							const cardnumber = get.number(event.card), cardsuit = get.suit(event.card);
+							if (card.dataset.views != 1 && event.card.cards && event.card.cards.length == 1 && (card.number != cardnumber || card.suit != cardsuit)) {
+								dui.cardTempSuitNum(card, cardsuit, cardnumber);
 							}
 
 							if (duicfg.cardUseEffect && event.card && (!event.card.cards || !event.card.cards.length || event.card.cards.length == 1)) {
