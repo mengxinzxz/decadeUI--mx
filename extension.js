@@ -4356,69 +4356,38 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					};
 
 					//game.check修改
-					//game.Check块级修改
-					const CheckCover = {
-						//添加target的un-selectable classList显示
-						target: function (event, useCache) {
-							const player = event.player;
-							const card = get.card();
-							const targets = game.players.slice();
-							if (event.deadTarget) targets.addArray(game.dead);
-							const isSelectable = (target, event) => {
-								if (game.chess && !event.chessForceAll && player && get.distance(player, target, 'pure') > 7) return false;
-								if (target.isOut()) return false;
-								return event.filterTarget(card, player, target);
-							}
-							const custom = target => {
-								const list = ['selected', 'selectable'];
-								target.classList[list.some(select => target.classList.contains(select)) ? 'remove' : 'add']('un-selectable');
-								if (target.instance) {
-									for (const className of list) {
-										target.instance.classList[target.classList.contains(className) ? 'add' : 'remove'](className);
-									}
-								}
-							}
-							return game.Check.processSelection({ type: 'target', items: targets, event, useCache, isSelectable, custom });
-						},
-						//对十周年UI和本体的视为卡牌样式的同时适配
-						card: function (event, useCache) {
-							const player = event.player;
-							const players = game.players.slice();
-							if (event.deadTarget) players.addArray(game.dead);
-							const cards = player.getCards(event.position);
-							let firstCheck = false;
-							const range = get.select(event.selectCard);
-							const isSelectable = card => {
-								if (card.classList.contains('uncheck')) return false;
-								if (player.isOut()) return false;
-								if (!lib.filter.cardRespondable(card, player)) return false;
-								return event.filterCard(card, player);
-							}
-							const custom = lib.config.cardtempname === 'off' ? null : card => {
-								if (get.name(card) === card.name && get.is.sameNature(get.nature(card), card.nature, true)) return;
-								const cardname = get.name(card), cardnature = get.nature(card);
-								if (lib.config.extension_十周年UI_showTemp) {
-									if (!card._tempName) card._tempName = ui.create.div('.temp-name', card);
-									let tempname = '', tempname2 = get.translation(cardname);
-									if (cardnature) {
-										card._tempName.dataset.nature = cardnature;
-										if (cardname == 'sha') {
-											tempname2 = get.translation(cardnature) + tempname2;
-										}
-									}
-									tempname += tempname2;
-									card._tempName.innerHTML = tempname;
-									card._tempName.tempname = tempname;
-								}
-								else {
-									const node = ui.create.cardTempName(card);
-									if (lib.config.cardtempname !== 'default') node.classList.remove('vertical');
-								}
-							}
-							return game.Check.processSelection({ type: 'card', items: cards, event, useCache, isSelectable, custom });
-						},
+					//添加target的un-selectable classList显示
+					lib.hooks['checkTarget'][0] = function updateInstance(target, event) {
+						const list = ['selected', 'selectable'];
+						target.classList[list.some(select => target.classList.contains(select)) ? 'remove' : 'add']('un-selectable');
+						if (!target.instance) return;
+						for (const className of list) {
+							target.instance.classList[target.classList.contains(className) ? 'add' : 'remove'](className);
+						}
 					};
-					for (const i in CheckCover) game.Check[i] = CheckCover[i];
+					//对十周年UI和本体的视为卡牌样式的同时适配
+					lib.hooks['checkCard'][0] = function updateTempname(card, event) {
+						if (lib.config.cardtempname === 'off') return;
+						if (get.name(card) === card.name && get.is.sameNature(get.nature(card), card.nature, true)) return;
+						if (lib.config.extension_十周年UI_showTemp) {
+							const cardname = get.name(card), cardnature = get.nature(card);
+							if (!card._tempName) card._tempName = ui.create.div('.temp-name', card);
+							let tempname = '', tempname2 = get.translation(cardname);
+							if (cardnature) {
+								card._tempName.dataset.nature = cardnature;
+								if (cardname == 'sha') {
+									tempname2 = get.translation(cardnature) + tempname2;
+								}
+							}
+							tempname += tempname2;
+							card._tempName.innerHTML = tempname;
+							card._tempName.tempname = tempname;
+						}
+						else {
+							const node = ui.create.cardTempName(card);
+							if (lib.config.cardtempname !== 'default') node.classList.remove('vertical');
+						}
+					};
 					//根据手杀ui选项开关调用不同结束出牌阶段的弹出样式
 					lib.hooks['checkEnd'].push(() => {
 						if (ui.confirm && ui.confirm.lastChild.link == 'cancel') {
@@ -4429,22 +4398,24 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					});
 
 					//game.uncheck修改
-					const OriginUncheck = game.uncheck;
-					game.uncheck = function (...args) {
-						//对十周年UI和本体的视为卡牌样式的同时适配
-						if ((args.length == 0 || args.includes('card')) && _status.event.player && lib.config.extension_十周年UI_showTemp) {
-							let cards = _status.event.player.getCards('hejsx');
-							for (let j = 0; j < cards.length; j++) {
-								if (cards[j]._tempName) cards[j]._tempName.textContent = '';
+					//对十周年UI和本体的视为卡牌样式的同时适配
+					lib.hooks['uncheckCard'][0] = function removeTempname(card, event) {
+						if (card._tempName) {
+							if (lib.config.extension_十周年UI_showTemp) {
+								card._tempName.textContent = '';
+							}
+							else {
+								card._tempName.delete();
+								delete card._tempName;
 							}
 						}
-						//移除target的un-selectable classList显示
-						if (args.length == 0 || args.includes('target')) {
-							let players = game.players.slice().concat(_status.event.deadTarget ? game.dead.slice() : []);
-							for (let j = 0; j < players.length; j++) players[j].classList.remove('un-selectable');
-						}
-						//引用game.uncheck源内容
-						OriginUncheck.apply(this, arguments);
+					};
+					//移除target的un-selectable classList显示
+					lib.hooks['uncheckTarget'][0] = function removeInstance(target, event) {
+						if (!target.instance) return;
+						target.instance.classList.remove('selected');
+						target.instance.classList.remove('selectable');
+						target.classList.remove('un-selectable');
 					};
 
 					game.swapPlayer = function (player, player2) {
@@ -12998,8 +12969,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				var log = [
 					'魔改十周年 萌修 0.2.7',
 					'新版适配',
-					'对game.check的修改改为对部分拆分部分的修改',
-					'对game.uncheck的修改改为继承式修改',
+					'对game.check和game.uncheck的修改改为lib.hooks钩子引入',
 					'菜单栏错位bug修复',
 					'刺杀素材命名修改（cisha→sha_stab）',
 					'修复控制身份为bYe的css片段加载失败的bug',
