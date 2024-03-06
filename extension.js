@@ -4411,12 +4411,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						}
 					};
 					//移除target的un-selectable classList显示
-					lib.hooks['uncheckTarget'][0] = function removeInstance(target, event) {
-						if (!target.instance) return;
-						target.instance.classList.remove('selected');
-						target.instance.classList.remove('selectable');
+					lib.hooks['uncheckTarget'].push(function decade_removeSystem(target, event) {
 						target.classList.remove('un-selectable');
-					};
+					});
 
 					game.swapPlayer = function (player, player2) {
 						var result = swapPlayerFunction.call(this, player, player2);
