@@ -4481,7 +4481,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							delete card._tempSuitNum;
 							card.dataset.views = 0;
 						}
-
 					};
 					//移除target的un-selectable classList显示
 					lib.hooks['uncheckTarget'].push((target, event) => {
