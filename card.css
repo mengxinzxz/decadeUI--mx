@@ -140,6 +140,10 @@
 	display: none;
 }
 
+.card[data-low='1']>.gaintag.info {
+	top: calc(70% - 16px);
+}
+
 /*卡名辅助显示及控制*/
 .card>.name,
 .card.fullskin>.name,

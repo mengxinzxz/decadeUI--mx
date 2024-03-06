@@ -4452,6 +4452,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								const node = goon ? ui.create.cardTempName(cardskb, card) : ui.create.cardTempName(card);
 								if (lib.config.cardtempname !== 'default') node.classList.remove('vertical');
 							}
+							card.dataset.low = 1;
 						}
 						const cardnumber = get.number(card), cardsuit = get.suit(card);
 						if (card.dataset.views != 1 && (card.number != cardnumber || card.suit != cardsuit)) {
