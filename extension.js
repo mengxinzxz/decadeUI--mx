@@ -4427,7 +4427,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						if (lib.config.cardtempname === 'off') return;
 						const skill = _status.event.skill, goon = (skill && get.info(skill) && get.info(skill).viewAs && (ui.selected.cards || []).includes(card));
 						let cardname, cardnature, cardskb;
-						if (!goon || !ui.selected.cards.includes(card)) {
+						if (!goon) {
 							cardname = get.name(card); cardnature = get.nature(card);
 						}
 						else {
