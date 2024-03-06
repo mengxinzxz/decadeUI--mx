@@ -4411,7 +4411,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						}
 					};
 					//移除target的un-selectable classList显示
-					lib.hooks['uncheckTarget'].push(function decade_removeSystem(target, event) {
+					lib.hooks['uncheckTarget'].push((target, event) => {
 						target.classList.remove('un-selectable');
 					});
 
