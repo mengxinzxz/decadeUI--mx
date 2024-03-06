@@ -2024,6 +2024,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										evt.card.nature,
 									]);
 									if (evt.card.suit == 'none') card.node.suitnum.style.display = 'none';
+									card.dataset.virtual = 1;
 									cards2 = [card];
 								}
 							}
@@ -4202,12 +4203,71 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									else {
 										this.classList.remove('selected');
 										this.updateTransform();
+										if (this.dataset.view == 1) {
+											this.dataset.view = 0;
+											if (this._tempName) {
+												this._tempName.delete();
+												delete this._tempName;
+												this.dataset.low = 0;
+											}
+										}
+										if (this.dataset.views == 1) {
+											this.dataset.views = 0;
+											if (this._tempSuitNum) {
+												this._tempSuitNum.delete();
+												delete this._tempSuitNum;
+											}
+										}
 									}
 								}
 								else {
 									ui.selected.cards.add(this);
 									this.classList.add('selected');
 									this.updateTransform(true);
+									const skill = _status.event.skill;
+									if (get.info(skill) && get.info(skill).viewAs) {
+										const cardskb = (typeof get.info(skill).viewAs == 'function' ? get.info(skill).viewAs([this], _status.event.player) : get.info(skill).viewAs);
+										const rsuit = get.suit(this), rnum = get.number(this), rname = get.name(this);
+										const vname = get.name(cardskb);
+										const rnature = get.nature(this), vnature = get.nature(cardskb);
+										let vsuit = get.suit(cardskb), vnum = get.number(cardskb);
+										if (vsuit == 'none') vsuit = rsuit;
+										if (!vnum) vnum = rnum;
+										if (rname != vname || !get.is.sameNature(rnature, vnature, true)) {
+											if (this._tempName) {
+												this._tempName.delete();
+												delete this._tempName;
+											}
+											//1
+											if (lib.config.extension_十周年UI_showTemp) {
+												if (!this._tempName) this._tempName = ui.create.div('.temp-name', this);
+												let tempname = '', tempname2 = get.translation(vname);
+												if (vnature) {
+													this._tempName.dataset.nature = vnature;
+													if (vname == 'sha') {
+														tempname2 = get.translation(vnature) + tempname2;
+													}
+												}
+												tempname += tempname2;
+												this._tempName.innerHTML = tempname;
+												this._tempName.tempname = tempname;
+											}
+											else {
+												const nodeviewas = ui.create.cardTempName(cardskb, this);
+												if (lib.config.cardtempname !== 'default') nodeviewas.classList.remove('vertical');
+											}
+											this.dataset.low = 1;
+											this.dataset.view = 1;
+										}
+										if (rsuit != vsuit || rnum != vnum) {
+											if (this._tempSuitNum) {
+												this._tempSuitNum.delete();
+												delete this._tempSuitNum;
+											}
+											dui.cardTempSuitNum(this, vsuit, vnum);
+											this.dataset.views = 1;
+										}
+									}
 								}
 								if (game.chess && get.config('show_range') && !_status.event.skill && this.classList.contains('selected') && _status.event.isMine() && _status.event.name == 'chooseToUse') {
 									var player = _status.event.player;
@@ -4405,11 +4465,15 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						if (card._tempName) {
 							card._tempName.delete();
 							delete card._tempName;
+							card.dataset.low = 0;
+							card.dataset.view = 0;
 						}
 						if (card._tempSuitNum) {
 							card._tempSuitNum.delete();
 							delete card._tempSuitNum;
+							cards.dataset.views = 0;
 						}
+
 					};
 					//移除target的un-selectable classList显示
 					lib.hooks['uncheckTarget'].push((target, event) => {
@@ -12546,47 +12610,45 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				intro: '开启此选项后，视为卡牌显示将会替换为十周年UI内置替换显示',
 				onclick: function (bool) {
 					game.saveConfig('extension_十周年UI_showTemp', bool);
-					if (game.me && game.me.getCards && lib.config.cardtempname != 'off') {
-						var cards = game.me.getCards('h');
-						for (var j = 0; j < cards.length; j++) {
-							var card = cards[j];
-							if (card._tempName) {
-								if (!bool) {
-									card._tempName.textContent = '';
-									card.updateTransform();
+					if (game.me && lib.config.cardtempname != 'off') {
+						let cards = game.me.getCards('h', card => card._tempName);
+						const skill = _status.event.skill, goon = (skill && get.info(skill) && get.info(skill).viewAs);
+						if (cards.length) {
+							for (let j = 0; j < cards.length; j++) {
+								const card = cards[j];
+								card._tempName.delete();
+								delete card._tempName;
+								let cardname, cardnature, cardskb;
+								if (!goon || !ui.selected.cards.includes(card)) {
+									cardname = get.name(card); cardnature = get.nature(card);
 								}
 								else {
-									card._tempName.delete();
-									delete card._tempName;
+									cardskb = (typeof get.info(skill).viewAs == 'function' ? get.info(skill).viewAs([card], game.me) : get.info(skill).viewAs);
+									cardname = get.name(cardskb); cardnature = get.nature(cardskb);
 								}
-							}
-							var cardname = get.name(card);
-							var cardnature = get.nature(card);
-							if (card.name != cardname || !get.is.sameNature(get.nature(card), card.nature, true)) {
-								if (bool) {
-									if (!card._tempName) card._tempName = ui.create.div('.temp-name', card);
-									var tempname = '';
-									var tempname2 = get.translation(cardname);
-									if (cardnature) {
-										card._tempName.dataset.nature = cardnature;
-										if (cardname == 'sha') {
-											tempname2 = get.translation(cardnature) + tempname2;
+								if (card.name != cardname || !get.is.sameNature(card.nature, cardnature, true)) {
+									if (bool) {
+										if (!card._tempName) card._tempName = ui.create.div('.temp-name', card);
+										let tempname = '', tempname2 = get.translation(cardname);
+										if (cardnature) {
+											card._tempName.dataset.nature = cardnature;
+											if (cardname == 'sha') {
+												tempname2 = get.translation(cardnature) + tempname2;
+											}
 										}
+										tempname += tempname2;
+										card._tempName.innerHTML = tempname;
+										card._tempName.tempname = tempname;
 									}
-									tempname += tempname2;
-
-									card._tempName.innerHTML = tempname;
-									card._tempName.tempname = tempname;
-								}
-								else {
-									var node = ui.create.cardTempName(card);
-									var cardtempnameConfig = lib.config.cardtempname;
-									if (cardtempnameConfig !== 'default') node.classList.remove('vertical');
+									else {
+										const node = ui.create.cardTempName(cardskb, card);
+										if (lib.config.cardtempname !== 'default') node.classList.remove('vertical');
+									}
 								}
 							}
+							//game.uncheck();
+							//game.check();
 						}
-						game.uncheck();
-						game.check();
 					}
 				},
 			},
@@ -12993,6 +13055,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				var log = [
 					'魔改十周年 萌修 0.2.7',
 					'新版适配',
+					'加回并优化转化花色点数显示（by-Fire.win）',
 					'对game.check和game.uncheck的修改改为lib.hooks钩子引入',
 					'菜单栏错位bug修复',
 					'刺杀素材命名修改（cisha→sha_stab）',
@@ -13002,7 +13065,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'修复特殊标签的主公技标记显示问题',
 					'修改单独装备栏按钮在菜单页面调整可以即时生效',
 					'修复非单独装备栏触碰装备选择按钮失效的bug',
-					'加回并优化转化花色点数显示（by-Fire.win）',
+					'添加viewAs转化技能的视为卡牌显示',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
