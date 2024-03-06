@@ -4479,7 +4479,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						if (card._tempSuitNum) {
 							card._tempSuitNum.delete();
 							delete card._tempSuitNum;
-							cards.dataset.views = 0;
+							card.dataset.views = 0;
 						}
 
 					};
