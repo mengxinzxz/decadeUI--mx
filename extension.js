@@ -4357,14 +4357,10 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 					//game.check修改
 					//添加target的un-selectable classList显示
-					lib.hooks['checkTarget'][0] = function updateInstance(target, event) {
+					lib.hooks['checkTarget'].push((target, event) => {
 						const list = ['selected', 'selectable'];
 						target.classList[list.some(select => target.classList.contains(select)) ? 'remove' : 'add']('un-selectable');
-						if (!target.instance) return;
-						for (const className of list) {
-							target.instance.classList[target.classList.contains(className) ? 'add' : 'remove'](className);
-						}
-					};
+					});
 					//对十周年UI和本体的视为卡牌样式的同时适配
 					lib.hooks['checkCard'][0] = function updateTempname(card, event) {
 						if (lib.config.cardtempname === 'off') return;
