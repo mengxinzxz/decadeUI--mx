@@ -2390,95 +2390,95 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
         },
         //注意：twtanfeng非版本不可用而修改，而是为了适配视为使用XX牌的转化写的以viewAs方法实现效果的技能的“示例”
         //玩家可以以此chooseToUse为模板，对自己想要实现的“将XX牌当作XX牌使用”的技能写成支持viewAs的模板以实现萌修十周年对viewAs卡牌选中美化的支持
-        twtanfeng:{
-            content:function(){
+        twtanfeng: {
+            content: function () {
                 'step 0'
-                player.chooseTarget(get.prompt2('twtanfeng'),function(card,player,target){
-                    return target!=player&&target.countDiscardableCards(player,'hej')>0;
-                }).set('ai',function(target){
-                    var player=_status.event.player,num=1;
-                    if(get.attitude(player,target)>0) num=3;
-                    else if(!target.countCards('he')||!target.canUse('sha',player)){
-                        if(target.hp+target.countCards('hs',{name:['tao','jiu']})<=1) num=2;
-                        else num=1.2;
+                player.chooseTarget(get.prompt2('twtanfeng'), function (card, player, target) {
+                    return target != player && target.countDiscardableCards(player, 'hej') > 0;
+                }).set('ai', function (target) {
+                    var player = _status.event.player, num = 1;
+                    if (get.attitude(player, target) > 0) num = 3;
+                    else if (!target.countCards('he') || !target.canUse('sha', player)) {
+                        if (target.hp + target.countCards('hs', { name: ['tao', 'jiu'] }) <= 1) num = 2;
+                        else num = 1.2;
                     }
-                    return get.effect(target,{name:'guohe'},player,player)*num*((player.hp<=1&&get.attitude(player,target)<=0)?0:1);
+                    return get.effect(target, { name: 'guohe' }, player, player) * num * ((player.hp <= 1 && get.attitude(player, target) <= 0) ? 0 : 1);
                 }).setHiddenSkill('twtanfeng');
                 'step 1'
-                if(result.bool){
-                    var target=result.targets[0];
-                    event.target=target;
-                    player.logSkill('twtanfeng',target);
-                    player.discardPlayerCard(target,'hej',true);
+                if (result.bool) {
+                    var target = result.targets[0];
+                    event.target = target;
+                    player.logSkill('twtanfeng', target);
+                    player.discardPlayerCard(target, 'hej', true);
                 }
                 else event.finish();
                 'step 2'
-                var next=target.chooseToUse();
-                next.set('openskilldialog','探锋：选择一张牌当做【杀】对'+get.translation(player)+'使用，或受到其造成的1点火焰伤害，并令其跳过本回合的一个阶段（准备阶段和结束阶段除外）');
-                next.set('norestore',true);
-                next.set('_backupevent','twtanfeng_backup');
-                next.set('custom',{
-                    add:{},
-                    replace:{window:function(){}}
+                var next = target.chooseToUse();
+                next.set('openskilldialog', '探锋：选择一张牌当做【杀】对' + get.translation(player) + '使用，或受到其造成的1点火焰伤害，并令其跳过本回合的一个阶段（准备阶段和结束阶段除外）');
+                next.set('norestore', true);
+                next.set('_backupevent', 'twtanfeng_backup');
+                next.set('custom', {
+                    add: {},
+                    replace: { window: function () { } }
                 });
                 next.backup('twtanfeng_backup');
-                next.set('targetRequired',true);
-                next.set('complexSelect',true);
-                next.set('filterTarget',function(card,player,target){
-                    if(target!=_status.event.sourcex&&!ui.selected.targets.includes(_status.event.sourcex)) return false;
-                    return lib.filter.targetEnabled.apply(this,arguments);
+                next.set('targetRequired', true);
+                next.set('complexSelect', true);
+                next.set('filterTarget', function (card, player, target) {
+                    if (target != _status.event.sourcex && !ui.selected.targets.includes(_status.event.sourcex)) return false;
+                    return lib.filter.targetEnabled.apply(this, arguments);
                 });
-                next.set('sourcex',player);
-                next.set('addCount',false);
+                next.set('sourcex', player);
+                next.set('addCount', false);
                 'step 3'
-                if(!result.bool){
-                    player.line(target,'fire');
-                    target.damage(1,'fire');
+                if (!result.bool) {
+                    player.line(target, 'fire');
+                    target.damage(1, 'fire');
                 }
                 else event.finish();
                 'step 4'
-                if(!target.isIn()){event.finish(); return;}
-                var list=[],list2=[];
-                event.map={phaseJudge:'判定阶段',phaseDraw:'摸牌阶段',phaseUse:'出牌阶段',phaseDiscard:'弃牌阶段'};
-                for(var i of ['phaseJudge','phaseDraw','phaseUse','phaseDiscard']){
-                    if(!player.skipList.includes(i)){
-                        i=event.map[i];
+                if (!target.isIn()) { event.finish(); return; }
+                var list = [], list2 = [];
+                event.map = { phaseJudge: '判定阶段', phaseDraw: '摸牌阶段', phaseUse: '出牌阶段', phaseDiscard: '弃牌阶段' };
+                for (var i of ['phaseJudge', 'phaseDraw', 'phaseUse', 'phaseDiscard']) {
+                    if (!player.skipList.includes(i)) {
+                        i = event.map[i];
                         list.push(i);
-                        if(i!='判定阶段'&&i!='弃牌阶段') list2.push(i);
+                        if (i != '判定阶段' && i != '弃牌阶段') list2.push(i);
                     }
                 }
-                target.chooseControl(list).set('prompt','探锋：令'+get.translation(player)+'跳过一个阶段').set('ai',function(){
+                target.chooseControl(list).set('prompt', '探锋：令' + get.translation(player) + '跳过一个阶段').set('ai', function () {
                     return _status.event.choice;
-                }).set('choice',function(){
-                    var att=get.attitude(target,player);
-                    var num=player.countCards('j');
-                    if(att>0){
-                        if(list.includes('判定阶段')&&num>0) return '判定阶段';
+                }).set('choice', function () {
+                    var att = get.attitude(target, player);
+                    var num = player.countCards('j');
+                    if (att > 0) {
+                        if (list.includes('判定阶段') && num > 0) return '判定阶段';
                         return '弃牌阶段';
                     }
-                    if(list.includes('摸牌阶段')&&player.hasJudge('lebu')) return '摸牌阶段';
-                    if(list.includes('出牌阶段')&&player.hasJudge('bingliang')||player.needsToDiscard()>0) return '出牌阶段';
+                    if (list.includes('摸牌阶段') && player.hasJudge('lebu')) return '摸牌阶段';
+                    if (list.includes('出牌阶段') && player.hasJudge('bingliang') || player.needsToDiscard() > 0) return '出牌阶段';
                     return list2.randomGet();
                 }());
                 'step 5'
-                for(var i in event.map){
-                    if(event.map[i]==result.control) player.skip(i);
+                for (var i in event.map) {
+                    if (event.map[i] == result.control) player.skip(i);
                 }
                 target.popup(result.control);
                 target.line(player);
-                game.log(player,'跳过了','#y'+result.control);
+                game.log(player, '跳过了', '#y' + result.control);
             },
-            subSkill:{
-                backup:{
-                    viewAs:{name:'sha'},
-                    filterCard:true,
-                    position:'hes',
-                    check:function(card){
-                        var player=_status.event.player,target=_status.event.getParent().player;
-                        var eff=get.effect(target,get.autoViewAs({name:'sha'},[card]),player,player);
-                        var eff2=get.damageEffect(player,target,player,'fire');
-                        if(eff<0||eff2>0||eff2>eff||get.tag(card,'recover')) return 0;
-                        return (player.hp==1?10:6)-get.value(card);
+            subSkill: {
+                backup: {
+                    viewAs: { name: 'sha' },
+                    filterCard: true,
+                    position: 'hes',
+                    check: function (card) {
+                        var player = _status.event.player, target = _status.event.getParent().player;
+                        var eff = get.effect(target, get.autoViewAs({ name: 'sha' }, [card]), player, player);
+                        var eff2 = get.damageEffect(player, target, player, 'fire');
+                        if (eff < 0 || eff2 > 0 || eff2 > eff || get.tag(card, 'recover')) return 0;
+                        return (player.hp == 1 ? 10 : 6) - get.value(card);
                     },
                 },
             },
