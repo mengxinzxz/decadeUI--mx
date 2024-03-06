@@ -260,3 +260,21 @@
 	top: -22px;
 	position: relative;
 }
+
+.card[data-suit='heart']>.suit-num,
+.card[data-suit='diamond']>.suit-num,
+.card[data-tempsn='heart']>.tempsuitnum,
+.card[data-tempsn='diamond']>.tempsuitnum {
+	color: #DF0101;
+}
+
+.card[data-suit='club']>.suit-num,
+.card[data-suit='spade']>.suit-num,
+.card[data-tempsn='club']>.tempsuitnum,
+.card[data-tempsn='spade']>.tempsuitnum {
+	color: #010101;
+}
+
+.dui-mobile .card>.tempsuitnum>.suit {
+	font-size: 16px;
+}
