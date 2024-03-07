@@ -4225,7 +4225,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									this.classList.add('selected');
 									this.updateTransform(true);
 									const skill = _status.event.skill;
-									if (get.info(skill) && get.info(skill).viewAs) {
+									if (get.info(skill) && get.info(skill).viewAs && !get.info(skill).ignoreMod) {
 										const cardskb = (typeof get.info(skill).viewAs == 'function' ? get.info(skill).viewAs([this], _status.event.player) : get.info(skill).viewAs);
 										const rsuit = get.suit(this), rnum = get.number(this), rname = get.name(this);
 										const vname = get.name(cardskb);
@@ -4424,7 +4424,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					//对十周年UI和本体的视为卡牌样式的同时适配
 					lib.hooks['checkCard'][0] = function updateTempname(card, event) {
 						if (lib.config.cardtempname === 'off') return;
-						const skill = _status.event.skill, goon = (skill && get.info(skill) && get.info(skill).viewAs && (ui.selected.cards || []).includes(card));
+						const skill = _status.event.skill, goon = (skill && get.info(skill) && get.info(skill).viewAs && !get.info(skill).ignoreMod && (ui.selected.cards || []).includes(card));
 						let cardname, cardnature, cardskb;
 						if (!goon) {
 							cardname = get.name(card); cardnature = get.nature(card);
@@ -12619,7 +12619,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					game.saveConfig('extension_十周年UI_showTemp', bool);
 					if (game.me && lib.config.cardtempname != 'off') {
 						let cards = game.me.getCards('h', card => card._tempName);
-						const skill = _status.event.skill, goon = (skill && get.info(skill) && get.info(skill).viewAs && ((ui.selected.cards || []).includes(card)));
+						const skill = _status.event.skill, goon = (skill && get.info(skill) && get.info(skill).viewAs && !get.info(skill).ignoreMod && ((ui.selected.cards || []).includes(card)));
 						if (cards.length) {
 							for (let j = 0; j < cards.length; j++) {
 								const card = cards[j];
@@ -13072,7 +13072,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'修复特殊标签的主公技标记显示问题',
 					'修改单独装备栏按钮在菜单页面调整可以即时生效',
 					'修复非单独装备栏触碰装备选择按钮失效的bug',
-					'添加viewAs转化技能的视为卡牌显示',
+					'添加不含ignoreMod标签的viewAs转化技能的视为卡牌显示',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
