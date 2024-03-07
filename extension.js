@@ -4422,7 +4422,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						target.classList[list.some(select => target.classList.contains(select)) ? 'remove' : 'add']('un-selectable');
 					});
 					//对十周年UI和本体的视为卡牌样式的同时适配
-					lib.hooks['checkCard'][0] = function updateTempname(card, event) {
+					const updateTempname = lib.hooks['checkCard'].indexOf(lib.hooks['checkCard'].find(i => i.name && i.name == 'updateTempname'));
+					lib.hooks['checkCard'][updateTempname] = function updateTempname(card, event) {
 						if (lib.config.cardtempname === 'off') return;
 						const skill = _status.event.skill, goon = (skill && get.info(skill) && get.info(skill).viewAs && !get.info(skill).ignoreMod && (ui.selected.cards || []).includes(card));
 						let cardname, cardnature, cardskb;
@@ -4469,7 +4470,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 					//game.uncheck修改
 					//对十周年UI和本体的视为卡牌样式的同时适配
-					lib.hooks['uncheckCard'][0] = function removeTempname(card, event) {
+					const removeTempname = lib.hooks['uncheckCard'].indexOf(lib.hooks['uncheckCard'].find(i => i.name && i.name == 'removeTempname'));
+					lib.hooks['uncheckCard'][removeTempname] = function removeTempname(card, event) {
 						if (card._tempName) {
 							card._tempName.delete();
 							delete card._tempName;
@@ -13060,26 +13062,15 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			},
 			intro: (function () {
 				var log = [
-					'魔改十周年 萌修 0.2.7',
-					'新版适配',
-					'加回并优化转化花色点数显示（by-Fire.win）',
-					'对game.check和game.uncheck的修改改为lib.hooks钩子引入',
-					'菜单栏错位bug修复',
-					'刺杀素材命名修改（cisha→sha_stab）',
-					'修复控制身份为bYe的css片段加载失败的bug',
-					'修复判定区废除显示两个“废”字的bug',
-					'调整十周年样式右上角菜单，手杀样式左上角问号和右上角菜单于进入游戏后再加载',
-					'修复特殊标签的主公技标记显示问题',
-					'修改单独装备栏按钮在菜单页面调整可以即时生效',
-					'修复非单独装备栏触碰装备选择按钮失效的bug',
-					'添加不含ignoreMod标签的viewAs转化技能的视为卡牌显示',
+					'魔改十周年 萌修 0.2.8',
+					'修复同时操作game.check和game.uncheck的lib.hooks部分可能发生冲突的bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
 			author: "萌新（转型中）<br>十周年UI原作者：短歌<br>手杀UI原名：界面美化<br>手杀UI原作者：橙续缘",
 			diskURL: "",
 			forumURL: "",
-			version: "0.2.7",
+			version: "0.2.8",
 		},
 		files: {
 			"character": [],
