@@ -3004,19 +3004,34 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						element: {
 							dialog: {
 								open: function () {
-									let result = base.lib.element.dialog.open.apply(this, arguments);
-									if (!result.classList.contains('prompt')) {
-										result.style.animation = 'open-dialog 0.5s';
+									if (this.noopen) return;
+									for (let i = 0; i < ui.dialogs.length; i++) {
+										if (ui.dialogs[i] == this) {
+											this.show();
+											this.refocus();
+											ui.dialogs.remove(this);
+											ui.dialogs.unshift(this);
+											ui.update();
+											return this;
+										}
+										if (ui.dialogs[i].static) ui.dialogs[i].unfocus();
+										else ui.dialogs[i].hide();
 									}
-									return result;
+									ui.dialog = this;
+									ui.arena.appendChild(this);
+									ui.dialogs.unshift(this);
+									ui.update();
+									if (!this.classList.contains('prompt')) {
+										this.style.animation = 'open-dialog 0.5s';
+									}
+									return this;
 								},
 								close: function () {
-									let result = base.lib.element.dialog.close.apply(this, arguments);
-									if (result.intersection) {
-										result.intersection.disconnect();
-										result.intersection = undefined;
+									if (this.intersection) {
+										this.intersection.disconnect();
+										this.intersection = undefined;
 									}
-									return result;
+									return base.lib.element.dialog.close.apply(this, arguments);
 								},
 							},
 							card: {
@@ -3787,7 +3802,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								intro.style.backgroundImage = 'url("' + decadeUIPath + 'assets/image/rarity_' + rarity + '.png")';
 							},
 
-							button: function(item, type, position, noclick, node){
+							button: function (item, type, position, noclick, node) {
 								const button = base.ui.create.button.apply(this, arguments);
 								if (position) position.appendChild(button);
 								return button;
@@ -3905,7 +3920,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								});
 								return card;
 							},
-							
+
 							spinningIdentityCard: function (identity, dialog) {
 								const card = ui.create.identityCard(identity);
 								const buttons = ui.create.div('.buttons', dialog.content);
@@ -3916,7 +3931,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								}, 50);
 							},
 
-							buttonPresets : {
+							buttonPresets: {
 								character: function (item, type, position, noclick, node) {
 									if (node) {
 										node.classList.add('button');
@@ -3927,7 +3942,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									else {
 										node = ui.create.div('.button.character.decadeUI');
 									}
-		
+
 									node._link = item;
 									if (type == 'characterx') {
 										if (_status.noReplaceCharacter) {
@@ -3937,16 +3952,16 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 											item = lib.characterReplace[item].randomGet();
 										}
 									}
-		
+
 									node.link = item;
 									var doubleCamp = get.is.double(node._link, true);
 									var character = dui.element.create('character', node);
-		
+
 									if (doubleCamp) node._changeGroup = true;
 									if (type == 'characterx' && lib.characterReplace[node._link] && lib.characterReplace[node._link].length > 1) {
 										node._replaceButton = true;
 									}
-		
+
 									node.refresh = function (node, item, intersection) {
 										if (intersection) {
 											node.awaitItem = item;
@@ -3955,7 +3970,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										else {
 											node.setBackground(item, 'character');
 										}
-		
+
 										if (node.node) {
 											node.node.name.remove();
 											node.node.hp.remove();
@@ -3970,7 +3985,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 											intro: decadeUI.element.create('intro', node),
 										};
 										var infoitem = get.character(item);
-		
+
 										node.node.name.innerHTML = get.slimName(item);
 										if (lib.config.buttoncharacter_style == 'default' || lib.config.buttoncharacter_style == 'simple') {
 											if (lib.config.buttoncharacter_style == 'simple') {
@@ -4031,7 +4046,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 												node.addEventListener('mouseleave', ui.click.buttonnameleave);
 											}
 										}
-		
+
 										node.node.intro.innerText = lib.config.intro;
 										if (!noclick) lib.setIntro(node);
 										if (infoitem[1]) {
