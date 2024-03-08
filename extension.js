@@ -3787,6 +3787,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								intro.style.backgroundImage = 'url("' + decadeUIPath + 'assets/image/rarity_' + rarity + '.png")';
 							},
 
+							button: function(item, type, position, noclick, node){
+								const button = base.ui.create.button.apply(this, arguments);
+								if (position) position.appendChild(button);
+								return button;
+							},
+
 							control: function () {
 								var i, controls;
 								var nozoom = false;
