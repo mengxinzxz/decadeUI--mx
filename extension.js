@@ -18,13 +18,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			//单独装备栏
 			_status.nopopequip = lib.config.extension_十周年UI_aloneEquip;
 
-			//路径确定
-			var extensionName = decadeUIName;
-			var extension = lib.extensionMenu['extension_' + extensionName];
-			var extensionPath = lib.assetURL + 'extension/' + extensionName + '/';
-
-			if (!(extension && extension.enable && extension.enable.init)) return;
-
+			//布局
 			switch (lib.config.layout) {
 				case 'long2':
 				case 'nova':
@@ -98,7 +92,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 						return ok;
 					};
-
 					function overrides(dest, src) {
 						if (!dest._super) dest._super = {};
 						for (var key in src) {
@@ -106,12 +99,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							dest[key] = src[key];
 						}
 					};
-
 					var base = {
 						ui: {
 							create: {
 								cards: ui.create.cards,
 								button: ui.create.button,
+								buttonPresets: ui.create.buttonPresets,
 							},
 							update: ui.update,
 						},
@@ -135,6 +128,10 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									$syncExpand: lib.element.player.$syncExpand,
 									markSkill: lib.element.player.markSkill,
 									unmarkSkill: lib.element.player.unmarkSkill,
+								},
+								dialog: {
+									open: lib.element.dialog.open,
+									close: lib.element.dialog.close,
 								},
 							},
 						},
@@ -3006,100 +3003,22 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					ride.lib = {
 						element: {
 							dialog: {
-								add: function (item, noclick, zoom) {
-									if (typeof item == 'string') {
-										if (item.indexOf('###') == 0) {
-											var items = item.slice(3).split('###');
-											this.add(items[0], noclick, zoom);
-											this.addText(items[1], items[1].length <= 20, zoom);
-										}
-										else if (noclick) {
-											var strstr = item;
-											item = ui.create.div('', this.content);
-											item.innerHTML = strstr;
-										}
-										else {
-											item = ui.create.caption(item, this.content);
-										}
-									}
-									else if (['div', 'fragment'].includes(get.objtype(item))) {
-										this.content.appendChild(item);
-									}
-									else if (get.itemtype(item) == 'cards') {
-										var buttons = ui.create.div('.buttons', this.content);
-										if (zoom) buttons.classList.add('smallzoom');
-										this.buttons = this.buttons.concat(ui.create.buttons(item, 'card', buttons, noclick));
-									}
-									else if (get.itemtype(item) == 'players') {
-										var buttons = ui.create.div('.buttons', this.content);
-										if (zoom) buttons.classList.add('smallzoom');
-										this.buttons = this.buttons.concat(ui.create.buttons(item, 'player', buttons, noclick));
-									}
-									else if (item[1] == 'textbutton') {
-										ui.create.textbuttons(item[0], this, noclick);
-									}
-									else {
-										var buttons = ui.create.div('.buttons', this.content);
-										if (zoom) buttons.classList.add('smallzoom');
-										this.buttons = this.buttons.concat(ui.create.buttons(item[0], item[1], buttons, noclick));
-									}
-									if (this.buttons.length) {
-										if (this.forcebutton !== false) this.forcebutton = true;
-										if (this.buttons.length > 3 || (zoom && this.buttons.length > 5)) {
-											this.classList.remove('forcebutton-auto');
-										}
-										else if (!this.noforcebutton) {
-											this.classList.add('forcebutton-auto');
-										}
-									}
-									ui.update();
-									return item;
-								},
-
 								open: function () {
-									if (this.noopen) return;
-									for (var i = 0; i < ui.dialogs.length; i++) {
-										if (ui.dialogs[i] == this) {
-											this.show();
-											this.refocus();
-											ui.dialogs.remove(this);
-											ui.dialogs.unshift(this);
-											ui.update();
-											return this;
-										}
-										if (ui.dialogs[i].static) ui.dialogs[i].unfocus();
-										else ui.dialogs[i].hide();
+									let result = base.lib.element.dialog.open.apply(this, arguments);
+									if (!result.classList.contains('prompt')) {
+										result.style.animation = 'open-dialog 0.5s';
 									}
-									ui.dialog = this;
-									ui.arena.appendChild(this);
-									ui.dialogs.unshift(this);
-									ui.update();
-									if (!this.classList.contains('prompt')) {
-										this.style.animation = 'open-dialog 0.5s';
-									}
-
-									return this;
+									return result;
 								},
-
 								close: function () {
-									if (this.intersection) {
-										this.intersection.disconnect();
-										this.intersection = undefined;
+									let result = base.lib.element.dialog.close.apply(this, arguments);
+									if (result.intersection) {
+										result.intersection.disconnect();
+										result.intersection = undefined;
 									}
-
-									ui.dialogs.remove(this);
-									if (ui.dialogs.length > 0) {
-										ui.dialog = ui.dialogs[0];
-										ui.dialog.show();
-										ui.dialog.refocus();
-										ui.update();
-									}
-
-									this.delete();
-									return this;
+									return result;
 								},
 							},
-
 							card: {
 								$init: function (card) {
 									base.lib.element.card.$init.apply(this, arguments);
@@ -3864,185 +3783,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								var intro = button.node.intro;
 								intro.classList.add('showintro');
 								intro.classList.add('rarity');
-								if (intro.innerText)
-									intro.innerText = '';
-
+								if (intro.innerText) intro.innerText = '';
 								intro.style.backgroundImage = 'url("' + decadeUIPath + 'assets/image/rarity_' + rarity + '.png")';
-							},
-
-							button: function (item, type, position, noclick, node) {
-								if (type != 'character' && type != 'characterx') {
-									var button = base.ui.create.button.apply(this, arguments);
-									if (position) position.appendChild(button);
-									return button;
-								}
-
-								if (node) {
-									node.classList.add('button');
-									node.classList.add('character');
-									node.classList.add('decadeUI');
-									node.style.display = '';
-								}
-								else {
-									node = ui.create.div('.button.character.decadeUI');
-								}
-
-								node._link = item;
-								if (type == 'characterx') {
-									if (_status.noReplaceCharacter) {
-										type = 'character';
-									}
-									else if (lib.characterReplace[item] && lib.characterReplace[item].length) {
-										item = lib.characterReplace[item].randomGet();
-									}
-								}
-
-								node.link = item;
-								var doubleCamp = get.is.double(node._link, true);
-								var character = dui.element.create('character', node);
-
-								if (doubleCamp) node._changeGroup = true;
-								if (type == 'characterx' && lib.characterReplace[node._link] && lib.characterReplace[node._link].length > 1) {
-									node._replaceButton = true;
-								}
-
-								node.refresh = function (node, item, intersection) {
-									if (intersection) {
-										node.awaitItem = item;
-										intersection.observe(node);
-									}
-									else {
-										node.setBackground(item, 'character');
-									}
-
-									if (node.node) {
-										node.node.name.remove();
-										node.node.hp.remove();
-										node.node.group.remove();
-										node.node.intro.remove();
-										if (node.node.replaceButton) node.node.replaceButton.remove();
-									}
-									node.node = {
-										name: decadeUI.element.create('name', node),
-										hp: decadeUI.element.create('hp', node),
-										group: decadeUI.element.create('identity', node),
-										intro: decadeUI.element.create('intro', node),
-									};
-									var infoitem = get.character(item);
-
-									node.node.name.innerHTML = get.slimName(item);
-									if (lib.config.buttoncharacter_style == 'default' || lib.config.buttoncharacter_style == 'simple') {
-										if (lib.config.buttoncharacter_style == 'simple') {
-											node.node.group.style.display = 'none';
-										}
-										node.classList.add('newstyle');
-										node.node.name.dataset.nature = get.groupnature(get.bordergroup(infoitem));
-										node.node.group.dataset.nature = get.groupnature(get.bordergroup(infoitem), 'raw');
-										ui.create.div(node.node.hp);
-										var hp = get.infoHp(infoitem[2]), maxHp = get.infoMaxHp(infoitem[2]), hujia = get.infoHujia(infoitem[2]);
-										var check = ((get.mode() == 'guozhan' || get.config('double_character')) && (_status.connectMode || get.mode() == 'single' || get.config('double_hp') == 'pingjun'));
-										var str = get.numStr(hp / (check ? 2 : 1));
-										if (hp != maxHp) {
-											str += '/';
-											str += get.numStr(maxHp / (check ? 2 : 1));
-										}
-										var textnode = ui.create.div('.text', str, node.node.hp);
-										if (infoitem[2] == 0) {
-											node.node.hp.hide();
-										}
-										else if (get.infoHp(infoitem[2]) <= 3) {
-											node.node.hp.dataset.condition = 'mid';
-										}
-										else {
-											node.node.hp.dataset.condition = 'high';
-										}
-										if (hujia > 0) {
-											ui.create.div(node.node.hp, '.shield');
-											ui.create.div('.text', get.numStr(hujia), node.node.hp);
-										}
-									}
-									else {
-										var hp = get.infoHp(infoitem[2]);
-										var maxHp = get.infoMaxHp(infoitem[2]);
-										var shield = get.infoHujia(infoitem[2]);
-										if (maxHp > 14) {
-											if (typeof infoitem[2] == 'string') node.node.hp.innerHTML = infoitem[2];
-											else node.node.hp.innerHTML = get.numStr(infoitem[2]);
-											node.node.hp.classList.add('text');
-										}
-										else {
-											for (var i = 0; i < maxHp; i++) {
-												var next = ui.create.div('', node.node.hp);
-												if (i >= hp) next.classList.add('exclude');
-											}
-											for (var i = 0; i < shield; i++) {
-												ui.create.div(node.node.hp, '.shield');
-											}
-										}
-									}
-									if (node.node.hp.childNodes.length == 0) {
-										node.node.name.style.top = '8px';
-									}
-									if (node.node.name.querySelectorAll('br').length >= 4) {
-										node.node.name.classList.add('long');
-										if (lib.config.buttoncharacter_style == 'old') {
-											node.addEventListener('mouseenter', ui.click.buttonnameenter);
-											node.addEventListener('mouseleave', ui.click.buttonnameleave);
-										}
-									}
-
-									node.node.intro.innerText = lib.config.intro;
-									if (!noclick) lib.setIntro(node);
-									if (infoitem[1]) {
-										if (doubleCamp) {
-											var text = '';
-											node.node.group.innerHTML = doubleCamp.reduce((previousValue, currentValue) => `${previousValue}<div data-nature="${get.groupnature(currentValue)}">${get.translation(currentValue)}</div>`, '');
-											if (doubleCamp.length > 4) if (new Set([5, 6, 9]).has(doubleCamp.length)) node.node.group.style.height = '48px';
-											else node.node.group.style.height = '64px';
-										}
-										else node.node.group.innerHTML = `<div>${get.translation(infoitem[1])}</div>`;
-										node.node.group.style.backgroundColor = get.translation(`${get.bordergroup(infoitem)}Color`);
-									}
-									else {
-										node.node.group.style.display = 'none';
-									}
-									if (node._replaceButton) {
-										var intro = ui.create.div('.button.replaceButton', node);
-										node.node.replaceButton = intro;
-										intro.innerText = '切换';
-										intro._node = node;
-										intro.addEventListener(lib.config.touchscreen ? 'touchend' : 'click', function () {
-											_status.tempNoButton = true;
-											var node = this._node;
-											var list = lib.characterReplace[node._link];
-											var link = node.link;
-											var index = list.indexOf(link);
-											if (index == list.length - 1) index = 0;
-											else index++;
-											link = list[index];
-											node.link = link;
-											node.refresh(node, link);
-											setTimeout(function (_status) { _status.tempNoButton = undefined; }, 200, _status);
-										});
-									}
-								};
-
-								node.refresh(node, item, position ? position.intersection : undefined);
-								if (!noclick) {
-									node.addEventListener(lib.config.touchscreen ? 'touchend' : 'click', ui.click.button);
-								}
-								else {
-									node.classList.add('noclick');
-									if (node.querySelector('.intro')) {
-										node.querySelector('.intro').remove();
-									}
-								}
-
-								//for (var i in lib.element.button) node[i] = lib.element.button[i];
-								Object.setPrototypeOf(node, lib.element.Button.prototype);
-								if (position) position.appendChild(node);
-
-								return node;
 							},
 
 							control: function () {
@@ -4134,6 +3876,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								if (onchange) select.onchange = onchange;
 								return select;
 							},
+
 							identityCard: function (identity, position, info, noclick) {
 								const card = ui.create.card(position, info, noclick);
 								card.removeEventListener(lib.config.touchscreen ? 'touchend' : 'click', ui.click.card);
@@ -4156,6 +3899,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								});
 								return card;
 							},
+							
 							spinningIdentityCard: function (identity, dialog) {
 								const card = ui.create.identityCard(identity);
 								const buttons = ui.create.div('.buttons', dialog.content);
@@ -4164,6 +3908,162 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									buttons.appendChild(card);
 									dialog.open();
 								}, 50);
+							},
+
+							buttonPresets : {
+								character: function (item, type, position, noclick, node) {
+									if (node) {
+										node.classList.add('button');
+										node.classList.add('character');
+										node.classList.add('decadeUI');
+										node.style.display = '';
+									}
+									else {
+										node = ui.create.div('.button.character.decadeUI');
+									}
+		
+									node._link = item;
+									if (type == 'characterx') {
+										if (_status.noReplaceCharacter) {
+											type = 'character';
+										}
+										else if (lib.characterReplace[item] && lib.characterReplace[item].length) {
+											item = lib.characterReplace[item].randomGet();
+										}
+									}
+		
+									node.link = item;
+									var doubleCamp = get.is.double(node._link, true);
+									var character = dui.element.create('character', node);
+		
+									if (doubleCamp) node._changeGroup = true;
+									if (type == 'characterx' && lib.characterReplace[node._link] && lib.characterReplace[node._link].length > 1) {
+										node._replaceButton = true;
+									}
+		
+									node.refresh = function (node, item, intersection) {
+										if (intersection) {
+											node.awaitItem = item;
+											intersection.observe(node);
+										}
+										else {
+											node.setBackground(item, 'character');
+										}
+		
+										if (node.node) {
+											node.node.name.remove();
+											node.node.hp.remove();
+											node.node.group.remove();
+											node.node.intro.remove();
+											if (node.node.replaceButton) node.node.replaceButton.remove();
+										}
+										node.node = {
+											name: decadeUI.element.create('name', node),
+											hp: decadeUI.element.create('hp', node),
+											group: decadeUI.element.create('identity', node),
+											intro: decadeUI.element.create('intro', node),
+										};
+										var infoitem = get.character(item);
+		
+										node.node.name.innerHTML = get.slimName(item);
+										if (lib.config.buttoncharacter_style == 'default' || lib.config.buttoncharacter_style == 'simple') {
+											if (lib.config.buttoncharacter_style == 'simple') {
+												node.node.group.style.display = 'none';
+											}
+											node.classList.add('newstyle');
+											node.node.name.dataset.nature = get.groupnature(get.bordergroup(infoitem));
+											node.node.group.dataset.nature = get.groupnature(get.bordergroup(infoitem), 'raw');
+											ui.create.div(node.node.hp);
+											var hp = get.infoHp(infoitem[2]), maxHp = get.infoMaxHp(infoitem[2]), hujia = get.infoHujia(infoitem[2]);
+											var check = ((get.mode() == 'guozhan' || get.config('double_character')) && (_status.connectMode || get.mode() == 'single' || get.config('double_hp') == 'pingjun'));
+											var str = get.numStr(hp / (check ? 2 : 1));
+											if (hp != maxHp) {
+												str += '/';
+												str += get.numStr(maxHp / (check ? 2 : 1));
+											}
+											var textnode = ui.create.div('.text', str, node.node.hp);
+											if (infoitem[2] == 0) {
+												node.node.hp.hide();
+											}
+											else if (get.infoHp(infoitem[2]) <= 3) {
+												node.node.hp.dataset.condition = 'mid';
+											}
+											else {
+												node.node.hp.dataset.condition = 'high';
+											}
+											if (hujia > 0) {
+												ui.create.div(node.node.hp, '.shield');
+												ui.create.div('.text', get.numStr(hujia), node.node.hp);
+											}
+										}
+										else {
+											var hp = get.infoHp(infoitem[2]);
+											var maxHp = get.infoMaxHp(infoitem[2]);
+											var shield = get.infoHujia(infoitem[2]);
+											if (maxHp > 14) {
+												if (typeof infoitem[2] == 'string') node.node.hp.innerHTML = infoitem[2];
+												else node.node.hp.innerHTML = get.numStr(infoitem[2]);
+												node.node.hp.classList.add('text');
+											}
+											else {
+												for (var i = 0; i < maxHp; i++) {
+													var next = ui.create.div('', node.node.hp);
+													if (i >= hp) next.classList.add('exclude');
+												}
+												for (var i = 0; i < shield; i++) {
+													ui.create.div(node.node.hp, '.shield');
+												}
+											}
+										}
+										if (node.node.hp.childNodes.length == 0) {
+											node.node.name.style.top = '8px';
+										}
+										if (node.node.name.querySelectorAll('br').length >= 4) {
+											node.node.name.classList.add('long');
+											if (lib.config.buttoncharacter_style == 'old') {
+												node.addEventListener('mouseenter', ui.click.buttonnameenter);
+												node.addEventListener('mouseleave', ui.click.buttonnameleave);
+											}
+										}
+		
+										node.node.intro.innerText = lib.config.intro;
+										if (!noclick) lib.setIntro(node);
+										if (infoitem[1]) {
+											if (doubleCamp) {
+												var text = '';
+												node.node.group.innerHTML = doubleCamp.reduce((previousValue, currentValue) => `${previousValue}<div data-nature="${get.groupnature(currentValue)}">${get.translation(currentValue)}</div>`, '');
+												if (doubleCamp.length > 4) if (new Set([5, 6, 9]).has(doubleCamp.length)) node.node.group.style.height = '48px';
+												else node.node.group.style.height = '64px';
+											}
+											else node.node.group.innerHTML = `<div>${get.translation(infoitem[1])}</div>`;
+											node.node.group.style.backgroundColor = get.translation(`${get.bordergroup(infoitem)}Color`);
+										}
+										else {
+											node.node.group.style.display = 'none';
+										}
+										if (node._replaceButton) {
+											var intro = ui.create.div('.button.replaceButton', node);
+											node.node.replaceButton = intro;
+											intro.innerText = '切换';
+											intro._node = node;
+											intro.addEventListener(lib.config.touchscreen ? 'touchend' : 'click', function () {
+												_status.tempNoButton = true;
+												var node = this._node;
+												var list = lib.characterReplace[node._link];
+												var link = node.link;
+												var index = list.indexOf(link);
+												if (index == list.length - 1) index = 0;
+												else index++;
+												link = list[index];
+												node.link = link;
+												node.refresh(node, link);
+												setTimeout(function (_status) { _status.tempNoButton = undefined; }, 200, _status);
+											});
+										}
+									};
+									node.refresh(node, item, position ? position.intersection : undefined);
+									return node;
+								},
 							},
 						},
 
@@ -4295,12 +4195,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								}
 							},
 						},
-
-
 					};
 
 					ride.game = {
-
 						addOverDialog: function (dialog, result) {
 							var sprite = decadeUI.backgroundAnimation.current;
 							if (!(sprite && sprite.name == 'skin_xiaosha_default')) return;
@@ -6979,7 +6876,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								}
 							}
 						}
-
 						if (this.sheetList) delete this.init;
 					},
 					getStyle: function (selector, cssName) {
@@ -13063,6 +12959,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			intro: (function () {
 				var log = [
 					'魔改十周年 萌修 0.2.8',
+					'优化/简化函数',
 					'修复同时操作game.check和game.uncheck的lib.hooks部分可能发生冲突的bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
