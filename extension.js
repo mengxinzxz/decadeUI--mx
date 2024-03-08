@@ -467,6 +467,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							var player = this;
 							var handcards = player.node.handcards1;
 							var fragment = document.createDocumentFragment();
+							if (_status.event.name == 'gameDraw') {
+								player.$draw(cards.length);
+							}
 
 							var card;
 							for (var i = 0; i < cards.length; i++) {
@@ -1314,86 +1317,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							"step 4"
 							if (event.updatePile) game.updateRoundNumber();
 						};
-						EventContent.gameDraw = function () {
-							"step 0"
-							if (_status.brawl && _status.brawl.noGameDraw)
-								return event.goto(4);
-
-							var end = player;
-							var gainNum = num;
-							do {
-								if (typeof num == 'function')
-									gainNum = num(player);
-
-								if (player.getTopCards)
-									player.directgain(player.getTopCards(gainNum));
-								else
-									player.directgain(get.cards(gainNum));
-
-								player.$draw(gainNum);
-								if (player.singleHp === true && get.mode() != 'guozhan' && (lib.config.mode != 'doudizhu' || _status.mode != 'online'))
-									player.doubleDraw();
-
-								player._start_cards = player.getCards('h');
-								player = player.next;
-							} while (player != end);
-							event.changeCard = get.config('change_card');
-							if (_status.connectMode || (lib.config.mode == 'doudizhu' && _status.mode == 'online') || lib.config.mode != 'identity' && lib.config.mode != 'guozhan' && lib.config.mode != 'doudizhu') {
-								event.changeCard = 'disabled';
-							}
-							"step 1"
-							if (event.changeCard != 'disabled' && !_status.auto) {
-								event.dialog = dui.showHandTip('是否使用手气卡？');
-								event.dialog.strokeText();
-								ui.create.confirm('oc');
-								event.custom.replace.confirm = function (bool) {
-									_status.event.bool = bool;
-									game.resume();
-								}
-							}
-							else {
-								event.goto(4);
-							}
-							"step 2"
-							if (event.changeCard == 'once') {
-								event.changeCard = 'disabled';
-							}
-							else if (event.changeCard == 'twice') {
-								event.changeCard = 'once';
-							}
-							else if (event.changeCard == 'disabled') {
-								event.bool = false;
-								return;
-							}
-							_status.imchoosing = true;
-							event.switchToAuto = function () {
-								_status.event.bool = false;
-								game.resume();
-							}
-							game.pause();
-							"step 3"
-							_status.imchoosing = false;
-							if (event.bool) {
-								if (game.changeCoin) {
-									game.changeCoin(- 3);
-								}
-								var hs = game.me.getCards('h');
-								game.addVideo('lose', game.me, [get.cardsInfo(hs), [], [], []]);
-								for (var i = 0; i < hs.length; i++) {
-									hs[i].discard(false);
-								}
-								game.me.directgain(get.cards(hs.length));
-								event.goto(2);
-							}
-							else {
-								if (event.dialog) event.dialog.close();
-								if (ui.confirm) ui.confirm.close();
-								game.me._start_cards = game.me.getCards('h');
-								event.goto(4);
-							}
-							"step 4"
-							setTimeout(decadeUI.effect.gameStart, 51);
-						};
 						EventContent.judge = function () {
 							"step 0"
 							var judgestr = get.translation(player) + '的' + event.judgestr + '判定';
@@ -1423,14 +1346,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								if (!window.decadeUI) {
 									ui.arena.classList.add('thrownhighlight');
 									event.node.classList.add('thrownhighlight');
-									event.dialog = ui.create.dialog(str);
-									event.dialog.classList.add('center');
 								}
-								else {
-									event.dialog = dui.showHandTip(str);
-									event.dialog.strokeText();
-									if (game.online) ui.dialogs.push(event.dialog);
-								}
+								event.dialog = ui.create.dialog(str);
+								event.dialog.classList.add('center');
 
 								event.dialog.videoId = id;
 							}, player, player.judging[0], judgestr, event.videoId, get.id());
@@ -1475,8 +1393,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 							game.addVideo('judge2', null, event.videoId);
 							game.log(player, '的判定结果为', event.result.card);
-							event.triggerMessage('judgeresult');
 							event.trigger('judgeFixing');
+							event.triggerMessage('judgeresult');
 							if (event.callback) {
 								var next = game.createEvent('judgeCallback', false);
 								next.player = player;
@@ -3298,7 +3216,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 						gameDraw: function () {
 							decadeUI.delay(100);
-							return base.game.gameDraw.apply(game, arguments);
+							base.game.gameDraw.apply(game, arguments);
+							setTimeout(decadeUI.effect.gameStart, 51);
 						},
 					};
 
