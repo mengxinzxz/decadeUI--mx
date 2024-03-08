@@ -4062,6 +4062,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										}
 									};
 									node.refresh(node, item, position ? position.intersection : undefined);
+									if (position) position.appendChild(node);
 									return node;
 								},
 							},
