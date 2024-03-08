@@ -297,49 +297,18 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									player.hujia = hujia;
 									player.update();
 								}, this, hp, hpMax, this.hujia);
-								/*
-								if (this.hujia) {
-									this.markSkill('ghujia');
-								}
-								else {
-									this.unmarkSkill('ghujia');
-								}
-								*/
 								if (this.hujia > 0) {
-									//if(lib.config.extension_十周年UI_newDecadeStyle=='on') this.markSkill('ghujia');
-									//else{
 									if (!hujiat) {
-										/*
-										if(lib.config.extension_十周年UI_newDecadeStyle=='on'){
-											var hpWrapx = decadeUI.element.create('hp-wrapx');
-											//this.insertBefore(hpWrapx, this.node.hp);
-											this.node.hpWrap = hpWrapx;
-											hpWrapx.appendChild(this.node.hp);
-										}
-										*/
 										hujiat = ui.create.div('.hujia');
 										this.node.hpWrap.appendChild(hujiat);
 									}
 									hujiat.innerText = this.hujia;
-									//}
 								}
-								else {
-                            /*
-						    if(lib.config.extension_十周年UI_newDecadeStyle=='on'){
-								var hpWrap = decadeUI.element.create('hp-wrap');
-								//this.insertBefore(hpWrap, this.node.hp);
-								this.node.hpWrap = hpWrap;
-								hpWrap.appendChild(this.node.hp);
-						    }
-						    */
-                            //if(lib.config.extension_十周年UI_newDecadeStyle=='on') this.unmarkSkill('ghujia');
-                        	/*else*/ if (hujiat) hujiat.remove();
-								}
+								else if (hujiat) hujiat.remove();
 
 								game.addVideo('update', this, [count, hp, hpMax, this.hujia]);
 							}
 							else {
-								// 虽然上面的 game.addVideo 提供了好几个参数，但是没啥用，因为videoContent里的update缺只给了1个参数。
 								if (!count) count = this.countCards('h');
 
 								hp = this.hp;
@@ -420,48 +389,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							}
 
 							return this;
-						};
-						Player.chooseToRespond = function () {
-							var next = game.createEvent('chooseToRespond');
-							next.player = this;
-							for (var i = 0; i < arguments.length; i++) {
-								if (typeof arguments[i] == 'number') {
-									next.selectCard = [arguments[i], arguments[i]];
-								}
-								else if (get.itemtype(arguments[i]) == 'select') {
-									next.selectCard = arguments[i];
-								}
-								else if (typeof arguments[i] == 'boolean') {
-									next.forced = arguments[i];
-								}
-								else if (get.itemtype(arguments[i]) == 'position') {
-									next.position = arguments[i];
-								}
-								else if (typeof arguments[i] == 'function') {
-									if (next.filterCard) next.ai = arguments[i];
-									else next.filterCard = arguments[i];
-								}
-								else if (typeof arguments[i] == 'object' && arguments[i]) {
-									next.filter = arguments[i];
-									next.filterCard = get.filter(arguments[i]);
-
-								}
-								else if (arguments[i] == 'nosource') {
-									next.nosource = true;
-								}
-								else if (typeof arguments[i] == 'string') {
-									next.prompt = arguments[i];
-								}
-							}
-							if (next.filterCard == undefined) next.filterCard = lib.filter.all;
-							if (next.selectCard == undefined) next.selectCard = [1, 1];
-							if (next.source == undefined && !next.nosource) next.source = _status.event.player;
-							if (next.ai == undefined) next.ai = get.unuseful2;
-							next.position = 'hs';
-							if (next.ai2 == undefined) next.ai2 = (() => 1);
-							next.setContent('chooseToRespond');
-							next._args = Array.from(arguments);
-							return next;
 						};
 						Player.directgain = function (cards, broadcast, gaintag) {
 							var player = this;
