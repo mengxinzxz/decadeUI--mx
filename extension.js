@@ -1780,7 +1780,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					overrides(lib.element.event, Event);
 					overrides(lib.element.player, Player);
 					overrides(lib.element.content, EventContent);
-					overrides(lib.skill, Skill);
 					overrides(ui.create, Create);
 					overrides(game, Game);
 
