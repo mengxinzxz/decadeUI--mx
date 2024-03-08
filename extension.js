@@ -436,16 +436,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						};
 						Player.useCard = function () {
 							var event = this._super.useCard.apply(this, arguments);
-							Object.defineProperties(event, {
-								oncard: {
-									get: function () {
-										return this._oncard;
-									},
-									set: function (value) {
-										this._oncard2 = value;
-									}
-								}
-							});
 							event.finish = function () {
 								this.finished = true;
 								var targets = this.targets;
@@ -453,15 +443,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									targets[i].classList.remove('target');
 								}
 							};
-							event._oncard = function (card, player) {
-								var player = this.player;
-								var targets = this.targets;
-								for (var i = 0; i < targets.length; i++) {
-									if (targets[i] != player) targets[i].classList.add('target');
-								}
-
-								if (this._oncard2) this._oncard2(card, player);
-							}
 							return event;
 						};
 						Player.lose = function () {
@@ -6380,13 +6361,24 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							tagText = '拼点置入';
 							break;
 						case 'usecard':
-							if (event.targets.length == 1) {
-								if (event.targets[0] == event.player) tagText = '对自己';
-								else tagText = '对' + get.translation(event.targets[0]);
-							}
-							else {
-								tagText = '使用';
-							}
+							tagText = '使用';
+							player.when({ global: 'useCard1' }).filter(evt => evt == event).then(() => {
+								const targets = trigger.targets;
+								if (targets && targets.length) {
+									if (!trigger.hideTargets) {
+										for (const target of targets) {
+											if (target != trigger.player) target.classList.add('target');
+										}
+									}
+									if (targets.length == 1) {
+										let tagText, tagNode = card.querySelector('.used-info');
+										if (tagNode == null) tagNode = card.appendChild(dui.element.create('used-info'));
+										if (targets[0] == trigger.player) tagText = '对自己';
+										else tagText = '对' + get.translation(targets[0]);
+										tagNode.textContent = get.translation(trigger.player) + tagText;
+									}
+								}
+							}).vars({ card: card });
 						case 'respond':
 							if (tagText == '') tagText = '打出';
 
@@ -11802,6 +11794,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'魔改十周年 萌修 0.2.8',
 					'优化/简化函数',
 					'删除所有chooseToXXX的修改，保证显示统一性',
+					'tryAddPlayerCardUseTag适配使用牌隐藏目标角色的机制',
 					'修复同时操作game.check和game.uncheck的lib.hooks部分可能发生冲突的bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
