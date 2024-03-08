@@ -89,10 +89,92 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
                 player.appendChild(longwei)
             }
         },
+        //属性赋予
+        decadeUI_usecardBegin: {
+            trigger: { global: 'useCardBegin' },
+            forced: true,
+            popup: false,
+            priority: -100,
+            silent: true,
+            filter: function (event) {
+                return !ui.clear.delay && event.card.name != 'wuxie';
+            },
+            content: function () {
+                ui.clear.delay = 'usecard';
+            }
+        },
+        //击杀特效
+        decadeUI_dieKillEffect: {
+            trigger: { source: ['dieBegin'] },
+            forced: true,
+            popup: false,
+            priority: -100,
+            lastDo: true,
+            silent: true,
+            content: function () {
+                if (!(trigger.source && trigger.player)) return;
+                game.broadcastAll(function (source, player) {
+                    if (!window.decadeUI) return;
+                    if (!decadeUI.config.playerKillEffect) return;
+                    decadeUI.effect.kill(source, player);
+                }, trigger.source, trigger.player);
+            }
+        },
     };
     decadeUI.skill = {
         ghujia: {
             mark: false,
+        },
+        _usecard: {
+            trigger: { global: 'useCardAfter' },
+            forced: true,
+            popup: false,
+            silent: true,
+            priority: -100,
+            filter: function (event) {
+                return ui.clear.delay === 'usecard' && event.card.name != 'wuxie';
+            },
+            content: function () {
+                ui.clear.delay = false;
+                game.broadcastAll(function () {
+                    ui.clear();
+                });
+            }
+        },
+        _discard: {
+            trigger: { global: ['discardAfter', 'loseToDiscardpileAfter', 'loseAsyncAfter'] },
+            filter: function (event) {
+                return ui.todiscard[event.discardid] ? true : false;
+            },
+            forced: true,
+            silent: true,
+            popup: false,
+            priority: -100,
+            content: function () {
+                game.broadcastAll(function (id) {
+                    if (window.decadeUI) {
+                        ui.todiscard = [];
+                        ui.clear();
+                        return;
+                    }
+                    var todiscard = ui.todiscard[id];
+                    delete ui.todiscard[id];
+                    if (todiscard) {
+                        var time = 1000;
+                        if (typeof todiscard._discardtime == 'number') {
+                            time += todiscard._discardtime - get.time();
+                        }
+                        if (time < 0) {
+                            time = 0;
+                        }
+                        setTimeout(function () {
+                            for (var i = 0; i < todiscard.length; i++) {
+                                todiscard[i].delete();
+                            }
+                        }, time);
+                    }
+                }, trigger.discardid);
+            }
         },
         guanxing: {
             audio: 2,
@@ -2491,7 +2573,7 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
             game.addGlobalSkill(key);
         }
         for (var key in decadeUI.skill) {
-            if (lib.skill[key]) lib.skill[key] = decadeUI.skill[key];
+            /*if (lib.skill[key]) */lib.skill[key] = decadeUI.skill[key];
         }
         for (var key in decadeUI.inheritSkill) {
             if (lib.skill[key]) {
