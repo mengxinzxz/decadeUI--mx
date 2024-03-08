@@ -130,7 +130,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									unmarkSkill: lib.element.player.unmarkSkill,
 								},
 								dialog: {
-									open: lib.element.dialog.open,
 									close: lib.element.dialog.close,
 								},
 							},
