@@ -1487,19 +1487,23 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 											}
 
 											if (event.prompt2) {
-												if (tipText == null)
-													tipText = ''
-
+												if (tipText == null) tipText = '';
 												handTip.setInfomation(event.prompt2);
 											}
 										}
 
 										if (tipText != undefined) {
-											event.dialog = handTip;
-											tipText = tipText.replace(/<\/?.+?\/?>/g, '');
-											handTip.appendText(tipText)
-											handTip.strokeText();
-											handTip.show();
+											if (tipText.startsWith('###')) {
+												event.dialog = ui.create.dialog(tipText);
+												handTip.close();
+											}
+											else {
+												event.dialog = handTip;
+												tipText = tipText.replace(/<\/?.+?\/?>/g, '');
+												handTip.appendText(tipText);
+												handTip.strokeText();
+												handTip.show();
+											}
 										}
 										else {
 											handTip.close();
@@ -1673,7 +1677,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							}
 						};
 						EventContent.chooseToUse = function () {
-							"step 0"
+							"step 0";
 							if (event.responded) return;
 							if (game.modeSwapPlayer && !_status.auto && player.isUnderControl() && !lib.filter.wuxieSwap(event)) {
 								game.modeSwapPlayer(player);
@@ -1686,16 +1690,17 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									info.onChooseToUse(event);
 								}
 							}
-							_status.noclearcountdown = true;
+							if (_status.noclearcountdown !== 'direct') _status.noclearcountdown = true;
 							if (event.type == 'phase') {
 								if (event.isMine()) {
-									event.endButton = ui.create.control('结束回合', 'stayleft',
-										function () {
-											if (_status.event.skill) {
-												ui.click.cancel();
-											}
+									event.endButton = ui.create.control('结束回合', 'stayleft', function () {
+										var evt = _status.event;
+										if (evt.name != 'chooseToUse' || evt.type != 'phase') return;
+										if (evt.skill) {
 											ui.click.cancel();
-										});
+										}
+										ui.click.cancel();
+									});
 									event.fakeforce = true;
 								}
 								else {
@@ -1709,7 +1714,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							if (event.player.isUnderControl() && !_status.auto) {
 								event.result = {
 									bool: false
-								}
+								};
 								return;
 							}
 							else if (event.isMine()) {
@@ -1727,7 +1732,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									if (lib.filter.wuxieSwap(event)) {
 										event.result = {
 											bool: false
-										}
+										};
 										return;
 									}
 								}
@@ -1738,56 +1743,51 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										delete player._noVibrate;
 										game.vibrate();
 									}
-								}
-								if (!ok) {
 									var tipText;
 									var handTip = event.handTip = dui.showHandTip();
 									if (event.openskilldialog) {
 										tipText = event.openskilldialog;
 										event.openskilldialog = undefined;
 									}
-									else if (event.prompt !== false) {
-										if (typeof event.prompt == 'function') {
-											tipText = event.prompt(event);
-										}
-										else if (typeof event.prompt == 'string') {
-											tipText = event.prompt;
-										}
-										else {
-											if (typeof event.filterCard == 'object') {
-												var filter = event.filterCard;
-												tipText = '请使用' + get.cnNumber(event.selectCard[0]) + '张'
-												if (filter.name) {
-													tipText += get.translation(filter.name);
-												}
-												else {
-													tipText += '牌';
-												}
+									else if (event.prompt !== undefined) {
+										tipText = typeof event.prompt == 'function' ? event.prompt(event) : event.prompt;
+									}
+									else {
+										if (typeof event.filterCard == 'object') {
+											var filter = event.filterCard;
+											tipText = '请使用' + get.cnNumber(event.selectCard[0]) + '张'
+											if (filter.name) {
+												tipText += get.translation(filter.name);
 											}
 											else {
-												tipText = '请选择一张卡牌';
-											}
-
-											if (event.type == 'phase' && event.isMine()) {
-												handTip.appendText('出牌阶段', 'phase');
-												tipText = '，' + tipText
+												tipText += '牌';
 											}
 										}
+										else {
+											tipText = '请选择一张卡牌';
+										}
 
-										if (event.prompt2) {
-											if (tipText == null)
-												tipText = ''
-
-											handTip.setInfomation(event.prompt2);
+										if (event.type == 'phase' && event.isMine()) {
+											handTip.appendText('出牌阶段', 'phase');
+											tipText = '，' + tipText
 										}
 									}
-
+									if (event.prompt2) {
+										if (tipText == null) tipText = '';
+										handTip.setInfomation(event.prompt2);
+									}
 									if (tipText != undefined) {
-										event.dialog = handTip;
-										tipText = tipText.replace(/<\/?.+?\/?>/g, '');
-										handTip.appendText(tipText);
-										handTip.strokeText();
-										handTip.show();
+										if (tipText.startsWith('###')) {
+											event.dialog = ui.create.dialog(tipText);
+											handTip.close();
+										}
+										else {
+											event.dialog = handTip;
+											tipText = tipText.replace(/<\/?.+?\/?>/g, '');
+											handTip.appendText(tipText);
+											handTip.strokeText();
+											handTip.show();
+										}
 									}
 									else {
 										handTip.close();
@@ -1800,14 +1800,14 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							else {
 								event.result = 'ai';
 							}
-							"step 1"
+							"step 1";
 							if (event.result == 'ai') {
 								var ok = game.check();
 								if (ok) {
 									ui.click.ok();
 								}
-								else if (ai.basic.chooseCard(event.ai1)) {
-									if (ai.basic.chooseTarget(event.ai2) && (!event.filterOk || event.filterOk())) {
+								else if (ai.basic.chooseCard(event.ai1) || forced) {
+									if ((ai.basic.chooseTarget(event.ai2) || forced) && (!event.filterOk || event.filterOk())) {
 										ui.click.ok();
 										event._aiexcludeclear = true;
 									}
@@ -1852,7 +1852,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									game.delayx();
 								}
 							}
-							"step 2"
+							"step 2";
 							if (event.endButton) {
 								event.endButton.close();
 								delete event.endButton;
@@ -1883,6 +1883,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 											next.set('ai', info.chooseButton.check || function () { return 1; });
 											next.set('filterButton', info.chooseButton.filter || function () { return true; });
 											next.set('selectButton', info.chooseButton.select || 1);
+											next.set('complexSelect', info.chooseButton.complexSelect !== false);
+											next.set('filterOk', info.chooseButton.filterOk || (() => true));
 											if (event.id) next._parent_id = event.id;
 											next.type = 'chooseToUse_button';
 										}
@@ -1896,7 +1898,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									}
 								}
 							}
-							"step 3"
+							"step 3";
 							if (event.buttoned) {
 								if (result.bool || result.control && result.control != 'cancel2') {
 									var info = get.info(event.buttoned).chooseButton;
@@ -1905,19 +1907,25 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									if (game.online) {
 										event._sendskill = [event.buttoned + '_backup', lib.skill[event.buttoned + '_backup']];
 									}
+									else {
+										game.broadcast((skill, audio) => {
+											if (!lib.skill[skill]) lib.skill[skill] = {};
+											lib.skill[skill].audio = audio;
+										}, event.buttoned + '_backup', lib.skill[event.buttoned + '_backup'].audio);
+									}
 									event.backup(event.buttoned + '_backup');
 									if (info.prompt) {
 										event.openskilldialog = info.prompt(info.chooseControl ? result : result.links, player);
 									}
 								}
 								else {
-									ui.control.animate('nozoom', 100);
+									ui.control.addTempClass('nozoom', 100);
 									event._aiexclude.add(event.buttoned);
 								}
 								event.goto(0);
 								delete event.buttoned;
 							}
-							"step 4"
+							"step 4";
 							if (event._aiexcludeclear) {
 								delete event._aiexcludeclear;
 								event._aiexclude.length = 0;
@@ -1932,11 +1940,17 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							else if (event._sendskill) {
 								event.result._sendskill = event._sendskill;
 							}
+							if ((!event.result || !event.result.bool || event.result._noHidingTimer) && (event.result.skill || event.logSkill)) {
+								var info = get.info(event.result.skill || event.logSkill);
+								if (info.direct && !info.clearTime) {
+									_status.noclearcountdown = 'direct';
+								}
+							}
 							if (event.dialog && typeof event.dialog == 'object') event.dialog.close();
 							if (!_status.noclearcountdown) {
 								game.stopCountChoose();
 							}
-							"step 5"
+							"step 5";
 							if (event._result && event.result) {
 								event.result.result = event._result;
 							}
@@ -2753,63 +2767,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						return Skill;
 					})({});
 
-					var Click = (function (Click) {
-						Click.skill = function (skill) {
-							var info = get.info(skill);
-							var event = _status.event;
-							event.backup(skill);
-							if (info.filterCard && info.discard != false && info.lose != false && !info.viewAs) {
-								var cards = event.player.getCards(event.position);
-								for (var i = 0; i < cards.length; i++) {
-									if (!lib.filter.cardDiscardable(cards[i], event.player)) {
-										cards[i].uncheck('useSkill');
-									}
-								}
-							}
-							if (typeof event.skillDialog == 'object') {
-								event.skillDialog.close();
-							}
-							if (event.isMine()) {
-								event.skillDialog = true;
-							}
-							game.uncheck();
-							game.check();
-							if (event.skillDialog) {
-								var title = get.translation(skill);
-								var intro;
-								if (info.prompt) {
-									if (typeof info.prompt == 'function') {
-										intro = info.prompt(event);
-									}
-									else {
-										intro = info.prompt;
-									}
-								}
-								else if (info.promptfunc) {
-									intro = info.promptfunc(event, event.player);
-								}
-								else if (lib.dynamicTranslate[skill]) {
-									intro = lib.dynamicTranslate[skill](event.player, skill);
-								}
-								else if (lib.translate[skill + '_info']) {
-									intro = lib.translate[skill + '_info'];
-								}
-
-								if (intro != undefined) {
-									if (intro.length > 25) {
-										event.skillDialog = ui.create.dialog(title, '<div><div style="width:100%">' + intro + '</div></div>');
-									}
-									else {
-										var handTip = dui.showHandTip(intro);
-										handTip.strokeText();
-										event.skillDialog = handTip;
-									}
-								}
-							}
-						};
-						return Click;
-					})({});
-
 					var Create = (function (Create) {
 						Create.prebutton = function (item, type, position, noclick) {
 							var button = ui.create.div();
@@ -2994,7 +2951,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					overrides(lib.element.player, Player);
 					overrides(lib.element.content, EventContent);
 					overrides(lib.skill, Skill);
-					overrides(ui.click, Click);
 					overrides(ui.create, Create);
 					overrides(game, Game);
 
