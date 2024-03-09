@@ -11701,7 +11701,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'魔改十周年 萌修 0.2.8',
 					'优化/简化函数',
 					'删除所有chooseToXXX的修改，保证显示统一性',
-					'tryAddPlayerCardUseTag适配使用牌隐藏目标角色的机制',
+					'修改tryAddPlayerCardUseTag对使用牌隐藏目标角色的机制进行适配',
+					'修改tryAddPlayerCardUseTag对useCard1和respond时机含有临时变换花色/属性的效果进行适配',
 					'修复同时操作game.check和game.uncheck的lib.hooks部分可能发生冲突的bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
