@@ -6263,53 +6263,59 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							break;
 						case 'usecard':
 							tagText = '使用';
-							player.when({ global: 'useCard1' }).filter(evt => evt == event).then(() => {
-								const targets = trigger.targets;
-								if (targets && targets.length) {
-									if (!trigger.hideTargets) {
-										for (const target of targets) {
-											if (target != trigger.player) target.classList.add('target');
-										}
-									}
-									if (targets.length == 1) {
-										let tagText, tagNode = card.querySelector('.used-info');
-										if (tagNode == null) tagNode = card.appendChild(dui.element.create('used-info'));
-										if (targets[0] == trigger.player) tagText = '对自己';
-										else tagText = '对' + get.translation(targets[0]);
-										tagNode.textContent = get.translation(trigger.player) + tagText;
-									}
-								}
-							}).vars({ card: card });
 						case 'respond':
 							if (tagText == '') tagText = '打出';
 
-							const cardname = event.card.name, cardnature = get.nature(event.card);
-							if ((lib.config.cardtempname != 'off') && ((card.name != cardname) || !get.is.sameNature(cardnature, card.nature, true))) {
-								if (lib.config.extension_十周年UI_showTemp) {
-									if (!card._tempName) card._tempName = ui.create.div('.temp-name', card);
-									var tempname = '';
-									var tempname2 = get.translation(cardname);
-									if (cardnature) {
-										card._tempName.dataset.nature = cardnature;
-										if (cardname == 'sha') {
-											tempname2 = get.translation(cardnature) + tempname2;
+							const changeShow = function (event, card) {
+								const cardname = event.card.name, cardnature = get.nature(event.card);
+								if ((lib.config.cardtempname != 'off') && ((card.name != cardname) || !get.is.sameNature(cardnature, card.nature, true))) {
+									if (lib.config.extension_十周年UI_showTemp) {
+										if (!card._tempName) card._tempName = ui.create.div('.temp-name', card);
+										var tempname = '';
+										var tempname2 = get.translation(cardname);
+										if (cardnature) {
+											card._tempName.dataset.nature = cardnature;
+											if (cardname == 'sha') {
+												tempname2 = get.translation(cardnature) + tempname2;
+											}
+										}
+										tempname += tempname2;
+
+										card._tempName.innerHTML = tempname;
+										card._tempName.tempname = tempname;
+									}
+									else {
+										var node = ui.create.cardTempName(event.card, card);
+										var cardtempnameConfig = lib.config.cardtempname;
+										if (cardtempnameConfig !== 'default') node.classList.remove('vertical');
+									}
+								}
+								const cardnumber = get.number(event.card), cardsuit = get.suit(event.card);
+								if (card.dataset.views != 1 && event.card.cards && event.card.cards.length == 1 && (card.number != cardnumber || card.suit != cardsuit)) {
+									dui.cardTempSuitNum(card, cardsuit, cardnumber);
+								}
+							};
+							changeShow(event, card);
+							player.when({ global: ['useCard1', 'respond'] }).filter(evt => evt == event).then(() => {
+								if (trigger.name == 'useCard') {
+									const targets = trigger.targets;
+									if (targets && targets.length) {
+										if (!trigger.hideTargets) {
+											for (const target of targets) {
+												if (target != trigger.player) target.classList.add('target');
+											}
+										}
+										if (targets.length == 1) {
+											let tagText, tagNode = card.querySelector('.used-info');
+											if (tagNode == null) tagNode = card.appendChild(dui.element.create('used-info'));
+											if (targets[0] == trigger.player) tagText = '对自己';
+											else tagText = '对' + get.translation(targets[0]);
+											tagNode.textContent = get.translation(trigger.player) + tagText;
 										}
 									}
-									tempname += tempname2;
-
-									card._tempName.innerHTML = tempname;
-									card._tempName.tempname = tempname;
 								}
-								else {
-									var node = ui.create.cardTempName(event.card, card);
-									var cardtempnameConfig = lib.config.cardtempname;
-									if (cardtempnameConfig !== 'default') node.classList.remove('vertical');
-								}
-							}
-							const cardnumber = get.number(event.card), cardsuit = get.suit(event.card);
-							if (card.dataset.views != 1 && event.card.cards && event.card.cards.length == 1 && (card.number != cardnumber || card.suit != cardsuit)) {
-								dui.cardTempSuitNum(card, cardsuit, cardnumber);
-							}
+								changeShow(trigger, card);
+							}).vars({ card: card, changeShow: changeShow }).assign({ priority: -Infinity, lastDo: true });
 
 							if (duicfg.cardUseEffect && event.card && (!event.card.cards || !event.card.cards.length || event.card.cards.length == 1)) {
 								var name = event.card.name;
