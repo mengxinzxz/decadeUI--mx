@@ -1,14 +1,15 @@
 import { ChildNodesWatcher } from '../../noname/library/cache/childNodesWatcher.js'
 import { nonameInitialized } from '../../noname/util/index.js'
 game.import("extension", function (lib, game, ui, get, ai, _status) {
+	const decadeUIName = window.decadeUIName = '十周年UI';
+	const decadeUIPath = window.decadeUIPath = lib.assetURL + 'extension/' + decadeUIName + '/';
+	const decadeUIResolvePath = window.decadeUIResolvePath = nonameInitialized + 'extension/' + decadeUIName + '/';
 	return {
 		name: "十周年UI",
 		content: function (config, pack) {
 			/*-----------------分割线-----------------*/
 			if (get.mode() == 'chess' || get.mode() == 'tafang') return;
-			var extensionName = decadeUIName;
-			var extension = lib.extensionMenu['extension_' + extensionName];
-			var extensionPath = lib.assetURL + 'extension/' + extensionName + '/';
+			var extension = lib.extensionMenu['extension_' + decadeUIName];
 			if (!(extension && extension.enable && extension.enable.init)) return;
 			/*-----------------分割线-----------------*/
 
@@ -29,12 +30,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					break;
 			}
 
-			console.time(extensionName);
+			console.time(decadeUIName);
 
 			window.duicfg = config;
 			window.dui = window.decadeUI = {
 				init: function () {
-					this.extensionName = extensionName;
+					this.extensionName = decadeUIName;
 
 					var sensor = decadeUI.element.create('sensor', document.body);
 					sensor.id = 'decadeUI-body-sensor';
@@ -255,7 +256,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										clipSlots: skin.clipSlots,	// 剪掉超出头的部件，仅针对露头动皮，其他勿用
 									}, i == 1);
 
-									this.$dynamicWrap.style.backgroundImage = 'url("' + extensionPath + 'assets/dynamic/' + skin.background + '")';
+									this.$dynamicWrap.style.backgroundImage = 'url("' + decadeUIPath + 'assets/dynamic/' + skin.background + '")';
 									if (!increased) {
 										increased = true;
 										decadeUI.CUR_DYNAMIC++;
@@ -1900,7 +1901,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 												}
 											}
 											else {
-												var url = lib.assetURL + 'extension/' + extensionName + '/image/card/' + filename + '.' + imgFormat;
+												var url = lib.assetURL + 'extension/' + decadeUIName + '/image/card/' + filename + '.' + imgFormat;
 												if (!asset) {
 													res[filename] = asset = {
 														name: filename,
@@ -3777,10 +3778,10 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										/*-----------------分割线-----------------*/
 										// 不同样式身份标记
 										if (lib.config.extension_十周年UI_newDecadeStyle == 'on') {
-											image.src = extensionPath + 'image/decoration/identity_' + filename + '.png';
+											image.src = decadeUIPath + 'image/decoration/identity_' + filename + '.png';
 										}
 										else {
-											image.src = extensionPath + 'image/decorations/identity2_' + filename + '.png';
+											image.src = decadeUIPath + 'image/decorations/identity2_' + filename + '.png';
 										}
 										this.parentNode.style.backgroundImage = 'url("' + image.src + '")';
 									}
@@ -4834,8 +4835,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								}
 								var image = new Image();
 								var url;
-								if (decadeUI.config.newDecadeStyle == 'off') url = extensionPath + 'image/decorations/name2_' + group + '.png';
-								else url = extensionPath + 'image/decoration/name_' + group + '.png';
+								if (decadeUI.config.newDecadeStyle == 'off') url = decadeUIPath + 'image/decorations/name2_' + group + '.png';
+								else url = decadeUIPath + 'image/decoration/name_' + group + '.png';
 								this._finalGroup = group;
 								image.onerror = () => this.node.campWrap.node.campName.innerHTML = this._finalGroup ? get.translation(this._finalGroup)[0] : '';
 								this.node.campWrap.node.campName.style.backgroundImage = `url("${url}")`;
@@ -5594,7 +5595,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						if (!this.sheetList) {
 							this.sheetList = [];
 							for (var i = 0; i < document.styleSheets.length; i++) {
-								if (document.styleSheets[i].href && document.styleSheets[i].href.indexOf('extension/' + encodeURI(extensionName)) != -1) {
+								if (document.styleSheets[i].href && document.styleSheets[i].href.indexOf('extension/' + encodeURI(decadeUIName)) != -1) {
 									this.sheetList.push(document.styleSheets[i]);
 								}
 							}
@@ -7437,7 +7438,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 			decadeUI.config = config;
 			duicfg.update = function () {
-				var menu = lib.extensionMenu['extension_' + extensionName];
+				var menu = lib.extensionMenu['extension_' + decadeUIName];
 				for (var key in menu) {
 					if (menu[key] && (typeof menu[key] == 'object')) {
 						if (typeof menu[key].update == 'function') {
@@ -7448,7 +7449,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			};
 
 			decadeUI.init();
-			console.timeEnd(extensionName);
+			console.timeEnd(decadeUIName);
 			//手杀UI
 			//发动技能函数
 			var shoushaUI = lib.element.player.trySkillAnimate;
@@ -9424,9 +9425,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 		},
 		precontent: function () {
 			if (get.mode() == 'chess' || get.mode() == 'tafang') return;
-			window.decadeUIName = '十周年UI';
-			window.decadeUIPath = lib.assetURL + 'extension/' + decadeUIName + '/';
-			window.decadeUIResolvePath = nonameInitialized + 'extension/' + decadeUIName + '/';
 			if (lib.config['extension_' + decadeUIName + '_eruda']) {
 				var script = document.createElement('script');
 				script.src = decadeUIPath + 'eruda.js';
