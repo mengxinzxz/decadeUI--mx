@@ -3167,8 +3167,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					//根据手杀ui选项开关调用不同结束出牌阶段的弹出样式
 					lib.hooks['checkEnd'].push(() => {
 						if (ui.confirm && ui.confirm.lastChild.link == 'cancel') {
-							if (_status.event.type == 'phase' && !_status.event.skill) {
-								ui.confirm.lastChild.innerHTML = lib.config['extension_十周年UI_newDecadeStyle'] == 'on' ? '回合结束' : '结束出牌';
+							if (_status.event.type == 'phase') {
+								const innerHTML = (lib.config['extension_十周年UI_newDecadeStyle'] == 'on' ? '回合结束' : '结束出牌');
+								ui.confirm.lastChild.innerHTML = _status.event.skill ? '取消' : innerHTML;
 							}
 						}
 					});
