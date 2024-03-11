@@ -7603,8 +7603,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			var originchangeZhuanhuanji = lib.element.player.$changeZhuanhuanji;
 			lib.element.player.$changeZhuanhuanji = function (skill) {
 				originchangeZhuanhuanji.apply(this, arguments);
-				var info = get.info(skill);
-				if (!info || !info.zhuanhuanji) return;
+				if (!get.is.zhuanhuanji(skill, i)) return;
 				var mark = this.node.xSkillMarks.querySelector('[data-id="' + skill + '"]');
 				var num = this.countMark(skill);
 				var url = lib.assetURL + 'extension/十周年UI/shoushaUI/skill/images/' + skill + '_yang.png';

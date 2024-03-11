@@ -75,7 +75,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
             var info = get.info(skill);
             if (!info) return;
             //这里修改1{这里是分离转换技，限定技，觉醒技，使命技
-            if (info.zhuanhuanji || info.limited || (info.intro && info.intro.content === 'limited')) {
+            if (get.is.zhuanhuanji(skill, player) || info.limited || (info.intro && info.intro.content === 'limited')) {
               xiandingji[skill] = player.awakenedSkills.includes(skill);
             }
             if (info.juexingji || info.dutySkill) juexingji[skill] = player.awakenedSkills.includes(skill);
