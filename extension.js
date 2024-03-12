@@ -3136,7 +3136,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							cardname = get.name(card); cardnature = get.nature(card);
 						}
 						else {
-							cardskb = (typeof get.info(skill).viewAs == 'function' ? get.info(skill).viewAs([card], game.me) : get.info(skill).viewAs);
+							cardskb = (typeof get.info(skill).viewAs == 'function' ? get.info(skill).viewAs([card], _status.event.player||game.me) : get.info(skill).viewAs);
 							cardname = get.name(cardskb); cardnature = get.nature(cardskb);
 						}
 						if (card.name !== cardname || !get.is.sameNature(card.nature, cardnature, true)) {
@@ -6298,26 +6298,28 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								}
 							};
 							changeShow(event, card);
-							player.when({ global: ['useCard', 'respond'] }).filter(evt => evt == event).then(() => {
-								if (trigger.name == 'useCard') {
-									const targets = trigger.targets;
-									if (targets && targets.length) {
-										if (!trigger.hideTargets) {
-											for (const target of targets) {
-												if (target != trigger.player) target.classList.add('target');
-											}
-										}
-										if (targets.length == 1) {
-											let tagText, tagNode = card.querySelector('.used-info');
-											if (tagNode == null) tagNode = card.appendChild(dui.element.create('used-info'));
-											if (targets[0] == trigger.player) tagText = '对自己';
-											else tagText = '对' + get.translation(targets[0]);
-											tagNode.textContent = get.translation(trigger.player) + tagText;
-										}
-									}
-								}
+							//卡牌属性于useCard1或respond转变后的显示
+							player.when({ global: ['useCard1', 'respond'] }).filter(evt => evt == event).then(() => {
 								changeShow(trigger, card);
 							}).vars({ card: card, changeShow: changeShow }).assign({ priority: -Infinity, lastDo: true });
+							//隐藏目标over后的目标classList显示和处理区牌信息显示
+							player.when({ global: ['useCard'] }).filter(evt => evt == event).then(() => {
+								const targets = trigger.targets;
+								if (targets && targets.length) {
+									if (!trigger.hideTargets) {
+										for (const target of targets) {
+											if (target != trigger.player) target.classList.add('target');
+										}
+									}
+									if (targets.length == 1) {
+										let tagText, tagNode = card.querySelector('.used-info');
+										if (tagNode == null) tagNode = card.appendChild(dui.element.create('used-info'));
+										if (targets[0] == trigger.player) tagText = '对自己';
+										else tagText = '对' + get.translation(targets[0]);
+										tagNode.textContent = get.translation(trigger.player) + tagText;
+									}
+								}
+							}).assign({ priority: -Infinity, lastDo: true });
 
 							if (duicfg.cardUseEffect && event.card && (!event.card.cards || !event.card.cards.length || event.card.cards.length == 1)) {
 								var name = event.card.name;
@@ -11698,9 +11700,10 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				var log = [
 					'魔改十周年 萌修 0.2.8',
 					'优化/简化函数',
+					'判定转换技的部分改为使用get.is.zhuanhuanji进行判别',
 					'删除所有chooseToXXX的修改，保证显示统一性',
 					'修复同时操作game.check和game.uncheck的lib.hooks部分可能发生冲突的bug',
-					'修改tryAddPlayerCardUseTag对使用牌隐藏目标角色的机制进行适配',
+					'修改tryAddPlayerCardUseTag对useCard0时机使用牌隐藏目标角色的机制进行适配',
 					'修改tryAddPlayerCardUseTag对useCard1和respond时机含有临时变换花色/属性的效果进行适配',
 					'修复随机/评级龙头框只对game.me生效的bug',
 				];
