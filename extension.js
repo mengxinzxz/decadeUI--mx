@@ -6298,7 +6298,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								}
 							};
 							changeShow(event, card);
-							player.when({ global: ['useCard1', 'respond'] }).filter(evt => evt == event).then(() => {
+							player.when({ global: ['useCard', 'respond'] }).filter(evt => evt == event).then(() => {
 								if (trigger.name == 'useCard') {
 									const targets = trigger.targets;
 									if (targets && targets.length) {
