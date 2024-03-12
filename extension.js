@@ -3136,7 +3136,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							cardname = get.name(card); cardnature = get.nature(card);
 						}
 						else {
-							cardskb = (typeof get.info(skill).viewAs == 'function' ? get.info(skill).viewAs([card], _status.event.player||game.me) : get.info(skill).viewAs);
+							cardskb = (typeof get.info(skill).viewAs == 'function' ? get.info(skill).viewAs([card], _status.event.player || game.me) : get.info(skill).viewAs);
 							cardname = get.name(cardskb); cardnature = get.nature(cardskb);
 						}
 						if (card.name !== cardname || !get.is.sameNature(card.nature, cardnature, true)) {
@@ -6319,7 +6319,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										tagNode.textContent = get.translation(trigger.player) + tagText;
 									}
 								}
-							}).assign({ priority: -Infinity, lastDo: true });
+							}).vars({ card: card }).assign({ priority: -Infinity, lastDo: true });
 
 							if (duicfg.cardUseEffect && event.card && (!event.card.cards || !event.card.cards.length || event.card.cards.length == 1)) {
 								var name = event.card.name;
