@@ -305,6 +305,17 @@
 	visibility: hidden;
 }
 
+.player>.unseen_show>.primary-avatar,
+.player>.unseen2_show>.deputy-avatar {
+	opacity: 0;
+}
+
+#arena:not(.observe) .player:not([data-position='0']).unseen_show>.primary-avatar,
+#arena:not(.observe) .player:not([data-position='0']).unseen2_show>.deputy-avatar {
+	opacity: 1 !important;
+	background-image:url('../../image/character/hidden_image.jpg') !important;
+}
+
 .player>.camp-wrap>.camp-name {
 	font-family: xinwei, xingkai;
 	font-display: swap;

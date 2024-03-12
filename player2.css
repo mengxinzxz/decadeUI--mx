@@ -387,6 +387,17 @@ z-index:100;
 	visibility: hidden;
 }
 
+.player>.unseen_show>.primary-avatar,
+.player>.unseen2_show>.deputy-avatar {
+	opacity: 0;
+}
+
+#arena:not(.observe) .player:not([data-position='0']).unseen_show>.primary-avatar,
+#arena:not(.observe) .player:not([data-position='0']).unseen2_show>.deputy-avatar {
+	opacity: 1 !important;
+	background-image:url('../../image/character/hidden_image.jpg') !important;
+}
+
 .player>.camp-wrap>.camp-name { /*势力图片，手杀样式已修改*/
 	font-family: shousha;
 	font-display: swap;
@@ -1154,8 +1165,8 @@ z-index:100;
 	font-weight: bold;
 	-webkit-text-stroke: 0.2px #3e362a;
 	text-shadow: none;
-	background: linear-gradient(180deg, #f5df88 16%, #ab8d35 60%); 
-	-webkit-background-clip: text;
+	background: linear-gradient(180deg, #f5df88 16%, #ab8d35 60%);
+	/*-webkit-background-clip: text;*/
 	-webkit-text-fill-color: transparent;
 	font-size: 28.5px;
 	z-index: 91;
