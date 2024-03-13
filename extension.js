@@ -300,15 +300,15 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							//体力条显示修改
 							const hidden = (this.classList.contains('unseen_show') || this.classList.contains('unseen2_show'));
 							let hp = this.hp, hpMax = (hidden ? 1 : this.maxHp), hpNode = this.node.hp;
+							const goon = (hpMax > 5 || (this.hujia && hpMax > 3));
 							if (!this.storage.nohp) {
-								if (hpMax > 5 || (!_status.video && this.hujia && hpMax > 3)) {
+								if (goon) {
 									hpNode.innerHTML = (isNaN(hp) ? '×' : (hp == Infinity ? '∞' : hp)) + '<br>/<br>' + (isNaN(hpMax) ? '×' : (hpMax == Infinity ? '∞' : hpMax)) + '<div></div>';
 									if (hp == 0) hpNode.lastChild.classList.add('lost');
 									hpNode.classList.add('textstyle');
 								}
 							}
-							if (!this.hujia && !_status.video) this.dataset.maxHp = hpMax;
-							else this.dataset.maxHp = 'hujia';
+							this.dataset.maxHp = (goon ? 4 : hpMax);
 							//手牌数显示修改
 							let count = this.countCards('h');
 							if (count >= 10) this.node.count.innerHTML = count;
@@ -11626,6 +11626,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				var log = [
 					'魔改十周年 萌修 0.2.9',
 					'update覆盖式修改→$update继承性修改',
+					'优化护甲显示（十周年样式素材+十周年样式参数by-Fire.win）',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),

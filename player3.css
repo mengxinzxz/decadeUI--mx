@@ -26,30 +26,30 @@
 
 /*护甲*/
 .hujia{
-top:auto;
-/*上下*/
-bottom:-5%;
-/*左右*/
-left:-4px;
-/*指向护甲图片放的位置*/
-background-image: url("image/decoration/shield.png");
-background-size: 100% 100%;
-background-repeat: no-repeat;
-/*图片宽*/
-width:21px;
-/*图片高*/
-height:21px;
-/*字体*/
-text-align: center;
-color:white;
-font-family: 'shousha';
--webkit-text-stroke: 0.9px black;
-text-shadow: 0 0 1.5px #ffded4, 0 0 1.5px #ffded4 ,0 0 1.5px #ffded4,0 0 1.5px #ffded4!important;
-font-size:18px;
-font-weight:900;
-/*其他*/
-position:relative;
-z-index:100;
+	top:auto;
+	/*上下*/
+	bottom:22px;
+	/*左右*/
+	left:-4px;
+	/*指向护甲图片放的位置*/
+	background-image: url("image/decoration/shield.png");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	/*图片宽*/
+	width:21px;
+	/*图片高*/
+	height:21px;
+	/*字体*/
+	text-align: center;
+	color:white;
+	font-family: 'shousha';
+	-webkit-text-stroke: 0.9px black;
+	text-shadow: 0 0 1.5px #ffded4, 0 0 1.5px #ffded4 ,0 0 1.5px #ffded4,0 0 1.5px #ffded4!important;
+	font-size:18px;
+	font-weight:900;
+	/*其他*/
+	position:relative;
+	z-index:100;
 }
 
 .player::before {

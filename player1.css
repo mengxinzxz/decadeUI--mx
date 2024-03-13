@@ -438,29 +438,23 @@
 	height: 78px;
 }
 
-.hujia{
-top:auto;
-bottom:48%;
-/*上下*/
-left:-8.75px;
-/*左右*/
-/*这些参数可能需要自己调一下*/
-background-image: url("image/decoration/shield_decade.png");
-/*护甲图片存放位置*/
-background-size: 100% 100%;
-background-repeat: no-repeat;
-width:30px;
-/*图片宽*/
-text-align: center;
-color:white;
-text-shadow: 0 0 1.5px #ffded4, 0 0 1.5px #ffded4 ,0 0 1.5px #ffded4,0 0 1.5px #ffded4!important;
-font-size:12px;
-font-weight:900;
-line-height: 54px;
-height:65px;
-/*图片高*/
-position:absolute;
-z-index:100;
+.hujia {
+	top: auto;
+	bottom: 43px;
+	left: -5px;
+	background-image: url('image/decoration/shield_decade.png');
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	width: 20.25px;
+	text-align: center;
+	color: white;
+	font-size: 17px;
+	font-family: 'yuanli';
+	line-height: 24px;
+	height: 22.5px;
+	position: relative;
+	text-shadow: 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18;
+	z-index: 100;
 }
 
 .player.connect>div:not(.avatar):not(.name):not(.nameol):not(.hp):not(.room):not(.gaming):not(.identity).hp-wrap {
