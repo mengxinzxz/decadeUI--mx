@@ -1245,7 +1245,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							}
 							player.judging.unshift(cardj);
 							game.addVideo('judge1', player, [get.cardInfo(player.judging[0]), judgestr, event.videoId]);
-							game.broadcastAll(function (player, card, str, id, cardid) {
+							game.broadcastAll(function (player, card/*, str*/, id, cardid) {
 								var event = game.online ? {} : _status.event;
 								if (game.chess) event.node = card.copy('thrown', 'center', ui.arena).animate('start');
 								else event.node = player.$throwordered2(card.copy(), true);
@@ -1256,11 +1256,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									ui.arena.classList.add('thrownhighlight');
 									event.node.classList.add('thrownhighlight');
 								}
+								/*
 								event.dialog = ui.create.dialog(str);
 								event.dialog.classList.add('center');
-
 								event.dialog.videoId = id;
-							}, player, player.judging[0], judgestr, event.videoId, get.id());
+								*/
+							}, player, player.judging[0]/*, judgestr*/, event.videoId, get.id());
 
 							game.log(player, '进行' + event.judgestr + '判定，亮出的判定牌为', player.judging[0]);
 							game.delay(2);
@@ -1293,12 +1294,14 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								game.broadcastAll(ui.clear);
 							}
 
-							event.dialog.close();
-							game.broadcast(function (id) {
+							//event.dialog.close();
+							game.broadcast(function (/*id*/) {
+								/*
 								var dialog = get.idDialog(id);
 								if (dialog) dialog.close();
+								*/
 								if (!window.decadeUI) ui.arena.classList.remove('thrownhighlight');
-							}, event.videoId);
+							}/*, event.videoId*/);
 
 							game.addVideo('judge2', null, event.videoId);
 							game.log(player, '的判定结果为', event.result.card);
@@ -3136,7 +3139,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							cardname = get.name(card); cardnature = get.nature(card);
 						}
 						else {
-							cardskb = (typeof get.info(skill).viewAs == 'function' ? get.info(skill).viewAs([card], _status.event.player || game.me) : get.info(skill).viewAs);
+							cardskb = (typeof get.info(skill).viewAs == 'function' ? get.info(skill).viewAs([card], _status.event.player||game.me) : get.info(skill).viewAs);
 							cardname = get.name(cardskb); cardnature = get.nature(cardskb);
 						}
 						if (card.name !== cardname || !get.is.sameNature(card.nature, cardnature, true)) {
@@ -11702,6 +11705,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'优化/简化函数',
 					'判定转换技的部分改为使用get.is.zhuanhuanji进行判别',
 					'删除所有chooseToXXX的修改，保证显示统一性',
+					'注释judge事件的部分字符显示',
 					'修复同时操作game.check和game.uncheck的lib.hooks部分可能发生冲突的bug',
 					'修改tryAddPlayerCardUseTag对useCard0时机使用牌隐藏目标角色的机制进行适配',
 					'修改tryAddPlayerCardUseTag对useCard1和respond时机含有临时变换花色/属性的效果进行适配',
