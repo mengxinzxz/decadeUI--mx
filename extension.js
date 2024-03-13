@@ -288,20 +288,15 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						Player.$update = function () {
 							this._super.$update.apply(this, arguments);
 							//护甲显示修改
-							if (!_status.video) {
-								if (get.info('ghujia').mark !== false) {
-									game.broadcastAll(() => lib.skill['ghujia'].mark = false);
+							let hujiat = this.node.hpWrap.querySelector('.hujia');
+							if (this.hujia > 0) {
+								if (!hujiat) {
+									hujiat = ui.create.div('.hujia');
+									this.node.hpWrap.appendChild(hujiat);
 								}
-								let hujiat = this.node.hpWrap.querySelector('.hujia');
-								if (this.hujia > 0) {
-									if (!hujiat) {
-										hujiat = ui.create.div('.hujia');
-										this.node.hpWrap.appendChild(hujiat);
-									}
-									hujiat.innerText = this.hujia;
-								}
-								else if (hujiat) hujiat.remove();
+								hujiat.innerText = this.hujia;
 							}
+							else if (hujiat) hujiat.remove();
 							//体力条显示修改
 							let hp = this.hp, hpMax = this.maxHp, hpNode = this.node.hp;
 							if (!this.storage.nohp) {

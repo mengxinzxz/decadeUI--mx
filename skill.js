@@ -124,6 +124,9 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
         },
     };
     decadeUI.skill = {
+        ghujia: {
+            mark: false,
+        },
         _usecard: {
             trigger: { global: 'useCardAfter' },
             forced: true,
