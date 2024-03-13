@@ -311,7 +311,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									hpNode.classList.add('textstyle');
 								}
 							}
-							if (!this.hujia) this.dataset.maxHp = hpMax;
+							if (!this.hujia && !_status.video) this.dataset.maxHp = hpMax;
 							else this.dataset.maxHp = 'hujia';
 							//手牌数显示修改
 							let count = this.countCards('h');
