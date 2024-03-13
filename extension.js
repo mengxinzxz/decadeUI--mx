@@ -298,7 +298,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							}
 							else if (hujiat) hujiat.remove();
 							//体力条显示修改
-							let hp = this.hp, hpMax = this.maxHp, hpNode = this.node.hp;
+							const hidden = (this.classList.contains('unseen_show') || this.classList.contains('unseen2_show'));
+							let hp = this.hp, hpMax = (hidden ? 1 : this.maxHp), hpNode = this.node.hp;
 							if (!this.storage.nohp) {
 								if (hpMax > 5 || (!_status.video && this.hujia && hpMax > 3)) {
 									hpNode.innerHTML = (isNaN(hp) ? '×' : (hp == Infinity ? '∞' : hp)) + '<br>/<br>' + (isNaN(hpMax) ? '×' : (hpMax == Infinity ? '∞' : hpMax)) + '<div></div>';
