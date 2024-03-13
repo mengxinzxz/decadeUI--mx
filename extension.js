@@ -11638,6 +11638,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			intro: (function () {
 				var log = [
 					'魔改十周年 萌修 0.2.9',
+					'合并@Icelotusflower提供的Pull Request',
+					'增加阵亡仍显示动皮的开关',
+					'大小乔骨骼背景显示修复',
 					'update覆盖式修改→$update继承性修改',
 					'优化护甲显示（十周年样式素材+十周年样式参数by-Fire.win）',
 				];
