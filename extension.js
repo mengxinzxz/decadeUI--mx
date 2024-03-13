@@ -285,19 +285,14 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								player.node.seat.innerHTML = get.cnNumber(player.seat, true);
 							}, this);
 						};
-						Player.update = function (count, hp, hpMax, hujia) {
+						Player.$update = function () {
+							this._super.$update.apply(this, arguments);
+							//护甲显示修改
 							if (!_status.video) {
-								if (this.hp >= this.maxHp) this.hp = this.maxHp;
-								count = this.countCards('h');
-								hp = this.hp;
-								hpMax = this.maxHp;
-								var hujiat = this.node.hpWrap.querySelector('.hujia');
-								game.broadcast(function (player, hp, maxHp, hujia) {
-									player.hp = hp;
-									player.maxHp = maxHp;
-									player.hujia = hujia;
-									player.update();
-								}, this, hp, hpMax, this.hujia);
+								if (get.info('ghujia').mark !== false) {
+									game.broadcastAll(() => lib.skill['ghujia'].mark = false);
+								}
+								let hujiat = this.node.hpWrap.querySelector('.hujia');
 								if (this.hujia > 0) {
 									if (!hujiat) {
 										hujiat = ui.create.div('.hujia');
@@ -306,89 +301,21 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									hujiat.innerText = this.hujia;
 								}
 								else if (hujiat) hujiat.remove();
-
-								game.addVideo('update', this, [count, hp, hpMax, this.hujia]);
 							}
-							else {
-								if (!count) count = this.countCards('h');
-
-								hp = this.hp;
-								hpMax = this.maxHp;
-							}
-
-							var hpNode = this.node.hp;
-							/*-----------------分割线-----------------*/
+							//体力条显示修改
+							let hp = this.hp, hpMax = this.maxHp, hpNode = this.node.hp;
 							if (!this.storage.nohp) {
-								if (hpMax > 5 || (this.hujia && hpMax > 3)) {
-									hpNode.innerHTML = (isNaN(hp) ? '×' : (hp == Infinity ? '∞' : hp)) + '<br>/<br>'
-										+ (isNaN(hpMax) ? '×' : (hpMax == Infinity ? '∞' : hpMax)) + '<div></div>';
+								if (hpMax > 5 || (!_status.video && this.hujia && hpMax > 3)) {
+									hpNode.innerHTML = (isNaN(hp) ? '×' : (hp == Infinity ? '∞' : hp)) + '<br>/<br>' + (isNaN(hpMax) ? '×' : (hpMax == Infinity ? '∞' : hpMax)) + '<div></div>';
 									if (hp == 0) hpNode.lastChild.classList.add('lost');
 									hpNode.classList.add('textstyle');
 								}
-								else {
-									hpNode.innerHTML = '';
-									hpNode.classList.remove('textstyle');
-									while (hpMax > hpNode.childNodes.length) ui.create.div(hpNode);
-									while (Math.max(0, hpMax) < hpNode.childNodes.length) hpNode.lastChild.remove();
-
-									for (var i = 0; i < Math.max(0, hpMax); i++) {
-										var index = i;
-										if (get.is.newLayout()) {
-											index = hpMax - i - 1;
-										}
-										if (i < hp) {
-											hpNode.childNodes[index].classList.remove('lost');
-										}
-										else {
-											hpNode.childNodes[index].classList.add('lost');
-										}
-									}
-								}
-
-								if (hpNode.classList.contains('room')) {
-									hpNode.dataset.condition = 'high';
-								}
-								else if (hp == 0) {
-									hpNode.dataset.condition = '';
-								}
-								else if (hp > Math.round(hpMax / 2) || hp === hpMax) {
-									hpNode.dataset.condition = 'high';
-								}
-								else if (hp > Math.floor(hpMax / 3)) {
-									hpNode.dataset.condition = 'mid';
-								}
-								else {
-									hpNode.dataset.condition = 'low';
-								}
 							}
-							/*-----------------分割线-----------------*/
-							this.node.count.innerHTML = count;
-							if (count >= 10) {
-								this.node.count.dataset.condition = 'low';
-							}
-							else if (count > 5) {
-								this.node.count.dataset.condition = 'higher';
-							}
-							else if (count > 2) {
-								this.node.count.dataset.condition = 'high';
-							}
-							else if (count > 0) {
-								this.node.count.dataset.condition = 'mid';
-							}
-							else {
-								this.node.count.dataset.condition = 'none';
-							}
-
 							if (!this.hujia) this.dataset.maxHp = hpMax;
 							else this.dataset.maxHp = 'hujia';
-							this.updateMarks();
-
-							if (this.updates) {
-								for (var i = 0; i < lib.element.player.updates.length; i++) {
-									lib.element.player.updates[i](this);
-								}
-							}
-
+							//手牌数显示修改
+							let count = this.countCards('h');
+							if (count >= 10) this.node.count.innerHTML = count;
 							return this;
 						};
 						Player.directgain = function (cards, broadcast, gaintag) {
@@ -3139,7 +3066,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							cardname = get.name(card); cardnature = get.nature(card);
 						}
 						else {
-							cardskb = (typeof get.info(skill).viewAs == 'function' ? get.info(skill).viewAs([card], _status.event.player||game.me) : get.info(skill).viewAs);
+							cardskb = (typeof get.info(skill).viewAs == 'function' ? get.info(skill).viewAs([card], _status.event.player || game.me) : get.info(skill).viewAs);
 							cardname = get.name(cardskb); cardnature = get.nature(cardskb);
 						}
 						if (card.name !== cardname || !get.is.sameNature(card.nature, cardnature, true)) {
@@ -11701,22 +11628,15 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			},
 			intro: (function () {
 				var log = [
-					'魔改十周年 萌修 0.2.8',
-					'优化/简化函数',
-					'判定转换技的部分改为使用get.is.zhuanhuanji进行判别',
-					'删除所有chooseToXXX的修改，保证显示统一性',
-					'注释judge事件的部分字符显示',
-					'修复同时操作game.check和game.uncheck的lib.hooks部分可能发生冲突的bug',
-					'修改tryAddPlayerCardUseTag对useCard0时机使用牌隐藏目标角色的机制进行适配',
-					'修改tryAddPlayerCardUseTag对useCard1和respond时机含有临时变换花色/属性的效果进行适配',
-					'修复随机/评级龙头框只对game.me生效的bug',
+					'魔改十周年 萌修 0.2.9',
+					'update覆盖式修改→$update继承性修改',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
 			author: "萌新（转型中）<br>十周年UI原作者：短歌<br>手杀UI原名：界面美化<br>手杀UI原作者：橙续缘",
 			diskURL: "",
 			forumURL: "",
-			version: "0.2.8",
+			version: "0.2.9",
 		},
 		files: {
 			"character": [],
