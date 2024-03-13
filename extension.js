@@ -294,7 +294,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									hujiat = ui.create.div('.hujia');
 									this.node.hpWrap.appendChild(hujiat);
 								}
-								hujiat.innerText = this.hujia;
+								hujiat.innerText = (this.hujia == Infinity ? '∞' : this.hujia);
 							}
 							else if (hujiat) hujiat.remove();
 							//体力条显示修改
