@@ -2316,7 +2316,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								},
 
 								$dieAfter: function () {
-									this.stopDynamic();
+									if (!config.dynamicSkin_dieAfter)
+										this.stopDynamic();
 									this.node.gainSkill.innerHTML = null
 
 									if (!decadeUI.config.playerDieEffect) {
@@ -11121,6 +11122,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					}
 				}
 			},
+			dynamicSkin_dieAfter: {
+				name: '阵亡保留动皮',
+				intro: '阵亡后依旧显示动态皮肤',
+				init: true,
+			},
 			cardAlternateNameVisible: {
 				name: '牌名辅助显示',
 				init: false,
@@ -11569,6 +11575,13 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					"120000": "2min/次",
 					"300000": "5min/次",
 				},
+			},
+			/*其它美化*/
+			FL4: {
+				"name": "<img style=width:240px src=" + lib.assetURL + "extension/十周年UI/shoushaUI/line.png>",
+				"intro": "",
+				"init": true,
+				"clear": true,
 			},
 			XPJ: {
 				name: "小配件（十周年）",
