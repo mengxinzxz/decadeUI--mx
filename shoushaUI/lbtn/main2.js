@@ -7,7 +7,8 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
       originUpdateRoundNumber.apply(this, arguments);
       if (ui.cardRoundTime) ui.cardRoundTime.updateRoundCard();
     };
-    if (lib.config.mode == 'identity' || lib.config.mode == 'doudizhu' || lib.config.mode == 'guozhan' || lib.config.mode == 'versus') {
+    //这个UI没什么用处，但是在电脑上会和菜单栏重叠，故删除
+    /* if (lib.config.mode == 'identity' || lib.config.mode == 'doudizhu' || lib.config.mode == 'guozhan' || lib.config.mode == 'versus') {
       if (lib.config.mode == 'doudizhu') {
         var jiaojia = ui.create.node('div');
         jiaojia.innerHTML = "<span style='letter-spacing:-1px;font-weight:400;'>城主出兵️</span>" + "<br>" + (num = ['100', '200', '300', '600', '900']).randomGet(1);
@@ -23,7 +24,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
         head.style.cssText = "display: block; --w: 60px;--h: 40px;width: var(--w);height: var(--h);position: absolute;top: 5px;left:120px;background-color: transparent;z-index:-1"
         document.body.appendChild(head);
       }
-    }
+    } */
 
     if (lib.config.mode == 'identity' || lib.config.mode == 'doudizhu' || lib.config.mode == 'guozhan' || lib.config.mode == 'versus' || lib.config.mode == 'single' || lib.config.mode == 'martial') {
       var wenhao = ui.create.node('img');
