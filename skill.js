@@ -2498,7 +2498,7 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
                 else event.finish();
                 'step 2'
                 var next = target.chooseToUse();
-                next.set('openskilldialog', '探锋：选择一张牌当做【杀】对' + get.translation(player) + '使用，或受到其造成的1点火焰伤害，并令其跳过本回合的一个阶段（准备阶段和结束阶段除外）');
+                next.set('openskilldialog', '###探锋：选择一张牌当作【杀】对' + get.translation(player) + '使用###或点击“取消”，受到其造成的1点火焰伤害，并令其跳过本回合的一个阶段（准备阶段和结束阶段除外）');
                 next.set('norestore', true);
                 next.set('_backupevent', 'twtanfeng_backup');
                 next.set('custom', {

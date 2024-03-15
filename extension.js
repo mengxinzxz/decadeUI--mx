@@ -2992,27 +2992,16 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						}
 					}
 
-					var getNodeIntro = get.nodeintro;
 					var gameLinexyFunction = game.linexy;
-					var gameUncheckFunction = game.uncheck;
 					var swapControlFunction = game.swapControl;
 					var swapPlayerFunction = game.swapPlayer;
-					var baseChooseCharacter = game.chooseCharacter;
 					var createArenaFunction = ui.create.arena;
 					var createPauseFunction = ui.create.pause;
-					var createMenuFunction = ui.create.menu;
 					var initCssstylesFunction = lib.init.cssstyles;
-					var initLayoutFunction = lib.init.layout;
 
 					var cardCopyFunction = lib.element.card.copy;
-					var playerInitFunction = lib.element.player.init;
-					var playerUninitFunction = lib.element.player.uninit;
 					var playerAddSkillFunction = lib.element.player.addSkill;
-					var playerRemoveSkillFunction = lib.element.player.removeSkill
-					var playerUpdateFunction = lib.element.player.update;
-					var playerChooseTargetFunction = lib.element.player.chooseTarget;
-					var playerThrowFunction = lib.element.player.$throw;
-					var playerDrawFunction = lib.element.player.$draw;
+					var playerRemoveSkillFunction = lib.element.player.removeSkill;
 					var playerDieFlipFunction = lib.element.player.$dieflip;
 
 					ui.updatejm = function (player, nodes, start, inv) {
@@ -4719,14 +4708,17 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					lib.element.player.addSkill = function (skill) {
 						var skill = playerAddSkillFunction.apply(this, arguments);
 						if (!Array.isArray(skill)) {
-							var character1 = lib.character[this.name];
-							var character2 = lib.character[this.name2];
-							if ((!character1 || !character1[3].includes(skill)) && (!character2 || !character2[3].includes(skill))) {
+							const skills = ['name', 'name1', 'name2'].reduce((list, name) => {
+								if (this[name] && (name != 'name1' || this.name != this.name1)) {
+									list.addArray(get.character(this[name], 3) || []);
+								}
+								return list;
+							}, []);
+							if (!skills.includes(skill)) {
 								var info = get.info(skill);
-								if (!(!info || info.nopop || !get.translation(skill + '_info') || !lib.translate[skill + "_info"])) this.node.gainSkill.gain(skill);
+								if (!(!info || info.nopop || !get.translation(skill + '_info') || !lib.translate[skill + '_info'])) this.node.gainSkill.gain(skill);
 							}
 						}
-
 						return skill;
 					};
 
@@ -4737,7 +4729,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								this.node.gainSkill.lose(skill);
 							}
 						}
-
 						return skill;
 					};
 
@@ -11643,6 +11634,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'大小乔骨骼背景显示修复',
 					'update覆盖式修改→$update继承性修改',
 					'优化护甲显示（十周年样式素材+十周年样式参数by-Fire.win）',
+					'修复获得技能显示对于Player.name和Player.name1不相等的情况下的bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
