@@ -3044,7 +3044,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						target.classList[list.some(select => target.classList.contains(select)) ? 'remove' : 'add']('un-selectable');
 					});
 					//对十周年UI和本体的视为卡牌样式的同时适配
-					const updateTempname = lib.hooks['checkCard'].indexOf(lib.hooks['checkCard'].find(i => i.name && i.name == 'updateTempname'));
+					const updateTempname = 0;//lib.hooks['checkCard'].indexOf(lib.hooks['checkCard'].find(i => i.name && i.name == 'updateTempname'));
 					lib.hooks['checkCard'][updateTempname] = function updateTempname(card, event) {
 						if (lib.config.cardtempname === 'off') return;
 						const skill = _status.event.skill, goon = (skill && get.info(skill) && get.info(skill).viewAs && !get.info(skill).ignoreMod && (ui.selected.cards || []).includes(card));
@@ -3093,7 +3093,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 					//game.uncheck修改
 					//对十周年UI和本体的视为卡牌样式的同时适配
-					const removeTempname = lib.hooks['uncheckCard'].indexOf(lib.hooks['uncheckCard'].find(i => i.name && i.name == 'removeTempname'));
+					const removeTempname = 0;//lib.hooks['uncheckCard'].indexOf(lib.hooks['uncheckCard'].find(i => i.name && i.name == 'removeTempname'));
 					lib.hooks['uncheckCard'][removeTempname] = function removeTempname(card, event) {
 						if (card._tempName) {
 							card._tempName.delete();
