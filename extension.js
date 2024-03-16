@@ -352,7 +352,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								this.update();
 							}
 
-							if (broadcast !== false){
+							if (broadcast !== false) {
 								game.broadcast(function (player, cards) {
 									player.directgain(cards);
 								}, this, cards);
@@ -483,8 +483,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							this.style.animation = animation;
 						};
 						Player.$draw = function (num, init, config) {
-							if (game.chess)
-								return this._super.$draw.call(this, num, init, config);
+							if (game.chess) return this._super.$draw.call(this, num, init, config);
 
 							if (init !== false && init !== 'nobroadcast') {
 								game.broadcast(function (player, num, init, config) {
@@ -518,17 +517,18 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								}
 							}
 
-							if (game.me == this && !isDrawCard)
-								return;
+							if (_status.event) {
+								if (_status.event.name == 'loseAsync') isDrawCard = true;
+							}
+							
+							if (game.me == this && !isDrawCard) return;
 
 							var fragment = document.createDocumentFragment();
 							var card;
 							for (var i = 0; i < cards.length; i++) {
 								card = cards[i];
-								if (card == null)
-									card = dui.element.create('card thrown drawingcard');
-								else
-									card = card.copy('thrown', 'drawingcard', false);
+								if (card == null) card = dui.element.create('card thrown drawingcard');
+								else card = card.copy('thrown', 'drawingcard', false);
 
 								card.fixed = true;
 								cards[i] = card;
@@ -652,8 +652,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								cards = [cards];
 							}
 
-							if (log === true)
-								game.log(this, '获得了', cards);
+							if (log === true) game.log(this, '获得了', cards);
 
 							game.broadcast(function (player, cards) {
 								player.$gain2(cards);
@@ -6071,8 +6070,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 				layoutDrawCards: function (cards, player, center) {
 					var bounds = dui.boundsCaches.arena;
-					if (!bounds.updated)
-						bounds.update();
+					if (!bounds.updated) bounds.update();
 
 					player.checkBoundsCache();
 					var playerX = player.cacheLeft;
@@ -6122,8 +6120,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				},
 
 				delayRemoveCards: function (cards, delay, delay2) {
-					if (!Array.isArray(cards))
-						cards = [cards];
+					if (!Array.isArray(cards)) cards = [cards];
 
 					setTimeout(function (cards, delay2) {
 						var remove = function (cards) {
@@ -6136,8 +6133,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							return;
 						}
 
-						for (var i = 0; i < cards.length; i++)
+						for (var i = 0; i < cards.length; i++) {
 							cards[i].classList.add('removing');
+						}
 
 						setTimeout(remove, delay2, cards)
 					}, delay, cards, delay2)
@@ -11638,6 +11636,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'优化护甲显示（十周年样式素材+十周年样式参数by-Fire.win）',
 					'修复获得技能显示对于Player.name和Player.name1不相等的情况下的bug',
 					'修复非使用自己区域的实体牌没有$throw动画的bug',
+					'取消loseAsync事件对game.me的$draw事件的取消显示',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
