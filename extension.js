@@ -352,10 +352,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								this.update();
 							}
 
-							if (broadcast !== false)
+							if (broadcast !== false){
 								game.broadcast(function (player, cards) {
 									player.directgain(cards);
 								}, this, cards);
+							}
+
 							return this;
 						};
 						Player.useCard = function () {
@@ -375,7 +377,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							if (event.name == 'useCard') {
 								next.animate = true;
 								next.blameEvent = event;
-								event.throw = false;
+								if (next.cards.length) event.throw = false;
 							}
 
 							return next;
@@ -11635,6 +11637,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'update覆盖式修改→$update继承性修改',
 					'优化护甲显示（十周年样式素材+十周年样式参数by-Fire.win）',
 					'修复获得技能显示对于Player.name和Player.name1不相等的情况下的bug',
+					'修复非使用自己区域的实体牌没有$throw动画的bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
