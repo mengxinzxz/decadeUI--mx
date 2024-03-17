@@ -5550,21 +5550,27 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								sheet = sheetList[j];
 							}
 
-							for (var i = 0; i < sheet.cssRules.length; i++) {
-								if (!(sheet.cssRules[i] instanceof CSSMediaRule)) {
-									if (sheet.cssRules[i].selectorText == selector) {
-										this.cachedSheet[selector] = sheet.cssRules[i].style;
-										return sheet.cssRules[i].style;
+							// 添加try-catch保证正常运行
+							try {
+								for (var i = 0; i < sheet.cssRules.length; i++) {
+									if (!(sheet.cssRules[i] instanceof CSSMediaRule)) {
+										if (sheet.cssRules[i].selectorText == selector) {
+											this.cachedSheet[selector] = sheet.cssRules[i].style;
+											return sheet.cssRules[i].style;
+										}
 									}
-								}
-								else {
-									var rules = sheet.cssRules[i].cssRules;
-									for (var j = 0; j < rules.length; j++) {
-										if (rules[j].selectorText == selector) {
-											return rules[j].style;
+									else {
+										var rules = sheet.cssRules[i].cssRules;
+										for (var j = 0; j < rules.length; j++) {
+											if (rules[j].selectorText == selector) {
+												return rules[j].style;
+											}
 										}
 									}
 								}
+							} catch (error) {
+								console.error(error);
+								console.log('error-sheet', sheet);
 							}
 
 							if (shouldBreak) break;
@@ -9384,8 +9390,13 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					this.css(decadeUIPath + 'layout.css');
 					this.css(decadeUIPath + 'decadeLayout.css');
 					this.css(decadeUIPath + 'card.css');
-
-					this.css(decadeUIPath + 'player' + parseFloat(['on', 'off', 'othersOn'].indexOf(lib.config.extension_十周年UI_newDecadeStyle) + 1) + '.css');
+					// 当且仅当初次载入时，newDecadeStyle == void 0
+					// 所以加载了不存在的css: player0.css
+					if (lib.config.extension_十周年UI_newDecadeStyle != void 0) {
+						this.css(decadeUIPath + 'player' + parseFloat(['on', 'off', 'othersOn'].indexOf(lib.config.extension_十周年UI_newDecadeStyle) + 1) + '.css');
+					} else {
+						this.css(decadeUIPath + 'player2.css');
+					}
 					this.css(decadeUIPath + (lib.config.extension_十周年UI_newDecadeStyle == 'on' ? 'equip.css' : 'equip_new.css'));
 
 					this.js(decadeUIPath + 'spine.js');
