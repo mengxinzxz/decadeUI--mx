@@ -520,7 +520,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							if (_status.event) {
 								if (_status.event.name == 'loseAsync') isDrawCard = true;
 							}
-							
+
 							if (game.me == this && !isDrawCard) return;
 
 							var fragment = document.createDocumentFragment();
@@ -3039,12 +3039,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 					//game.check修改
 					//添加target的un-selectable classList显示
-					lib.hooks['checkTarget'].push((target, event) => {
+					lib.hooks['checkTarget'].push(function decadeUI_selectable(target, event) {
 						const list = ['selected', 'selectable'];
 						target.classList[list.some(select => target.classList.contains(select)) ? 'remove' : 'add']('un-selectable');
 					});
 					//对十周年UI和本体的视为卡牌样式的同时适配
-					const updateTempname = 0;//lib.hooks['checkCard'].indexOf(lib.hooks['checkCard'].find(i => i.name && i.name == 'updateTempname'));
+					const updateTempname = lib.hooks['checkCard'].indexOf(lib.hooks['checkCard'].find(i => i.name && i.name == 'updateTempname'));
 					lib.hooks['checkCard'][updateTempname] = function updateTempname(card, event) {
 						if (lib.config.cardtempname === 'off') return;
 						const skill = _status.event.skill, goon = (skill && get.info(skill) && get.info(skill).viewAs && !get.info(skill).ignoreMod && (ui.selected.cards || []).includes(card));
@@ -3082,7 +3082,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						}
 					};
 					//根据手杀ui选项开关调用不同结束出牌阶段的弹出样式
-					lib.hooks['checkEnd'].push(() => {
+					lib.hooks['checkEnd'].push(function decadeUI_UIconfirm() {
 						if (ui.confirm && ui.confirm.lastChild.link == 'cancel') {
 							if (_status.event.type == 'phase') {
 								const innerHTML = (lib.config['extension_十周年UI_newDecadeStyle'] == 'on' ? '回合结束' : '结束出牌');
@@ -3093,7 +3093,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 					//game.uncheck修改
 					//对十周年UI和本体的视为卡牌样式的同时适配
-					const removeTempname = 0;//lib.hooks['uncheckCard'].indexOf(lib.hooks['uncheckCard'].find(i => i.name && i.name == 'removeTempname'));
+					const removeTempname = lib.hooks['uncheckCard'].indexOf(lib.hooks['uncheckCard'].find(i => i.name && i.name == 'removeTempname'));
 					lib.hooks['uncheckCard'][removeTempname] = function removeTempname(card, event) {
 						if (card._tempName) {
 							card._tempName.delete();
@@ -3108,7 +3108,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						}
 					};
 					//移除target的un-selectable classList显示
-					lib.hooks['uncheckTarget'].push((target, event) => {
+					lib.hooks['uncheckTarget'].push(function decadeUI_unselectable(target, event) {
 						target.classList.remove('un-selectable');
 					});
 
