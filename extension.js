@@ -9395,7 +9395,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					if (lib.config.extension_十周年UI_newDecadeStyle != void 0) {
 						this.css(decadeUIPath + 'player' + parseFloat(['on', 'off', 'othersOn'].indexOf(lib.config.extension_十周年UI_newDecadeStyle) + 1) + '.css');
 					} else {
-						this.css(decadeUIPath + 'player' + parseFloat(['on', 'off', 'othersOn'].indexOf(lib.config.extension_十周年UI_newDecadeStyle) + 1) + '.css');
+						this.css(decadeUIPath + 'player2.css');
 					}
 					this.css(decadeUIPath + (lib.config.extension_十周年UI_newDecadeStyle == 'on' ? 'equip.css' : 'equip_new.css'));
 
