@@ -11649,6 +11649,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'修复获得技能显示对于Player.name和Player.name1不相等的情况下的bug',
 					'修复非使用自己区域的实体牌没有$throw动画的bug',
 					'取消loseAsync事件对game.me的$draw事件的取消显示',
+					'修复手杀样式进入对决-自由模式报错bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),

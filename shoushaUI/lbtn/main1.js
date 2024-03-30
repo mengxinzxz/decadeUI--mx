@@ -121,98 +121,80 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
     }
     /*---------------------*/
 
-    if (lib.config.mode == 'identity' || lib.config.mode == 'th_mougong' || lib.config.mode == 'doudizhu' || lib.config.mode == 'guozhan' || lib.config.mode == 'versus' || lib.config.mode == 'single' || lib.config.mode == 'boss') {
-      /*斗地主*/
-      if (lib.config.mode == 'doudizhu') {
-        var jiaojia = ui.create.node('div');
-        jiaojia.innerText = "本场叫价"
-        jiaojia.style.cssText = "display: line;position: absolute;top: 5px;color: white;left: 56px;font-size:16.5px;font-family:shousha;text-shadow:-1.7px 0px 2.5px #2b1f19, 0px -1.7px 2.5px #2b1f19, 1.7px 0px 2.5px #2b1f19 ,0px 1.7px 2.5px #2b1f19; z-index:1; "
-        document.body.appendChild(jiaojia);
-        var douzi = ui.create.node('div');
-        douzi.innerText = get.translation(innerText = (num = ['300', '600', '900']).randomGet(1));
-        douzi.style.cssText = "display: block;position: absolute;top: -7px;color: gold;left: 141px;font-size:21px;font-family:shousha;font-weight: 900; "
-        ui.arena.appendChild(douzi);
-      } else
-        if (lib.config.mode == 'single') {
-          //单挑
-          var translate = {
+    if (lib.config.mode == 'identity' || lib.config.mode == 'guozhan' || lib.config.mode == 'versus' || lib.config.mode == 'single' || lib.config.mode == 'boss') {
+      var translate = {};
+      switch (lib.config.mode) {
+        case 'single':
+          translate = {
             zhu: '击败对手',
             fan: '击败对手',
             undefined: '未选择阵营',
-          }
-        }
-        else if (lib.config.mode == 'boss') {
-          //挑战
-          var translate = {
+          };
+          break;
+        case 'boss':
+          translate = {
             zhu: '击败盟军',
             cai: '击败神祇',
             undefined: '未选择阵营',
-          }
-        }
-        else if (lib.config.mode == 'guozhan') {
-          //国战
-          var translate = {
+          };
+          break;
+        case 'guozhan':
+          translate = {
             undefined: '未选择势力',
             unknown: '保持隐蔽',
             ye: '&nbsp;&nbsp;&nbsp;击败场上<br>所有其他角色',
             key: '&nbsp;&nbsp;&nbsp;击败所有<br>非键势力角色',
-          }
+          };
           for (var i = 0; i < lib.group.length; i++) {
             translate[lib.group[i]] = '&nbsp;&nbsp;&nbsp;击败所有<br>非' + get.translation(lib.group[i]) + '势力角色';
           }
-        }
-        else if (lib.config.mode == 'identity' && get.config('identity_mode') == 'purple') {
-          //身份：3v3v2
-          var translate = {
-            rZhu: '击败冷方主公<br>与所有野心家',
-            rZhong: '保护暖方主公<br>击败冷方主公<br>与所有野心家',
-            rYe: '联合冷方野心家<br>击败其他角色',
-            rNei: '协助冷方主公<br>击败暖方主公<br>与所有野心家',
-            bZhu: '击败暖方主公<br>与所有野心家',
-            bZhong: '保护冷方主公<br>击败暖方主公<br>与所有野心家',
-            bYe: '联合暖方野心家<br>击败其他角色',
-            bNei: '协助暖方主公<br>击败冷方主公<br>与所有野心家',
+          break;
+        case 'identity':
+          if (get.config('identity_mode') == 'purple') {
+            translate = {
+              rZhu: '击败冷方主公<br>与所有野心家',
+              rZhong: '保护暖方主公<br>击败冷方主公<br>与所有野心家',
+              rYe: '联合冷方野心家<br>击败其他角色',
+              rNei: '协助冷方主公<br>击败暖方主公<br>与所有野心家',
+              bZhu: '击败暖方主公<br>与所有野心家',
+              bZhong: '保护冷方主公<br>击败暖方主公<br>与所有野心家',
+              bYe: '联合暖方野心家<br>击败其他角色',
+              bNei: '协助暖方主公<br>击败冷方主公<br>与所有野心家',
+            };
           }
-        }
-        else if (lib.config.mode == 'versus' && get.config('versus_mode') == 'two' && !get.config('replace_character_two')) {
-          //对决：欢乐成双
-          var translate = {
-            undefined: '&nbsp;&nbsp;&nbsp;协同队友<br>击败所有敌人',
+          break;
+        case 'versus':
+          if (get.config('versus_mode') == 'standard') {
+            return;
           }
-        }
-        else if (lib.config.mode == 'versus' && get.config('versus_mode') == 'two' && get.config('replace_character_two')) {
-          //对决：欢乐成双（替补模式）
-          var translate = {
-            undefined: '抢先击败敌人<br>所有上场角色',
+          if (get.config('versus_mode') == 'two') {
+            translate = {
+              undefined: get.config('replace_character_two') ? '抢先击败敌人<br>所有上场角色' : '&nbsp;&nbsp;&nbsp;协同队友<br>击败所有敌人',
+            };
           }
-        }
-        else if (lib.config.mode == 'versus' && get.config('versus_mode') == 'jiange') {
-          //对决-剑阁
-          var translate = {
-            wei: '&nbsp;&nbsp;击败所有<br>蜀势力角色',
-            shu: '&nbsp;&nbsp;击败所有<br>魏势力角色',
+          if (get.config('versus_mode') == 'jiange') {
+            translate = {
+              wei: '&nbsp;&nbsp;击败所有<br>蜀势力角色',
+              shu: '&nbsp;&nbsp;击败所有<br>魏势力角色',
+            };
           }
-        }
-        else if (lib.config.mode == 'versus' && get.config('versus_mode') == 'siguo') {
-          //对决-四国（同舟共济）
-          var translate = {
-
+          if (get.config('versus_mode') == 'siguo') {
+            for (var i = 0; i < lib.group.length; i++) {
+              translate[lib.group[i]] = '获得龙船或击败<br>非' + get.translation(lib.group[i]) + '势力角色';
+            }
           }
-          for (var i = 0; i < lib.group.length; i++) {
-            translate[lib.group[i]] = '获得龙船或击败<br>非' + get.translation(lib.group[i]) + '势力角色';
-          }
-        }
-        else {
-          //身份：标准、明忠
-          var translate = {
+          break;
+        default:
+          translate = {
             zhu: '推测场上身份<br>击败反贼内奸',
             zhong: '&nbsp;&nbsp;&nbsp;保护主公<br>取得最后胜利',
             fan: '找出反贼队友<br>全力击败主公',
             nei: '找出反贼忠臣<br>最后击败主公',
             mingzhong: '&nbsp;&nbsp;&nbsp;保护主公<br>取得最后胜利',
             undefined: '胜利条件',
-          }
-        }
+          };
+          break;
+      }
       for (var i in translate) {
         lib.translate[i + '_win_option'] = translate[i];
       }
@@ -226,14 +208,14 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
     head.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/SSCD/button.png"
     head.style.cssText = "display: block;--w: 130px;--h: calc(var(--w) * 1080/1434);width: var(--w);height: var(--h);position: absolute;bottom: calc(100% - 98px);left: calc(100% - 126.2px);background-color: transparent;z-index:1"
     document.body.appendChild(head);
-  
+
     var head = ui.create.node('div');
     head.style.cssText = "display: block;width: 134px;height: 103px;position: absolute;top: 0px;right: -8px;background-color: transparent;z-index:1"
     head.onclick = function () {
       game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/SSCD/label.mp3');
       var popuperContainer = ui.create.div('.popup-container', { background: "rgb(0,0,0,0)" }, ui.window);
       popuperContainer.addEventListener('click', event => {
-  
+
         game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/SSCD/caidan.mp3');
         event.stopPropagation();
         popuperContainer.delete(200);
@@ -256,23 +238,23 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
       });
       var taopao = ui.create.div('.taopao', popuperContainer);
       taopao.addEventListener('click', event => {
-  
+
         game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/SSCD/xuanzhe.mp3');
-  
+
         game.reload();
       });
       var touxiang = ui.create.div('.touxiang', popuperContainer);
       touxiang.addEventListener('click', event => {
-  
+
         game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/SSCD/xuanzhe.mp3');
-  
+
         game.over();
       });
       var tuoguan = ui.create.div('.tuoguan', popuperContainer);
       tuoguan.addEventListener('click', event => {
-  
+
         game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/SSCD/xuanzhe.mp3');
-  
+
         ui.click.auto();
       });
     }
@@ -284,7 +266,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
     if (lib.config.mode == 'doudizhu') {
       tipshow.style.cssText = "display: block;width: 360px;height: 35px;position: absolute;top: -1.3px;left: -35px;background-color: transparent;z-index:3"
     } else tipshow.style.cssText = "display: block;--w: 400px;--h: calc(var(--w) * 279/2139);width: var(--w);height: var(--h);position: absolute;top: -1px;left:-45px;background-color: transparent;z-index:3"
-  
+
     if (lib.config.mode == 'identity' || lib.config.mode == 'doudizhu' || lib.config.mode == 'versus' || lib.config.mode == 'guozhan') {
       tipshow.onclick = function () {
         var popuperContainer = ui.create.div('.popup-container', ui.window);

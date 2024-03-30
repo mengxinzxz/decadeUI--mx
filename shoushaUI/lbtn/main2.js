@@ -7,23 +7,6 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
       originUpdateRoundNumber.apply(this, arguments);
       if (ui.cardRoundTime) ui.cardRoundTime.updateRoundCard();
     };
-    if (lib.config.mode == 'identity' || lib.config.mode == 'doudizhu' || lib.config.mode == 'guozhan' || lib.config.mode == 'versus') {
-      if (lib.config.mode == 'doudizhu') {
-        var jiaojia = ui.create.node('div');
-        jiaojia.innerHTML = "<span style='letter-spacing:-1px;font-weight:400;'>城主出兵️</span>" + "<br>" + (num = ['100', '200', '300', '600', '900']).randomGet(1);
-        jiaojia.style.cssText = "display: line;position: absolute;top: 55px;color: #523a29;left: 137px;font-size:15px;font-family:yuanli; z-index:1; text-shadow: #000 0 0 0.3px,#000 0 0 0.3px,#000 0 0 0.3px;-webkit-text-stroke:none;font-weight:400;"
-        document.body.appendChild(jiaojia);
-
-        var head = ui.create.node('img');
-        head.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/uibutton/chubing.png"
-        head.style.cssText = "display: block; --w: 103px;--h: calc(var(--w) * 1/2);width: var(--w);height: var(--h);position: absolute;top: 48px;left:120px;background-color: transparent;z-index:-1"
-        document.body.appendChild(head);
-        var head = ui.create.node('img');
-        head.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/uibutton/shoupai.png"
-        head.style.cssText = "display: block; --w: 60px;--h: 40px;width: var(--w);height: var(--h);position: absolute;top: 5px;left:120px;background-color: transparent;z-index:-1"
-        document.body.appendChild(head);
-      }
-    }
 
     if (lib.config.mode == 'identity' || lib.config.mode == 'doudizhu' || lib.config.mode == 'guozhan' || lib.config.mode == 'versus' || lib.config.mode == 'single' || lib.config.mode == 'martial') {
       var wenhao = ui.create.node('img');
@@ -87,7 +70,9 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
               ui.create.div('.Tipyexinjia', popuperContainer);
             }
             //容错选项
-            else { ui.create.div('.Tipweizhi', popuperContainer); }
+            else {
+              ui.create.div('.Tipweizhi', popuperContainer);
+            }
           }
           popuperContainer.addEventListener('click', event => {
             game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/SSCD/caidan.mp3');
