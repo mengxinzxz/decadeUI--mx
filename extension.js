@@ -2951,12 +2951,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									break;
 							}
 						},
-
-						gameDraw: function () {
-							decadeUI.delay(100);
-							base.game.gameDraw.apply(game, arguments);
-							setTimeout(decadeUI.effect.gameStart, 51);
-						},
 					};
 
 					ride.get = {
@@ -11650,6 +11644,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'修复非使用自己区域的实体牌没有$throw动画的bug',
 					'取消loseAsync事件对game.me的$draw事件的取消显示',
 					'修复手杀样式进入对决-自由模式报错bug',
+					'修复给gameDraw赋予函数报错的bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
