@@ -259,15 +259,12 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
       });
     }
     document.body.appendChild(head);
-    /*左上角问号框*/
-    var tipshow = ui.create.node('img');
-    if (lib.config.mode == 'doudizhu') tipshow.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/uibutton/doudizhu.png";
-    else tipshow.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/uibutton/shenfen.png";
-    if (lib.config.mode == 'doudizhu') {
-      tipshow.style.cssText = "display: block;width: 360px;height: 35px;position: absolute;top: -1.3px;left: -35px;background-color: transparent;z-index:3"
-    } else tipshow.style.cssText = "display: block;--w: 400px;--h: calc(var(--w) * 279/2139);width: var(--w);height: var(--h);position: absolute;top: -1px;left:-45px;background-color: transparent;z-index:3"
 
     if (lib.config.mode == 'identity' || lib.config.mode == 'doudizhu' || lib.config.mode == 'versus' || lib.config.mode == 'guozhan') {
+      /*左上角问号框*/
+      var tipshow = ui.create.node('img');
+      tipshow.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/uibutton/shenfen.png";
+      tipshow.style.cssText = "display: block;--w: 400px;--h: calc(var(--w) * 279/2139);width: var(--w);height: var(--h);position: absolute;top: -1px;left:-45px;background-color: transparent;z-index:1";
       tipshow.onclick = function () {
         var popuperContainer = ui.create.div('.popup-container', ui.window);
         game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/SSCD/label.mp3');
