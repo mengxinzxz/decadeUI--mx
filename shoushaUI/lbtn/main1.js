@@ -149,20 +149,6 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
             translate[lib.group[i]] = '&nbsp;&nbsp;&nbsp;击败所有<br>非' + get.translation(lib.group[i]) + '势力角色';
           }
           break;
-        case 'identity':
-          if (get.config('identity_mode') == 'purple') {
-            translate = {
-              rZhu: '击败冷方主公<br>与所有野心家',
-              rZhong: '保护暖方主公<br>击败冷方主公<br>与所有野心家',
-              rYe: '联合冷方野心家<br>击败其他角色',
-              rNei: '协助冷方主公<br>击败暖方主公<br>与所有野心家',
-              bZhu: '击败暖方主公<br>与所有野心家',
-              bZhong: '保护冷方主公<br>击败暖方主公<br>与所有野心家',
-              bYe: '联合暖方野心家<br>击败其他角色',
-              bNei: '协助暖方主公<br>击败冷方主公<br>与所有野心家',
-            };
-          }
-          break;
         case 'versus':
           if (get.config('versus_mode') == 'standard') {
             return;
@@ -186,6 +172,14 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
           break;
         default:
           translate = {
+            rZhu: '击败冷方主公<br>与所有野心家',
+            rZhong: '保护暖方主公<br>击败冷方主公<br>与所有野心家',
+            rYe: '联合冷方野心家<br>击败其他角色',
+            rNei: '协助冷方主公<br>击败暖方主公<br>与所有野心家',
+            bZhu: '击败暖方主公<br>与所有野心家',
+            bZhong: '保护冷方主公<br>击败暖方主公<br>与所有野心家',
+            bYe: '联合暖方野心家<br>击败其他角色',
+            bNei: '协助暖方主公<br>击败冷方主公<br>与所有野心家',
             zhu: '推测场上身份<br>击败反贼内奸',
             zhong: '&nbsp;&nbsp;&nbsp;保护主公<br>取得最后胜利',
             fan: '找出反贼队友<br>全力击败主公',
