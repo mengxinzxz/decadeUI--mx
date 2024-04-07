@@ -166,11 +166,9 @@
     bottom: 20px;
 }
 
-#window[data-card-alternate-name-visible='off'] .card>.name,
-#window[data-card-alternate-name-visible='off'] .card>.range:not(.card-tag) {
+#window[data-card-alternate-name-visible='off'] .card>.name  {
     display: none;
 }
-
 
 /****** 转换牌显示 ******/
 .card>.temp-name {

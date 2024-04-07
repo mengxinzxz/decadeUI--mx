@@ -342,10 +342,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							}
 
 							var s = player.getCards('s');
-							if (s.length)
-								handcards.insertBefore(fragment, s[0]);
-							else
-								handcards.appendChild(fragment);
+							if (s.length) handcards.insertBefore(fragment, s[0]);
+							else handcards.appendChild(fragment);
 
 							if (!_status.video) {
 								game.addVideo('directgain', this, get.cardsInfo(cards));
@@ -1749,6 +1747,36 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							card: {
 								$init: function (card) {
 									base.lib.element.card.$init.apply(this, arguments);
+
+									this.node.range.innerHTML = '';
+									var tags = [];
+									if (Array.isArray(card[4])) {
+										tags.addArray(card[4]);
+									}
+									if (this.cardid) {
+										if (!_status.cardtag) {
+											_status.cardtag = {};
+										}
+										for (var i in _status.cardtag) {
+											if (_status.cardtag[i].includes(this.cardid)) {
+												tags.add(i);
+											}
+										}
+										if (tags.length) {
+											var tagstr = ' <span class="cardtag">';
+											for (var i = 0; i < tags.length; i++) {
+												var tag = tags[i];
+												if (!_status.cardtag[tag]) {
+													_status.cardtag[tag] = [];
+												}
+												_status.cardtag[tag].add(this.cardid);
+												tagstr += lib.translate[tag + '_tag'];
+											}
+											tagstr += '</span>';
+											this.node.range.innerHTML += tagstr;
+										}
+									}
+
 									const verticalName = this.$vertname;
 									this.$name.innerHTML = verticalName.innerHTML;
 									let cardNumber = this.number || '';
@@ -1806,6 +1834,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									if (equip.childElementCount) while (equip.firstChild) {
 										equip.removeChild(equip.lastChild);
 									}
+
 									var imgFormat = decadeUI.config.cardPrettify;
 									if (imgFormat != 'off') {
 										let filename = card[2];
@@ -11646,6 +11675,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'修复手杀样式进入对决-自由模式报错bug',
 					'修复给gameDraw赋予函数报错的bug',
 					'修复无图角色发动skillAnimation为true的特效不显示的bug',
+					'修复部分tag无法正常显示于卡牌上的bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
