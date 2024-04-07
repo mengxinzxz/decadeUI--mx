@@ -11645,6 +11645,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'取消loseAsync事件对game.me的$draw事件的取消显示',
 					'修复手杀样式进入对决-自由模式报错bug',
 					'修复给gameDraw赋予函数报错的bug',
+					'修复无图角色发动skillAnimation为true的特效不显示的bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
