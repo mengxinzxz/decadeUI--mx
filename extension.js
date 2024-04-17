@@ -11662,27 +11662,14 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			},
 			intro: (function () {
 				var log = [
-					'魔改十周年 萌修 0.2.9',
-					'合并@Icelotusflower、@nonameShijian的Pull Request',
-					'修复萌修十周年初加载bug',
-					'增加阵亡仍显示动皮的开关',
-					'大小乔骨骼背景显示修复',
-					'update覆盖式修改→$update继承性修改',
-					'优化护甲显示（十周年样式素材+十周年样式参数by-Fire.win）',
-					'修复获得技能显示对于Player.name和Player.name1不相等的情况下的bug',
-					'修复非使用自己区域的实体牌没有$throw动画的bug',
-					'取消loseAsync事件对game.me的$draw事件的取消显示',
-					'修复手杀样式进入对决-自由模式报错bug',
-					'修复给gameDraw赋予函数报错的bug',
-					'修复无图角色发动skillAnimation为true的特效不显示的bug',
-					'修复部分tag无法正常显示于卡牌上的bug',
+					'魔改十周年 萌修 0.3.0',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
 			author: "萌新（转型中）<br>十周年UI原作者：短歌<br>手杀UI原名：界面美化<br>手杀UI原作者：橙续缘",
 			diskURL: "",
 			forumURL: "",
-			version: "0.2.9",
+			version: "0.3.0",
 		},
 		files: {
 			"character": [],
