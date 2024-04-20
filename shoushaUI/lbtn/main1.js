@@ -73,8 +73,8 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
     /*尽量保持字体大小，行高一致，不然会产生偏移*/
     identityShow.innerHTML = '<span style="font-family:shousha; font-size: 17.0px;font-weight:500;text-align: right; line-height: 20px; color: #C1AD92;text-shadow:none;">' + str + '</span>';/*图层1*/
     identityShowx.innerHTML = '<span style="font-family:shousha; font-size: 17.0px;font-weight:500;text-align: right; line-height: 20px; color: #2D241B; -webkit-text-stroke: 2.7px #322B20;text-shadow:none;">' + str + '</span>';/*图层2*/
+  };
 
-  }
   game.ui_identityShow_init = function () {
     if (game.ui_identityShow == undefined) {
       game.ui_identityShow = ui.create.div('', '身份加载中......');
@@ -315,8 +315,8 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
           popuperContainer.delete(200);
         });
       };
+      document.body.appendChild(tipshow);
     }
-    document.body.appendChild(tipshow);
   });
 
   var plugin = {
