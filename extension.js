@@ -4767,7 +4767,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							set: function (group) {
 								if (!group) return;
 								this._group = group;
-								this.node.campWrap.dataset.camp = get.bordergroup(this.name, true) || group;
+								this.node.campWrap.dataset.camp = (get.mode() == 'guozhan' ? group : get.bordergroup(this.name, true)) || group;
 								if (!decadeUI.config.campIdentityImageMode) {
 									this.node.campWrap.node.campName.innerHTML = group ? get.translation(group)[0] : '';
 									return;
@@ -11660,6 +11660,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			intro: (function () {
 				var log = [
 					'魔改十周年 萌修 0.3.0',
+					'新版适配',
 					'将overrides修改内容合并至override，并废弃前者写法，保证写法一致性',
 					'修复交换角色控制权时单独装备栏下的额外装备栏显示bug',
 				];
