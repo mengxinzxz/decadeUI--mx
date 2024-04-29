@@ -4767,7 +4767,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							set: function (group) {
 								if (!group) return;
 								this._group = group;
-								this.node.campWrap.dataset.camp = ((get.mode() == 'guozhan' && this.name.startsWith('unknown')) ? group : get.bordergroup(this.name, true)) || group;
+								this.node.campWrap.dataset.camp = (get.character(this.name) ? get.bordergroup(this.name, true) : group) || group;
 								if (!decadeUI.config.campIdentityImageMode) {
 									this.node.campWrap.node.campName.innerHTML = group ? get.translation(group)[0] : '';
 									return;
