@@ -11701,18 +11701,14 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			},
 			intro: (function () {
 				var log = [
-					'魔改十周年 萌修 0.3.0',
-					'新版适配',
-					'调回十周年UI过去内置的OL搜索武将框，并在扩展中添加调用选项（用本体/用扩展/不用）',
-					'将overrides修改内容合并至override并废弃前者写法',
-					'修复交换角色控制权时单独装备栏下的额外装备栏显示bug',
+					'魔改十周年 萌修 0.3.1',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
 			author: "萌新（转型中）<br>十周年UI原作者：短歌<br>手杀UI原名：界面美化<br>手杀UI原作者：橙续缘",
 			diskURL: "",
 			forumURL: "",
-			version: "0.3.0",
+			version: "0.3.1",
 		},
 		files: {
 			"character": [],
