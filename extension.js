@@ -77,7 +77,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				initOverride: function () {
 					function override(dest, src) {
 						var ok = true;
-						var key;
 						for (const key in src) {
 							if (dest[key]) {
 								ok = override(dest[key], src[key]);
@@ -90,9 +89,24 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							}
 							ok = false;
 						}
-
 						return ok;
 					};
+					/*
+					function override(dest, src) {
+						const getCover = function (from, to, getCover) {
+							if (get.is.object(from)) {
+								console.log(from);
+								for (const key in from) {
+									getCover(from[key], to[key], getCover);
+								}
+							}
+							else {
+								to = from;
+							}
+						};
+						getCover(src, dest, getCover);
+					};
+					*/
 					//暂时用不上你了
 					/*
 					function overrides(dest, src) {
@@ -108,7 +122,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							create: {
 								cards: ui.create.cards,
 								button: ui.create.button,
-								buttonPresets: ui.create.buttonPresets,
 							},
 							update: ui.update,
 						},
@@ -1595,7 +1608,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								},
 							},
 							content: {
-
 								changeHp: function () {
 									game.getGlobalHistory().changeHp.push(event);
 									if (num < 0 && player.hujia > 0 && event.getParent().name == 'damage' && !player.hasSkillTag('nohujia')) {
@@ -2529,10 +2541,20 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 											item = lib.characterReplace[item].randomGet();
 										}
 									}
+									if (_status.noReplaceCharacter && type == "characterx")
+										type = "character";
+									if (type == "characterx") {
+										if (
+											lib.characterReplace[item] &&
+											lib.characterReplace[item].length
+										)
+											item = lib.characterReplace[item].randomGet();
+									}
 
 									node.link = item;
+									dui.element.create('character', node);
+
 									var doubleCamp = get.is.double(node._link, true);
-									var character = dui.element.create('character', node);
 
 									if (doubleCamp) node._changeGroup = true;
 									if (type == 'characterx' && lib.characterReplace[node._link] && lib.characterReplace[node._link].length > 1) {
@@ -2579,7 +2601,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 												str += '/';
 												str += get.numStr(maxHp / (check ? 2 : 1));
 											}
-											var textnode = ui.create.div('.text', str, node.node.hp);
+											ui.create.div('.text', str, node.node.hp);
 											if (infoitem[2] == 0) {
 												node.node.hp.hide();
 											}
@@ -7447,102 +7469,112 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					}
 				}
 			};
-			/*
 			//武将搜索代码摘抄至扩展ol
 			var kzol_create_characterDialog = ui.create.characterDialog;
 			ui.create.characterDialog = function () {
 				var dialog = kzol_create_characterDialog.apply(this, arguments);
-				var content_container = dialog.childNodes[0];
-				var content = content_container.childNodes[0];
-				var switch_con = content.childNodes[0];
-				var buttons = content.childNodes[1];
-				var div = ui.create.div('');
-				div.style.height = '35px';
-				div.style.width = 'calc(100%)';
-				div.style.top = '-2px';
-				div.style.left = '0px';
-				div.style['white-space'] = 'nowrap';
-				div.style['text-align'] = 'center';
-				div.style['line-height'] = '26px';
-				div.style['font-size'] = '24px';
-				div.style['font-family'] = 'xinwei';
-				div.innerHTML = '搜索：' +
-					'<select size="1" style="width:75px;height:21px;">' +
-					'<option value="name">名称翻译</option>' +
-					'<option value="name1">名称</option>' +
-					'<option value="skill">技能翻译</option>' +
-					'<option value="skill1">技能</option>' +
-					'<option value="skill2">技能叙述</option>' +
-					'→' +
-					'<input type="text" style="width:150px;"></input>' +
-					'</select>';
-				var input = div.querySelector('input');
-				input.onkeydown = function (e) {
-					e.stopPropagation();
-					if (e.keyCode == 13) {
-						var value = this.value;
-						var choice = div.querySelector('select').options[div.querySelector('select')
-							.selectedIndex].value;
-						if (value) {
-							for (var i = 0; i < buttons.childNodes.length; i++) {
-								buttons.childNodes[i].classList.add('nodisplay');
-								var name = buttons.childNodes[i].link;
-								var skills;
-								if (lib.character[name] != undefined) {
-									skills = lib.character[name][3];
-								};
-								if (choice == 'name1') {
-									if (name.indexOf(value) != -1) {
-										buttons.childNodes[i].classList.remove('nodisplay');
-									};
+				const control = (lib.config.extension_十周年UI_mx_decade_characterDialog || 'default');
+				if (control != 'default') {
+					const Searcher = dialog.querySelector(".searcher.caption");
+					if (Searcher) Searcher.parentNode.removeChild(Searcher); 
+					if (control == 'extension-OL-system') {
+						var content_container = dialog.childNodes[0];
+						var content = content_container.childNodes[0];
+						var switch_con = content.childNodes[0];
+						var buttons = content.childNodes[1];
+						var div = ui.create.div('extension-OL-system');
+						div.style.height = '35px';
+						div.style.width = 'calc(100%)';
+						div.style.top = '-2px';
+						div.style.left = '0px';
+						div.style['white-space'] = 'nowrap';
+						div.style['text-align'] = 'center';
+						div.style['line-height'] = '26px';
+						div.style['font-size'] = '24px';
+						div.style['font-family'] = 'xinwei';
+						div.innerHTML = '搜索：' +
+							'<select size="1" style="width:75px;height:21px;">' +
+							'<option value="name">名称翻译</option>' +
+							'<option value="name1">名称</option>' +
+							'<option value="skill">技能翻译</option>' +
+							'<option value="skill1">技能</option>' +
+							'<option value="skill2">技能叙述</option>' +
+							'→' +
+							'<input type="text" style="width:150px;"></input>' +
+							'</select>';
+						var input = div.querySelector('input');
+						input.onkeydown = function (e) {
+							e.stopPropagation();
+							if (e.keyCode == 13) {
+								var value = this.value;
+								if (value == "") {
+									game.alert("搜索不能为空");
+									input.focus();
+									return;
 								}
-								else if (choice == 'skill') {
-									if (skills != undefined && skills.length > 0) {
-										for (var j = 0; j < skills.length; j++) {
-											var skill = skills[j];
-											if (get.translation(skill).indexOf(value) != -1) {
+								var choice = div.querySelector('select').options[div.querySelector('select')
+									.selectedIndex].value;
+								if (value) {
+									for (var i = 0; i < buttons.childNodes.length; i++) {
+										buttons.childNodes[i].classList.add('nodisplay');
+										var name = buttons.childNodes[i].link;
+										var skills;
+										if (lib.character[name] != undefined) {
+											skills = lib.character[name][3];
+										};
+										if (choice == 'name1') {
+											if (name.indexOf(value) != -1) {
+												buttons.childNodes[i].classList.remove('nodisplay');
+											};
+										}
+										else if (choice == 'skill') {
+											if (skills != undefined && skills.length > 0) {
+												for (var j = 0; j < skills.length; j++) {
+													var skill = skills[j];
+													if (get.translation(skill).indexOf(value) != -1) {
+														buttons.childNodes[i].classList.remove('nodisplay');
+													};
+												};
+											};
+										}
+										else if (choice == 'skill1') {
+											if (skills != undefined && skills.length > 0) {
+												for (var j = 0; j < skills.length; j++) {
+													var skill = skills[j];
+													if (skill.indexOf(value) != -1) {
+														buttons.childNodes[i].classList.remove('nodisplay');
+													};
+												};
+											};
+										}
+										else if (choice == 'skill2') {
+											if (skills != undefined && skills.length > 0) {
+												for (var j = 0; j < skills.length; j++) {
+													var skill = skills[j];
+													if (lib.translate[skill + '_info'] != undefined && lib.translate[
+														skill + '_info'].indexOf(value) != -1) {
+														buttons.childNodes[i].classList.remove('nodisplay');
+													};
+												};
+											};
+										}
+										else {
+											if (get.translation(name).indexOf(value) != -1) {
 												buttons.childNodes[i].classList.remove('nodisplay');
 											};
 										};
 									};
 								}
-								else if (choice == 'skill1') {
-									if (skills != undefined && skills.length > 0) {
-										for (var j = 0; j < skills.length; j++) {
-											var skill = skills[j];
-											if (skill.indexOf(value) != -1) {
-												buttons.childNodes[i].classList.remove('nodisplay');
-											};
-										};
-									};
-								}
-								else if (choice == 'skill2') {
-									if (skills != undefined && skills.length > 0) {
-										for (var j = 0; j < skills.length; j++) {
-											var skill = skills[j];
-											if (lib.translate[skill + '_info'] != undefined && lib.translate[
-												skill + '_info'].indexOf(value) != -1) {
-												buttons.childNodes[i].classList.remove('nodisplay');
-											};
-										};
-									};
-								}
-								else {
-									if (get.translation(name).indexOf(value) != -1) {
-										buttons.childNodes[i].classList.remove('nodisplay');
-									};
-								};
 							};
-						}
-					};
-				};
-				input.onmousedown = function (e) {
-					e.stopPropagation();
-				};
-				switch_con.insertBefore(div, switch_con.firstChild);
+						};
+						input.onmousedown = function (e) {
+							e.stopPropagation();
+						};
+						switch_con.insertBefore(div, switch_con.firstChild);
+					}
+				}
 				return dialog;
 			};
-			*/
 			/*-------转换技，阴阳标记等----*/
 			//修改changezhuanhuanji函数
 			var originchangeZhuanhuanji = lib.element.player.$changeZhuanhuanji;
@@ -11629,6 +11661,16 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					"2": "十周年",
 				},
 			},
+			mx_decade_characterDialog: {
+				name: '自由选将筛选框',
+				init: 'default',
+				intro: '更改自由选将筛选框',
+				item: {
+					'default': '默认本体框',
+					'extension-OL-system': '扩展内置框',
+					'offDialog': '关闭筛选框',
+				},
+			},
 			//手杀UI
 			FLInfinity: {
 				"name": "<img style=width:240px src=" + lib.assetURL + "extension/十周年UI/shoushaUI/line.png>",
@@ -11661,7 +11703,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				var log = [
 					'魔改十周年 萌修 0.3.0',
 					'新版适配',
-					'将overrides修改内容合并至override，并废弃前者写法，保证写法一致性',
+					'调回十周年UI过去内置的OL搜索武将框，并在扩展中添加调用选项（用本体/用扩展/不用）',
+					'将overrides修改内容合并至override并废弃前者写法',
 					'修复交换角色控制权时单独装备栏下的额外装备栏显示bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
