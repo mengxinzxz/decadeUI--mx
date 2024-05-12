@@ -7476,7 +7476,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				const control = (lib.config.extension_十周年UI_mx_decade_characterDialog || 'default');
 				if (control != 'default') {
 					const Searcher = dialog.querySelector(".searcher.caption");
-					if (Searcher) Searcher.parentNode.removeChild(Searcher); 
+					if (Searcher) Searcher.parentNode.removeChild(Searcher);
 					if (control == 'extension-OL-system') {
 						var content_container = dialog.childNodes[0];
 						var content = content_container.childNodes[0];
@@ -9452,7 +9452,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 					this.js(decadeUIPath + 'spine.js');
 					this.js(decadeUIPath + 'component.js');
-					this.js(decadeUIPath + 'card.js');
 					this.js(decadeUIPath + 'skill.js');
 					this.js(decadeUIPath + 'content.js');
 					this.js(decadeUIPath + 'effect.js');
@@ -11242,7 +11241,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					game.saveConfig('extension_十周年UI_showTemp', bool);
 					if (game.me && lib.config.cardtempname != 'off') {
 						let cards = game.me.getCards('h', card => card._tempName);
-						const skill = _status.event.skill, goon = (skill && get.info(skill) && get.info(skill).viewAs && !get.info(skill).ignoreMod && ((ui.selected.cards || []).includes(card)));
+						const skill = _status.event.skill, goon = (skill && get.info(skill) && get.info(skill).viewAs && !get.info(skill).ignoreMod && cards.some(card => ((ui.selected.cards || []).includes(card))));
 						if (cards.length) {
 							for (let j = 0; j < cards.length; j++) {
 								const card = cards[j];
