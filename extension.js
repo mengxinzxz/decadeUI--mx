@@ -615,6 +615,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 									nodeMark.name = name + '_charactermark';
 									nodeMark.info = info;
+									nodeMark.text = nodeMarkText;
 									nodeMark.addEventListener(lib.config.touchscreen ? 'touchend' : 'click', ui.click.card);
 									if (!lib.config.touchscreen) {
 										if (lib.config.hover_all) {
@@ -639,7 +640,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 												content: content,
 												id: id
 											};
-											player.marks[id].setBackground(target, 'character');
 											game.addVideo('changeMarkCharacter', player, {
 												id: id,
 												name: name,
@@ -660,8 +660,10 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 												target: target
 											});
 										}
+										player.marks[id].setBackground(target, 'character');
 										player.marks[id]._name = target;
 										player.marks[id].style.setProperty('background-size', 'cover', 'important');
+										player.marks[id].text.style.setProperty('font-size', '0px', 'important');
 									}, this, target, name, content, id);
 									return this;
 								},
@@ -11702,6 +11704,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				var log = [
 					'魔改十周年 萌修 0.3.1',
 					'添加十周年UI内置视为卡牌显示背景+其他细微调整',
+					'修复markSkillCharacter偶尔不显示武将图片的bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
