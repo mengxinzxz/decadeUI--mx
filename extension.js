@@ -7810,12 +7810,34 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					}
 					else {
 						if (event.seperate || lib.config.seperate_control) {
-							event.controlbars = [];
-							for (var i = 0; i < event.controls.length; i++) {
-								event.controlbars.push(ui.create.control([event.controls[i]]));
+							var controls = event.controls.slice(0);
+							var num = 0;
+							controls.remove("cancel2");
+							if ((event.direct && controls.length == 1) || event.forceDirect) {
+								event.result = {
+									control: event.controls[0],
+									links: get.links([event.controls[0]]),
+								};
+								return;
+							}
+							else {
+								event.controlbars = [];
+								for (var i = 0; i < event.controls.length; i++) {
+									event.controlbars.push(ui.create.control([event.controls[i]]));
+								}
 							}
 						}
 						else {
+							var controls = event.controls.slice(0);
+							var num = 0;
+							controls.remove("cancel2");
+							if ((event.direct && controls.length == 1) || event.forceDirect) {
+								event.result = {
+									control: event.controls[0],
+									links: get.links([event.controls[0]]),
+								};
+								return;
+							}
 							event.controlbar = ui.create.control(event.controls);
 						}
 						if (event.dialog) {
@@ -11705,6 +11727,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'魔改十周年 萌修 0.3.1',
 					'添加十周年UI内置视为卡牌显示背景+其他细微调整',
 					'修复markSkillCharacter偶尔不显示武将图片的bug',
+					'修复修改后的lib.element.content.chooseControl不支持使用forceDirect属性的bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
