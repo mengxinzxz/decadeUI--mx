@@ -11724,17 +11724,14 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			},
 			intro: (function () {
 				var log = [
-					'魔改十周年 萌修 0.3.1',
-					'添加十周年UI内置视为卡牌显示背景+其他细微调整',
-					'修复markSkillCharacter偶尔不显示武将图片的bug',
-					'修复修改后的lib.element.content.chooseControl不支持使用forceDirect属性的bug',
+					'魔改十周年 萌修 0.3.2',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
 			author: "萌新（转型中）<br>十周年UI原作者：短歌<br>手杀UI原名：界面美化<br>手杀UI原作者：橙续缘",
 			diskURL: "",
 			forumURL: "",
-			version: "0.3.1",
+			version: "0.3.2",
 		},
 		files: {
 			"character": [],
