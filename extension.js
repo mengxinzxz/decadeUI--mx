@@ -1064,6 +1064,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									return this;
 								},
 								directgain: function (cards, broadcast, gaintag) {
+									if (!cards || !cards.length) return;
 									var player = this;
 									var handcards = player.node.handcards1;
 									var fragment = document.createDocumentFragment();
@@ -11725,6 +11726,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			intro: (function () {
 				var log = [
 					'魔改十周年 萌修 0.3.2',
+					'directgain添加保底检测，防止0牌弹窗bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
