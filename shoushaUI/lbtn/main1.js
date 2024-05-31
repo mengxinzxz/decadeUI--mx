@@ -345,27 +345,28 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 
         /*来自瓜瓜 自动牌序*/
         lib.skill._paixu_paixu_paixu = {
+          charlotte: true,
           trigger: {
             player: ["gainEnd"]
           },
+          filter(event, player) {
+            return window.paixuxx == false && player == game.me && !player.hasSkillTag('noSortCard');
+          },
           silent: true,
-          charlotte: true,
           forced: true,
           content: function () {
-            if (window.paixuxx == false && player == game.me) {
-              var cards = game.me.getCards("hs");
-              var sort2 = function (b, a) {
-                if (a.name != b.name) return lib.sort.card(a.name, b.name);
-                else if (a.suit != b.suit) return lib.suit.indexOf(a) - lib.suit.indexOf(b);
-                else return a.number - b.number;
-              };
-              if (cards.length > 1) {
-                cards.sort(sort2);
-                cards.forEach(function (i, j) {
-                  game.me.node.handcards1.insertBefore(cards[j], game.me.node.handcards1.firstChild);
-                });
-                dui.queueNextFrameTick(dui.layoutHand, dui);
-              }
+            var cards = game.me.getCards("hs");
+            var sort2 = function (b, a) {
+              if (a.name != b.name) return lib.sort.card(a.name, b.name);
+              else if (a.suit != b.suit) return lib.suit.indexOf(a) - lib.suit.indexOf(b);
+              else return a.number - b.number;
+            };
+            if (cards.length > 1) {
+              cards.sort(sort2);
+              cards.forEach(function (i, j) {
+                game.me.node.handcards1.insertBefore(cards[j], game.me.node.handcards1.firstChild);
+              });
+              dui.queueNextFrameTick(dui.layoutHand, dui);
             }
           },
         };

@@ -11727,6 +11727,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				var log = [
 					'魔改十周年 萌修 0.3.2',
 					'directgain添加保底检测，防止0牌弹窗bug',
+					'适配noSortCard的整理手牌tag',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),

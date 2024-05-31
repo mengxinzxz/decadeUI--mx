@@ -88,6 +88,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
     head.style.cssText = "display: block;--w: 88px;--h: calc(var(--w) * 81/247);width: var(--w);height: var(--h);position: absolute;top: calc(100% - 33px);left: calc(100% - 376.2px);background-color: transparent;z-index:7"
     head.onclick = function () {
       //head.onclick=ui.click.sortCard;
+      if (!game.me || game.me.hasSkillTag('noSortCard')) return;
       var cards = game.me.getCards("hs");
       var sort2 = function (b, a) {
         if (a.name != b.name) return lib.sort.card(a.name, b.name);
@@ -108,7 +109,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
     head.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/uibutton/yinying.png"
     head.style.cssText = "display: block;width: 100%;height: 30%;position: absolute;bottom: 0px;background-color: transparent;z-index:-4"
     document.body.appendChild(head);
-  
+
     var head = ui.create.node('img');
     head.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/CD/button3.png"
     head.style.cssText = "display: block;--w: 56px;--h: calc(var(--w) * 74/71);width: var(--w);height: var(--h);position: absolute;bottom: calc(100% - 69px);left: calc(100% - 112.5px);background-color: transparent;z-index:1"
@@ -116,7 +117,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
       head.style.transform = 'scale(0.95)';
     };
     document.body.appendChild(head);
-  
+
     var head = ui.create.node('div');
     head.style.cssText = "display: block;--w: 56px;--h: calc(var(--w) * 74/71);width: var(--w);height: var(--h);position: absolute;bottom: calc(100% - 69px);left: calc(100% - 112.5px);background-color: transparent;z-index:1"
     head.onclick = function () {
@@ -124,7 +125,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
       var popuperContainer = ui.create.div('.popup-container', { background: "rgb(0,0,0,0)" }, ui.window);
       popuperContainer.addEventListener('click', event => {
         game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/CD/back.mp3');
-  
+
         event.stopPropagation();
         popuperContainer.delete(200);
       });
@@ -132,7 +133,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
       var SZ = ui.create.div('.SZ', popuperContainer);
       SZ.addEventListener('click', event => {
         game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/CD/button.mp3');
-  
+
         if (!ui.click.configMenu) return;
         game.closePopped();
         game.pause2();
@@ -143,32 +144,32 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
       var LK = ui.create.div('.LK', popuperContainer);
       LK.addEventListener('click', event => {
         game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/CD/button.mp3');
-  
+
         window.location.reload();
       });
       var BJ = ui.create.div('.BJ', popuperContainer);
       BJ.addEventListener('click', event => {
         game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/CD/button.mp3');
-  
+
         //换背景          
         var Backgrounds = ["人间安乐", "兵临城下", "兵荒马乱", "三国开黑节", "华灯初上", "天书乱斗", "朝堂之上", "校园行", "桃园风格", "汉室当兴", "游卡桌游", "十周年"];
-  
+
         ui.background.setBackgroundImage("extension/十周年UI/shoushaUI/lbtn/images/background/" + Backgrounds.randomGet() + ".jpg");
-  
+
       });
       var TX = ui.create.div('.TX', popuperContainer);
       TX.addEventListener('click', event => {
         game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/CD/button.mp3');
-  
+
         game.over();
       });
       var TG = ui.create.div('.TG', popuperContainer);
       TG.addEventListener('click', event => {
         game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/CD/button.mp3');
-  
+
         ui.click.auto();
       });
-  
+
     }
     document.body.appendChild(head);
   });
