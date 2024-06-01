@@ -607,7 +607,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										nodeMarkText.innerHTML = get.translation(name)[0];
 									}
 									else {
-										if (!lib.character[name]) return console.error(name);
+										if (!get.character(name)) return console.error(name);
 										var text = info.name.substr(0, 2);
 										if (text.length == 2) nodeMarkText.classList.add('small-text');
 										nodeMarkText.innerHTML = text;
@@ -11728,6 +11728,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'魔改十周年 萌修 0.3.2',
 					'directgain添加保底检测，防止0牌弹窗bug',
 					'适配noSortCard的整理手牌tag',
+					'markCharacter中lib.character判断改get.character',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
