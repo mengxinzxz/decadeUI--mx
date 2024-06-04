@@ -11729,6 +11729,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'directgain添加保底检测，防止0牌弹窗bug',
 					'适配noSortCard的整理手牌tag',
 					'markCharacter中lib.character判断改get.character',
+					'修复十周年UI覆盖的【评才】的部分问题并简化覆盖部分',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
