@@ -4802,7 +4802,14 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								if (decadeUI.config.newDecadeStyle == 'off') url = decadeUIPath + 'image/decorations/name2_' + group + '.png';
 								else url = decadeUIPath + 'image/decoration/name_' + group + '.png';
 								this._finalGroup = group;
-								image.onerror = () => this.node.campWrap.node.campName.innerHTML = this._finalGroup ? get.translation(this._finalGroup)[0] : '';
+								image.onerror = () => {
+									if (!this._finalGroup) this.node.campWrap.node.campName.innerHTML = '';
+									else {
+										const name = get.translation(this._finalGroup), str = get.plainText(name);
+										if (str.length <= 2) this.node.campWrap.node.campName.innerHTML = name;
+										else this.node.campWrap.node.campName.innerHTML = name.replaceAll(str, str[0]);
+									}
+								};
 								this.node.campWrap.node.campName.style.backgroundImage = `url("${url}")`;
 								image.src = url;
 							}
@@ -11730,6 +11737,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'适配noSortCard的整理手牌tag',
 					'markCharacter中lib.character判断改get.character',
 					'修复十周年UI覆盖的【评才】的部分问题并简化覆盖部分',
+					'优化十周年UI势力显示支持将HTML代码转换为文本形式',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
