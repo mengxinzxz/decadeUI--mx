@@ -1023,6 +1023,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										campName.removeChild(campName.lastChild);
 									}
 									campName.style.removeProperty('background-image');
+									const hujiat = this.node.hpWrap.querySelector('.hujia');
+									if (hujiat) hujiat.remove();
 									base.lib.element.player.$uninit.apply(this, arguments);
 									return this;
 								},
@@ -11741,6 +11743,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'markCharacter中lib.character判断改get.character',
 					'修复十周年UI覆盖的【评才】的部分问题并简化覆盖部分',
 					'删除十周年样式下border势力背景颜色特殊支持，优化势力显示支持将HTML代码转换为文本形式',
+					'修复uninit无法消除护甲美化属性的bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
