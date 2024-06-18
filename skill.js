@@ -2392,6 +2392,23 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
         },
     };
 
+    decadeUI.inheritSubSkill = {
+        olziruo: {
+            sort: {
+                content() {
+                    let hs = player.getCards("h");
+                    const list = [hs.indexOf(cards[0]), hs.indexOf(cards[1])];
+                    hs[list[0]] = cards[1]; hs[list[1]] = cards[0];
+                    hs.reverse();
+                    hs.forEach((i, j) => {
+                        player.node.handcards1.insertBefore(hs[j], player.node.handcards1.firstChild);
+                    });
+                    dui.queueNextFrameTick(dui.layoutHand, dui);
+                },
+            },
+        },
+    };
+
     if (!_status.connectMode) {
         for (var key in decadeUI.animateSkill) {
             lib.skill[key] = decadeUI.animateSkill[key];
@@ -2404,6 +2421,17 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
             if (lib.skill[key]) {
                 for (var j in decadeUI.inheritSkill[key]) {
                     lib.skill[key][j] = decadeUI.inheritSkill[key][j];
+                }
+            }
+        }
+        for (const key in decadeUI.inheritSubSkill) {
+            if (lib.skill[key]) {
+                if (!lib.skill[key].subSkill) continue;
+                for (const j in decadeUI.inheritSubSkill[key]) {
+                    if (!lib.skill[key].subSkill[j]) continue;
+                    for (const k in decadeUI.inheritSubSkill[key][j]) {
+                        lib.skill[key].subSkill[j][k] = decadeUI.inheritSubSkill[key][j][k];
+                    }
                 }
             }
         }
