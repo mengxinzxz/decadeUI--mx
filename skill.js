@@ -2404,6 +2404,7 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
                         player.node.handcards1.insertBefore(hs[j], player.node.handcards1.firstChild);
                     });
                     dui.queueNextFrameTick(dui.layoutHand, dui);
+                    event.getParent(2).goto(0);
                 },
             },
         },
