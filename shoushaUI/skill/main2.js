@@ -51,17 +51,17 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 					if (ui.skills2 && ui.skills2.skills.length) {
 						var gSkills = ui.skills2.skills
 					}
-					
-            		for (var i = 0; i < skills.length; i++) {
-            			var info = get.info(skills[i]);
-            			if (info&&info.nopop) skills.splice(i--, 1);
-            		}
-          
+
+					for (var i = 0; i < skills.length; i++) {
+						var info = get.info(skills[i]);
+						if (info && info.nopop) skills.splice(i--, 1);
+					}
+
 					var iSkills = player.invisibleSkills.slice(0);
 					game.expandSkills(iSkills);
 					skills.addArray(iSkills.filter(function (skill) {
 						var info = get.info(skill);
-						return info&&info.enable;
+						return info && info.enable;
 					}));
 
 					if (player === game.me) {
@@ -159,7 +159,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 					return true;
 				});
 
-				if (!hasSame) enableSkills.unshift(skills[0]);
+				if (!hasSame) enableSkills.push(skills[0]);
 				var showSkills = enableSkills.length ? enableSkills : skills;
 				showSkills.forEach(function (item) {
 					var node = self.querySelector('[data-id="' + item.id + '"]');
@@ -173,7 +173,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 					if (!item.info) return;
 					if (!item.translation) return;
 					if (eSkills && eSkills.includes(item.id)) return;
-					node = ui.create.div('.skillitem', self.node.trigger, item.name);
+					node = ui.create.div('.skillitem', self.node[get.is.phoneLayout() ? 'trigger' : 'enable'], item.name);
 					node.dataset.id = item.id;
 				});
 				return this;
@@ -199,12 +199,6 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 						item.classList.remove('select');
 					}
 				});
-
-				ui.skillControl.node.enable.style.width = ui.skillControl.node.enable.childNodes.length > 2
-					? '210px' : ui.skillControl.node.enable.childNodes.length > 0
-						? '90px' : '0px';
-
-
 
 				var level1 = Math.min(4, this.node.trigger.childNodes.length);
 				var level2 = this.node.enable.childNodes.length > 2

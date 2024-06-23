@@ -4,7 +4,6 @@
 	right: 165px;/*技能显示右移，越小越靠右，建议别调*/
 	/*border: 3px solid rgb(255, 255, 255);/*调试用*/
 	 z-index: 6;
-
 }
 .skill-control div {
 	position: relative;

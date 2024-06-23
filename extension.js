@@ -9963,7 +9963,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					switch (pack) {
 						case 'card':
 							if (bool) {
-								lib.init.css(layoutPath + pack, 'main1' + (lib.config.touchscreen ? '' : '_window'));
+								lib.init.css(layoutPath + pack, 'main1' + (get.is.phoneLayout() ? '' : '_window'));
 							}
 							else lib.init.css(layoutPath + pack, 'main2');
 							break;
@@ -9971,7 +9971,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							lib.init.css(layoutPath + pack, bool ? 'main1' : 'main2');
 							break;
 						default:
-							lib.init.css(layoutPath + pack, (bool ? 'main1' : 'main2') + (lib.config.touchscreen ? '' : '_window'));
+							lib.init.css(layoutPath + pack, (bool ? 'main1' : 'main2') + (get.is.phoneLayout() ? '' : '_window'));
 							break;
 					}
 				}
@@ -11737,20 +11737,15 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			},
 			intro: (function () {
 				var log = [
-					'魔改十周年 萌修 0.3.2',
-					'directgain添加保底检测，防止0牌弹窗bug',
-					'适配noSortCard的整理手牌tag',
-					'markCharacter中lib.character判断改get.character',
-					'修复十周年UI覆盖的【评才】的部分问题并简化覆盖部分',
-					'删除十周年样式下border势力背景颜色特殊支持，优化势力显示支持将HTML代码转换为文本形式',
-					'修复uninit无法消除护甲美化属性的bug',
+					'魔改十周年 萌修 0.3.3',
+					'十周年样式PC端技能按钮位置调整（全新样式，感谢Fire.win的协助）',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
 			author: "萌新（转型中）<br>十周年UI原作者：短歌<br>手杀UI原名：界面美化<br>手杀UI原作者：橙续缘",
 			diskURL: "",
 			forumURL: "",
-			version: "0.3.2",
+			version: "0.3.3",
 		},
 		files: {
 			"character": [],

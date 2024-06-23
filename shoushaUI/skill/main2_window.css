@@ -1,10 +1,15 @@
-.skill-control {/*技能按钮*/
-	max-width: 200px;/*同列技能可容纳最大宽度，建议别调*/
-	bottom: 25px;/*整体上移，建议别调*/
-	right: 165px;/*技能显示右移，越小越靠右，建议别调*/
+.skill-control {
+	/*技能按钮*/
+	max-width: 120px;
+	/*同列技能可容纳最大宽度，建议别调*/
+	bottom: 4px;
+	/*整体上移，建议别调*/
+	right: 44px;
+	/*技能显示右移，越小越靠右，建议别调*/
 	/*border: 3px solid rgb(255, 255, 255);/*调试用*/
-	 z-index: 6;
-
+	bottom: 0px;
+	z-index: 100 !important;
+	pointer-events: none;
 }
 .skill-control div {
 	position: relative;
@@ -36,72 +41,20 @@
 	margin: 0 0 0 auto;
 	bottom:7px;
 }
-.skill-control > .trigger {
-	margin: 0 0 0 auto;
-	bottom:4px;
-}
-
-.skill-control > .trigger > .skillitem {
-	--w: 52px;
-	--h: calc(var(--w) * 28 / 79);
-	width: var(--w);
-	height: var(--h);
-	line-height: var(--h);
-	text-align: center;
-	background-image: url("./images/skill.png");
-	padding: 3px 7px;
-	background-size: 100% 100%;
-	margin: 2px 0px;
-	color: #DCD09E;
-	font-family: 'yuanli';
-	font-size: 18px;
-	text-shadow: 0.5px 0px 1.5px #4A3A19,0.5px 0px 1.5px #4A3A19,0.5px 0px 1.5px #4A3A19,0.5px 0px 1.5px #4A3A19,
-	             0.5px 0px 1.5px #4A3A19,0.5px 0px 1.5px #4A3A19,0.5px 0px 1.5px #4A3A19,0.5px 0px 1.5px #4A3A19,
-	             0.5px 0px 1.5px #4A3A19,0.5px 0px 1.5px #4A3A19,0.5px 0px 1.5px #4A3A19,0.5px 0px 1.5px #4A3A19,
-	             0.5px 0px 1.5px #4A3A19,0.5px 0px 1.5px #4A3A19,0.5px 0px 1.5px #4A3A19,0.5px 0px 1.5px #4A3A19,
-	             0.5px 0px 1.5px #4A3A19,0.5px 0px 1.5px #4A3A19,0.5px 0px 1.5px #4A3A19,0.5px 0px 1.5px #4A3A19,
-	             0.5px 0px 1.5px #4A3A19;
-}
 .skill-control > .enable > .skillitem {
-margin: -2px -5px;
-	--w: 99px;
+	margin: -2px -4.2px;
+	--w: 56px;
+	pointer-events: auto;
 	--h: calc(var(--w) * 91 / 200);
 	width: var(--w);
 	height: var(--h);
-	line-height: 45px;
+	line-height: 26px;
 	text-align: center;
 	font-family: 'yuanli';
-	font-weight:500;
-	font-size: 22px;
+	font-weight:450;
+	font-size: 15px;
 	color: #F7F5E7;
-	text-shadow: 0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
-	             0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
-	             0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
-	             0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
-	             0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
-	             0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
-	             0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
-	             0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
-	             0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
-	             0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
-	             0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
-	             0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
-	             0.3px 0px 1.8px #332C18;
-	background-image: url("./images/btnn1.png");
-	background-size: 100% 100%;
-	/*border: 1px solid rgb(3,4,5);/*调试用*/
-}
-.skill-control > .enable > .xiandingji {/*限定技按钮*/
-	margin: -2px -5px;
-	--w: 99px;
-	--h: calc(var(--w) * 91 / 200);
-	width: var(--w);
-	height: var(--h);
-	line-height: 45px;
-	text-align: center;
-	font-family: 'yuanli';
-	font-weight: 500;/*å­—ç²—ç»†*/
-	text-shadow:  
+	text-shadow: 
 	0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
 	0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
 	0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
@@ -115,14 +68,43 @@ margin: -2px -5px;
 	0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
 	0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
 	0.3px 0px 1.8px #332C18;
+	background-image: url("./images/btnn1_window.png");
+	background-size: 100% 100%;
+	/*border: 1px solid rgb(3,4,5);/*调试用*/
+}
+.skill-control > .enable > .xiandingji {/*限定技按钮*/
+	margin: -2px -4.2px;
+	--w: 56px;
+	pointer-events: auto;
+	--h: calc(var(--w) * 91 / 200);
+	width: var(--w);
+	height: var(--h);
+	line-height: 26px;
+	text-align: center;
+	font-family: 'yuanli';
+	font-weight:450;
+	font-size: 15px;
 	color: #F7F5E7;
-	font-size: 22px;
-	background-image: url("./images/btnn4.png");
+	text-shadow: 
+	0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
+	0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
+	0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
+	0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
+	0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
+	0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
+	0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
+	0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
+	0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
+	0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
+	0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
+	0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,0.3px 0px 1.8px #332C18,
+	0.3px 0px 1.8px #332C18;
+	background-image: url("./images/btnn4_window.png");
 	background-size: 100% 100%;
 	/*border: 1px solid rgb(3,4,5);/*调试用*/
 }
 .skill-control > .enable > .skillitem.select {
-	background-image: url("./images/btnn3.png");
+	background-image: url("./images/btnn3_window.png");
 }
 .skill-control > .enable > .skillitem:not(.usable):not(.select) {/*技能按钮不可用时变灰*/
 	filter: grayscale(50%);
@@ -135,17 +117,12 @@ margin: -2px -5px;
 	/*-webkit-filter: brightness(70%);*/
 }
 
-
-
-
 .skill-control > .enable > .xiandingji.select {
-	background-image: url("./images/btnn4.png");
+	background-image: url("./images/btnn4_window.png");
 }
 .skill-control > .enable > .xiandingji:not(.usable):not(.select) {
-    /*background-image: url("./images/btn5.png");*/
 	filter: grayscale(50%);
 	-webkit-filter: grayscale(90%);
-	/*-webkit-filter: brightness(70%);*/
 }
 .skillMarks{
 max-height: 80px;
