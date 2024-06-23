@@ -159,7 +159,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 					return true;
 				});
 
-				if (!hasSame) enableSkills.push(skills[0]);
+				if (!hasSame) enableSkills.unshift(skills[0]);
 				var showSkills = enableSkills.length ? enableSkills : skills;
 				showSkills.forEach(function (item) {
 					var node = self.querySelector('[data-id="' + item.id + '"]');
