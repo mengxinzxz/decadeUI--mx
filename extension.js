@@ -1119,6 +1119,14 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 											targets[i].classList.remove('target');
 										}
 									};
+									event.pushHandler('decadeUI_LineAnimation', (event, option) => {
+										if (event.step === 1 && option.state === "begin" && !event.hideTargets) {
+											const player = event.player;
+											for (var i = 0; i < targets.length; i++) {
+												if (targets[i] != player) targets[i].classList.add('target');
+											}
+										}
+									});
 									return event;
 								},
 								lose: function () {
@@ -6245,65 +6253,46 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							break;
 						case 'usecard':
 							tagText = '使用';
+							if (!event.player.hasSkillTag('ignoreLogAI', null, { card: event.card }) && !event.hideTargets && event.targets.length == 1) {
+								if (event.targets[0] == event.player) tagText = '对自己';
+								else tagText = '对' + get.translation(event.targets[0]);
+							}
+							else {
+								tagText = '使用';
+							}
 						case 'respond':
 							if (tagText == '') tagText = '打出';
 
-							const changeShow = function (event, card) {
-								const cardname = event.card.name, cardnature = get.nature(event.card);
-								if ((lib.config.cardtempname != 'off') && ((card.name != cardname) || !get.is.sameNature(cardnature, card.nature, true))) {
-									if (lib.config.extension_十周年UI_showTemp) {
-										if (!card._tempName) card._tempName = ui.create.div('.temp-name', card);
-										var tempname = '';
-										var tempname2 = get.translation(cardname);
-										if (cardnature) {
-											card._tempName.dataset.nature = cardnature;
-											if (cardname == 'sha') {
-												tempname2 = get.translation(cardnature) + tempname2;
-											}
+							const cardname = event.card.name, cardnature = get.nature(event.card);
+							if ((lib.config.cardtempname != 'off') && ((card.name != cardname) || !get.is.sameNature(cardnature, card.nature, true))) {
+								if (lib.config.extension_十周年UI_showTemp) {
+									if (!card._tempName) card._tempName = ui.create.div('.temp-name', card);
+									var tempname = '';
+									var tempname2 = get.translation(cardname);
+									if (cardnature) {
+										card._tempName.dataset.nature = cardnature;
+										if (cardname == 'sha') {
+											tempname2 = get.translation(cardnature) + tempname2;
 										}
-										tempname += tempname2;
+									}
+									tempname += tempname2;
 
-										card._tempName.innerHTML = tempname;
-										card._tempName.tempname = tempname;
-									}
-									else {
-										var node = ui.create.cardTempName(event.card, card);
-										var cardtempnameConfig = lib.config.cardtempname;
-										if (cardtempnameConfig !== 'default') node.classList.remove('vertical');
-									}
+									card._tempName.innerHTML = tempname;
+									card._tempName.tempname = tempname;
 								}
-								const cardnumber = get.number(event.card), cardsuit = get.suit(event.card);
-								if (card.dataset.views != 1 && event.card.cards && event.card.cards.length == 1 && (card.number != cardnumber || card.suit != cardsuit)) {
-									dui.cardTempSuitNum(card, cardsuit, cardnumber);
+								else {
+									var node = ui.create.cardTempName(event.card, card);
+									var cardtempnameConfig = lib.config.cardtempname;
+									if (cardtempnameConfig !== 'default') node.classList.remove('vertical');
 								}
-							};
-							changeShow(event, card);
-							//卡牌属性于useCard1或respond转变后的显示
-							player.when({ global: ['useCard1', 'respond'] }).filter(evt => evt == event).then(() => {
-								changeShow(trigger, card);
-							}).vars({ card: card, changeShow: changeShow }).assign({ priority: -Infinity, lastDo: true });
-							//隐藏目标over后的目标classList显示和处理区牌信息显示
-							player.when({ global: ['useCard'] }).filter(evt => evt == event).then(() => {
-								const targets = trigger.targets;
-								if (targets && targets.length) {
-									if (!trigger.hideTargets) {
-										for (const target of targets) {
-											if (target != trigger.player) target.classList.add('target');
-										}
-									}
-									if (targets.length == 1) {
-										let tagText, tagNode = card.querySelector('.used-info');
-										if (tagNode == null) tagNode = card.appendChild(dui.element.create('used-info'));
-										if (targets[0] == trigger.player) tagText = '对自己';
-										else tagText = '对' + get.translation(targets[0]);
-										tagNode.textContent = get.translation(trigger.player) + tagText;
-									}
-								}
-							}).vars({ card: card }).assign({ priority: -Infinity, lastDo: true });
+							}
+							const cardnumber = get.number(event.card), cardsuit = get.suit(event.card);
+							if (card.dataset.views != 1 && event.card.cards && event.card.cards.length == 1 && (card.number != cardnumber || card.suit != cardsuit)) {
+								dui.cardTempSuitNum(card, cardsuit, cardnumber);
+							}
 
 							if (duicfg.cardUseEffect && event.card && (!event.card.cards || !event.card.cards.length || event.card.cards.length == 1)) {
-								var name = event.card.name;
-								var nature = event.card.nature;
+								var name = event.card.name, nature = event.card.nature;
 
 								switch (name) {
 									case 'effect_caochuanjiejian':
@@ -11738,6 +11727,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			intro: (function () {
 				var log = [
 					'魔改十周年 萌修 0.3.3',
+					'修改隐藏目标机制的写法',
 					'十周年样式PC端技能按钮位置调整（全新样式，感谢Fire.win的协助）',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
