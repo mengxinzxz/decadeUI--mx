@@ -11726,16 +11726,14 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			},
 			intro: (function () {
 				var log = [
-					'魔改十周年 萌修 0.3.3',
-					'修改隐藏目标机制的写法',
-					'十周年样式PC端技能按钮位置调整（全新样式，感谢Fire.win的协助）',
+					'魔改十周年 萌修 0.3.4',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
 			author: "萌新（转型中）<br>十周年UI原作者：短歌<br>手杀UI原名：界面美化<br>手杀UI原作者：橙续缘",
 			diskURL: "",
 			forumURL: "",
-			version: "0.3.3",
+			version: "0.3.4",
 		},
 		files: {
 			"character": [],
