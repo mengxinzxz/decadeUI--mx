@@ -4677,8 +4677,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						var cards = get.cards(num);
 						game.addCardKnower(cards, player);
 						var guanxing = decadeUI.content.chooseGuanXing(player, cards, cards.length, null, cards.length);
-						if (this.getParent() && this.getParent().name && get.translation(this.getParent().name) != this.getParent().name) {
-							guanxing.caption = '【' + get.translation(this.getParent().name) + '】';
+						if (event.getParent() && event.getParent().name && get.translation(event.getParent().name) != event.getParent().name) {
+							guanxing.caption = '【' + get.translation(event.getParent().name) + '】';
 						}
 						else {
 							guanxing.caption = "请按顺序排列牌。";
@@ -11727,6 +11727,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			intro: (function () {
 				var log = [
 					'魔改十周年 萌修 0.3.4',
+					'chooseToGuanxing函数bugfix',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
