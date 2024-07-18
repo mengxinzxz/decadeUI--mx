@@ -1276,7 +1276,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									}
 
 									if (_status.event) {
-										if (_status.event.name == 'loseAsync') isDrawCard = true;
+										if (!_status.event.name.includes('raw')) isDrawCard = true;
 									}
 
 									if (game.me == this && !isDrawCard) return;
@@ -11727,6 +11727,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			intro: (function () {
 				var log = [
 					'魔改十周年 萌修 0.3.4',
+					'取消非摸牌事件$draw函数对game.me的阻断',
 					'chooseToGuanxing函数bugfix',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
