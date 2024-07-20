@@ -1275,8 +1275,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										}
 									}
 
-									if (_status.event) {
-										if (!_status.event.name.includes('raw')) isDrawCard = true;
+									if (_status.event && _status.event.name) {
+										const name = _status.event.name;
+										if (function (name) {
+											if (name != 'gain') return !name.includes('raw');
+											return name.animate && name.animate.includes('draw');
+										}(name)) isDrawCard = true;
 									}
 
 									if (game.me == this && !isDrawCard) return;
