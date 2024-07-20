@@ -1276,11 +1276,10 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									}
 
 									if (_status.event && _status.event.name) {
-										const name = _status.event.name;
-										if (function (name) {
-											if (name != 'gain') return !name.includes('raw');
-											return name.animate && name.animate.includes('draw');
-										}(name)) isDrawCard = true;
+										if (function (event) {
+											if (event.name != 'gain') return !event.name.includes('raw');
+											return !event.animate || !event.animate.includes('draw');
+										}(_status.event)) isDrawCard = true;
 									}
 
 									if (game.me == this && !isDrawCard) return;
