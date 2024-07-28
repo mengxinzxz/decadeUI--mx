@@ -930,7 +930,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									this[goon ? 'markSkill' : 'unmarkSkill']('expandedSlots');
 									//ui.equipSolts.back.innerHTML = new Array(5 + Object.values(this.expandedSlots).reduce((previousValue, currentValue) => previousValue + currentValue, 0)).fill('<div></div>').join('');
 									let ele;
-									while ((ele = ui.equipSolts.back.firstChild)) {
+									while ((ele === ui.equipSolts.back.firstChild)) {
 										ele.remove();
 									}
 									var storage = this.expandedSlots, equipSolts = ui.equipSolts;
@@ -1137,7 +1137,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										next.blameEvent = event;
 										if (next.cards.length) event.throw = false;
 									}
-
 									return next;
 								},
 								line: function (target, config) {
@@ -2006,7 +2005,53 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									}
 								},
 								lose: function () {
-									"step 0"
+									'step 0'
+									var evt = event.getParent();
+									if ((evt.name != "discard" || event.type != "discard") && (evt.name != "loseToDiscardpile" || event.type != "loseToDiscardpile")) {
+										event.delay = false;
+										return;
+									}
+									if (evt.delay === false) event.delay = false;
+									if (evt.animate != false) {
+										evt.discardid = lib.status.videoId++;
+										game.broadcastAll(function (player, cards, id, visible) {
+											var cardnodes = [];
+											cardnodes._discardtime = get.time();
+											for (var i = 0; i < cards.length; i++) {
+												if (cards[i].clone) {
+													cardnodes.push(cards[i].clone);
+													if (!visible) {
+														cards[i].clone.classList.add("infohidden");
+														cards[i].clone.classList.add("infoflip");
+													}
+												}
+											}
+											ui.todiscard[id] = cardnodes;
+										}, player, cards, evt.discardid, event.visible);
+										if (lib.config.sync_speed && cards[0] && cards[0].clone) {
+											if (evt.delay != false) {
+												var waitingForTransition = get.time();
+												evt.waitingForTransition = waitingForTransition;
+												cards[0].clone.listenTransition(function () {
+													if (_status.waitingForTransition == waitingForTransition && _status.paused) {
+														game.resume();
+													}
+													delete evt.waitingForTransition;
+												});
+											} else if (evt.getParent().discardTransition) {
+												delete evt.getParent().discardTransition;
+												var waitingForTransition = get.time();
+												evt.getParent().waitingForTransition = waitingForTransition;
+												cards[0].clone.listenTransition(function () {
+													if (_status.waitingForTransition == waitingForTransition && _status.paused) {
+														game.resume();
+													}
+													delete evt.getParent().waitingForTransition;
+												});
+											}
+										}
+									}
+									"step 1"
 									if (event.insert_card && event.position == ui.cardPile) event.cards.reverse();
 									event.stockcards = cards.concat();
 									var hs = [], es = [], js = [], ss = [], xs = [];
@@ -2025,8 +2070,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										if (pe.delay === false) event.delay = false;
 										if (event.animate == undefined) event.animate = pe.animate;
 									}
-
-
 									var card, pileNode;
 									var hej = player.getCards('hejsx');
 									for (var i = 0; i < cards.length; i++) {
@@ -2038,33 +2081,38 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 											continue;
 										}
 										else if (pileNode) {
-											if (pileNode.classList.contains('equips')) {
+											if (pileNode.classList.contains("equips")) {
+												card.throwWith = card.original = "e";
 												es.push(card);
-												card.throwWith = card.original = 'e';
-											}
-											else if (pileNode.classList.contains('judges')) {
+												const VEquip = player.getVCards("e").find(card => card.cards?.includes(card));
+												if (VEquip) event.vcard_map.set(card, VJudge);
+												else event.vcard_map.set(card, get.autoViewAs(card, void 0, false));
+											} else if (pileNode.classList.contains("judges")) {
+												card.throwWith = card.original = "j";
 												js.push(card);
-												card.throwWith = card.original = 'j';
-											}
-											else if (pileNode.classList.contains('expansions')) {
+												const VJudge = player.getVCards("j").find(card => card.cards?.includes(card));
+												if (VJudge) event.vcard_map.set(card, VJudge);
+												else event.vcard_map.set(card, get.autoViewAs(card, void 0, false));
+											} else if (pileNode.classList.contains("expansions")) {
+												card.throwWith = card.original = "x";
 												xs.push(card);
-												card.throwWith = card.original = 'x';
+												event.vcard_map.set(card, get.autoViewAs(card, void 0, false));
 												if (card.gaintag && card.gaintag.length) unmarks.addArray(card.gaintag);
-											}
-											else if (pileNode.classList.contains('handcards')) {
-												if (card.classList.contains('glows')) {
+											} else if (pileNode.classList.contains("handcards")) {
+												if (card.classList.contains("glows")) {
+													card.throwWith = card.original = "s";
 													ss.push(card);
-													card.throwWith = card.original = 's';
-												}
-												else {
+													event.vcard_map.set(card, get.autoViewAs(card, void 0, false));
+												} else {
+													card.throwWith = card.original = "h";
 													hs.push(card);
-													card.throwWith = card.original = 'h';
+													event.vcard_map.set(card, get.autoViewAs(card, void 0, player));
 												}
-											}
-											else {
+											} else {
 												card.throwWith = card.original = null;
 											}
 										}
+
 										if (card.gaintag && card.gaintag.length) {
 											gainmap[card.cardid] = card.gaintag.concat();
 											card.removeGaintag(true);
@@ -2191,7 +2239,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									else if (event.position == ui.cardPile) {
 										game.updateRoundNumber();
 									}
-									if (event.toRenku) _status.renku.addArray(cards);
 									if (unmarks.length) {
 										for (var i of unmarks) {
 											player[(lib.skill[i] && lib.skill[i].mark || player.hasCard((card) => card.hasGaintag(i), 'x')) ? 'markSkill' : 'unmarkSkill'](i);
@@ -2206,69 +2253,89 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									if (hs.length && !event.visible) {
 										player.getCards('h').forEach(hcard => hcard.clearKnowers());
 									}
-									"step 1"
+									"step 2"
 									if (num < cards.length) {
 										if (event.es.includes(cards[num])) {
 											event.loseEquip = true;
-											player.removeEquipTrigger(cards[num]);
-											var info = get.info(cards[num]);
-											if (info.onLose && (!info.filterLose || info.filterLose(cards[num], player))) {
-												event.goto(2);
-												return;
+											const VEquip = player.getVCards("e").find(card => {
+												return card.cards?.includes(cards[num])
+											});
+											if (VEquip) {
+												player.removeVirtualEquip(VEquip);
+												//player.removeEquipTrigger(cards[num]);
+												var info = get.info(VEquip, false);
+												if (info.onLose && (!info.filterLose || info.filterLose(VEquip, player))) {
+													event.goto(3);
+													event.currentVEquip = VEquip;
+													return;
+												}
+											}
+										}
+										else if (event.js.includes(cards[num])) {
+											const VJudge = player.getVCards("j").find(card => {
+												return card.cards?.includes(cards[num])
+											});
+											if (VJudge) {
+												player.removeVirtualJudge(VJudge);
 											}
 										}
 										event.num++;
 										event.redo();
-									}
-									else {
+									} else {
 										if (event.loseEquip) {
 											player.addEquipTrigger();
 										}
-										event.goto(3);
+										event.goto(4);
 									}
-									"step 2"
-									var info = get.info(cards[num]);
+									"step 3"
+									const VEquip = event.currentVEquip;
+									var info = get.info(VEquip, false);
 									if (info.loseDelay != false && (player.isAlive() || info.forceDie)) {
-										player.popup(cards[num].name);
+										player.popup(VEquip.name);
 										game.delayx();
 									}
 									if (Array.isArray(info.onLose)) {
 										for (var i = 0; i < info.onLose.length; i++) {
-											var next = game.createEvent('lose_' + cards[num].name);
+											var next = game.createEvent("lose_" + VEquip.name);
 											next.setContent(info.onLose[i]);
 											if (info.forceDie) next.forceDie = true;
 											next.player = player;
-											next.card = cards[num];
+											next.card = VEquip;
+											next.cards = VEquip.cards;
 										}
-									}
-									else {
-										var next = game.createEvent('lose_' + cards[num].name);
+									} else {
+										var next = game.createEvent("lose_" + VEquip.name);
 										next.setContent(info.onLose);
 										next.player = player;
 										if (info.forceDie) next.forceDie = true;
-										next.card = cards[num];
+										next.card = VEquip;
+										next.cards = VEquip.cards;
 									}
 									event.num++;
-									event.goto(1);
-									"step 3"
+									event.goto(2);
+									"step 4"
 									if (event.toRenku) {
+										_status.renku.addArray(
+											cards.filter(function (card) {
+												return !card.willBeDestroyed("renku", null, event);
+											})
+										);
 										if (_status.renku.length > 6) {
 											var cards = _status.renku.splice(0, _status.renku.length - 6);
-											game.log(cards, '从仁库进入了弃牌堆');
-											game.cardsDiscard(cards).set('outRange', true).fromRenku = true;
+											game.log(cards, "从仁库进入了弃牌堆");
+											game.cardsDiscard(cards).set("outRange", true).fromRenku = true;
 										}
 										game.updateRenku();
 									}
-									"step 4"
+									"step 5"
 									var evt = event.getParent();
-									if (evt.name != 'discard' && event.type != 'discard' && evt.name != 'loseToDiscardpile' && event.type != 'loseToDiscardpile') return;
+									if (evt.name != "discard" && event.type != "discard" && evt.name != "loseToDiscardpile" && event.type != "loseToDiscardpile") return;
 									if (event.animate === false || event.delay === false) return;
 									if (evt.delay != false) {
 										if (evt.waitingForTransition) {
 											_status.waitingForTransition = evt.waitingForTransition;
 											game.pause();
-										}
-										else {
+										} else {
 											game.delayx();
 										}
 									}
@@ -2341,17 +2408,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 							var judges = player.node.judges.childNodes;
 							for (var i = 0; i < judges.length; i++) {
-								if (judges[i].classList.contains('removing'))
-									continue;
-
+								if (judges[i].classList.contains('removing')) continue;
 								judges[i].classList.remove('drawinghidden');
 								if (_status.connectMode) {
-									if (judges[i].viewAs) {
-										judges[i].node.judgeMark.node.judge.innerHTML = get.translation(judges[i].viewAs)[0];
-									}
-									else {
-										judges[i].node.judgeMark.node.judge.innerHTML = get.translation(judges[i].name)[0];
-									}
+									const bgMark = lib.translate[judges[i].name + '_bg'] || get.translation(judges[i].name)[0];
+									judges[i].node.judgeMark.node.judge.innerHTML = bgMark;
 								}
 							}
 						},
@@ -4007,108 +4068,119 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						setTimeout(relayout, 500);
 					};
 
-					lib.element.content.addJudge = function () {
-						"step 0";
-						const cardName = typeof card == 'string' ? card : card.name, cardInfo = lib.card[cardName];
-						if (cards) {
-							var owner = get.owner(cards[0]);
-							if (owner) {
-								event.relatedLose = owner.lose(cards, ui.special).set('getlx', false);
-								if (cardInfo && !cardInfo.blankCard) event.relatedLose.set('visible', true);
-							}
-						};
-						"step 1";
-						if (cards[0].destroyed) {
-							if (player.hasSkill(cards[0].destroyed)) {
-								delete cards[0].destroyed;
-							}
-							else {
-								event.finish();
-								return;
-							}
-						}
-						else if (event.relatedLose) {
-							var owner = event.relatedLose.player;
-							if (owner.getCards('hejsx').includes(card)) {
-								event.finish();
-								return;
-							}
-						}
-						cards[0].fix();
-						cards[0].style.transform = '';
-						cards[0].classList.remove('drawinghidden');
-						cards[0]._transform = null;
-
-						var viewAs = typeof card == 'string' ? card : card.name;
-						if (!lib.card[viewAs] || (!lib.card[viewAs].effect && !lib.card[viewAs].noEffect)) {
-							game.cardsDiscard(cards[0]);
+					lib.element.content.addJudge = async function (event, trigger, player) {
+						let card, cardName;
+						if (typeof event.card == "string") {
+							cardName = event.card;
+							card = get.autoViewAs({ name: cardName }, event.cards);
+							event.card = card;
 						}
 						else {
-							cards[0].style.transform = '';
-							player.node.judges.insertBefore(cards[0], player.node.judges.firstChild);
-							if (_status.discarded) {
-								_status.discarded.remove(cards[0]);
+							cardName = event.card.name;
+							if (get.itemtype(event.card) === "card") {
+								event.cards = [event.card]
+								card = get.autoViewAs(event.card, void 0, false);
+								event.card = card;
 							}
-							ui.updatej(player);
-							game.broadcast(function (player, card, viewAs) {
-								card.fix();
-								card.style.transform = '';
-								card.classList.add('drawinghidden');
-								card.viewAs = viewAs;
-								if (viewAs && viewAs != card.name) {
-									if (window.decadeUI) {
-										card.classList.add('fakejudge');
-										card.node.judgeMark.node.judge.innerHTML = get.translation(viewAs)[0];
-
+							else if (!(event.card.cards?.length) && event.cards?.length) {
+								card = get.autoViewAs({ name: cardName, isCard: true }, event.cards);
+								event.card = card;
+							}
+							else if (!event.cards) {
+								event.cards = [];
+							}
+						}
+						card = event.card;
+						const cards = event.cards, cardInfo = lib.card[cardName], visible = (cardInfo && !cardInfo.blankCard);
+						event.visible = visible;
+						//失去牌的一长串
+						if (event.cards?.length) {
+							const map = {};
+							for (const i of event.cards) {
+								var owner = get.owner(i, "judge");
+								if (owner && (owner != player || get.position(i) != "e")) {
+									var id = owner.playerid;
+									if (!map[id]) map[id] = [[], [], []];
+									map[id][0].push(i);
+									var position = get.position(i);
+									if (position == "h") map[id][1].push(i);
+									else map[id][2].push(i);
+								} else if (!event.updatePile && get.position(i) == "c") event.updatePile = true;
+								if (event.visible) i.addKnower("everyone");
+							}
+							event.losing_map = map;
+							for (const i in map) {
+								const owner = (_status.connectMode ? lib.playerOL : game.playerMap)[i];
+								const next = owner
+									.lose(map[i][0], ui.special)
+									.set("type", "addJudge")
+									.set("forceDie", true)
+									.set("getlx", false);
+								if (event.visible == true) {
+									// @ts-ignore
+									next.visible = true;
+								}
+								await next;
+								event.relatedLose = next;
+							}
+							let canMoveOn = true;
+							event.cards.forEach(card => {
+								if (card.willBeDestroyed("judge", player, event)) {
+									card.selfDestroy(event);
+									canMoveOn = false;
+									return;
+								}
+								else if (canMoveOn) {
+									// @ts-ignore
+									if ("hejx".includes(get.position(card, true))) {
+										canMoveOn = false;
+										return;
 									}
-									else if (card.classList.contains('fullskin') || card.classList.contains('fullborder')) {
-										card.classList.add('fakejudge');
-										card.node.background.innerHTML = lib.translate[viewAs + '_bg'] || get.translation(viewAs)[0];
-									}
 								}
-								else {
-									card.classList.remove('fakejudge');
-									if (window.decadeUI) card.node.judgeMark.node.judge.innerHTML = get.translation(card.name)[0];
+							});
+							if (!canMoveOn) return;
+						}
+						if (!cardInfo.effect && !cardInfo.noEffect) {
+							if (event.cards.length) await game.cardsDiscard(event.cards);
+							return;
+						}
+						game.broadcastAll((player, card, cards) => {
+							const isViewAsCard = (cards?.length !== 1 || cards[0].name !== card.name);
+							const bgMark = lib.translate[card.name + '_bg'] || get.translation(card.name)[0];
+							if (isViewAsCard) {
+								if (window.decadeUI) {
+									cards[0].classList.add('fakejudge');
+									cards[0].node.judgeMark.node.judge.innerHTML = bgMark;
 								}
-
-								player.node.judges.insertBefore(card, player.node.judges.firstChild);
-								ui.updatej(player);
-								if (card.clone && (card.clone.parentNode == player.parentNode || card.clone.parentNode == ui.arena)) {
-									card.clone.moveDelete(player);
-									game.addVideo('gain2', player, get.cardsInfo([card]));
-								}
-							}, player, cards[0], viewAs);
-
-							if (cards[0].clone && (cards[0].clone.parentNode == player.parentNode || cards[0].clone.parentNode == ui.arena)) {
-								cards[0].clone.moveDelete(player);
-								game.addVideo('gain2', player, get.cardsInfo(cards));
-							}
-
-							if (get.itemtype(card) != 'card') {
-								if (typeof card == 'string') cards[0].viewAs = card;
-								else cards[0].viewAs = card.name;
-							}
-							else {
-								cards[0].viewAs = null;
-							}
-
-							if (cards[0].viewAs && cards[0].viewAs != cards[0].name) {
-								cards[0].classList.add('fakejudge');
-								cards[0].node.judgeMark.node.judge.innerHTML = get.translation(cards[0].viewAs)[0];
-								if (lib.card[viewAs].blankCard) {
-									game.log(player, '被扣置了<span class="yellowtext">' + get.translation(cards[0].viewAs) + '</span>');
-								}
-								else {
-									game.log(player, '被贴上了<span class="yellowtext">' + get.translation(cards[0].viewAs) + '</span>（', cards, '）');
+								else if (cards[0].classList.contains('fullskin') || cards[0].classList.contains('fullborder')) {
+									cards[0].classList.add('fakejudge');
+									cards[0].node.background.innerHTML = bgMark;
 								}
 							}
 							else {
 								cards[0].classList.remove('fakejudge');
-								cards[0].node.judgeMark.node.judge.innerHTML = get.translation(cards[0].name)[0];
-								game.log(player, '被贴上了', cards);
+								if (window.decadeUI) cards[0].node.judgeMark.node.judge.innerHTML = bgMark;
 							}
-
-							game.addVideo('addJudge', player, [get.cardInfo(cards[0]), cards[0].viewAs]);
+							const cardsCloned = cards.filter(card => {
+								return (cards[0].clone && (cards[0].clone.parentNode == player.parentNode || cards[0].clone.parentNode == ui.arena));
+							})
+							if (cardsCloned.length) {
+								cardsCloned.forEach(card => {
+									card.clone.moveDelete(player);
+								});
+								game.addVideo("gain2", player, get.cardsInfo(cardsCloned));
+							}
+						}, player, event.card, event.cards);
+						player.addVirtualJudge(event.card, event.cards);
+						const isViewAsCard = (cards?.length !== 1 || cards[0].name !== card.name);
+						if (isViewAsCard && cards?.length) {
+							if (cardInfo.blankCard) {
+								game.log(player, '被扣置了<span class="yellowtext">' + get.translation(cardName) + "</span>");
+							} else {
+								game.log(player, '被贴上了<span class="yellowtext">' + get.translation(cardName) + "</span>（", cards, "）");
+							}
+						} else {
+							game.log(player, "被贴上了", card);
 						}
 					};
 
@@ -4848,7 +4920,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 					lib.element.player.$handleEquipChange = function () {
 						let player = this, sp;
-						const cards = Array.from(this.node.equips.childNodes);
+						const cards = Array.from(player.node.equips.childNodes);
 						const cardsResume = cards.slice(0);
 						cards.forEach(card => {
 							let spnum = get.equipNum(card);
@@ -4857,12 +4929,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								let num = get.equipNum(card);
 								let remove = false;
 								if ((num == 4 || num == 3) && get.is.mountCombined()) {
-									remove = !this.hasEmptySlot('equip3_4') || this.getEquips('equip3_4').length;
-								} else if (!this.hasEmptySlot(num) || this.getEquips(num).length) {
+									remove = !player.hasEmptySlot('equip3_4') || player.getEquips('equip3_4').length;
+								} else if (!player.hasEmptySlot(num) || player.getEquips(num).length) {
 									remove = true;
 								}
 								if (remove) {
-									this.node.equips.removeChild(card);
+									player.node.equips.removeChild(card);
 									cardsResume.remove(card);
 								}
 							}
@@ -4870,7 +4942,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						for (let i = 1; i <= 5; i++) {
 							let add = false;
 							if ((i == 4 || i == 3) && get.is.mountCombined()) {
-								add = this.hasEmptySlot('equip3_4') && !this.getEquips('equip3_4').length;
+								add = player.hasEmptySlot('equip3_4') && !player.getEquips('equip3_4').length;
 							} else {
 								let flag = false, subtypes;
 								for (var j = 0; j < cards.length; j++) {
@@ -4884,7 +4956,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										}
 									}
 								}
-								if (!flag) add = this.hasEmptySlot(i) && !this.getEquips(i).length;
+								if (!flag) add = player.hasEmptySlot(i) && !player.getEquips(i).length;
 							}
 							if (add && !cardsResume.some(card => {
 								let num = get.equipNum(card);
@@ -8826,9 +8898,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					filter: function (event, player) {
 						if (event.card.storage && event.card.storage.nowuxie) return false;
 						var card = event.card;
-						if (event.name == 'phaseJudge' && card.viewAs) card = {
-							name: card.viewAs
-						};
 						var info = get.info(card);
 						if (info.wuxieable === false) return false;
 						if (event.name != 'phaseJudge') {
