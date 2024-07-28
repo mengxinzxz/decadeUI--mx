@@ -1110,6 +1110,36 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 									return this;
 								},
+								$addVirtualJudge(VCard, cards) {
+									const player = this;
+									const isViewAsCard = (cards.length !== 1 || cards[0].name !== VCard.name);
+									cards.forEach(card => {
+										card.fix();
+										card.style.transform = "";
+										card.classList.remove("drawinghidden");
+										delete card._transform;
+										const bgMark = lib.translate[VCard.name + '_bg'] || get.translation(VCard.name)[0];
+										if (isViewAsCard) {
+											card.viewAs = VCard.name;
+											if (window.decadeUI) {
+												card.classList.add('fakejudge');
+												card.node.judgeMark.node.judge.innerHTML = bgMark;
+											}
+											else if (card.classList.contains('fullskin') || card.classList.contains('fullborder')) {
+												card.classList.add('fakejudge');
+												card.node.background.innerHTML = bgMark;
+											}
+										}
+										else {
+											delete card.viewAs;
+											card.classList.remove('fakejudge');
+											if (window.decadeUI) card.node.judgeMark.node.judge.innerHTML = bgMark;
+										}
+										card.classList.add("drawinghidden");
+										player.node.judges.insertBefore(card, player.node.judges.firstChild);
+									});
+									ui.updatej(player);
+								},
 								useCard: function () {
 									var event = base.lib.element.player.useCard.apply(this, arguments);
 									event.finish = function () {
@@ -3639,6 +3669,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							},
 							queueCount: 0,
 							outCount: 0,
+							vcardsMap: {
+								handcards: [],
+								equips: [],
+								judges: [],
+							},
 						};
 
 						var chainImg = new Image();
@@ -4066,122 +4101,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						};
 
 						setTimeout(relayout, 500);
-					};
-
-					lib.element.content.addJudge = async function (event, trigger, player) {
-						let card, cardName;
-						if (typeof event.card == "string") {
-							cardName = event.card;
-							card = get.autoViewAs({ name: cardName }, event.cards);
-							event.card = card;
-						}
-						else {
-							cardName = event.card.name;
-							if (get.itemtype(event.card) === "card") {
-								event.cards = [event.card]
-								card = get.autoViewAs(event.card, void 0, false);
-								event.card = card;
-							}
-							else if (!(event.card.cards?.length) && event.cards?.length) {
-								card = get.autoViewAs({ name: cardName, isCard: true }, event.cards);
-								event.card = card;
-							}
-							else if (!event.cards) {
-								event.cards = [];
-							}
-						}
-						card = event.card;
-						const cards = event.cards, cardInfo = lib.card[cardName], visible = (cardInfo && !cardInfo.blankCard);
-						event.visible = visible;
-						//失去牌的一长串
-						if (event.cards?.length) {
-							const map = {};
-							for (const i of event.cards) {
-								var owner = get.owner(i, "judge");
-								if (owner && (owner != player || get.position(i) != "e")) {
-									var id = owner.playerid;
-									if (!map[id]) map[id] = [[], [], []];
-									map[id][0].push(i);
-									var position = get.position(i);
-									if (position == "h") map[id][1].push(i);
-									else map[id][2].push(i);
-								} else if (!event.updatePile && get.position(i) == "c") event.updatePile = true;
-								if (event.visible) i.addKnower("everyone");
-							}
-							event.losing_map = map;
-							for (const i in map) {
-								const owner = (_status.connectMode ? lib.playerOL : game.playerMap)[i];
-								const next = owner
-									.lose(map[i][0], ui.special)
-									.set("type", "addJudge")
-									.set("forceDie", true)
-									.set("getlx", false);
-								if (event.visible == true) {
-									// @ts-ignore
-									next.visible = true;
-								}
-								await next;
-								event.relatedLose = next;
-							}
-							let canMoveOn = true;
-							event.cards.forEach(card => {
-								if (card.willBeDestroyed("judge", player, event)) {
-									card.selfDestroy(event);
-									canMoveOn = false;
-									return;
-								}
-								else if (canMoveOn) {
-									// @ts-ignore
-									if ("hejx".includes(get.position(card, true))) {
-										canMoveOn = false;
-										return;
-									}
-								}
-							});
-							if (!canMoveOn) return;
-						}
-						if (!cardInfo.effect && !cardInfo.noEffect) {
-							if (event.cards.length) await game.cardsDiscard(event.cards);
-							return;
-						}
-						game.broadcastAll((player, card, cards) => {
-							const isViewAsCard = (cards?.length !== 1 || cards[0].name !== card.name);
-							const bgMark = lib.translate[card.name + '_bg'] || get.translation(card.name)[0];
-							if (isViewAsCard) {
-								if (window.decadeUI) {
-									cards[0].classList.add('fakejudge');
-									cards[0].node.judgeMark.node.judge.innerHTML = bgMark;
-								}
-								else if (cards[0].classList.contains('fullskin') || cards[0].classList.contains('fullborder')) {
-									cards[0].classList.add('fakejudge');
-									cards[0].node.background.innerHTML = bgMark;
-								}
-							}
-							else {
-								cards[0].classList.remove('fakejudge');
-								if (window.decadeUI) cards[0].node.judgeMark.node.judge.innerHTML = bgMark;
-							}
-							const cardsCloned = cards.filter(card => {
-								return (cards[0].clone && (cards[0].clone.parentNode == player.parentNode || cards[0].clone.parentNode == ui.arena));
-							})
-							if (cardsCloned.length) {
-								cardsCloned.forEach(card => {
-									card.clone.moveDelete(player);
-								});
-								game.addVideo("gain2", player, get.cardsInfo(cardsCloned));
-							}
-						}, player, event.card, event.cards);
-						player.addVirtualJudge(event.card, event.cards);
-						const isViewAsCard = (cards?.length !== 1 || cards[0].name !== card.name);
-						if (isViewAsCard && cards?.length) {
-							if (cardInfo.blankCard) {
-								game.log(player, '被扣置了<span class="yellowtext">' + get.translation(cardName) + "</span>");
-							} else {
-								game.log(player, '被贴上了<span class="yellowtext">' + get.translation(cardName) + "</span>（", cards, "）");
-							}
-						} else {
-							game.log(player, "被贴上了", card);
-						}
 					};
 
 					lib.element.content.chooseToCompare = function () {
