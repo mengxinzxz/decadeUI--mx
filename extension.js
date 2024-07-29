@@ -1496,6 +1496,34 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								},
 								$handleEquipChange: function () {
 									base.lib.element.player.$handleEquipChange.apply(this, arguments);
+									const player = this;
+									if (!(player == game.me && ui.equipSolts)) return;
+									const getRealType = function (card) {
+										const card2 = player.vcardsMap.equips.find(i => i.cards?.includes(card));
+										return card2 ? card2 : card;
+									};
+									const sum = Array.from(player.node.equips.childNodes).filter(card => {
+										return ![1, 2, 3, 4, 5].includes(get.equipNum(getRealType(card)));
+									}).length;
+									const current = Array.from(ui.equipSolts.back.children).filter(elements => {
+										return elements.dataset.type == 5;
+									}).length;
+									let delta = sum - current;
+									if (delta > 0) {
+										while (delta > 0) {
+											delta--;
+											const ediv = decadeUI.element.create(null, ui.equipSolts.back);
+											ediv.dataset.type = 5;
+										}
+									}
+									else if (delta < 0) {
+										for (let i = 0; i > num; i--) {
+											const element = Array.from(ui.equipSolts.back.children).find(elements => {
+												return elements.dataset.type == 5;
+											});
+											if (element?.dataset.type == 5) element.remove();
+										}
+									}
 								},
 								$damage: function (source) {
 									if (get.itemtype(source) == 'player') {
