@@ -1308,9 +1308,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 									if (_status.event && _status.event.name) {
 										if (function (event) {
-											if (event.name != 'gain') return !event.name.includes('raw');
-											const animate = event.animate;
-											return !animate || ((typeof animate == 'string' || Array.isArray(animate)) && !event.animate.includes('draw'));
+											return event.name != 'gain' && !event.name.includes('raw');
 										}(_status.event)) isDrawCard = true;
 									}
 
@@ -2746,7 +2744,10 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 											node.node.group.dataset.nature = get.groupnature(get.bordergroup(infoitem), 'raw');
 											ui.create.div(node.node.hp);
 											var hp = get.infoHp(infoitem[2]), maxHp = get.infoMaxHp(infoitem[2]), hujia = get.infoHujia(infoitem[2]);
-											var check = ((get.mode() == 'guozhan' || get.config('double_character')) && (_status.connectMode || get.mode() == 'single' || get.config('double_hp') == 'pingjun'));
+											const check = (get.mode() == 'single' && _status.mode == 'changban') || ((get.mode() == 'guozhan' || function (config) {
+												if (typeof config === 'string') return config === 'double';
+												return Boolean(config) === true;
+											}(_status.connectMode ? lib.configOL.double_character : get.config('double_character'))) && (_status.connectMode || (_status.connectMode ? lib.configOL.double_hp : get.config('double_hp')) == 'pingjun'));
 											var str = get.numStr(hp / (check ? 2 : 1));
 											if (hp != maxHp) {
 												str += '/';
@@ -11614,6 +11615,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				var log = [
 					'魔改十周年 萌修 0.3.4',
 					'新版适配',
+					'修复显示界面对半体力值模式判定bug',
 					'取消非摸牌事件$draw函数对game.me的阻断',
 					'chooseToGuanxing函数bugfix',
 				];
