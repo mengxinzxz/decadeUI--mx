@@ -153,6 +153,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									lose: lib.element.player.lose,
 									$draw: lib.element.player.$draw,
 									$handleEquipChange: lib.element.player.$handleEquipChange,
+									removeVirtualEquip: lib.element.player.removeVirtualEquip,
 								},
 								dialog: {
 									close: lib.element.dialog.close,
@@ -1524,6 +1525,10 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 											if (element?.dataset.type == 5) element.remove();
 										}
 									}
+								},
+								removeVirtualEquip: function () {
+									base.lib.element.player.removeVirtualEquip.apply(this, arguments);
+									if (!lib.config.equip_span) this.$handleEquipChange();
 								},
 								$damage: function (source) {
 									if (get.itemtype(source) == 'player') {
