@@ -152,6 +152,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									useCard: lib.element.player.useCard,
 									lose: lib.element.player.lose,
 									$draw: lib.element.player.$draw,
+									$handleEquipChange: lib.element.player.$handleEquipChange,
 								},
 								dialog: {
 									close: lib.element.dialog.close,
@@ -930,7 +931,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									this[goon ? 'markSkill' : 'unmarkSkill']('expandedSlots');
 									//ui.equipSolts.back.innerHTML = new Array(5 + Object.values(this.expandedSlots).reduce((previousValue, currentValue) => previousValue + currentValue, 0)).fill('<div></div>').join('');
 									let ele;
-									while ((ele === ui.equipSolts.back.firstChild)) {
+									while ((ele = ui.equipSolts.back.firstChild)) {
 										ele.remove();
 									}
 									var storage = this.expandedSlots, equipSolts = ui.equipSolts;
@@ -1307,7 +1308,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									if (_status.event && _status.event.name) {
 										if (function (event) {
 											if (event.name != 'gain') return !event.name.includes('raw');
-											return !event.animate || !event.animate.includes('draw');
+											const animate = event.animate;
+											return !animate || ((typeof animate == 'string' || Array.isArray(animate)) && !event.animate.includes('draw'));
 										}(_status.event)) isDrawCard = true;
 									}
 
@@ -1491,6 +1493,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										dui.layoutDrawCards(cards, player);
 										dui.delayRemoveCards(cards, 460, 220);
 									});
+								},
+								$handleEquipChange: function () {
+									base.lib.element.player.$handleEquipChange.apply(this, arguments);
 								},
 								$damage: function (source) {
 									if (get.itemtype(source) == 'player') {
@@ -4837,98 +4842,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						}
 					};
 
-					lib.element.player.$handleEquipChange = function () {
-						let player = this, sp;
-						const cards = Array.from(player.node.equips.childNodes);
-						const cardsResume = cards.slice(0);
-						cards.forEach(card => {
-							let spnum = get.equipNum(card);
-							if (spnum == 6) sp = true;
-							if (card.name.indexOf('empty_equip') == 0) {
-								let num = get.equipNum(card);
-								let remove = false;
-								if ((num == 4 || num == 3) && get.is.mountCombined()) {
-									remove = !player.hasEmptySlot('equip3_4') || player.getEquips('equip3_4').length;
-								} else if (!player.hasEmptySlot(num) || player.getEquips(num).length) {
-									remove = true;
-								}
-								if (remove) {
-									player.node.equips.removeChild(card);
-									cardsResume.remove(card);
-								}
-							}
-						});
-						for (let i = 1; i <= 5; i++) {
-							let add = false;
-							if ((i == 4 || i == 3) && get.is.mountCombined()) {
-								add = player.hasEmptySlot('equip3_4') && !player.getEquips('equip3_4').length;
-							} else {
-								let flag = false, subtypes;
-								for (var j = 0; j < cards.length; j++) {
-									subtypes = lib.card[cards[j].name].subtypes;
-									if (subtypes) {
-										if (!Array.isArray(subtypes)) subtypes = [subtypes];
-										if (subtypes.length && subtypes.includes('equip' + i)) {
-											add = true;
-											flag = true;
-											break;
-										}
-									}
-								}
-								if (!flag) add = player.hasEmptySlot(i) && !player.getEquips(i).length;
-							}
-							if (add && !cardsResume.some(card => {
-								let num = get.equipNum(card);
-								if ((i == 4 || i == 3) && get.is.mountCombined()) {
-									return num == 4 || num == 3;
-								} else {
-									return num == i;
-								}
-							})) {
-								const card = game.createCard('empty_equip' + i, '', '');
-								card.fix();
-								console.log('add ' + card.name);
-								card.style.transform = '';
-								card.classList.remove('drawinghidden');
-								card.classList.add('emptyequip');
-								card.classList.add('hidden');
-								delete card._transform;
-								const equipNum = get.equipNum(card);
-								let equipped = false;
-								for (let j = 0; j < player.node.equips.childNodes.length; j++) {
-									if (get.equipNum(player.node.equips.childNodes[j]) >= equipNum) {
-										player.node.equips.insertBefore(card, player.node.equips.childNodes[j]);
-										equipped = true;
-										break;
-									}
-								}
-								if (!equipped) {
-									player.node.equips.appendChild(card);
-									if (_status.discarded) {
-										_status.discarded.remove(card);
-									}
-								}
-							}
-						}
-						if (sp && player == game.me && ui.equipSolts) {
-							let elements, flags = false;
-							for (let i = 0; i < ui.equipSolts.back.children.length; i++) {
-								elements = ui.equipSolts.back.children[i];
-								if (elements.dataset.type == 5) flags = true;
-							}
-							if (!flags) {
-								var ediv = decadeUI.element.create(null, ui.equipSolts.back);
-								ediv.dataset.type = 5;
-							}
-						}
-						else if (!sp && player == game.me && ui.equipSolts) {
-							for (let i = 0; i < ui.equipSolts.back.children.length; i++) {
-								const element = ui.equipSolts.back.children[i];
-								if (element.dataset.type == 5) element.remove();
-							}
-						}
-					};
-
 					lib.element.player.$damagepop = function (num, nature, font, nobroadcast) {
 						if (typeof num == 'number' || typeof num == 'string') {
 							game.addVideo('damagepop', this, [num, nature, font]);
@@ -5060,63 +4973,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						}
 						player.$throwordered2(card1.copy(false));
 					};
-
-					/*
-					lib.element.player.$disableEquip = function(skill){
-						game.broadcast(function(player, skill) {
-							player.$disableEquip(skill);
-						}, this, skill);
-						var player = this;
-						if (!player.storage.disableEquip) player.storage.disableEquip = [];
-						player.storage.disableEquip.add(skill);
-						player.storage.disableEquip.sort();
-						var pos = {
-							equip1: '武器栏',
-							equip2: '防具栏',
-							equip3: '+1马栏',
-							equip4: '-1马栏',
-							equip5: '宝物栏'
-						} [skill];
-						if (!pos) return;
-						var card = game.createCard('feichu_' + skill, pos, '');
-						card.fix();
-						card.style.transform = '';
-						card.classList.remove('drawinghidden');
-						card.classList.add('feichu');
-						delete card._transform;
-						
-						
-						var iconName = {
-							equip1: 'icon feichu icon-saber',
-							equip2: 'icon feichu icon-shield',
-							equip3: 'icon feichu icon-mount',
-							equip4: 'icon feichu icon-mount',
-							equip5: 'icon feichu icon-treasure'
-						}[skill];
-						
-						if (iconName) {
-							var icon = decadeUI.element.create(iconName, card);
-							icon.style.zIndex = '1';
-						}
-						
-						var equipNum = get.equipNum(card);
-						var equipped = false;
-						for (var i = 0; i < player.node.equips.childNodes.length; i++) {
-							if (get.equipNum(player.node.equips.childNodes[i]) >= equipNum) {
-								player.node.equips.insertBefore(card, player.node.equips.childNodes[i]);
-								equipped = true;
-								break;
-							}
-						}
-						if (!equipped) {
-							player.node.equips.appendChild(card);
-							if (_status.discarded) {
-								_status.discarded.remove(card);
-							}
-						}
-						return player;
-					};
-					*/
 
 					lib.element.card.copy = function () {
 						var clone = cardCopyFunction.apply(this, arguments);
@@ -11718,6 +11574,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			intro: (function () {
 				var log = [
 					'魔改十周年 萌修 0.3.4',
+					'新版适配',
 					'取消非摸牌事件$draw函数对game.me的阻断',
 					'chooseToGuanxing函数bugfix',
 				];
