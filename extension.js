@@ -1653,7 +1653,13 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								},
 								$phaseJudge: function (card) {
 									game.addVideo('phaseJudge', this, get.cardInfo(card));
-									this.$throw(card);
+									if (card.cards?.length) {
+										const cards = card.cards;
+										this.$throw(cards);
+									} else {
+										const VCard = game.createCard(card.name, '虚拟', '');
+										this.$throw(VCard);
+									}
 									dui.delay(451);
 								},
 							},
