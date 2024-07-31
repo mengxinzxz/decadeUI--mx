@@ -4376,26 +4376,26 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							num1: event.num1,
 							num2: event.num2
 						}
+						event.trigger("compareFixing");
+						'step 8'
 						var str;
-						if (event.num1 > event.num2) {
+						if (event.forceWinner === player || (event.forceWinner !== target && event.num1 > event.num2)) {
 							event.result.bool = true;
 							event.result.winner = player;
-							str = get.translation(player) + '拼点成功';
-							player.popup('胜');
-							target.popup('负');
-						}
-						else {
+							str = get.translation(player) + "拼点成功";
+							player.popup("胜");
+							target.popup("负");
+						} else {
 							event.result.bool = false;
-							str = get.translation(player) + '拼点失败';
-							if (event.num1 == event.num2) {
+							str = get.translation(player) + "拼点失败";
+							if (event.forceWinner !== target && event.num1 == event.num2) {
 								event.result.tie = true;
-								player.popup('平');
-								target.popup('平');
-							}
-							else {
+								player.popup("平");
+								target.popup("平");
+							} else {
 								event.result.winner = target;
-								player.popup('负');
-								target.popup('胜');
+								player.popup("负");
+								target.popup("胜");
 							}
 						}
 
@@ -4426,7 +4426,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						}, str, event.compareName, event.result.bool);
 						decadeUI.delay(1800);
 
-						"step 8"
+						"step 9"
 						if (typeof event.target.ai.shown == 'number' && event.target.ai.shown <= 0.85 && event.addToAI) {
 							event.target.ai.shown += 0.1;
 						}
@@ -4463,7 +4463,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							if (targets[i].countCards('h') == 0) {
 								event.result = {
 									cancelled: true,
-									bool: false
+									bool: false,
 								}
 								event.finish();
 								return;
@@ -4629,32 +4629,35 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								}, 110, dialog);
 
 							}, event.compareName);
-							event.goto(9);
+							event.goto(10);
 						}
-						"step 6"
-						event.result.num1[event.iwhile] = event.num1;
-						event.result.num2[event.iwhile] = event.num2;
+						'step 6'
+						event.iiwhile = event.iwhile;
+						delete event.iwhile;
+						event.trigger("compareFixing");
+						"step 7"
+						event.result.num1[event.iiwhile] = event.num1;
+						event.result.num2[event.iiwhile] = event.num2;
 
 						var str, result;
-						if (event.num1 > event.num2) {
+						if (event.forceWinner === player || (event.forceWinner !== target && event.num1 > event.num2)) {
 							result = true;
-							str = get.translation(player) + '拼点成功';
-							player.popup('胜');
-							target.popup('负');
-						}
-						else {
+							event.winner = player;
+							str = get.translation(player) + "拼点成功";
+							player.popup("胜");
+							target.popup("负");
+						} else {
 							result = false;
-							str = get.translation(player) + '拼点失败';
-							if (event.num1 == event.num2) {
-								player.popup('平');
-								target.popup('平');
-							}
-							else {
-								player.popup('负');
-								target.popup('胜');
+							str = get.translation(player) + "拼点失败";
+							if (event.forceWinner !== target && event.num1 == event.num2) {
+								player.popup("平");
+								target.popup("平");
+							} else {
+								event.winner = target;
+								player.popup("负");
+								target.popup("胜");
 							}
 						}
-
 						// 更新拼点框
 						game.broadcastAll(function (str, eventName, result) {
 							if (!window.decadeUI) {
@@ -4680,7 +4683,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						}, str, event.compareName, result);
 						decadeUI.delay(1800);
 
-						"step 7"
+						"step 8"
 						if (event.callback) {
 							game.broadcastAll(function (card1, card2) {
 								if (!window.decadeUI) {
@@ -4695,14 +4698,17 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							next.card2 = event.card2;
 							next.num1 = event.num1;
 							next.num2 = event.num2;
+							next.winner = event.winner;
 							next.setContent(event.callback);
 							event.compareMultiple = true;
 						}
 
-						"step 8"
-						event.iwhile++;
-						event.goto(5);
 						"step 9"
+						delete event.winner;
+						delete event.forceWinner;
+						event.iwhile = event.iiwhile + 1;
+						event.goto(5);
+						"step 10"
 						game.broadcastAll(ui.clear);
 						event.cards.add(event.card1);
 					};
