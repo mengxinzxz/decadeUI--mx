@@ -11621,6 +11621,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				var log = [
 					'魔改十周年 萌修 0.3.4',
 					'新版适配',
+					'修复左慈【化身】执行两次“游戏开始时”获取“化身”牌效果的bug',
 					'修复显示界面对半体力值模式判定bug',
 					'取消非摸牌事件$draw函数对game.me的阻断',
 					'chooseToGuanxing函数bugfix',
