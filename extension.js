@@ -3870,6 +3870,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										case '后':
 											filename = 'houshou';
 											break;
+										case '民':
+											filename = 'commoner';
+											break;
 										default:
 											this.innerText = value;
 											this.style.visibility = '';
@@ -6532,7 +6535,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 							case 'guozhan':
 								if (identity == 'unknown') {
-									identity = player.wontYe() ? lib.character[player.name1][1] : 'ye';
+									identity = player.wontYe() ? (player.trueIdentity || lib.character[player.name1][1]) : 'ye';
 								}
 
 								if (get.is.jun(player)) {
