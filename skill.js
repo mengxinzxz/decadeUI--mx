@@ -1768,6 +1768,26 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
                 }
             },
         },
+        dcqixin: {
+            mark: undefined,
+            init(player, skill) {
+                const mark = player.marks[skill];
+                if (!mark) player.markSkill(skill);
+                game.broadcastAll((player, skill) => {
+                    lib.skill.dcqixin.$zhuanhuanji(skill, player);
+                }, player, skill);
+            },
+            $zhuanhuanji(skill, player) {
+                const character = Boolean(player.storage[skill]) ? "caojie" : "liuxie";
+                const mark = player.marks[skill];
+                if (mark) {
+                    mark.setBackground(character, 'character');
+                    mark._name = character;
+                    mark.style.setProperty('background-size', 'cover', 'important');
+                    mark.text.style.setProperty('font-size', '0px', 'important');
+                }
+            },
+        },
         nk_shekong: {
             content: function () {
                 'step 0';
