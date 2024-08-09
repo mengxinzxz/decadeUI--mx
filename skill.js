@@ -1771,6 +1771,9 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
         dcqixin: {
             mark: undefined,
             init(player, skill) {
+                if (_status.gameStarted && !player.storage.dcqixin_hp) {
+                    player.storage.dcqixin_hp = [player.maxHp, player.maxHp];
+                }
                 const mark = player.marks[skill];
                 if (!mark) player.markSkill(skill);
                 game.broadcastAll((player, skill) => {
