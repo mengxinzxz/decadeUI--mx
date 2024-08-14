@@ -202,7 +202,6 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
         var showSkills = enableSkills.length ? enableSkills : skills;
 
         showSkills.forEach(function (item) {
-
           //技能锁，不需要加数字
           var showAddSpan = true;
           if (game.me.hasSkill('baiban') && baibanSkillBlocker && baibanSkillBlocker.includes(item.id)) {
@@ -214,8 +213,6 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
           if (game.me.shixiaoedSkills.includes(item.id)) {
             showAddSpan = false;
           }
-
-
           //势力技能筛选
           if (lib.skill[item.id].filter) {
             if ((lib.skill[item.id].filter + '').indexOf('player.group') != -1) {

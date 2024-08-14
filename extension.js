@@ -9371,6 +9371,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						this.css(decadeUIPath + 'player2.css');
 					}
 					this.css(decadeUIPath + (lib.config.extension_十周年UI_newDecadeStyle == 'on' ? 'equip.css' : 'equip_new.css'));
+					if (lib.config.extension_十周年UI_meanPrettify) {
+						this.css(decadeUIPath + 'menu.css');
+					}
 
 					this.js(decadeUIPath + 'spine.js');
 					this.js(decadeUIPath + 'component.js');
@@ -10991,6 +10994,24 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					png: 'PNG 素材',
 				}
 			},
+			//菜单美化
+			meanPrettify: {
+				name: '菜单美化',
+				intro: '开启全屏的菜单样式',
+				init: false,
+				onclick: function (bool) {
+					game.saveConfig('extension_十周年UI_meanPrettify', bool);
+					if (bool) lib.init.css(lib.assetURL + 'extension/十周年UI', 'menu');
+					else {
+						for (const link of document.head.querySelectorAll('link')) {
+							if (link.href.includes('menu.css')) {
+								link.remove();
+								break;
+							};
+						};
+					};
+				},
+			},
 			dynamicBackground: {
 				name: '动态背景',
 				init: 'skin_xiaosha_default',
@@ -11351,7 +11372,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				},
 				update: function () {
 					if (window.decadeUI) ui.arena.dataset.loadingStyle = lib.config['extension_十周年UI_loadingStyle'];
-				}
+				},
 			},
 			//手杀UI
 			FL1: {
@@ -11593,7 +11614,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				},
 			},
 			//手杀UI
-			FLInfinity: {
+			FL5: {
 				"name": "<img style=width:240px src=" + lib.assetURL + "extension/十周年UI/shoushaUI/line.png>",
 				"intro": "",
 				"init": true,
@@ -11624,6 +11645,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				var log = [
 					'魔改十周年 萌修 0.3.4',
 					'新版适配',
+					'整合婉儿的菜单美化',
 					'修复左慈【化身】执行两次“游戏开始时”获取“化身”牌效果的bug',
 					'修复显示界面对半体力值模式判定bug',
 					'取消非摸牌事件$draw函数对game.me的阻断',
