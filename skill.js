@@ -2249,7 +2249,7 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
                         return [cards];
                     });
                     const result = await next.forResult();
-                    if (!result || result.bool) return;
+                    if (!result || !result.bool) return;
                     let hs = result.moved[0].reverse();
                     hs.forEach((i, j) => {
                         player.node.handcards1.insertBefore(hs[j], player.node.handcards1.firstChild);
