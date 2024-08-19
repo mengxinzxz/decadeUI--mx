@@ -1516,7 +1516,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										}
 									}
 									else if (delta < 0) {
-										for (let i = 0; i > num; i--) {
+										for (let i = 0; i > sum; i--) {
 											const element = Array.from(ui.equipSolts.back.children).find(elements => {
 												return elements.dataset.type == 5;
 											});
