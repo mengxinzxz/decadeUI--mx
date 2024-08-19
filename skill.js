@@ -2235,16 +2235,25 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
     decadeUI.inheritSubSkill = {
         olziruo: {
             sort: {
-                content() {
-                    let hs = player.getCards("h");
-                    const list = [hs.indexOf(cards[0]), hs.indexOf(cards[1])];
-                    hs[list[0]] = cards[1]; hs[list[1]] = cards[0];
-                    hs.reverse();
+                async content(event, trigger, player) {
+                    event.getParent(2).goto(0);
+                    if (_status.connectMode || !event.isMine()) {
+                        player.tempBanSkill("olziruo_sort", { player: ["useCard1", "useSkillBegin", "chooseToUseEnd"] });
+                    }
+                    const next = player.chooseToMove("自若：请整理手牌顺序", true);
+                    next.set("list", [["手牌", player.getCards("h")]]);
+                    next.set("processAI", list => {
+                        let player = get.player(), cards = list[0][1].slice(0);
+                        cards.sort((a, b) => get.useful(b, player) - get.useful(a, player));
+                        if (player.storage.olziruo) cards.reverse();
+                        return [cards];
+                    });
+                    const result = await next;
+                    let hs = result.moved[0].reverse();
                     hs.forEach((i, j) => {
                         player.node.handcards1.insertBefore(hs[j], player.node.handcards1.firstChild);
                     });
                     dui.queueNextFrameTick(dui.layoutHand, dui);
-                    event.getParent(2).goto(0);
                 },
             },
         },
