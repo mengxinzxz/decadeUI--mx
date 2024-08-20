@@ -86,10 +86,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 
           rightPane.innerHTML = '<div></div>';
           lib.setScroll(rightPane.firstChild);
-          var hSkills = player.getCards('h');
-          var eSkills = player.getCards('e');
           var oSkills = player.getSkills(null, false, false).slice(0);
-          var judges = player.getCards('j');
           oSkills = oSkills.filter(function (skill) {
             if (!lib.skill[skill] || skill == 'jiu') return false;
             if (lib.skill[skill].nopop || lib.skill[skill].equipSkill) return false;
@@ -189,23 +186,34 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
             });
           }
 
+          var eSkills = player.getVCards('e');
           if (eSkills.length) {
             ui.create.div('.xcaption', '装备区域', rightPane.firstChild);
-            eSkills.forEach(function (item) {
-              ui.create.div('.xskill', '<div data-color>' + get.translation(item) + '</div><div>' + get.translation(item.name + '_info') + '</div>', rightPane.firstChild);
+            eSkills.forEach(function (card) {
+              let str = [get.translation(card), get.translation(card.name + '_info')];
+              const cards = card.cards;
+              if (cards?.length && (cards?.length !== 1 || cards[0].name !== card.name)) str[0] += ('（' + get.translation(card.cards) + '）');
+              for (const item of [card].concat(card.cards?.length ? card.cards : [])) {
+                const cardinfo = lib.card[item.name];
+                if (cardinfo && cardinfo.cardPrompt) {
+                  str[1] = cardinfo.cardPrompt(item);
+                  break;
+                }
+              }
+              ui.create.div('.xskill', '<div data-color>' + str[0] + '</div><div>' + str[1] + '</div>', rightPane.firstChild);
             });
           }
 
+          var judges = player.getVCards('j');
           if (judges.length) {
             ui.create.div('.xcaption', '判定区域', rightPane.firstChild);
             judges.forEach(function (card) {
-              if (card.viewAs && card.viewAs != card.name) {
-                if (lib.card[card.viewAs].blankCard && !player.isUnderControl(true)) {
-                  ui.create.div('.xskill', '<div data-color>' + get.translation(card.viewAs) + '</div><div>' + get.translation(card.viewAs + '_info') + '</div>', rightPane.firstChild);
-                }
-                else ui.create.div('.xskill', '<div data-color>' + get.translation(card.viewAs) + '（' + get.translation(card) + '）' + '</div><div>' + get.translation(card.viewAs + '_info') + '</div>', rightPane.firstChild);
+              const cards = card.cards;
+              let str = get.translation(card);
+              if (cards?.length && (cards?.length !== 1 || cards[0].name !== card.name)) {
+                if (!lib.card[card]?.blankCard || player.isUnderControl(true)) str += ('（' + get.translation(cards) + '）');
               }
-              else ui.create.div('.xskill', '<div data-color>' + get.translation(card) + '</div><div>' + get.translation(card.name + '_info') + '</div>', rightPane.firstChild);
+              ui.create.div('.xskill', '<div data-color>' + str + '</div><div>' + get.translation(card.name + '_info') + '</div>', rightPane.firstChild);
             });
           }
 

@@ -11647,6 +11647,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'新版适配',
 					'整合u的菜单美化',
 					'整合鹿都智川介的素材',
+					'修复装备区不支持cardPrompt动态翻译的bug',
 					'修复左慈【化身】执行两次“游戏开始时”获取“化身”牌效果的bug',
 					'修复显示界面对半体力值模式判定bug',
 					'取消非摸牌事件$draw函数对game.me的阻断',
