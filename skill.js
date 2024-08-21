@@ -1789,6 +1789,103 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
                     mark.style.setProperty('background-size', 'cover', 'important');
                     mark.text.style.setProperty('font-size', '0px', 'important');
                 }
+                player.changeSkin({ characterName: "liuxiecaojie" }, "liuxiecaojie" + (player.storage[skill] ? "_shadow" : ""));
+            },
+        },
+        olyicheng: {
+            async content(event, trigger, player) {
+                let num = player.maxHp, cards = get.cards(num, true);
+                await player.showCards(cards, get.translation(player) + "发动了【易城】");
+                if (player.countCards("h")) {
+                    const sum = cards.reduce((num, card) => num + get.number(card), 0);
+                    const { result: { bool, moved } } = await player.chooseToMove("易城：请选择你要交换的牌").set("filterMove", (from, to) => {
+                        return typeof to !== "number";
+                    }).set("list", [
+                        ["牌堆顶", cards, list => {
+                            const sum2 = list.reduce((num, card) => num + get.number(card, false), 0);
+                            return "牌堆顶（现" + sum2 + { 0: "=", "-1": "<", 1: ">" }[get.sgn(sum2 - sum).toString()] + "原" + sum + "）";
+                        }],
+                        ["手牌", player.getCards("h")],
+                    ]).set("filterOk", moved => moved[1].some(i => !get.owner(i))).set("processAI", list => {
+                        const player = get.event("player"),
+                            limit = Math.min(get.event("num"), player.countCards("h"));
+                        let cards = list[0][1].slice(),
+                            hs = player.getCards("h");
+                        if (cards.reduce((num, card) => num + get.value(card), 0) > player.getCards("h").reduce((num, card) => num + get.value(card), 0)) {
+                            cards.sort((a, b) => get.number(a) - get.number(b));
+                            hs.sort((a, b) => get.number(b) - get.number(a));
+                            let cards2 = cards.slice(0, limit),
+                                hs2 = hs.slice(0, limit);
+                            if (hs2.reduce((num, card) => num + get.number(card), 0) > cards2.reduce((num, card) => num + get.number(card), 0)) {
+                                cards.removeArray(cards2);
+                                hs.removeArray(hs2);
+                                return [cards.concat(hs2), hs.concat(cards2)];
+                            }
+                            return [cards, hs];
+                        } else {
+                            cards.sort((a, b) => get.value(b) - get.value(a));
+                            hs.sort((a, b) => get.value(a) - get.value(b));
+                            let cards2 = cards.slice(0, limit),
+                                hs2 = hs.slice(0, limit),
+                                list = [cards, hs];
+                            for (let i = 0; i < limit; i++) {
+                                if (get.value(cards2[i]) > get.value(hs2[i])) {
+                                    const change = [cards2[i], hs2[i]];
+                                    cards[i] = change[1];
+                                    hs[i] = change[0];
+                                } else break;
+                            }
+                            return list;
+                        }
+                    }).set("num", num);
+                    if (bool) {
+                        const puts = player.getCards("h", i => moved[0].includes(i));
+                        const gains = cards.filter(i => moved[1].includes(i));
+                        if (puts.length && gains.length) {
+                            player.$throw(puts, 1000);
+                            await player.lose(puts, ui.special);
+                            await player.gain(gains, "gain2");
+                            //调整手牌顺序
+                            let hs = moved[1].reverse();
+                            hs.forEach((i, j) => {
+                                player.node.handcards1.insertBefore(hs[j], player.node.handcards1.firstChild);
+                            });
+                            dui.queueNextFrameTick(dui.layoutHand, dui);
+
+                            cards = moved[0].slice();
+                            if (cards.length) {
+                                await game.cardsGotoOrdering(cards);
+                                for (let i = cards.length - 1; i >= 0; i--) {
+                                    ui.cardPile.insertBefore(cards[i], ui.cardPile.firstChild);
+                                }
+                                game.log(cards, "被放回了牌堆顶");
+                                game.updateRoundNumber();
+                            }
+                            await player.showCards(cards, get.translation(player) + "【易城】第一次交换后");
+                            if (cards.reduce((num, card) => num + get.number(card), 0) > sum && player.countCards("h")) {
+                                const { result: { bool } } = await player.chooseBool("易城：是否使用全部手牌交换" + get.translation(cards) + "？").set("choice", (() => {
+                                    return cards.reduce((num, card) => num + get.value(card), 0) > player.getCards("h").reduce((num, card) => num + get.value(card), 0);
+                                })());
+                                if (bool) {
+                                    const hs = player.getCards("h");
+                                    player.$throw(hs, 1000);
+                                    await player.lose(hs, ui.special);
+                                    await player.gain(cards, "gain2");
+                                    cards = hs.slice();
+                                    if (cards.length) {
+                                        await game.cardsGotoOrdering(cards);
+                                        for (let i = cards.length - 1; i >= 0; i--) {
+                                            ui.cardPile.insertBefore(cards[i], ui.cardPile.firstChild);
+                                        }
+                                        game.log(cards, "被放回了牌堆顶");
+                                        game.updateRoundNumber();
+                                    }
+                                    await player.showCards(cards, get.translation(player) + "【易城】第二次交换后");
+                                }
+                            }
+                        }
+                    }
+                }
             },
         },
         nk_shekong: {
