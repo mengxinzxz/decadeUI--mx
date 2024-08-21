@@ -193,13 +193,8 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
               let str = [get.translation(card), get.translation(card.name + '_info')];
               const cards = card.cards;
               if (cards?.length && (cards?.length !== 1 || cards[0].name !== card.name)) str[0] += ('（' + get.translation(card.cards) + '）');
-              for (const item of [card].concat(card.cards?.length ? card.cards : [])) {
-                const cardinfo = lib.card[item.name];
-                if (cardinfo && cardinfo.cardPrompt) {
-                  str[1] = cardinfo.cardPrompt(item);
-                  break;
-                }
-              }
+              const special = card.cards?.find(item => item.name == card.name && lib.card[item.name]?.cardPrompt);
+              if (special) str[1] = lib.card[special.name].cardPrompt(special);
               ui.create.div('.xskill', '<div data-color>' + str[0] + '</div><div>' + str[1] + '</div>', rightPane.firstChild);
             });
           }
