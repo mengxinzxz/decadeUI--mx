@@ -2216,22 +2216,16 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										_status.cardPileNum = num;
 									}, player, cards, ui.cardPile.childNodes.length);
 
-									if (evt.animate != false) {
+									if (event.animate != false) {
 										evt.discardid = lib.status.videoId++;
 										game.broadcastAll(function (player, cards, id, visible) {
 											const cardx = cards.slice().map(i => i.cards ? i.cards : [i]).flat();
 											cardx.duiMod = true;
-											player.$throw(cardx, null, "nobroadcast");
+											player.$throw(!visible ? cardx.length : cardx, null, "nobroadcast");
 											var cardnodes = [];
 											cardnodes._discardtime = get.time();
 											for (var i = 0; i < cardx.length; i++) {
-												if (cardx[i].clone) {
-													cardnodes.push(cardx[i].clone);
-													if (!visible) {
-														cardx[i].clone.classList.add("infohidden");
-														cardx[i].clone.classList.add("infoflip");
-													}
-												}
+												if (cardx[i].clone) cardnodes.push(cardx[i].clone);
 											}
 											ui.todiscard[id] = cardnodes;
 										}, player, cards, evt.discardid, event.visible);
@@ -2359,7 +2353,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									event.num++;
 									event.goto(2);
 									"step 4"
-									event.cards  = cards.map(i => i.cards ? i.cards : [i]).flat();
+									event.cards = cards.map(i => i.cards ? i.cards : [i]).flat();
 									if (event.toRenku) {
 										_status.renku.addArray(
 											cards.filter(function (card) {
