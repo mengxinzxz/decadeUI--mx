@@ -1497,12 +1497,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									base.lib.element.player.$handleEquipChange.apply(this, arguments);
 									const player = this;
 									if (!(player == game.me && ui.equipSolts)) return;
-									const getRealType = function (card) {
-										const card2 = player.vcardsMap.equips.find(i => i.cards?.includes(card));
-										return card2 ? card2 : card;
-									};
 									const sum = Array.from(player.node.equips.childNodes).filter(card => {
-										return ![1, 2, 3, 4, 5].includes(get.equipNum(getRealType(card)));
+										return ![1, 2, 3, 4, 5].includes(get.equipNum(card));
 									}).length;
 									const current = Array.from(ui.equipSolts.back.children).filter(elements => {
 										return elements.dataset.type == 5;
