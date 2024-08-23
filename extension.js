@@ -2084,46 +2084,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										return;
 									}
 									if (evt.delay === false) event.delay = false;
-									if (evt.animate != false) {
-										evt.discardid = lib.status.videoId++;
-										game.broadcastAll(function (player, cards, id, visible) {
-											const cardx = cards.slice().map(i => i.cards ? i.cards : [i]).flat();
-											var cardnodes = [];
-											cardnodes._discardtime = get.time();
-											for (var i = 0; i < cardx.length; i++) {
-												if (cardx[i].clone) {
-													cardnodes.push(cardx[i].clone);
-													if (!visible) {
-														cardx[i].clone.classList.add("infohidden");
-														cardx[i].clone.classList.add("infoflip");
-													}
-												}
-											}
-											ui.todiscard[id] = cardnodes;
-										}, player, cards, evt.discardid, event.visible);
-										if (lib.config.sync_speed && cards[0] && cards[0].clone) {
-											if (evt.delay != false) {
-												var waitingForTransition = get.time();
-												evt.waitingForTransition = waitingForTransition;
-												cards[0].clone.listenTransition(function () {
-													if (_status.waitingForTransition == waitingForTransition && _status.paused) {
-														game.resume();
-													}
-													delete evt.waitingForTransition;
-												});
-											} else if (evt.getParent().discardTransition) {
-												delete evt.getParent().discardTransition;
-												var waitingForTransition = get.time();
-												evt.getParent().waitingForTransition = waitingForTransition;
-												cards[0].clone.listenTransition(function () {
-													if (_status.waitingForTransition == waitingForTransition && _status.paused) {
-														game.resume();
-													}
-													delete evt.getParent().waitingForTransition;
-												});
-											}
-										}
-									}
 									"step 1"
 									event.gaintag_map = {};
 									if (event.insert_card && event.position == ui.cardPile) event.cards.reverse();
