@@ -2079,11 +2079,10 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								lose: function () {
 									'step 0'
 									var evt = event.getParent();
-									if (event.blameEvent == undefined && (evt.name != "discard" || event.type != "discard") && (evt.name != "loseToDiscardpile" || event.type != "loseToDiscardpile")) {
-										event.animate = false;
+									if ((evt.name != "discard" || event.type != "discard") && (evt.name != "loseToDiscardpile" || event.type != "loseToDiscardpile")) {
 										event.delay = false;
-									}
-									else {
+										return;
+									} else {
 										if (evt.delay === false) event.delay = false;
 										if (event.animate == undefined) event.animate = evt.animate;
 									}
@@ -2100,8 +2099,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										if (!hej.includes(card)) {
 											cards.splice(i--, 1);
 											continue;
-										}
-										else if (pileNode) {
+										} else if (pileNode) {
 											if (pileNode.classList.contains("equips")) {
 												card.throwWith = card.original = "e";
 												let loseCards = card.cards ? card.cards : [card];
@@ -2110,47 +2108,36 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 													es.push(cardi);
 													event.vcard_map.set(cardi, card.card || get.autoViewAs(card, void 0, false));
 												});
-											}
-											else if (pileNode.classList.contains("judges")) {
+											} else if (pileNode.classList.contains("judges")) {
 												card.throwWith = card.original = "j";
 												js.push(card);
 												const VJudge = player.getVCards("j").find(card => card.cards?.includes(card));
 												if (VJudge) event.vcard_map.set(card, VJudge);
 												else event.vcard_map.set(card, get.autoViewAs(card, void 0, false));
-											}
-											else if (pileNode.classList.contains("expansions")) {
+											} else if (pileNode.classList.contains("expansions")) {
 												card.throwWith = card.original = "x";
 												xs.push(card);
 												event.vcard_map.set(card, get.autoViewAs(card, void 0, false));
 												if (card.gaintag && card.gaintag.length) unmarks.addArray(card.gaintag);
-											}
-											else if (pileNode.classList.contains("handcards")) {
+											} else if (pileNode.classList.contains("handcards")) {
 												if (card.classList.contains("glows")) {
 													card.throwWith = card.original = "s";
 													ss.push(card);
 													event.vcard_map.set(card, get.autoViewAs(card, void 0, false));
-												}
-												else {
+												} else {
 													card.throwWith = card.original = "h";
 													hs.push(card);
 													event.vcard_map.set(card, get.autoViewAs(card, void 0, player));
 												}
-											}
-											else {
+											} else {
 												card.throwWith = card.original = null;
 											}
 										}
-
 										for (var j = 0; j < cardx.length; j++) {
 											if (cardx[j].gaintag && cardx[j].gaintag.length) {
 												event.gaintag_map[cardx[j].cardid] = cardx[j].gaintag.slice(0);
 												cardx[j].removeGaintag(true);
 											}
-
-											cardx[j].classList.remove("glow");
-											cardx[j].classList.remove("glows");
-											cardx[j].recheck();
-
 											var info = lib.card[cardx[j].name];
 											if ("_destroy" in cardx[j]) {
 												if (cardx[j]._destroy) {
@@ -2158,14 +2145,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 													cardx[j].destroyed = cardx[j]._destroy;
 													continue;
 												}
-											}
-											else if ("destroyed" in cardx[j]) {
+											} else if ("destroyed" in cardx[j]) {
 												if (event.getlx !== false && event.position && cardx[j].willBeDestroyed(event.position.id, null, event)) {
 													cardx[j].selfDestroy(event);
 													continue;
 												}
-											}
-											else if (info.destroy) {
+											} else if (info.destroy) {
 												cardx[j].delete();
 												cardx[j].destroyed = info.destroy;
 												continue;
@@ -2174,33 +2159,29 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 												if (_status.discarded) {
 													if (event.position == ui.discardPile) {
 														_status.discarded.add(cardx[j]);
-													}
-													else {
+													} else {
 														_status.discarded.remove(cardx[j]);
 													}
 												}
 												if (event.insert_index) {
 													cardx[j].fix();
 													event.position.insertBefore(cardx[j], event.insert_index(event, cardx[j]));
-												}
-												else if (event.insert_card) {
+												} else if (event.insert_card) {
 													cardx[j].fix();
 													event.position.insertBefore(cardx[j], event.position.firstChild);
-												}
-												else if (event.position == ui.cardPile) {
-													cardx[j].fix();
+												} else {
+													if (event.position == ui.cardPile) cardx[j].fix();
 													event.position.appendChild(cardx[j]);
 												}
-												else cardx[j].goto(event.position);
-											}
-											else {
+											} else {
 												cardx[j].remove();
 											}
+											cardx[j].recheck();
+											cardx[j].classList.remove("glow");
+											cardx[j].classList.remove("glows");
 										}
 									}
-
 									if (player == game.me) dui.queueNextFrameTick(dui.layoutHand, dui);
-
 									ui.updatej(player);
 									game.broadcast(function (player, cards, num) {
 										for (var i = 0; i < cards.length; i++) {
@@ -2209,13 +2190,10 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 											cards[i].fix();
 											cards[i].remove();
 										}
-
 										if (player == game.me) ui.updatehl();
-
 										ui.updatej(player);
 										_status.cardPileNum = num;
 									}, player, cards, ui.cardPile.childNodes.length);
-
 									if (event.animate != false) {
 										evt.discardid = lib.status.videoId++;
 										game.broadcastAll(function (player, cards, id, visible) {
@@ -2225,7 +2203,13 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 											var cardnodes = [];
 											cardnodes._discardtime = get.time();
 											for (var i = 0; i < cardx.length; i++) {
-												if (cardx[i].clone) cardnodes.push(cardx[i].clone);
+												if (cardx[i].clone) {
+													cardnodes.push(cardx[i].clone);
+													if (!visible) {
+														cardx[i].clone.classList.add("infohidden");
+														cardx[i].clone.classList.add("infoflip");
+													}
+												}
 											}
 											ui.todiscard[id] = cardnodes;
 										}, player, cards, evt.discardid, event.visible);
@@ -2239,8 +2223,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 													}
 													delete evt.waitingForTransition;
 												});
-											}
-											else if (evt.getParent().discardTransition) {
+											} else if (evt.getParent().discardTransition) {
 												delete evt.getParent().discardTransition;
 												var waitingForTransition = get.time();
 												evt.getParent().waitingForTransition = waitingForTransition;
@@ -2253,7 +2236,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 											}
 										}
 									}
-
 									game.addVideo('lose', player, [get.cardsInfo(hs), get.cardsInfo(es), get.cardsInfo(js), get.cardsInfo(ss), get.cardsInfo(xs)]);
 									event.cards2 = hs.concat(es);
 									player.getHistory('lose').push(event);
@@ -2274,8 +2256,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 											evt.orderingCards.addArray(cards);
 											evt.orderingCards.addArray(ss);
 										}
-									}
-									else if (event.position == ui.cardPile) {
+									} else if (event.position == ui.cardPile) {
 										game.updateRoundNumber();
 									}
 									if (unmarks.length) {
@@ -2307,8 +2288,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 													return;
 												}
 											}
-										}
-										else if (event.js.includes(cards[num])) {
+										} else if (event.js.includes(cards[num])) {
 											const VJudge = player.getVCards("j").find(card => {
 												return card.cards?.includes(cards[num])
 											});
@@ -2318,8 +2298,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										}
 										event.num++;
 										event.redo();
-									}
-									else {
+									} else {
 										if (event.loseEquip) {
 											player.addEquipTrigger();
 										}
@@ -2341,8 +2320,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 											next.card = VEquip;
 											next.cards = VEquip.cards;
 										}
-									}
-									else {
+									} else {
 										var next = game.createEvent("lose_" + VEquip.name);
 										next.setContent(info.onLose);
 										next.player = player;
@@ -2375,8 +2353,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										if (evt.waitingForTransition) {
 											_status.waitingForTransition = evt.waitingForTransition;
 											game.pause();
-										}
-										else {
+										} else {
 											game.delayx();
 										}
 									}
