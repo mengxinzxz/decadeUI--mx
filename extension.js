@@ -1686,7 +1686,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									if (card.cards?.length) {
 										const cards = card.cards;
 										this.$throw(cards);
-									} else {
+									}
+									else {
 										const VCard = game.createCard(card.name, '虚拟', '');
 										this.$throw(VCard);
 									}
@@ -2081,22 +2082,18 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									var evt = event.getParent();
 									if ((evt.name != "discard" || event.type != "discard") && (evt.name != "loseToDiscardpile" || event.type != "loseToDiscardpile")) {
 										event.delay = false;
-										return;
+										if (event.blameEvent == undefined) event.animate = false;
 									}
-									if (evt.delay === false) event.delay = false;
+									else {
+										if (evt.delay === false) event.delay = false;
+										if (event.blameEvent && event.animate == undefined) event.animate = evt.animate;
+									}
 									"step 1"
 									event.gaintag_map = {};
 									if (event.insert_card && event.position == ui.cardPile) event.cards.reverse();
 									event.stockcards = event.cards.slice(0);
 									var hs = [], es = [], js = [], ss = [], xs = [], unmarks = [];
 									var evt = event.getParent(), card, pileNode, hej = player.getCards('hejsx');
-									if (event.blameEvent == undefined && (evt.name != 'discard' || event.type != 'discard') && (evt.name != 'loseToDiscardpile' || event.type != 'loseToDiscardpile')) {
-										event.animate = false;
-										event.delay = false;
-									} else {
-										if (evt.delay === false) event.delay = false;
-										if (event.animate == undefined) event.animate = evt.animate;
-									}
 									for (var i = 0; i < cards.length; i++) {
 										card = cards[i];
 										var cardx = [card];
@@ -2104,7 +2101,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										if (!hej.includes(card)) {
 											cards.splice(i--, 1);
 											continue;
-										} else if (pileNode) {
+										}
+										else if (pileNode) {
 											if (pileNode.classList.contains("equips")) {
 												card.throwWith = card.original = "e";
 												let loseCards = card.cards ? card.cards : [card];
@@ -2113,28 +2111,33 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 													es.push(cardi);
 													event.vcard_map.set(cardi, card.card || get.autoViewAs(card, void 0, false));
 												});
-											} else if (pileNode.classList.contains("judges")) {
+											}
+											else if (pileNode.classList.contains("judges")) {
 												card.throwWith = card.original = "j";
 												js.push(card);
 												const VJudge = player.getVCards("j").find(card => card.cards?.includes(card));
 												if (VJudge) event.vcard_map.set(card, VJudge);
 												else event.vcard_map.set(card, get.autoViewAs(card, void 0, false));
-											} else if (pileNode.classList.contains("expansions")) {
+											}
+											else if (pileNode.classList.contains("expansions")) {
 												card.throwWith = card.original = "x";
 												xs.push(card);
 												event.vcard_map.set(card, get.autoViewAs(card, void 0, false));
 												if (card.gaintag && card.gaintag.length) unmarks.addArray(card.gaintag);
-											} else if (pileNode.classList.contains("handcards")) {
+											}
+											else if (pileNode.classList.contains("handcards")) {
 												if (card.classList.contains("glows")) {
 													card.throwWith = card.original = "s";
 													ss.push(card);
 													event.vcard_map.set(card, get.autoViewAs(card, void 0, false));
-												} else {
+												}
+												else {
 													card.throwWith = card.original = "h";
 													hs.push(card);
 													event.vcard_map.set(card, get.autoViewAs(card, void 0, player));
 												}
-											} else {
+											}
+											else {
 												card.throwWith = card.original = null;
 											}
 										}
@@ -2143,6 +2146,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 												event.gaintag_map[cardx[j].cardid] = cardx[j].gaintag.slice(0);
 												cardx[j].removeGaintag(true);
 											}
+
+											cardx[j].recheck();
+											cardx[j].classList.remove("glow");
+											cardx[j].classList.remove("glows");
+
 											var info = lib.card[cardx[j].name];
 											if ("_destroy" in cardx[j]) {
 												if (cardx[j]._destroy) {
@@ -2150,12 +2158,14 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 													cardx[j].destroyed = cardx[j]._destroy;
 													continue;
 												}
-											} else if ("destroyed" in cardx[j]) {
+											}
+											else if ("destroyed" in cardx[j]) {
 												if (event.getlx !== false && event.position && cardx[j].willBeDestroyed(event.position.id, null, event)) {
 													cardx[j].selfDestroy(event);
 													continue;
 												}
-											} else if (info.destroy) {
+											}
+											else if (info.destroy) {
 												cardx[j].delete();
 												cardx[j].destroyed = info.destroy;
 												continue;
@@ -2164,26 +2174,27 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 												if (_status.discarded) {
 													if (event.position == ui.discardPile) {
 														_status.discarded.add(cardx[j]);
-													} else {
+													}
+													else {
 														_status.discarded.remove(cardx[j]);
 													}
 												}
 												if (event.insert_index) {
 													cardx[j].fix();
 													event.position.insertBefore(cardx[j], event.insert_index(event, cardx[j]));
-												} else if (event.insert_card) {
+												}
+												else if (event.insert_card) {
 													cardx[j].fix();
 													event.position.insertBefore(cardx[j], event.position.firstChild);
-												} else {
+												}
+												else {
 													if (event.position == ui.cardPile) cardx[j].fix();
 													event.position.appendChild(cardx[j]);
 												}
-											} else {
+											}
+											else {
 												cardx[j].remove();
 											}
-											cardx[j].recheck();
-											cardx[j].classList.remove("glow");
-											cardx[j].classList.remove("glows");
 										}
 									}
 									if (player == game.me) dui.queueNextFrameTick(dui.layoutHand, dui);
@@ -2208,9 +2219,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 											var cardnodes = [];
 											cardnodes._discardtime = get.time();
 											for (var i = 0; i < cardx.length; i++) {
-												if (cardx[i].clone) {
-													cardnodes.push(cardx[i].clone);
-												}
+												if (cardx[i].clone) cardnodes.push(cardx[i].clone);
 											}
 											ui.todiscard[id] = cardnodes;
 										}, player, cards, evt.discardid, event.visible);
@@ -2224,7 +2233,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 													}
 													delete evt.waitingForTransition;
 												});
-											} else if (evt.getParent().discardTransition) {
+											}
+											else if (evt.getParent().discardTransition) {
 												delete evt.getParent().discardTransition;
 												var waitingForTransition = get.time();
 												evt.getParent().waitingForTransition = waitingForTransition;
@@ -2257,7 +2267,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 											evt.orderingCards.addArray(cards);
 											evt.orderingCards.addArray(ss);
 										}
-									} else if (event.position == ui.cardPile) {
+									}
+									else if (event.position == ui.cardPile) {
 										game.updateRoundNumber();
 									}
 									if (unmarks.length) {
@@ -2289,7 +2300,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 													return;
 												}
 											}
-										} else if (event.js.includes(cards[num])) {
+										}
+										else if (event.js.includes(cards[num])) {
 											const VJudge = player.getVCards("j").find(card => {
 												return card.cards?.includes(cards[num])
 											});
@@ -2299,7 +2311,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										}
 										event.num++;
 										event.redo();
-									} else {
+									}
+									else {
 										if (event.loseEquip) {
 											player.addEquipTrigger();
 										}
@@ -2321,7 +2334,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 											next.card = VEquip;
 											next.cards = VEquip.cards;
 										}
-									} else {
+									}
+									else {
 										var next = game.createEvent("lose_" + VEquip.name);
 										next.setContent(info.onLose);
 										next.player = player;
@@ -2354,7 +2368,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										if (evt.waitingForTransition) {
 											_status.waitingForTransition = evt.waitingForTransition;
 											game.pause();
-										} else {
+										}
+										else {
 											game.delayx();
 										}
 									}
@@ -4335,14 +4350,16 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							str = get.translation(player) + "拼点成功";
 							player.popup("胜");
 							target.popup("负");
-						} else {
+						}
+						else {
 							event.result.bool = false;
 							str = get.translation(player) + "拼点失败";
 							if (event.forceWinner !== target && event.num1 == event.num2) {
 								event.result.tie = true;
 								player.popup("平");
 								target.popup("平");
-							} else {
+							}
+							else {
 								event.result.winner = target;
 								player.popup("负");
 								target.popup("胜");
@@ -4596,13 +4613,15 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							str = get.translation(player) + "拼点成功";
 							player.popup("胜");
 							target.popup("负");
-						} else {
+						}
+						else {
 							result = false;
 							str = get.translation(player) + "拼点失败";
 							if (event.forceWinner !== target && event.num1 == event.num2) {
 								player.popup("平");
 								target.popup("平");
-							} else {
+							}
+							else {
 								event.winner = target;
 								player.popup("负");
 								target.popup("胜");
@@ -7874,7 +7893,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							imgBg.style.cssText =
 								"position:absolute;z-index:91;--w: 122px;--h: calc(var(--w) * 4/145);width: var(--w);height: var(--h);top: 0;"
 							//-------------------------//	
-						} else {
+						}
+						else {
 							//----------十周年样式--------//		
 							boxContent.style.cssText =
 								"display:block;position:absolute;z-index:90;--w: 122px;--h: calc(var(--w) *8/162);width: var(--w);height: var(--h);left:1.5px;bottom:-8.2px;"
@@ -7957,7 +7977,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							imgBg.style.cssText =
 								"position:absolute;z-index:91;--w: 122px;--h: calc(var(--w) * 4/145);width: var(--w);height: var(--h);top: 0;"
 							//-------------------------//	
-						} else {
+						}
+						else {
 							//----------十周年样式--------//		
 							boxContent.style.cssText =
 								"display:block;position:absolute;z-index:90;--w: 122px;--h: calc(var(--w) *8/162);width: var(--w);height: var(--h);left:1.5px;bottom:-8.2px;"
@@ -8417,7 +8438,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							tipKL.src = lib.assetURL + 'extension/十周年UI/shoushaUI/lbtn/images/shoushatip/tipplay.png';
 							tipKL.classList.add("playertipplay")
 							tipKL.style.cssText = "display:block;position:absolute;z-index:91;--w: 133px;--h: calc(var(--w) * 50/431);width: var(--w);height: var(--h);bottom:-22px;";
-						} else {
+						}
+						else {
 							tipKL.src = lib.assetURL + 'extension/十周年UI/shoushaUI/lbtn/images/shoushatip/thinktip.png';
 							tipKL.classList.add("playertipplay")
 							tipKL.style.cssText = "display:block;position:absolute;z-index:92;--w: 129px;--h: calc(var(--w) * 50/431);width: var(--w);height: var(--h);bottom:-9.2px;transform:scale(1.2);";
@@ -8628,10 +8650,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == 'taixuhuanjing' || lib.config['extension_EngEX_SSServant']) {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/ddxy.jpg', [10, 58, 7, 6], 10)
-							} else {
+							}
+							else {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/ddxy.jpg', [3, 58, 7, 6], 10)
 							}
-						} else {
+						}
+						else {
 							game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/ddxy.png', [18, 65, 8, 4.4], 10)
 						}
 					},
@@ -8652,10 +8676,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == 'taixuhuanjing' || lib.config['extension_EngEX_SSServant']) {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/ddxy.jpg', [10, 58, 7, 6], true)
-							} else {
+							}
+							else {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/ddxy.jpg', [3, 58, 7, 6], true)
 							}
-						} else {
+						}
+						else {
 							game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/ddxy.png', [18, 65, 8, 4.4], true)
 						}
 					},
@@ -8689,10 +8715,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == 'taixuhuanjing' || lib.config['extension_EngEX_SSServant']) {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/ddxy.jpg', [10, 58, 7, 6], true)
-							} else {
+							}
+							else {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/ddxy.jpg', [3, 58, 7, 6], true)
 							}
-						} else {
+						}
+						else {
 							game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/ddxy.png', [18, 65, 8, 4.4], true)
 						}
 					},
@@ -8715,10 +8743,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 								if (get.mode() == 'taixuhuanjing' || lib.config['extension_EngEX_SSServant']) {
 									game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/' + _status.as_showImage_phase + '.jpg', [10, 58, 7, 6], true);
-								} else {
+								}
+								else {
 									game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/' + _status.as_showImage_phase + '.jpg', [3, 58, 7, 6], true);
 								}
-							} else {
+							}
+							else {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/' + _status.as_showImage_phase + '.png', [18, 65, 8, 4.4], true);
 							}
 						}
@@ -8743,10 +8773,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 								if (get.mode() == 'taixuhuanjing' || lib.config['extension_EngEX_SSServant']) {
 									game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/' + _status.as_showImage_phase + '.jpg', [10, 58, 7, 6], true);
-								} else {
+								}
+								else {
 									game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/' + _status.as_showImage_phase + '.jpg', [3, 58, 7, 6], true);
 								}
-							} else {
+							}
+							else {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/' + _status.as_showImage_phase + '.png', [18, 65, 8, 4.4], true);
 							}
 						}
@@ -8771,10 +8803,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == 'taixuhuanjing' || lib.config['extension_EngEX_SSServant']) {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/dfsk.jpg', [10, 58, 7, 6], true)
-							} else {
+							}
+							else {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/dfsk.jpg', [3, 58, 7, 6], true)
 							}
-						} else {
+						}
+						else {
 							game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/dfsk.png', [18, 65, 8, 4.4], true)
 						}
 					},
@@ -8826,10 +8860,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == 'taixuhuanjing' || lib.config['extension_EngEX_SSServant']) {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/hhks.jpg', [10, 58, 7, 6], true)
-							} else {
+							}
+							else {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/hhks.jpg', [3, 58, 7, 6], true)
 							}
-						} else {
+						}
+						else {
 							game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/hhks.png', [18, 65, 8, 4.4], true)
 						}
 						_status.as_showImage_phase = 'hhks';
@@ -8853,10 +8889,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == 'taixuhuanjing' || lib.config['extension_EngEX_SSServant']) {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/pdjd.jpg', [10, 58, 7, 6], true)
-							} else {
+							}
+							else {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/pdjd.jpg', [3, 58, 7, 6], true)
 							}
-						} else {
+						}
+						else {
 							game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/zbjd.png', [18, 65, 8, 4.4], true)
 						}
 						_status.as_showImage_phase = 'zbjd';
@@ -8900,10 +8938,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == 'taixuhuanjing' || lib.config['extension_EngEX_SSServant']) {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/pdjd.jpg', [10, 58, 7, 6], true)
-							} else {
+							}
+							else {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/pdjd.jpg', [3, 58, 7, 6], true)
 							}
-						} else {
+						}
+						else {
 							game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/pdjd.png', [18, 65, 8, 4.4], true)
 						}
 						_status.as_showImage_phase = 'pdjd';
@@ -8947,10 +8987,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == 'taixuhuanjing' || lib.config['extension_EngEX_SSServant']) {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/mpjd.jpg', [10, 58, 7, 6], true)
-							} else {
+							}
+							else {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/mpjd.jpg', [3, 58, 7, 6], true)
 							}
-						} else {
+						}
+						else {
 							game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/mpjd.png', [18, 65, 8, 4.4], true)
 						}
 						_status.as_showImage_phase = 'mpjd';
@@ -8995,10 +9037,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == 'taixuhuanjing' || lib.config['extension_EngEX_SSServant']) {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/cpjd.jpg', [10, 58, 7, 6], true)
-							} else {
+							}
+							else {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/cpjd.jpg', [3, 58, 7, 6], true)
 							}
-						} else {
+						}
+						else {
 							game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/cpjd.png', [18, 65, 8, 4.4], true)
 						}
 						_status.as_showImage_phase = 'cpjd';
@@ -9042,10 +9086,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == 'taixuhuanjing' || lib.config['extension_EngEX_SSServant']) {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/qpjd.jpg', [10, 58, 7, 6], true)
-							} else {
+							}
+							else {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/qpjd.jpg', [3, 58, 7, 6], true)
 							}
-						} else {
+						}
+						else {
 							game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/qpjd.png', [18, 65, 8, 4.4], true)
 						}
 						_status.as_showImage_phase = 'qpjd';
@@ -9089,10 +9135,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == 'taixuhuanjing' || lib.config['extension_EngEX_SSServant']) {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/pdjd.jpg', [10, 58, 7, 6], true)
-							} else {
+							}
+							else {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/pdjd.jpg', [3, 58, 7, 6], true)
 							}
-						} else {
+						}
+						else {
 							game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/jsjd.png', [18, 65, 8, 4.4], true)
 						}
 						_status.as_showImage_phase = 'jsjd';
@@ -9136,10 +9184,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == 'taixuhuanjing' || lib.config['extension_EngEX_SSServant']) {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/hhjs.jpg', [10, 58, 7, 6], true)
-							} else {
+							}
+							else {
 								game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/hhjs.jpg', [3, 58, 7, 6], true)
 							}
-						} else {
+						}
+						else {
 							game.as_showImage('extension/十周年UI/shoushaUI/lbtn/images/JDTS/hhjs.png', [18, 65, 8, 4.4], true)
 						}
 						_status.as_showImage_phase = 'hhjs';
@@ -9313,7 +9363,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					// 所以加载了不存在的css: player0.css
 					if (lib.config.extension_十周年UI_newDecadeStyle != void 0) {
 						this.css(decadeUIPath + 'player' + parseFloat(['on', 'off', 'othersOn'].indexOf(lib.config.extension_十周年UI_newDecadeStyle) + 1) + '.css');
-					} else {
+					}
+					else {
 						this.css(decadeUIPath + 'player2.css');
 					}
 					this.css(decadeUIPath + (lib.config.extension_十周年UI_newDecadeStyle == 'on' ? 'equip.css' : 'equip_new.css'));
@@ -9512,7 +9563,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					listens.forEach(function (item) {
 						if (typeof item === 'function') {
 							item.apply(null, args);
-						} else if (typeof item.listen === 'function') {
+						}
+						else if (typeof item.listen === 'function') {
 							item.listen.apply(null, args);
 							item.remove && listens.remove(item);
 						}
@@ -9542,7 +9594,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					for (var i in zip.files) {
 						if (/\/$/.test(i)) {
 							dirList.push('extension/' + app.name + '/' + i);
-						} else if (!/^extension\.(js|css)$/.test(i)) {
+						}
+						else if (!/^extension\.(js|css)$/.test(i)) {
 							fileList.push({
 								id: i,
 								path: 'extension/' + app.name + '/' + i.split('/').reverse().slice(1)
@@ -9563,7 +9616,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							setText('正在导入(' + (++finish) + '/' + total + ')...')
 							game.writeFile(isNode ? file.target.asNodeBuffer() : file.target
 								.asArrayBuffer(), file.path, file.name, writeFile);
-						} else {
+						}
+						else {
 							alert('导入完成');
 							setText('导入插件');
 						}
@@ -9572,7 +9626,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						if (dirList.length) {
 							setText('正在导入(' + (++finish) + '/' + total + ')...')
 							game.ensureDirectory(dirList.shift(), ensureDir);
-						} else {
+						}
+						else {
 							writeFile();
 						}
 					};
@@ -9608,7 +9663,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										console.info(e);
 										loaded();
 									});
-							} else {
+							}
+							else {
 								game.readFile('extension/' + app.name + '/' + dir + '/main2.js',
 									function (data) {
 										var binarry = new Uint8Array(data);
@@ -9640,7 +9696,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						(typeof str === 'string' || str instanceof RegExp)) {
 						var funcStr = target[name].toString().replace(replace, str);
 						eval('target.' + name + ' = ' + funcStr);
-					} else {
+					}
+					else {
 						var func = target[name];
 						target[name] = function () {
 							var result, cancel;
@@ -9668,7 +9725,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						var item3 = replace[2];
 						if (item3 === 'append') {
 							item2 = item1 + item2;
-						} else if (item3 === 'insert') {
+						}
+						else if (item3 === 'insert') {
 							item2 = item2 + item1;
 						}
 						if (typeof item1 === 'string') {
@@ -9677,7 +9735,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						if (item1 instanceof RegExp && typeof item2 === 'string') {
 							var funcStr = target[name].toString().replace(item1, item2);
 							eval('target.' + name + ' = ' + funcStr);
-						} else {
+						}
+						else {
 							var func = target[name];
 							target[name] = function () {
 								var arg1 = Array.from(arguments);
@@ -9689,7 +9748,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								return result;
 							};
 						}
-					} else {
+					}
+					else {
 						console.info(arguments);
 					}
 					return target[name];
@@ -9700,9 +9760,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						var item = list.shift();
 						if (typeof item === 'function') {
 							item(runNext);
-						} else if (list.length === 0) {
+						}
+						else if (list.length === 0) {
 							callback();
-						} else {
+						}
+						else {
 							runNext();
 						}
 					};
@@ -9732,7 +9794,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						if (lib.translate[skill + '_ab']) {
 							obj.name = lib.translate[skill + '_ab'];
 							obj.nameSimple = lib.translate[skill + '_ab'];
-						} else if (lib.translate[skill]) {
+						}
+						else if (lib.translate[skill]) {
 							obj.name = lib.translate[skill];
 							obj.nameSimple = lib.translate[skill].slice(0, 2);
 						}
@@ -9751,7 +9814,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						obj.translationAppend = lib.translate[skill + '_append'];
 						if (obj.info && obj.info.enable) {
 							obj.type = 'enable';
-						} else {
+						}
+						else {
 							obj.type = 'trigger';
 						}
 						return obj;
@@ -11337,7 +11401,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						this.parentNode.insertBefore(more, this.nextSibling);
 						this.JDTSM = more;
 						this.innerHTML = '<div class="shousha_menu">进度条·关闭</div>';
-					} else {
+					}
+					else {
 						this.parentNode.removeChild(this.JDTSM);
 						delete this.JDTSM;
 						this.innerHTML = '<div class="shousha_menu">进度条·查看</div>';
@@ -11438,7 +11503,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						this.parentNode.insertBefore(more, this.nextSibling);
 						this.JDTSSM = more;
 						this.innerHTML = '<div class="shousha_menu">阶段提示·关闭</div>';
-					} else {
+					}
+					else {
 						this.parentNode.removeChild(this.JDTSSM);
 						delete this.JDTSSM;
 						this.innerHTML = '<div class="shousha_menu">阶段提示·查看</div>';
@@ -11476,7 +11542,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						this.parentNode.insertBefore(more, this.nextSibling);
 						this.GTBBSM = more;
 						this.innerHTML = '<div class="shousha_menu">狗托播报·关闭</div>';
-					} else {
+					}
+					else {
 						this.parentNode.removeChild(this.GTBBSM);
 						delete this.GTBBSM;
 						this.innerHTML = '<div class="shousha_menu">狗托播报·查看</div>';
