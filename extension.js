@@ -11652,8 +11652,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			},
 			intro: (function () {
 				var log = [
-					'魔改十周年 萌修 0.3.4',
-					'适配v1.10.15.1',
+					'魔改十周年 萌修 0.3.5',
+					'最低适配：v1.10.15.1',
+					'新版适配',
 					'对OL刘辟【易城】（调整手牌顺序）、刘协曹节【齐心】（更换插画）进行适配补充',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
