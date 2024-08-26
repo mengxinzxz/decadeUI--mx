@@ -4808,7 +4808,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						player.popup(get.cnNumber(event.num1) + '上' + get.cnNumber(event.num2) + '下');
 						game.logv(player, '将' + get.cnNumber(event.num1) + '张牌置于牌堆顶，' + get.cnNumber(event.num2) + '张牌置于牌堆底');
 						game.updateRoundNumber();
-						game.delayx();
 					};
 
 					lib.element.player.setIdentity = function (identity) {
