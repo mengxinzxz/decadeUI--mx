@@ -4679,43 +4679,111 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					};
 
 					lib.element.content.chooseToGuanxing = function () {
-						"step 0"
-						if (player.isUnderControl()) {
-							game.modeSwapPlayer(player);
-						}
-
+						'step 0'
+						if (player.isUnderControl()) game.modeSwapPlayer(player);
 						var cards = get.cards(num);
-						game.addCardKnower(cards, player);
 						var guanxing = decadeUI.content.chooseGuanXing(player, cards, cards.length, null, cards.length);
-						if (event.getParent() && event.getParent().name && get.translation(event.getParent().name) != event.getParent().name) {
-							guanxing.caption = '【' + get.translation(event.getParent().name) + '】';
-						}
-						else {
-							guanxing.caption = "请按顺序排列牌。";
-						}
+						guanxing.caption = (event.getParent() && event.getParent().name && get.translation(event.getParent().name) != event.getParent().name) ? ('【' + get.translation(event.getParent().name) + '】') : '请按顺序排列牌';
+
 						game.broadcast(function (player, cards, callback) {
 							if (!window.decadeUI) return;
 							var guanxing = decadeUI.content.chooseGuanXing(player, cards, cards.length, null, cards.length);
 							guanxing.caption = '观星';
 							guanxing.callback = callback;
+							game.log(guanxing.callback);
 						}, player, cards, guanxing.callback);
 
-						event.switchToAuto = function () {
-							var cards = guanxing.cards[0].concat();
-							var cheats = [];
-							var judges = player.node.judges.childNodes;
+						if (event.isOnline()) {
+							event.player.send(function () {
+								if (!window.decadeUI && decadeUI.eventDialog) _status.event.finish();
+							}, event.player);
 
-							if (judges.length) cheats = decadeUI.get.cheatJudgeCards(cards, judges, true);
-							if (cards.length) {
-								for (var i = 0; i >= 0 && i < cards.length; i++) {
-									if (get.value(cards[i], player) >= 5) {
-										cheats.push(cards[i]);
-										cards.splice(i, 1);
-									}
+							event.player.wait();
+							decadeUI.game.wait();
+						}
+						else if (!(typeof event.isMine == 'function' && event.isMine())) {
+							const processAI = event.processAI || function (list) {
+								let cards = list[0][1],
+									player = _status.event.player,
+									target = _status.currentPhase || player,
+									name = _status.event.getTrigger().name,
+									countWuxie = (current) => {
+										let num = current.getKnownCards(player, card => {
+											return get.name(card, current) === 'wuxie';
+										});
+										if (num && current !== player) return num;
+										let skills = current.getSkills('invisible').concat(lib.skill.global);
+										game.expandSkills(skills);
+										for (let i = 0; i < skills.length; i++) {
+											let ifo = get.info(skills[i]);
+											if (!ifo) continue;
+											if (ifo.viewAs && typeof ifo.viewAs != 'function' && ifo.viewAs.name == 'wuxie') {
+												if (!ifo.viewAsFilter || ifo.viewAsFilter(current)) {
+													num++;
+													break;
+												}
+											} else {
+												let hiddenCard = ifo.hiddenCard;
+												if (typeof hiddenCard == 'function' && hiddenCard(current, 'wuxie')) {
+													num++;
+													break;
+												}
+											}
+										}
+										return num;
+									},
+									top = [];
+								switch (name) {
+									case 'phaseJieshu':
+										target = target.next;
+									case 'phaseZhunbei':
+										let att = get.sgn(get.attitude(player, target)),
+											judges = target.getCards('j'),
+											needs = 0,
+											wuxie = countWuxie(target);
+										for (let i = Math.min(cards.length, judges.length) - 1; i >= 0; i--) {
+											let j = judges[i], cardj = j.viewAs ? { name: j.viewAs, cards: j.cards || [j] } : j;
+											if (wuxie > 0 && get.effect(target, j, target, target) < 0) {
+												wuxie--;
+												continue;
+											}
+											let judge = get.judge(j);
+											cards.sort((a, b) => {
+												return (judge(b) - judge(a)) * att;
+											});
+											if (judge(cards[0]) * att < 0) {
+												needs++;
+												continue;
+											} else {
+												top.unshift(cards.shift());
+											}
+										}
+										if (needs > 0 && needs >= judges.length) {
+											return [top, cards];
+										}
+										cards.sort((a, b) => {
+											return (get.value(b, target) - get.value(a, target)) * att;
+										});
+										while (needs--) {
+											top.unshift(cards.shift());
+										}
+										while (cards.length) {
+											if (get.value(cards[0], target) > 6 == att > 0) top.unshift(cards.shift());
+											else break;
+										}
+										return [top, cards];
+									default:
+										cards.sort((a, b) => {
+											return get.value(b, target) - get.value(a, target);
+										});
+										while (cards.length) {
+											if (get.value(cards[0], target) > 6) top.unshift(cards.shift());
+											else break;
+										}
+										return [top, cards];
 								}
-							}
-
-							var time = 500;
+							};
+							var [cards, cheats] = processAI([[' ', guanxing.cards[0].slice()]]), time = 500;
 							for (var i = 0; i < cheats.length; i++) {
 								setTimeout(function (card, index, finished) {
 									guanxing.move(card, index, 0);
@@ -4731,23 +4799,16 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								}, time, cards[i], i, (i >= cards.length - 1));
 								time += 500;
 							}
-						};
-
-						if (event.isOnline()) {
-							event.player.send(function () {
-								if (!window.decadeUI && decadeUI.eventDialog) _status.event.finish();
-							}, event.player);
-
-							event.player.wait();
-							decadeUI.game.wait();
 						}
-						else if (!(typeof event.isMine == 'function' && event.isMine())) {
-							event.switchToAuto();
-						}
-						"step 1";
+						'step 1'
+						var [top, bottom] = [event.cards1, event.cards2];
+						event.result = { bool: true, moved: [top, bottom] };
+						game.addCardKnower(top, player);
+						game.addCardKnower(bottom, player);
 						player.popup(get.cnNumber(event.num1) + '上' + get.cnNumber(event.num2) + '下');
 						game.logv(player, '将' + get.cnNumber(event.num1) + '张牌置于牌堆顶，' + get.cnNumber(event.num2) + '张牌置于牌堆底');
 						game.updateRoundNumber();
+						game.delayx();
 					};
 
 					lib.element.player.setIdentity = function (identity) {
@@ -11652,10 +11713,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			},
 			intro: (function () {
 				var log = [
-					'魔改十周年 萌修 0.3.5',
-					'最低适配：v1.10.15.1',
+					'魔改十周年 萌修 0.3.6-待定',
+					'最低适配：v1.10.16',
 					'新版适配',
-					'对OL刘辟【易城】（调整手牌顺序）、刘协曹节【齐心】（更换插画）进行适配补充',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
