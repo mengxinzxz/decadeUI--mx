@@ -28,7 +28,7 @@
 
 /*-----------------分割线-----------------*/
 /*选项光标*/
-#arena.decadeUI.dui-mobile[data-loading-style='on']>.dialog .tdnode {
+#arena.decadeUI[data-loading-style='on']>.dialog .tdnode {
 	--h: 30px;
 	--w: calc(var(--h) * 77 / 44);
 	width: auto;
@@ -42,12 +42,12 @@
 	line-height: var(--h);
 	text-align: center;
 }
-#arena.decadeUI.dui-mobile[data-loading-style='on']>.dialog .tdnode.bluebg {
+#arena.decadeUI[data-loading-style='on']>.dialog .tdnode.bluebg {
 	background-image: url('assets/image/tnode-A2.png') !important;
 }
 
 
-#arena.decadeUI.dui-mobile[data-loading-style='On']>.dialog .tdnode {
+#arena.decadeUI[data-loading-style='On']>.dialog .tdnode {
 	--h: 35px;
 	--w: calc(var(--h) * 100 / 70);
 	width: auto;
@@ -62,12 +62,12 @@
 	line-height: var(--h);
 	text-align: center;
 }
-#arena.decadeUI.dui-mobile[data-loading-style='On']>.dialog .tdnode.bluebg {
+#arena.decadeUI[data-loading-style='On']>.dialog .tdnode.bluebg {
 	background-image: url('assets/image/tnode-B3.png') !important;
 }
 
 
-#arena.decadeUI.dui-mobile[data-loading-style='othersOn']>.dialog .tdnode {
+#arena.decadeUI[data-loading-style='othersOn']>.dialog .tdnode {
 	--h: 30px;
 	--w: calc(var(--h) * 77 / 44);
 	width: auto;
@@ -81,7 +81,7 @@
 	line-height: var(--h);
 	text-align: center;
 }
-#arena.decadeUI.dui-mobile[data-loading-style='othersOn']>.dialog .tdnode.bluebg {
+#arena.decadeUI[data-loading-style='othersOn']>.dialog .tdnode.bluebg {
 	background-image: url('assets/image/tnode-C2.png') !important;
 }
 /*-----------------分割线-----------------*/
@@ -91,23 +91,23 @@
 
 
 /*-----------------分割线-----------------*/
-#arena.decadeUI.dui-mobile[data-loading-style='On']>.dialog.scroll1,
-#arena.decadeUI.dui-mobile[data-loading-style='On']>.dialog.scroll2 { /*所有选项框*/
+#arena.decadeUI[data-loading-style='On']>.dialog.scroll1,
+#arena.decadeUI[data-loading-style='On']>.dialog.scroll2 { /*所有选项框*/
 	background-position: center;
 	background-image: url('assets/image/dialog1.png') !important;
 	background-size: 100% 100% !important;
 	background-repeat: no-repeat !important;
 }
-#arena.decadeUI.dui-mobile[data-loading-style='on']>.dialog.scroll1,
-#arena.decadeUI.dui-mobile[data-loading-style='on']>.dialog.scroll2 { /*所有选项框*/
+#arena.decadeUI[data-loading-style='on']>.dialog.scroll1,
+#arena.decadeUI[data-loading-style='on']>.dialog.scroll2 { /*所有选项框*/
 	background-position: center;
 	background-image: url('assets/image/dialog2.png') !important;
 	background-size: 104% 100% !important;
 	background-repeat: no-repeat !important;
 	/* padding: 10px 50px; /*高度 + 宽度*/
 }
-#arena.decadeUI.dui-mobile[data-loading-style='othersOn']>.dialog.scroll1,
-#arena.decadeUI.dui-mobile[data-loading-style='othersOn']>.dialog.scroll2 { /*所有选项框*/
+#arena.decadeUI[data-loading-style='othersOn']>.dialog.scroll1,
+#arena.decadeUI[data-loading-style='othersOn']>.dialog.scroll2 { /*所有选项框*/
 	background-position: center;
 	background-image: url('assets/image/dialog3.png') !important;
 	background-size: 102% 100% !important;

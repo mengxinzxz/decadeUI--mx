@@ -11715,6 +11715,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'魔改十周年 萌修 0.3.6-待定',
 					'最低适配：v1.10.16',
 					'新版适配',
+					'修复电脑端无法使用dialog美化的bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
