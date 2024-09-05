@@ -92,14 +92,16 @@
 
 /*-----------------分割线-----------------*/
 #arena.decadeUI[data-loading-style='On']>.dialog.scroll1,
-#arena.decadeUI[data-loading-style='On']>.dialog.scroll2 { /*所有选项框*/
+#arena.decadeUI[data-loading-style='On']>.dialog.scroll2,
+#arena.decadeUI[data-loading-style='On']>.dialog:has(.row-container) { /*所有选项框*/
 	background-position: center;
 	background-image: url('assets/image/dialog1.png') !important;
 	background-size: 100% 100% !important;
 	background-repeat: no-repeat !important;
 }
 #arena.decadeUI[data-loading-style='on']>.dialog.scroll1,
-#arena.decadeUI[data-loading-style='on']>.dialog.scroll2 { /*所有选项框*/
+#arena.decadeUI[data-loading-style='on']>.dialog.scroll2,
+#arena.decadeUI[data-loading-style='on']>.dialog:has(.row-container) { /*所有选项框*/
 	background-position: center;
 	background-image: url('assets/image/dialog2.png') !important;
 	background-size: 104% 100% !important;
@@ -107,7 +109,8 @@
 	/* padding: 10px 50px; /*高度 + 宽度*/
 }
 #arena.decadeUI[data-loading-style='othersOn']>.dialog.scroll1,
-#arena.decadeUI[data-loading-style='othersOn']>.dialog.scroll2 { /*所有选项框*/
+#arena.decadeUI[data-loading-style='othersOn']>.dialog.scroll2,
+#arena.decadeUI[data-loading-style='othersOn']>.dialog:has(.row-container) { /*所有选项框*/
 	background-position: center;
 	background-image: url('assets/image/dialog3.png') !important;
 	background-size: 102% 100% !important;
@@ -226,7 +229,7 @@
 	position: relative;
 }
 
-#arena.decadeUI>.dialog.prompt>.content-container>.content>.caption {
+#arena.decadeUI>.dialog.prompt:not(:has(.row-container))>.content-container>.content>.caption {
 	border: none;
 	bottom: 0;
 	height: auto;

@@ -3261,6 +3261,23 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						target.classList.remove('un-selectable');
 					});
 
+					const updateDialog = lib.hooks['checkOverflow'].indexOf(lib.hooks['checkOverflow'].find(i => i.name && i.name == 'updateDialog'));
+					lib.hooks['checkOverflow'][updateDialog] = function updateDialog(itemOption, itemContainer, addedItems, game) {
+						//计算压缩折叠的量
+						const gap = 5
+						const L = itemContainer.originWidth / game.documentZoom
+						const W = addedItems[0].getBoundingClientRect().width / game.documentZoom
+						let n = addedItems.length
+						const r = -20//为偏移留出的空间，如果r为0，可能会把前面的卡牌全遮住
+						if (n * W + (n + 1) * gap < L) {
+							itemContainer.style.setProperty('--ml', gap + 'px')
+						} else {
+							const ml = Math.min(((n * W - L + 30 * n) / (n - 1)), W - r / game.documentZoom)
+							itemContainer.style.setProperty('--ml', "-" + ml + 'px')
+						}
+					}
+
+
 					game.swapPlayer = function (player, player2) {
 						var result = swapPlayerFunction.call(this, player, player2);
 						/*-----------------分割线-----------------*/
