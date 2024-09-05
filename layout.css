@@ -355,6 +355,7 @@ body > .background {
 	width: 108px;
 	height: 150px;
 	background-size: 100% 100%;
+	z-index: 1;
 }
 
 .card,
