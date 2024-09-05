@@ -93,7 +93,7 @@
 /*-----------------分割线-----------------*/
 #arena.decadeUI[data-loading-style='On']>.dialog.scroll1,
 #arena.decadeUI[data-loading-style='On']>.dialog.scroll2,
-#arena.decadeUI[data-loading-style='On']>.dialog:has(.row-container) { /*所有选项框*/
+#arena.decadeUI[data-loading-style='On']>.dialog.addNewRow { /*所有选项框*/
 	background-position: center;
 	background-image: url('assets/image/dialog1.png') !important;
 	background-size: 100% 100% !important;
@@ -101,7 +101,7 @@
 }
 #arena.decadeUI[data-loading-style='on']>.dialog.scroll1,
 #arena.decadeUI[data-loading-style='on']>.dialog.scroll2,
-#arena.decadeUI[data-loading-style='on']>.dialog:has(.row-container) { /*所有选项框*/
+#arena.decadeUI[data-loading-style='on']>.dialog.addNewRow { /*所有选项框*/
 	background-position: center;
 	background-image: url('assets/image/dialog2.png') !important;
 	background-size: 104% 100% !important;
@@ -110,7 +110,7 @@
 }
 #arena.decadeUI[data-loading-style='othersOn']>.dialog.scroll1,
 #arena.decadeUI[data-loading-style='othersOn']>.dialog.scroll2,
-#arena.decadeUI[data-loading-style='othersOn']>.dialog:has(.row-container) { /*所有选项框*/
+#arena.decadeUI[data-loading-style='othersOn']>.dialog.addNewRow { /*所有选项框*/
 	background-position: center;
 	background-image: url('assets/image/dialog3.png') !important;
 	background-size: 102% 100% !important;
@@ -121,6 +121,21 @@
 	width: 900px !important;
 	left: calc(50% - 450px) !important;
 	height: 200px;
+}
+
+.buttons.guanxing,
+.dialog.addNewRow .item-container:not(:has(.caption)) {
+	border-image-source: url('assets/image/cardcontain_bg.png');
+	border-image-slice: 26 fill;
+	border-image-width: 26px;
+	border-image-outset: 4px 0px 0px 0px;
+	background: none;
+	box-shadow: none;
+	border-radius: 0;
+}
+
+.dialog.addNewRow .item-container {
+	height: 100%;
 }
 /*-----------------分割线-----------------*/
 
@@ -229,7 +244,7 @@
 	position: relative;
 }
 
-#arena.decadeUI>.dialog.prompt:not(:has(.row-container))>.content-container>.content>.caption {
+#arena.decadeUI>.dialog.prompt:not(.addNewRow)>.content-container>.content>.caption {
 	border: none;
 	bottom: 0;
 	height: auto;
