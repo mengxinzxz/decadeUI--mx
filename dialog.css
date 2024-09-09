@@ -123,6 +123,7 @@
 	height: 200px;
 }
 
+/*
 .buttons.guanxing,
 .dialog.addNewRow .item-container:not(:has(.caption)) {
 	border-image-source: url('assets/image/cardcontain_bg.png');
@@ -133,6 +134,7 @@
 	box-shadow: none;
 	border-radius: 0;
 }
+*/
 
 .dialog.addNewRow .item-container {
 	height: 100%;
