@@ -2285,7 +2285,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									if (num < cards.length) {
 										if (event.es.includes(cards[num]) || cards[num].cards?.some(i => event.es.includes(i))) {
 											event.loseEquip = true;
-											const VEquip = cards[num].card;
+											const VEquip = cards[num][cards[num].cardSymbol];
 											if (VEquip) {
 												player.removeVirtualEquip(VEquip);
 												//player.removeEquipTrigger(cards[num]);
