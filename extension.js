@@ -11733,6 +11733,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'最低适配：v1.10.16',
 					'新版适配',
 					'修复电脑端无法使用dialog美化的bug',
+					'修复手杀样式主动整理手牌按钮不会被noSortCard的tag无效化的bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),

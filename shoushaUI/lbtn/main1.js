@@ -711,6 +711,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
       },
 
       paixu: function () {
+        if (!game.me || game.me.hasSkillTag('noSortCard')) return;
         var cards = game.me.getCards("hs");
         var sort2 = function (b, a) {
           if (a.name != b.name) return lib.sort.card(a.name, b.name);
