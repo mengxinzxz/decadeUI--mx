@@ -2211,7 +2211,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										game.broadcastAll(function (player, cards, id, visible) {
 											const cardx = cards.slice().map(i => i.cards ? i.cards : [i]).flat();
 											cardx.duiMod = true;
-											player.$throw(!visible ? cardx.length : cardx, null, "nobroadcast");
+											if (visible) player.$throw(cardx, null, "nobroadcast");
 											var cardnodes = [];
 											cardnodes._discardtime = get.time();
 											for (var i = 0; i < cardx.length; i++) {
@@ -11734,6 +11734,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'新版适配',
 					'修复电脑端无法使用dialog美化的bug',
 					'修复手杀样式主动整理手牌按钮不会被noSortCard的tag无效化的bug',
+					'修复设置了visible属性为false的lose事件仍显示$throw卡牌特效的bug',
 				];
 				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join('<br>•') + '</p>';
 			})(),
