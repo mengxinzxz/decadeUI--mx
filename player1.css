@@ -531,7 +531,6 @@
 	background-position: top;
 	border-radius: 8px;
 	transition-property: opacity, transform;
-	z-index: 61;
 }
 
 .player.fullskin2 > .primary-avatar {
@@ -555,7 +554,6 @@
 	background-position: top;
 	border-radius: 0 8px 8px 0;
 	transition-property: opacity, transform;
-	z-index: 61;
 }
 
 .player.unseen > .primary-avatar,
@@ -1197,7 +1195,6 @@
 	background-position: center;
 	transform: none;
 	opacity: 0;
-	z-index: 61;
 }
 
 .player.opposite-camp > .died-identity {

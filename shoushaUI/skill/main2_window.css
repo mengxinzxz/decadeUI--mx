@@ -8,7 +8,7 @@
 	/*技能显示右移，越小越靠右，建议别调*/
 	/*border: 3px solid rgb(255, 255, 255);/*调试用*/
 	bottom: 0px;
-	z-index: 100 !important;
+	z-index: 4 !important;
 	pointer-events: none;
 }
 .skill-control div {
@@ -102,7 +102,7 @@
 	overflow-y: auto;
 	left: -14.5px !important;
 	top: 96px !important;
-	z-index: 89 !important;
+	z-index: 4 !important;
 	justify-content: center;
 	align-items: center;
 }
