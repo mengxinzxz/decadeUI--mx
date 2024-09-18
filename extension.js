@@ -3946,7 +3946,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								player: player,
 								gain: function (skill) {
 									var sender = this;
-
 									if (!sender.skills) sender.skills = [];
 									if (!sender.skills.includes(skill) && lib.translate[skill]) {
 										//var info = lib.skill[skill];
@@ -3963,9 +3962,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 											else {
 												html += '' + lib.translate[sender.skills[i]] + ' ';
 											}
+											sender.innerHTML = html;
 										}
-
-										sender.innerHTML = html;
 									}
 								},
 								lose: function (skill) {

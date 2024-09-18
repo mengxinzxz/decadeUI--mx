@@ -1357,3 +1357,8 @@
 	z-index: 87;
 }
 */
+
+/*玩家tip标记显示*/
+.player .tipContainer {
+    width: 83% !important;
+}
