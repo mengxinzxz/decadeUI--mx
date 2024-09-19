@@ -218,7 +218,12 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
             content: function () {
                 'step 0';
                 var chengxiangNum = (event.name == 'oldchengxiang' ? 12 : 13);
-                var cards = get.cards(4);
+                var mark = 0;
+                if (event.name == "olchengxiang") {
+                    mark += player.countMark("olchengxiang");
+                    player.removeMark("olchengxiang", mark, false);
+                }
+                var cards = get.cards(4 + mark);
                 var guanXing = decadeUI.content.chooseGuanXing(player, cards, cards.length, null, 4, false);
                 guanXing.doubleSwitch = true;
                 guanXing.caption = '【称象】';
@@ -317,7 +322,14 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
                 'step 1';
                 if (event.result && event.result.bool) {
                     game.cardsDiscard(event.cards1);
-                    player.gain(event.cards2, 'log', 'gain2');
+                    var cards2 = event.cards2;
+                    player.gain(cards2, "gain2");
+                    if (event.name == "olchengxiang") {
+                        let num = cards2.reduce((num, i) => {
+                            return num + get.number(i, player);
+                        }, 0);
+                        if (num == 13) player.addMark("olchengxiang", 1, false);
+                    }
                 }
             },
             ai: {
