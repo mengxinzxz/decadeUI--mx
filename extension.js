@@ -4721,8 +4721,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 								let cards = list[0][1],
 									player = _status.event.player,
 									target = _status.currentPhase || player,
-									name = _status.event.getTrigger().name,
-									countWuxie = (current) => {
+									name = _status.event.getTrigger()?.name,
+									countWuxie = current => {
 										let num = current.getKnownCards(player, card => {
 											return get.name(card, current) === 'wuxie';
 										});
