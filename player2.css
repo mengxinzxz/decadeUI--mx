@@ -1444,4 +1444,5 @@
 /*玩家tip标记显示*/
 .player .tipContainer {
     width: 83% !important;
+	right:0;
 }

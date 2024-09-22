@@ -1353,3 +1353,9 @@
 	pointer-events: none;
 	z-index: 87;
 }
+
+.player .tipContainer {
+	width: 93% !important;
+	right: 0;
+	z-index: 87;
+}
