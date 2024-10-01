@@ -99,9 +99,9 @@
 	background-size: 100% 100% !important;
 	background-repeat: no-repeat !important;
 }
-#arena.decadeUI[data-loading-style='on']>.dialog.scroll1,
-#arena.decadeUI[data-loading-style='on']>.dialog.scroll2,
-#arena.decadeUI[data-loading-style='on']>.dialog.addNewRow { /*所有选项框*/
+#arena.decadeUI[data-loading-style='on']>.dialog.scroll1:not(.dclieqiong),
+#arena.decadeUI[data-loading-style='on']>.dialog.scroll2:not(.dclieqiong),
+#arena.decadeUI[data-loading-style='on']>.dialog.addNewRow:not(.dclieqiong) { /*所有选项框*/
 	background-position: center;
 	background-image: url('assets/image/dialog2.png') !important;
 	background-size: 104% 100% !important;
