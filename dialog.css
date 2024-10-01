@@ -91,9 +91,9 @@
 
 
 /*-----------------分割线-----------------*/
-#arena.decadeUI[data-loading-style='On']>.dialog.scroll1,
-#arena.decadeUI[data-loading-style='On']>.dialog.scroll2,
-#arena.decadeUI[data-loading-style='On']>.dialog.addNewRow { /*所有选项框*/
+#arena.decadeUI[data-loading-style='On']>.dialog.scroll1:not(.dclieqiong),
+#arena.decadeUI[data-loading-style='On']>.dialog.scroll2:not(.dclieqiong),
+#arena.decadeUI[data-loading-style='On']>.dialog.addNewRow:not(.dclieqiong) { /*所有选项框*/
 	background-position: center;
 	background-image: url('assets/image/dialog1.png') !important;
 	background-size: 100% 100% !important;
@@ -108,9 +108,9 @@
 	background-repeat: no-repeat !important;
 	/* padding: 10px 50px; /*高度 + 宽度*/
 }
-#arena.decadeUI[data-loading-style='othersOn']>.dialog.scroll1,
-#arena.decadeUI[data-loading-style='othersOn']>.dialog.scroll2,
-#arena.decadeUI[data-loading-style='othersOn']>.dialog.addNewRow { /*所有选项框*/
+#arena.decadeUI[data-loading-style='othersOn']>.dialog.scroll1:not(.dclieqiong),
+#arena.decadeUI[data-loading-style='othersOn']>.dialog.scroll2:not(.dclieqiong),
+#arena.decadeUI[data-loading-style='othersOn']>.dialog.addNewRow:not(.dclieqiong) { /*所有选项框*/
 	background-position: center;
 	background-image: url('assets/image/dialog3.png') !important;
 	background-size: 102% 100% !important;
