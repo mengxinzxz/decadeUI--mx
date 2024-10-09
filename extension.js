@@ -4887,7 +4887,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							set: function (group) {
 								if (!group) return;
 								this._group = group;
-								this.node.campWrap.dataset.camp = group;
+								this.node.campWrap.dataset.camp = get.character(this.name)?.groupBorder || group;
 								if (!decadeUI.config.campIdentityImageMode) {
 									if (!this._finalGroup) this.node.campWrap.node.campName.innerHTML = '';
 									else {
@@ -11730,6 +11730,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'魔改十周年 萌修 0.3.6-待定',
 					'最低适配：v1.10.16',
 					'新版适配',
+					'如果玩家主将存在groupBorder属性则使用groupBorder势力作为势力边框颜色',
 					'修复电脑端无法使用dialog美化的bug',
 					'修复手杀样式主动整理手牌按钮不会被noSortCard的tag无效化的bug',
 					'修复设置了visible属性为false的lose事件仍显示$throw卡牌特效的bug',
