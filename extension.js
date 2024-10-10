@@ -2541,11 +2541,13 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							},
 
 							dialog: function () {
-								var i;
 								var hidden = false;
 								var notouchscroll = false;
 								var forcebutton = false;
 								var dialog = decadeUI.element.create('dialog');
+								dialog.supportsPagination = false;
+								dialog.paginationMap = new Map();
+								dialog.paginationMaxCount = new Map();
 								dialog.contentContainer = decadeUI.element.create('content-container', dialog);
 								dialog.content = decadeUI.element.create('content', dialog.contentContainer);
 								dialog.buttons = [];
@@ -7434,14 +7436,17 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						div.innerHTML = '搜索：' +
 							'<select size="1" style="width:75px;height:21px;">' +
 							'<option value="name">名称翻译</option>' +
-							'<option value="name1">名称</option>' +
+							'<option value="name1">名称ID</option>' +
+							'<option value="name2">名称ID(精确匹配)</option>' +
 							'<option value="skill">技能翻译</option>' +
-							'<option value="skill1">技能</option>' +
-							'<option value="skill2">技能叙述</option>' +
+							'<option value="skill1">技能ID</option>' +
+							'<option value="skill2">技能ID(精确匹配)</option>' +
+							'<option value="skill3">技能描述/翻译</option>' +
 							'→' +
 							'<input type="text" style="width:150px;"></input>' +
 							'</select>';
 						var input = div.querySelector('input');
+						input.placeholder = "非精确匹配支持正则搜索";
 						input.onkeydown = function (e) {
 							e.stopPropagation();
 							if (e.keyCode == 13) {
@@ -7451,58 +7456,34 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									input.focus();
 									return;
 								}
-								var choice = div.querySelector('select').options[div.querySelector('select')
-									.selectedIndex].value;
+								var choice = div.querySelector('select').options[div.querySelector('select').selectedIndex].value;
 								if (value) {
 									for (var i = 0; i < buttons.childNodes.length; i++) {
 										buttons.childNodes[i].classList.add('nodisplay');
 										var name = buttons.childNodes[i].link;
-										var skills;
-										if (lib.character[name] != undefined) {
-											skills = lib.character[name][3];
-										};
-										if (choice == 'name1') {
-											if (name.indexOf(value) != -1) {
-												buttons.childNodes[i].classList.remove('nodisplay');
-											};
+										var skills = get.character(name).skills || [];
+										if (function (choice, value, name, skills) {
+											if (choice.endsWith('2')) return choice === 'name2' ? (value === name) : (skills.includes(value));
+											value = new RegExp(value, 'g');
+											const goon = (value, text) => text && value.test(text);
+											if (choice == 'name1') return goon(value, name);
+											else if (choice == 'name') return goon(value, get.translation(name));
+											else if (choice == 'skill1') return skills.some(skill => goon(value, skill));
+											else if (choice == 'skill') return skills.some(skill => goon(value, get.translation(skill)));
+											else return skills.some(skill => goon(value, get.translation(skill + '_info')));
+										}(choice, value, name, skills)) {
+											buttons.childNodes[i].classList.remove('nodisplay');
 										}
-										else if (choice == 'skill') {
-											if (skills != undefined && skills.length > 0) {
-												for (var j = 0; j < skills.length; j++) {
-													var skill = skills[j];
-													if (get.translation(skill).indexOf(value) != -1) {
-														buttons.childNodes[i].classList.remove('nodisplay');
-													};
-												};
-											};
-										}
-										else if (choice == 'skill1') {
-											if (skills != undefined && skills.length > 0) {
-												for (var j = 0; j < skills.length; j++) {
-													var skill = skills[j];
-													if (skill.indexOf(value) != -1) {
-														buttons.childNodes[i].classList.remove('nodisplay');
-													};
-												};
-											};
-										}
-										else if (choice == 'skill2') {
-											if (skills != undefined && skills.length > 0) {
-												for (var j = 0; j < skills.length; j++) {
-													var skill = skills[j];
-													if (lib.translate[skill + '_info'] != undefined && lib.translate[
-														skill + '_info'].indexOf(value) != -1) {
-														buttons.childNodes[i].classList.remove('nodisplay');
-													};
-												};
-											};
-										}
-										else {
-											if (get.translation(name).indexOf(value) != -1) {
-												buttons.childNodes[i].classList.remove('nodisplay');
-											};
-										};
-									};
+									}
+								}
+								if (dialog.paginationMaxCount.get("character")) {
+									const buttons = dialog.content.querySelector(".buttons");
+									const p = dialog.paginationMap.get(buttons);
+									if (p) {
+										const array = dialog.buttons.filter(item => !item.classList.contains("nodisplay"));
+										p.state.data = array;
+										p.setTotalPageCount(Math.ceil(array.length / dialog.paginationMaxCount.get("character")));
+									}
 								}
 							};
 						};
@@ -11730,6 +11711,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					'魔改十周年 萌修 0.3.6-待定',
 					'最低适配：v1.10.16',
 					'新版适配',
+					'为十周年UI搬运的《扩展OL》的自由选将筛选框添加名称ID和技能ID的精确匹配选项，并为其他选项的筛选支持正则化',
 					'如果玩家主将存在groupBorder属性则使用groupBorder势力作为势力边框颜色',
 					'修复电脑端无法使用dialog美化的bug',
 					'修复手杀样式主动整理手牌按钮不会被noSortCard的tag无效化的bug',
