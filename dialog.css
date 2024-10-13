@@ -643,3 +643,8 @@
 	display: block !important;
 	opacity: 1;
 }
+
+.player .tipContainer>.tip {
+    width: 100%;
+    left: 0%;
+}
