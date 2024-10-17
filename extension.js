@@ -129,31 +129,31 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
             return ok;
           }
           /*
-					function override(dest, src) {
-						const getCover = function (from, to, getCover) {
-							if (get.is.object(from)) {
-								console.log(from);
-								for (const key in from) {
-									getCover(from[key], to[key], getCover);
-								}
-							}
-							else {
-								to = from;
-							}
-						};
-						getCover(src, dest, getCover);
-					};
-					*/
+          function override(dest, src) {
+            const getCover = function (from, to, getCover) {
+              if (get.is.object(from)) {
+                console.log(from);
+                for (const key in from) {
+                  getCover(from[key], to[key], getCover);
+                }
+              }
+              else {
+                to = from;
+              }
+            };
+            getCover(src, dest, getCover);
+          };
+          */
           //暂时用不上你了
           /*
-					function overrides(dest, src) {
-						if (!dest._super) dest._super = {};
-						for (var key in src) {
-							if (dest[key]) dest._super[key] = dest[key];
-							dest[key] = src[key];
-						}
-					};
-					*/
+          function overrides(dest, src) {
+            if (!dest._super) dest._super = {};
+            for (var key in src) {
+              if (dest[key]) dest._super[key] = dest[key];
+              dest[key] = src[key];
+            }
+          };
+          */
           var base = {
             ui: {
               create: {
@@ -482,7 +482,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                   );
                   var y = Math.round(
                     (player.cacheHeight - arena.cardHeight) / 2 +
-                      player.cacheTop
+                    player.cacheTop
                   );
                   var scale = arena.cardScale;
 
@@ -2122,7 +2122,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                     if (sourceSkill) {
                       if (
                         player.stat[player.stat.length - 1].skill[
-                          sourceSkill
+                        sourceSkill
                         ] == undefined
                       ) {
                         player.stat[player.stat.length - 1].skill[
@@ -2421,10 +2421,10 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                         event.node.classList.add("thrownhighlight");
                       }
                       /*
-										event.dialog = ui.create.dialog(str);
-										event.dialog.classList.add('center');
-										event.dialog.videoId = id;
-										*/
+                    event.dialog = ui.create.dialog(str);
+                    event.dialog.classList.add('center');
+                    event.dialog.videoId = id;
+                    */
                     },
                     player,
                     player.judging[0] /*, judgestr*/,
@@ -2472,9 +2472,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                   game.broadcast(
                     function (/*id*/) {
                       /*
-										var dialog = get.idDialog(id);
-										if (dialog) dialog.close();
-										*/
+                    var dialog = get.idDialog(id);
+                    if (dialog) dialog.close();
+                    */
                       if (!window.decadeUI)
                         ui.arena.classList.remove("thrownhighlight");
                     } /*, event.videoId*/
@@ -2700,7 +2700,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                         cards[0].clone.listenTransition(function () {
                           if (
                             _status.waitingForTransition ==
-                              waitingForTransition &&
+                            waitingForTransition &&
                             _status.paused
                           ) {
                             game.resume();
@@ -2715,7 +2715,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                         cards[0].clone.listenTransition(function () {
                           if (
                             _status.waitingForTransition ==
-                              waitingForTransition &&
+                            waitingForTransition &&
                             _status.paused
                           ) {
                             game.resume();
@@ -2762,7 +2762,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                     for (var i of unmarks) {
                       player[
                         (lib.skill[i] && lib.skill[i].mark) ||
-                        player.hasCard((card) => card.hasGaintag(i), "x")
+                          player.hasCard((card) => card.hasGaintag(i), "x")
                           ? "markSkill"
                           : "unmarkSkill"
                       ](i);
@@ -2973,7 +2973,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
               }
             },
 
-            updatem: function (player) {},
+            updatem: function (player) { },
 
             updatez: function () {
               window.documentZoom = game.documentZoom;
@@ -3764,9 +3764,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
               node.classList.remove("hidden");
               Array.from(ui.historybar.childNodes).forEach((value, index) => {
                 if (index < num) {
-                  value.style.transform = `scale(1) translateY(${
-                    margin + index * (42 + margin) - 4
-                  }px)`;
+                  value.style.transform = `scale(1) translateY(${margin + index * (42 + margin) - 4
+                    }px)`;
                   return;
                 }
                 if (value.removetimeout) return;
@@ -3942,8 +3941,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
               cardskb =
                 typeof get.info(skill).viewAs == "function"
                   ? get
-                      .info(skill)
-                      .viewAs([card], _status.event.player || game.me)
+                    .info(skill)
+                    .viewAs([card], _status.event.player || game.me)
                   : get.info(skill).viewAs;
               cardname = get.name(cardskb);
               cardnature = get.nature(cardskb);
@@ -4390,12 +4389,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
               equipSolts
             );
             /*
-						decadeUI.element.create('icon icon-treasure', decadeUI.element.create('equip0', equipSolts.back));
-						decadeUI.element.create('icon icon-saber', decadeUI.element.create('equip1', equipSolts.back));
-						decadeUI.element.create('icon icon-shield', decadeUI.element.create('equip2', equipSolts.back));
-						decadeUI.element.create('icon icon-mount', decadeUI.element.create('equip3', equipSolts.back));
-						decadeUI.element.create('icon icon-mount', decadeUI.element.create('equip4', equipSolts.back));
-						*/
+            decadeUI.element.create('icon icon-treasure', decadeUI.element.create('equip0', equipSolts.back));
+            decadeUI.element.create('icon icon-saber', decadeUI.element.create('equip1', equipSolts.back));
+            decadeUI.element.create('icon icon-shield', decadeUI.element.create('equip2', equipSolts.back));
+            decadeUI.element.create('icon icon-mount', decadeUI.element.create('equip3', equipSolts.back));
+            decadeUI.element.create('icon icon-mount', decadeUI.element.create('equip4', equipSolts.back));
+            */
             for (var repetition = 0; repetition < 5; repetition++) {
               var ediv = decadeUI.element.create(null, equipSolts.back);
               ediv.dataset.type = repetition;
@@ -4976,8 +4975,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
             lib.config.glow_phase = temp;
             ui.css.styles.sheet.insertRule(
               '.avatar-name, .avatar-name-default { font-family: "' +
-                (lib.config.name_font || "xinkai") +
-                '", "xinwei" }',
+              (lib.config.name_font || "xinkai") +
+              '", "xinwei" }',
               0
             );
           };
@@ -5076,15 +5075,15 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                 .set("type", "compare")
                 .set("ai", event.ai)
                 .set("source", player).aiCard = function (target) {
-                var hs = target.getCards("h");
-                var event = _status.event;
-                event.player = target;
-                hs.sort(function (a, b) {
-                  return event.ai(b) - event.ai(a);
-                });
-                delete event.player;
-                return { bool: true, cards: [hs[0]] };
-              };
+                  var hs = target.getCards("h");
+                  var event = _status.event;
+                  event.player = target;
+                  hs.sort(function (a, b) {
+                    return event.ai(b) - event.ai(a);
+                  });
+                  delete event.player;
+                  return { bool: true, cards: [hs[0]] };
+                };
             }
             ("step 2");
             const lose_list = [];
@@ -5347,18 +5346,18 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                 .set("type", "compare")
                 .set("ai", event.ai)
                 .set("source", player).aiCard = function (target) {
-                var hs = target.getCards("h");
-                var event = _status.event;
-                event.player = target;
-                hs.sort(function (a, b) {
-                  return event.ai(b) - event.ai(a);
-                });
-                delete event.player;
-                return {
-                  bool: true,
-                  cards: [hs[0]],
+                  var hs = target.getCards("h");
+                  var event = _status.event;
+                  event.player = target;
+                  hs.sort(function (a, b) {
+                    return event.ai(b) - event.ai(a);
+                  });
+                  delete event.player;
+                  return {
+                    bool: true,
+                    cards: [hs[0]],
+                  };
                 };
-              };
             }
             ("step 2");
             var cards = [];
@@ -5603,8 +5602,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
             );
             guanxing.caption =
               event.getParent() &&
-              event.getParent().name &&
-              get.translation(event.getParent().name) != event.getParent().name
+                event.getParent().name &&
+                get.translation(event.getParent().name) != event.getParent().name
                 ? "【" + get.translation(event.getParent().name) + "】"
                 : "请按顺序排列牌";
 
@@ -5743,8 +5742,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                   }
                 };
               var [cards, cheats] = processAI([
-                  [" ", guanxing.cards[0].slice()],
-                ]),
+                [" ", guanxing.cards[0].slice()],
+              ]),
                 time = 500;
               for (var i = 0; i < cheats.length; i++) {
                 setTimeout(
@@ -5785,10 +5784,10 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
             game.logv(
               player,
               "将" +
-                get.cnNumber(event.num1) +
-                "张牌置于牌堆顶，" +
-                get.cnNumber(event.num2) +
-                "张牌置于牌堆底"
+              get.cnNumber(event.num1) +
+              "张牌置于牌堆顶，" +
+              get.cnNumber(event.num2) +
+              "张牌置于牌堆底"
             );
             game.updateRoundNumber();
           };
@@ -7559,9 +7558,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
               if (skillEvent) {
                 tagText =
                   lib.translate[
-                    skillEvent.name != "useSkill"
-                      ? skillEvent.name
-                      : skillEvent.skill
+                  skillEvent.name != "useSkill"
+                    ? skillEvent.name
+                    : skillEvent.skill
                   ];
                 if (!tagText) tagText = "";
                 tagText += "弃置";
@@ -7581,16 +7580,16 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
               if (
                 skillEvent &&
                 lib.translate[
-                  skillEvent.name != "useSkill"
-                    ? skillEvent.name
-                    : skillEvent.skill
+                skillEvent.name != "useSkill"
+                  ? skillEvent.name
+                  : skillEvent.skill
                 ]
               ) {
                 tagText +=
                   lib.translate[
-                    skillEvent.name != "useSkill"
-                      ? skillEvent.name
-                      : skillEvent.skill
+                  skillEvent.name != "useSkill"
+                    ? skillEvent.name
+                    : skillEvent.skill
                   ];
               }
               tagText += "弃置";
@@ -7601,9 +7600,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                 if (skillEvent) {
                   tagText =
                     lib.translate[
-                      skillEvent.name != "useSkill"
-                        ? skillEvent.name
-                        : skillEvent.skill
+                    skillEvent.name != "useSkill"
+                      ? skillEvent.name
+                      : skillEvent.skill
                     ];
                   if (!tagText) tagText = "";
                   tagText += "弃置";
@@ -7613,9 +7612,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                 if (skillEvent) {
                   tagText =
                     lib.translate[
-                      skillEvent.name != "useSkill"
-                        ? skillEvent.name
-                        : skillEvent.skill
+                    skillEvent.name != "useSkill"
+                      ? skillEvent.name
+                      : skillEvent.skill
                     ];
                   if (!tagText || tagText == "重铸") tagText = "";
                   if (event.parent.parent.name != "recast")
@@ -7747,7 +7746,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
           var bodySize = decadeUI.get.bodySize();
           return Math.min(
             (bodySize.height * (decadeUI.isMobile() ? 0.23 : 0.18)) /
-              size.height,
+            size.height,
             1
           );
         },
@@ -7892,8 +7891,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                     identity == "ye"
                       ? "野心家"
                       : identity == "qun"
-                      ? "群雄"
-                      : get.translation(identity) + "将";
+                        ? "群雄"
+                        : get.translation(identity) + "将";
                 }
                 translated = true;
                 break;
@@ -8676,7 +8675,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
           return element;
         },
-        clone: function (element) {},
+        clone: function (element) { },
       };
 
       decadeUI.game = {
@@ -8849,7 +8848,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                         const goon = (value, text) => text && value.test(text);
                         if (choice == "name1") return goon(value, name);
                         else if (choice == "name")
-                          return goon(value, get.translation(name));
+                          return goon(value, get.translation(name)) || goon(value, get.translation(name + '_ab'));
                         else if (choice == "skill1")
                           return skills.some((skill) => goon(value, skill));
                         else if (choice == "skill")
@@ -8877,7 +8876,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                     p.setTotalPageCount(
                       Math.ceil(
                         array.length /
-                          dialog.paginationMaxCount.get("character")
+                        dialog.paginationMaxCount.get("character")
                       )
                     );
                   }
@@ -8937,8 +8936,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
               if (mark.dk) {
                 mark.setBackgroundImage(
                   "extension/十周年UI/shoushaUI/skill/images/" +
-                    skill +
-                    "_yang.png"
+                  skill +
+                  "_yang.png"
                 );
               } else {
                 mark.setBackgroundImage(
@@ -8951,8 +8950,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
               if (mark.dk) {
                 mark.setBackgroundImage(
                   "extension/十周年UI/shoushaUI/skill/images/" +
-                    skill +
-                    "_ying.png"
+                  skill +
+                  "_ying.png"
                 );
               } else {
                 mark.setBackgroundImage(
@@ -9152,8 +9151,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
             for (var i = 0; i < event.controls.length; i++) {
               var item = event.dialog.add(
                 '<div class="popup text pointerdiv" style="width:calc(100% - 10px);display:inline-block">' +
-                  event.controls[i] +
-                  "</div>"
+                event.controls[i] +
+                "</div>"
               );
               item.firstChild.listen(ui.click.dialogcontrol);
               item.firstChild.link = event.controls[i];
@@ -9235,11 +9234,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
               for (var i = 0; i < event.choiceList.length; i++) {
                 event.dialog.add(
                   '<div class="popup text" style="width:calc(100% - 10px);display:inline-block">' +
-                    (event.displayIndex !== false
-                      ? "选项" + get.cnNumber(i + 1, true) + "："
-                      : "") +
-                    event.choiceList[i] +
-                    "</div>"
+                  (event.displayIndex !== false
+                    ? "选项" + get.cnNumber(i + 1, true) + "："
+                    : "") +
+                  event.choiceList[i] +
+                  "</div>"
                 );
               }
             } else if (event.prompt) {
@@ -10705,16 +10704,16 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                 ) {
                   game.as_showImage(
                     "extension/十周年UI/shoushaUI/lbtn/images/JDTS/" +
-                      _status.as_showImage_phase +
-                      ".jpg",
+                    _status.as_showImage_phase +
+                    ".jpg",
                     [10, 58, 7, 6],
                     true
                   );
                 } else {
                   game.as_showImage(
                     "extension/十周年UI/shoushaUI/lbtn/images/JDTS/" +
-                      _status.as_showImage_phase +
-                      ".jpg",
+                    _status.as_showImage_phase +
+                    ".jpg",
                     [3, 58, 7, 6],
                     true
                   );
@@ -10722,8 +10721,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
               } else {
                 game.as_showImage(
                   "extension/十周年UI/shoushaUI/lbtn/images/JDTS/" +
-                    _status.as_showImage_phase +
-                    ".png",
+                  _status.as_showImage_phase +
+                  ".png",
                   [18, 65, 8, 4.4],
                   true
                 );
@@ -10758,16 +10757,16 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                 ) {
                   game.as_showImage(
                     "extension/十周年UI/shoushaUI/lbtn/images/JDTS/" +
-                      _status.as_showImage_phase +
-                      ".jpg",
+                    _status.as_showImage_phase +
+                    ".jpg",
                     [10, 58, 7, 6],
                     true
                   );
                 } else {
                   game.as_showImage(
                     "extension/十周年UI/shoushaUI/lbtn/images/JDTS/" +
-                      _status.as_showImage_phase +
-                      ".jpg",
+                    _status.as_showImage_phase +
+                    ".jpg",
                     [3, 58, 7, 6],
                     true
                   );
@@ -10775,8 +10774,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
               } else {
                 game.as_showImage(
                   "extension/十周年UI/shoushaUI/lbtn/images/JDTS/" +
-                    _status.as_showImage_phase +
-                    ".png",
+                  _status.as_showImage_phase +
+                  ".png",
                   [18, 65, 8, 4.4],
                   true
                 );
@@ -11548,22 +11547,22 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
           if (lib.config.extension_十周年UI_newDecadeStyle != void 0) {
             this.css(
               decadeUIPath +
-                "player" +
-                parseFloat(
-                  ["on", "off", "othersOn"].indexOf(
-                    lib.config.extension_十周年UI_newDecadeStyle
-                  ) + 1
-                ) +
-                ".css"
+              "player" +
+              parseFloat(
+                ["on", "off", "othersOn"].indexOf(
+                  lib.config.extension_十周年UI_newDecadeStyle
+                ) + 1
+              ) +
+              ".css"
             );
           } else {
             this.css(decadeUIPath + "player2.css");
           }
           this.css(
             decadeUIPath +
-              (lib.config.extension_十周年UI_newDecadeStyle == "on"
-                ? "equip.css"
-                : "equip_new.css")
+            (lib.config.extension_十周年UI_newDecadeStyle == "on"
+              ? "equip.css"
+              : "equip_new.css")
           );
           if (lib.config.extension_十周年UI_meanPrettify) {
             this.css(decadeUIPath + "menu.css");
@@ -11594,20 +11593,20 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                 case "character":
                   this.css(
                     layoutPath +
-                      pack +
-                      "/" +
-                      (bool ? "main1" : "main2") +
-                      ".css"
+                    pack +
+                    "/" +
+                    (bool ? "main1" : "main2") +
+                    ".css"
                   );
                   break;
                 default:
                   this.css(
                     layoutPath +
-                      pack +
-                      "/" +
-                      (bool ? "main1" : "main2") +
-                      (lib.config.touchscreen ? "" : "_window") +
-                      ".css"
+                    pack +
+                    "/" +
+                    (bool ? "main1" : "main2") +
+                    (lib.config.touchscreen ? "" : "_window") +
+                    ".css"
                   );
                   break;
               }
@@ -11615,8 +11614,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
               this.js(
                 layoutPath + pack + "/" + (bool ? "main1.js" : "main2.js"),
                 null,
-                function () {},
-                function () {}
+                function () { },
+                function () { }
               );
             });
           }
@@ -11781,8 +11780,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
           var listens = app.listens[event] || [];
           var filters = listen
             ? listens.filter(function (item) {
-                return item === listen || item.listen === listen;
-              })
+              return item === listen || item.listen === listen;
+            })
             : listens.slice(0);
           filters.forEach(function (item) {
             listens.remove(item);
@@ -11818,7 +11817,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
             });
             return;
           }
-          setText = typeof setText === "function" ? setText : function () {};
+          setText = typeof setText === "function" ? setText : function () { };
           var zip = new JSZip(data);
           var dirList = [],
             fileList = [];
@@ -12125,8 +12124,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
           lib.init.js(
             layoutPath + pack + "/" + (bool ? "main1.js" : "main2.js"),
             null,
-            function () {},
-            function () {}
+            function () { },
+            function () { }
           );
           switch (pack) {
             case "card":
@@ -12144,7 +12143,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
               lib.init.css(
                 layoutPath + pack,
                 (bool ? "main1" : "main2") +
-                  (get.is.phoneLayout() ? "" : "_window")
+                (get.is.phoneLayout() ? "" : "_window")
               );
               break;
           }
@@ -12239,7 +12238,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
           var boxTime = document.createElement("div");
           boxTime.data = 395; /*黄色条长度*/
           /*boxTime.style.cssText =
-						"width:399px;height:10px;margin:0 0 0 0;background-color: #F4C336;border-radius:2px; border-top:0px solid #000000;border-bottom:0px solid #000000;position: absolute;top: 1px;border-radius: 0.5px;"*/
+            "width:399px;height:10px;margin:0 0 0 0;background-color: #F4C336;border-radius:2px; border-top:0px solid #000000;border-bottom:0px solid #000000;position: absolute;top: 1px;border-radius: 0.5px;"*/
           boxTime.style.cssText =
             "z-index:1;width:399px;height:8px;margin:0 0 0 1px;background-color: #F4C336;border-top:3px solid #EBE1A7;border-bottom:2px solid #73640D;border-left:1px solid #73640D;position: absolute;top: 0px;border-radius:3px;";
           boxContent.appendChild(boxTime);
@@ -12432,16 +12431,16 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
           "display: block;--w: 420px;--h: calc(var(--w) * 430/911);width: var(--w);height: var(--h);position: fixed;left:30%;bottom:5%;opacity: 1;background-size: 100% 100%;background-color: transparent;z-index:99;";
         window.chatBg.style.transition = "all 1.5s";
         /*window.chatBg.style.height='170px';//调整对话框背景大小，位置
-				window.chatBg.style.width='550px';
-					window.chatBg.style.left='calc(50%-130px)';
-				window.chatBg.style.top='calc(100% - 470px)';
-				window.chatBg.style.opacity=1;*/
+        window.chatBg.style.width='550px';
+          window.chatBg.style.left='calc(50%-130px)';
+        window.chatBg.style.top='calc(100% - 470px)';
+        window.chatBg.style.opacity=1;*/
         window.chatBg.setBackgroundImage(
           "extension/十周年UI/shoushaUI/sayplay/chat.png"
         );
         /*window.chatBg.style.backgroundSize="100% 100%";
-				window.chatBg.style.transition='all 0.5s';
-				window.chatBg.style['box-shadow']='none';*/
+        window.chatBg.style.transition='all 0.5s';
+        window.chatBg.style['box-shadow']='none';*/
         ui.window.appendChild(window.chatBg);
 
         var clickFK = function (div) {
@@ -12596,11 +12595,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
         window.chatButton1.style.cssText =
           "display: block;--w: 80px;--h: calc(var(--w) * 82/98);width: var(--w);height: var(--h);left:40px;bottom:25px;transition:none;background-size:100% 100%";
         /*window.chatButton1.style.height='70px';
-				window.chatButton1.style.width='80px';
-				window.chatButton1.style.left='40px';
-				window.chatButton1.style.bottom='10px';
-				window.chatButton1.style.transition='none';
-				window.chatButton1.style.backgroundSize="100% 100%";*/
+        window.chatButton1.style.width='80px';
+        window.chatButton1.style.left='40px';
+        window.chatButton1.style.bottom='10px';
+        window.chatButton1.style.transition='none';
+        window.chatButton1.style.backgroundSize="100% 100%";*/
         window.chatButton1.setBackgroundImage(
           "extension/十周年UI/shoushaUI/sayplay/lifesay.png"
         );
@@ -12842,7 +12841,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
         lib.setScroll(window.qicai);
         clickFK(window.qicai);
         //-----7---小酒-------//
-        game.open_xiaojiu = function () {};
+        game.open_xiaojiu = function () { };
         window.xiaojiu = ui.create.div("hidden", "", game.open_xiaojiu);
         window.xiaojiu.style.cssText =
           "display: block;--w: 63px;--h: calc(var(--w) * 50/50);width: var(--w);height: var(--h);left:-230px;bottom:36px;transition:none;background-size:100% 100%";
@@ -12993,10 +12992,10 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
               function () {
                 game.me.say(
                   '<img style=width:34px height:34px src="' +
-                    lib.assetURL +
-                    "extension/十周年UI/shoushaUI/sayplay/emoji/" +
-                    this.pos +
-                    '.png">'
+                  lib.assetURL +
+                  "extension/十周年UI/shoushaUI/sayplay/emoji/" +
+                  this.pos +
+                  '.png">'
                 );
                 window.dialog_emoji.delete();
                 delete window.dialog_emoji;
@@ -13024,11 +13023,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
         window.chatButton2.style.cssText =
           "display: block;--w: 80px;--h: calc(var(--w) * 82/98);width: var(--w);height: var(--h);left:150px;bottom:25px;transition:none;background-size:100% 100%";
         /*window.chatButton2.style.height='70px';
-				window.chatButton2.style.width='80px';
-				window.chatButton2.style.left='150px';
-				window.chatButton2.style.bottom='10px';
-				window.chatButton2.style.transition='none';
-				window.chatButton2.style.backgroundSize="100% 100%";*/
+        window.chatButton2.style.width='80px';
+        window.chatButton2.style.left='150px';
+        window.chatButton2.style.bottom='10px';
+        window.chatButton2.style.transition='none';
+        window.chatButton2.style.backgroundSize="100% 100%";*/
         window.chatButton2.setBackgroundImage(
           "extension/十周年UI/shoushaUI/sayplay/emoji.png"
         );
@@ -13045,11 +13044,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
         window.chatButton3.style.cssText =
           "display: block;--w: 80px;--h: calc(var(--w) * 82/98);width: var(--w);height: var(--h);left:260px;bottom:25px;transition:none;background-size:100% 100%";
         /*window.chatButton3.style.height='70px';
-				window.chatButton3.style.width='80px';
-				window.chatButton3.style.left='260px';
-				window.chatButton3.style.bottom='10px';
-				window.chatButton3.style.transition='none';
-				window.chatButton3.style.backgroundSize="100% 100%";*/
+        window.chatButton3.style.width='80px';
+        window.chatButton3.style.left='260px';
+        window.chatButton3.style.bottom='10px';
+        window.chatButton3.style.transition='none';
+        window.chatButton3.style.backgroundSize="100% 100%";*/
         window.chatButton3.setBackgroundImage(
           "extension/十周年UI/shoushaUI/sayplay/jilu.png"
         );
@@ -13067,13 +13066,13 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
         window.chatSendBottom.style.cssText =
           "display: block;--w: 91px;--h: calc(var(--w) * 62/160);width: var(--w);height: var(--h);left:70%;top:33px;transition:none;background-size:100% 100%;text-align:center;border-randius:8px;";
         /*window.chatSendBottom.style.height='50px';
-				window.chatSendBottom.style.width='25%';
-				window.chatSendBottom.style.left='calc( 60% + 62px )';
-				window.chatSendBottom.style.top='23px';
-				window.chatSendBottom.style.transition='none';
-				window.chatSendBottom.style['text-align']='center';
-				window.chatSendBottom.style.borderRadius='8px';
-				window.chatSendBottom.style.backgroundSize="100% 100%";*/
+        window.chatSendBottom.style.width='25%';
+        window.chatSendBottom.style.left='calc( 60% + 62px )';
+        window.chatSendBottom.style.top='23px';
+        window.chatSendBottom.style.transition='none';
+        window.chatSendBottom.style['text-align']='center';
+        window.chatSendBottom.style.borderRadius='8px';
+        window.chatSendBottom.style.backgroundSize="100% 100%";*/
 
         window.chatSendBottom.setBackgroundImage(
           "extension/十周年UI/shoushaUI/sayplay/buttonsend.png"
@@ -13096,11 +13095,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
         window.chatInputOut.style.cssText =
           "display: block;--w: 265px;--h: calc(var(--w) * 50/280);width: var(--w);height: var(--h);left:30px;top:30px;transition:none;background-size:100% 100%;pointer-events:none;z-index:6;";
         /*window.chatInputOut.style.height='22px';
-				window.chatInputOut.style.width='60%';
-				window.chatInputOut.style.left='40px';
-				window.chatInputOut.style.top='40px';
-				window.chatInputOut.style.transition='none';
-				window.chatInputOut.style.backgroundSize="100% 100%";*/
+        window.chatInputOut.style.width='60%';
+        window.chatInputOut.style.left='40px';
+        window.chatInputOut.style.top='40px';
+        window.chatInputOut.style.transition='none';
+        window.chatInputOut.style.backgroundSize="100% 100%";*/
         window.chatInputOut.style.backgroundImage =
           "url('" +
           lib.assetURL +
@@ -13279,10 +13278,10 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
             //对应上面函数，把其他player的发言记录到框里
             game.addChatWord(
               "<font color=yellow>" +
-                get.translation("" + player.name) +
-                "</font><font color=white>：" +
-                str +
-                "</font>"
+              get.translation("" + player.name) +
+              "</font><font color=white>：" +
+              str +
+              "</font>"
             );
             player.sayTextWord(str);
           };
@@ -13398,9 +13397,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
         }
 
         /*setTimeout(function () {
-					div.style.left = pos[0] + '%';
-					div.style.width = pos[2] + '%';
-				}, 1);*/
+          div.style.left = pos[0] + '%';
+          div.style.width = pos[2] + '%';
+        }, 1);*/
 
         if (time === true) return true;
         setTimeout(function () {
