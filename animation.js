@@ -283,7 +283,7 @@ var duilib;
             x: rect.left,
             y:
               decadeUI.get.bodySize().height *
-                (useNewDpr ? window.documentZoom : 1) -
+              (useNewDpr ? window.documentZoom : 1) -
               rect.bottom,
             width: rect.width,
             height: rect.height,
@@ -557,7 +557,7 @@ var duilib;
 
       this.check = function () {
         if (!this.gl) {
-          function empty() {}
+          function empty() { }
           var key;
           for (key in this.__proto__) {
             if (typeof this.__proto__[key] == "function") {
@@ -940,7 +940,7 @@ var duilib;
         if (this.dprAdaptive == true)
           dpr = Math.max(
             window.devicePixelRatio *
-              (window.documentZoom ? window.documentZoom : 1),
+            (window.documentZoom ? window.documentZoom : 1),
             1
           );
 
@@ -971,7 +971,7 @@ var duilib;
         else
           dpr = Math.max(
             window.devicePixelRatio *
-              (window.documentZoom ? window.documentZoom : 1),
+            (window.documentZoom ? window.documentZoom : 1),
             1
           );
       }
@@ -1266,7 +1266,7 @@ var duilib;
           this.initialized = true;
           this.dpr = Math.max(
             window.devicePixelRatio *
-              (window.documentZoom ? window.documentZoom : 1),
+            (window.documentZoom ? window.documentZoom : 1),
             1
           );
           this.height = this.canvas.clientHeight;
@@ -1344,7 +1344,7 @@ var duilib;
 
       this.dpr = Math.max(
         window.devicePixelRatio *
-          (window.documentZoom ? window.documentZoom : 1),
+        (window.documentZoom ? window.documentZoom : 1),
         1
       );
       if (force === false) return;
@@ -1414,7 +1414,7 @@ var duilib;
     }
 
     var regex = /(firefox|chrome|safari)\/(\d+(?:\.\d+)+)/;
-    var result;
+    var result, userAgent;
     if (!(result = userAgent.match(regex))) return ["other", NaN, NaN, NaN];
 
     if (result[1] !== "safari") {
@@ -1861,11 +1861,11 @@ if (decadeModule)
             height: [0, 0.55],
           },
           /*动态边框: {//这部分别管
-					name: 'skin_chengzhu_ChengZhuBianKuang',
-					x: [12, 0.893],
-					y: [16, 0.15],
-					height: [0, 0.53],
-				},*/
+          name: 'skin_chengzhu_ChengZhuBianKuang',
+          x: [12, 0.893],
+          y: [16, 0.15],
+          height: [0, 0.53],
+        },*/
         },
         skin_caojinyu: {
           惊鸿: {
