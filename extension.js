@@ -14196,7 +14196,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
         "萌新（转型中）<br>十周年UI原作者：短歌<br>手杀UI原名：界面美化<br>手杀UI原作者：橙续缘",
       diskURL: "",
       forumURL: "",
-      version: "0.3.4",
+      version: "0.3.5",
     },
     files: {
       character: [],
