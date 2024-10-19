@@ -1414,7 +1414,7 @@ var duilib;
     }
 
     var regex = /(firefox|chrome|safari)\/(\d+(?:\.\d+)+)/;
-    var result, userAgent;
+    var result, userAgent = navigator.userAgent;
     if (!(result = userAgent.match(regex))) return ["other", NaN, NaN, NaN];
 
     if (result[1] !== "safari") {

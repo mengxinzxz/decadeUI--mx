@@ -1,5 +1,4 @@
 "use strict";
-importScripts("spine.js", "animation.js");
 
 Array.prototype.remove = function (item) {
   var index = this.indexOf(item);
@@ -16,6 +15,8 @@ var HTMLCanvasElement = function () {
 var HTMLElement = function () {
   return "HTMLElement";
 };
+
+importScripts("spine.js", "animation.js");
 var dynamics = [];
 dynamics.getById = function (id) {
   for (var i = 0; i < this.length; i++) {
