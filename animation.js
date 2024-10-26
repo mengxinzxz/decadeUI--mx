@@ -1385,8 +1385,7 @@ var duilib;
 
   function getInfo() {
     if (
-      typeof window.process != "undefined" &&
-      typeof window.process.versions == "object"
+      typeof window?.process?.versions == "object"
     ) {
       if (window.process.versions.chrome) {
         return [
