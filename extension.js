@@ -264,7 +264,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									if (parsedCardNumber == cardNumber) cardNumber = parsedCardNumber;
 									this.$suitnum.$num.innerHTML = get.strNumber(cardNumber, true) || "";
 									this.$suitnum.$suit.innerHTML = get.translation((this.dataset.suit = this.suit));
-                  
+
 									const equip = this.$equip;
 									const innerHTML = equip.innerHTML;
 									equip.$suitnum.innerHTML = innerHTML.slice(0, innerHTML.indexOf(" "));
@@ -11592,29 +11592,42 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				clear: true,
 			},
 		},
-		package: {
-			character: {
-				character: {},
-				translate: {},
-			},
-			card: {
-				card: {},
-				translate: {},
-				list: [],
-			},
-			skill: {
-				skill: {},
-				translate: {},
-			},
-			intro: (function () {
-				var log = ["魔改十周年 萌修 0.3.6-待定", "最低适配：v1.10.16", "新版适配", "为十周年UI搬运的《扩展OL》的自由选将筛选框添加名称ID和技能ID的精确匹配选项，并为其他选项的筛选支持正则化", "如果玩家主将存在groupBorder属性则使用groupBorder势力作为势力边框颜色", "修复电脑端无法使用dialog美化的bug", "修复手杀样式主动整理手牌按钮不会被noSortCard的tag无效化的bug", "修复设置了visible属性为false的lose事件仍显示$throw卡牌特效的bug"];
-				return '<p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join("<br>•") + "</p>";
-			})(),
-			author: "萌新（转型中）<br>十周年UI原作者：短歌<br>手杀UI原名：界面美化<br>手杀UI原作者：橙续缘",
-			diskURL: "",
-			forumURL: "",
-			version: "0.3.5",
-		},
+		package: (() => {
+			const pack = {
+				character: {
+					character: {},
+					translate: {},
+				},
+				card: {
+					card: {},
+					translate: {},
+					list: [],
+				},
+				skill: {
+					skill: {},
+					translate: {},
+				},
+				author: "萌新（转型中）<br>十周年UI原作者：短歌<br>手杀UI原名：界面美化<br>手杀UI原作者：橙续缘",
+				diskURL: "",
+				forumURL: "",
+				version: "0.3.6",
+			};
+			pack.intro = (pack => {
+				let log = [
+					"魔改十周年 萌修 " + pack.version,
+					"最低适配：v1.10.16",
+					"新版适配",
+					"统一扩展内js的格式",
+					"为十周年UI搬运的《扩展OL》的自由选将筛选框添加名称ID和技能ID的精确匹配选项，并为其他选项的筛选支持正则化",
+					"如果玩家主将存在groupBorder属性则使用groupBorder势力作为势力边框颜色",
+					"修复电脑端无法使用dialog美化的bug",
+					"修复手杀样式主动整理手牌按钮不会被noSortCard的tag无效化的bug",
+					"修复设置了visible属性为false的lose事件仍显示$throw卡牌特效的bug",
+				];
+				return '<a href="https://github.com/mengxinzxz/decadeUI--mx">点击前往萌修十周年Github仓库</a><br><p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join("<br>•") + "</p>";
+			})(pack);
+			return pack;
+		})(),
 		files: {
 			character: [],
 			card: [],
