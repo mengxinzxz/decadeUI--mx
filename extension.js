@@ -262,7 +262,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
               card: {
                 $init: function (card) {
                   base.lib.element.card.$init.apply(this, arguments);
-
+        
                   this.node.range.innerHTML = "";
                   var tags = [];
                   if (Array.isArray(card[4])) {
@@ -291,78 +291,58 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                       this.node.range.innerHTML += tagstr;
                     }
                   }
-
+        
                   const verticalName = this.$vertname;
                   this.$name.innerHTML = verticalName.innerHTML;
                   let cardNumber = this.number || "";
                   const parsedCardNumber = parseInt(cardNumber);
-
-                  if (parsedCardNumber == cardNumber)
-                    cardNumber = parsedCardNumber;
-
-                  switch (cardNumber) {
-                    case 1:
-                      this.$suitnum.$num.innerHTML = "A";
-                      break;
-                    case 11:
-                      this.$suitnum.$num.innerHTML = "J";
-                      break;
-                    case 12:
-                      this.$suitnum.$num.innerHTML = "Q";
-                      break;
-                    case 13:
-                      this.$suitnum.$num.innerHTML = "K";
-                      break;
-                    default:
-                      this.$suitnum.$num.innerHTML = cardNumber.toString();
-                  }
-
+        
+                  if (parsedCardNumber == cardNumber) cardNumber = parsedCardNumber;
+        
+                  if (lib.strNumber.has(cardNumber)) {
+                    this.$suitnum.$num.innerHTML = lib.strNumber.get(cardNumber);
+                  } else this.$suitnum.$num.innerHTML = cardNumber.toString();
+        
                   this.$suitnum.$suit.innerHTML = get.translation(
                     (this.dataset.suit = this.suit)
                   );
                   const equip = this.$equip;
                   const innerHTML = equip.innerHTML;
-                  equip.$suitnum.innerHTML = innerHTML.slice(
-                    0,
-                    innerHTML.indexOf(" ")
-                  );
-                  equip.$name.innerHTML = innerHTML.slice(
-                    innerHTML.indexOf(" ")
-                  );
+                  equip.$suitnum.innerHTML = innerHTML.slice(0, innerHTML.indexOf(" "));
+                  equip.$name.innerHTML = innerHTML.slice(innerHTML.indexOf(" "));
                   const node = this.node;
                   const background = node.background;
                   node.judgeMark.node.judge.innerHTML = background.innerHTML;
                   const classList = background.classList;
-
+        
                   if (classList.contains("tight")) classList.remove("tight");
-
+        
                   const cardStyle = this.style;
-
+        
                   if (cardStyle.color) cardStyle.removeProperty("color");
-
-                  if (cardStyle.textShadow)
-                    cardStyle.removeProperty("text-shadow");
-
+        
+                  if (cardStyle.textShadow) cardStyle.removeProperty("text-shadow");
+        
                   const info = node.info;
                   const infoStyle = info.style;
-
+        
                   if (infoStyle.opacity) infoStyle.removeProperty("opacity");
-
+        
                   const verticalNameStyle = verticalName.style;
-
+        
                   if (verticalNameStyle.opacity)
                     verticalNameStyle.removeProperty("opacity");
-
+        
                   if (info.childElementCount)
                     while (info.firstChild) {
                       info.removeChild(info.lastChild);
                     }
-
+        
                   if (equip.childElementCount)
                     while (equip.firstChild) {
                       equip.removeChild(equip.lastChild);
                     }
-
+        
                   var imgFormat = decadeUI.config.cardPrettify;
                   if (imgFormat != "off") {
                     let filename = card[2];
@@ -407,7 +387,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                             rawUrl: undefined,
                           };
                         }
-
+        
                         if (asset.loaded !== false) {
                           if (asset.loaded == undefined) {
                             var image = new Image();
@@ -415,7 +395,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                               asset.loaded = true;
                               image.onload = undefined;
                             };
-
+        
                             var card = this;
                             image.onerror = function () {
                               asset.loaded = false;
@@ -423,15 +403,14 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
                               card.style.background = asset.rawUrl;
                               card.classList.remove("decade-card");
                             };
-
+        
                             asset.url = url;
                             asset.rawUrl =
-                              this.style.background ||
-                              this.style.backgroundImage;
+                              this.style.background || this.style.backgroundImage;
                             asset.image = image;
                             image.src = url;
                           }
-
+        
                           this.style.background = 'url("' + url + '")';
                         } else {
                           this.classList.remove("decade-card");
