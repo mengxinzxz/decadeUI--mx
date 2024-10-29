@@ -95,31 +95,31 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						return ok;
 					}
 					/*
-          function override(dest, src) {
-            const getCover = function (from, to, getCover) {
-              if (get.is.object(from)) {
-                console.log(from);
-                for (const key in from) {
-                  getCover(from[key], to[key], getCover);
-                }
-              }
-              else {
-                to = from;
-              }
-            };
-            getCover(src, dest, getCover);
-          };
-          */
+		  function override(dest, src) {
+			const getCover = function (from, to, getCover) {
+			  if (get.is.object(from)) {
+				console.log(from);
+				for (const key in from) {
+				  getCover(from[key], to[key], getCover);
+				}
+			  }
+			  else {
+				to = from;
+			  }
+			};
+			getCover(src, dest, getCover);
+		  };
+		  */
 					//暂时用不上你了
 					/*
-          function overrides(dest, src) {
-            if (!dest._super) dest._super = {};
-            for (var key in src) {
-              if (dest[key]) dest._super[key] = dest[key];
-              dest[key] = src[key];
-            }
-          };
-          */
+		  function overrides(dest, src) {
+			if (!dest._super) dest._super = {};
+			for (var key in src) {
+			  if (dest[key]) dest._super[key] = dest[key];
+			  dest[key] = src[key];
+			}
+		  };
+		  */
 					var base = {
 						ui: {
 							create: {
@@ -260,7 +260,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									const verticalName = this.$vertname;
 									this.$name.innerHTML = verticalName.innerHTML;
 									let cardNumber = this.number;
-									this.$suitnum.$num.innerHTML = get.strNumber(cardNumber) || cardNumber || "";
+									this.$suitnum.$num.innerHTML = (cardNumber !== 0 ? get.strNumber(cardNumber) : false) || cardNumber || "";
 									this.$suitnum.$suit.innerHTML = get.translation((this.dataset.suit = this.suit));
 
 									const equip = this.$equip;
@@ -1967,10 +1967,10 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 												event.node.classList.add("thrownhighlight");
 											}
 											/*
-                    event.dialog = ui.create.dialog(str);
-                    event.dialog.classList.add('center');
-                    event.dialog.videoId = id;
-                    */
+					event.dialog = ui.create.dialog(str);
+					event.dialog.classList.add('center');
+					event.dialog.videoId = id;
+					*/
 										},
 										player,
 										player.judging[0] /*, judgestr*/,
@@ -2013,9 +2013,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									game.broadcast(
 										function (/*id*/) {
 											/*
-                    var dialog = get.idDialog(id);
-                    if (dialog) dialog.close();
-                    */
+					var dialog = get.idDialog(id);
+					if (dialog) dialog.close();
+					*/
 											if (!window.decadeUI) ui.arena.classList.remove("thrownhighlight");
 										} /*, event.videoId*/
 									);
@@ -3525,12 +3525,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						var equipSolts = (ui.equipSolts = decadeUI.element.create("equips-wrap"));
 						equipSolts.back = decadeUI.element.create("equips-back", equipSolts);
 						/*
-            decadeUI.element.create('icon icon-treasure', decadeUI.element.create('equip0', equipSolts.back));
-            decadeUI.element.create('icon icon-saber', decadeUI.element.create('equip1', equipSolts.back));
-            decadeUI.element.create('icon icon-shield', decadeUI.element.create('equip2', equipSolts.back));
-            decadeUI.element.create('icon icon-mount', decadeUI.element.create('equip3', equipSolts.back));
-            decadeUI.element.create('icon icon-mount', decadeUI.element.create('equip4', equipSolts.back));
-            */
+			decadeUI.element.create('icon icon-treasure', decadeUI.element.create('equip0', equipSolts.back));
+			decadeUI.element.create('icon icon-saber', decadeUI.element.create('equip1', equipSolts.back));
+			decadeUI.element.create('icon icon-shield', decadeUI.element.create('equip2', equipSolts.back));
+			decadeUI.element.create('icon icon-mount', decadeUI.element.create('equip3', equipSolts.back));
+			decadeUI.element.create('icon icon-mount', decadeUI.element.create('equip4', equipSolts.back));
+			*/
 						for (var repetition = 0; repetition < 5; repetition++) {
 							var ediv = decadeUI.element.create(null, equipSolts.back);
 							ediv.dataset.type = repetition;
@@ -9943,7 +9943,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					var boxTime = document.createElement("div");
 					boxTime.data = 395; /*黄色条长度*/
 					/*boxTime.style.cssText =
-            "width:399px;height:10px;margin:0 0 0 0;background-color: #F4C336;border-radius:2px; border-top:0px solid #000000;border-bottom:0px solid #000000;position: absolute;top: 1px;border-radius: 0.5px;"*/
+			"width:399px;height:10px;margin:0 0 0 0;background-color: #F4C336;border-radius:2px; border-top:0px solid #000000;border-bottom:0px solid #000000;position: absolute;top: 1px;border-radius: 0.5px;"*/
 					boxTime.style.cssText = "z-index:1;width:399px;height:8px;margin:0 0 0 1px;background-color: #F4C336;border-top:3px solid #EBE1A7;border-bottom:2px solid #73640D;border-left:1px solid #73640D;position: absolute;top: 0px;border-radius:3px;";
 					boxContent.appendChild(boxTime);
 
@@ -10107,14 +10107,14 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				window.chatBg.style.cssText = "display: block;--w: 420px;--h: calc(var(--w) * 430/911);width: var(--w);height: var(--h);position: fixed;left:30%;bottom:5%;opacity: 1;background-size: 100% 100%;background-color: transparent;z-index:99;";
 				window.chatBg.style.transition = "all 1.5s";
 				/*window.chatBg.style.height='170px';//调整对话框背景大小，位置
-        window.chatBg.style.width='550px';
-          window.chatBg.style.left='calc(50%-130px)';
-        window.chatBg.style.top='calc(100% - 470px)';
-        window.chatBg.style.opacity=1;*/
+		window.chatBg.style.width='550px';
+		  window.chatBg.style.left='calc(50%-130px)';
+		window.chatBg.style.top='calc(100% - 470px)';
+		window.chatBg.style.opacity=1;*/
 				window.chatBg.setBackgroundImage("extension/十周年UI/shoushaUI/sayplay/chat.png");
 				/*window.chatBg.style.backgroundSize="100% 100%";
-        window.chatBg.style.transition='all 0.5s';
-        window.chatBg.style['box-shadow']='none';*/
+		window.chatBg.style.transition='all 0.5s';
+		window.chatBg.style['box-shadow']='none';*/
 				ui.window.appendChild(window.chatBg);
 
 				var clickFK = function (div) {
@@ -10237,11 +10237,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				window.chatButton1 = ui.create.div("hidden", "", game.open_lifesay);
 				window.chatButton1.style.cssText = "display: block;--w: 80px;--h: calc(var(--w) * 82/98);width: var(--w);height: var(--h);left:40px;bottom:25px;transition:none;background-size:100% 100%";
 				/*window.chatButton1.style.height='70px';
-        window.chatButton1.style.width='80px';
-        window.chatButton1.style.left='40px';
-        window.chatButton1.style.bottom='10px';
-        window.chatButton1.style.transition='none';
-        window.chatButton1.style.backgroundSize="100% 100%";*/
+		window.chatButton1.style.width='80px';
+		window.chatButton1.style.left='40px';
+		window.chatButton1.style.bottom='10px';
+		window.chatButton1.style.transition='none';
+		window.chatButton1.style.backgroundSize="100% 100%";*/
 				window.chatButton1.setBackgroundImage("extension/十周年UI/shoushaUI/sayplay/lifesay.png");
 
 				lib.setScroll(window.chatButton1);
@@ -10601,11 +10601,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				window.chatButton2 = ui.create.div("hidden", "", game.open_emoji);
 				window.chatButton2.style.cssText = "display: block;--w: 80px;--h: calc(var(--w) * 82/98);width: var(--w);height: var(--h);left:150px;bottom:25px;transition:none;background-size:100% 100%";
 				/*window.chatButton2.style.height='70px';
-        window.chatButton2.style.width='80px';
-        window.chatButton2.style.left='150px';
-        window.chatButton2.style.bottom='10px';
-        window.chatButton2.style.transition='none';
-        window.chatButton2.style.backgroundSize="100% 100%";*/
+		window.chatButton2.style.width='80px';
+		window.chatButton2.style.left='150px';
+		window.chatButton2.style.bottom='10px';
+		window.chatButton2.style.transition='none';
+		window.chatButton2.style.backgroundSize="100% 100%";*/
 				window.chatButton2.setBackgroundImage("extension/十周年UI/shoushaUI/sayplay/emoji.png");
 
 				lib.setScroll(window.chatButton2);
@@ -10619,11 +10619,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				window.chatButton3 = ui.create.div("hidden", "", game.open_jilu);
 				window.chatButton3.style.cssText = "display: block;--w: 80px;--h: calc(var(--w) * 82/98);width: var(--w);height: var(--h);left:260px;bottom:25px;transition:none;background-size:100% 100%";
 				/*window.chatButton3.style.height='70px';
-        window.chatButton3.style.width='80px';
-        window.chatButton3.style.left='260px';
-        window.chatButton3.style.bottom='10px';
-        window.chatButton3.style.transition='none';
-        window.chatButton3.style.backgroundSize="100% 100%";*/
+		window.chatButton3.style.width='80px';
+		window.chatButton3.style.left='260px';
+		window.chatButton3.style.bottom='10px';
+		window.chatButton3.style.transition='none';
+		window.chatButton3.style.backgroundSize="100% 100%";*/
 				window.chatButton3.setBackgroundImage("extension/十周年UI/shoushaUI/sayplay/jilu.png");
 
 				lib.setScroll(window.chatButton3);
@@ -10638,13 +10638,13 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				});
 				window.chatSendBottom.style.cssText = "display: block;--w: 91px;--h: calc(var(--w) * 62/160);width: var(--w);height: var(--h);left:70%;top:33px;transition:none;background-size:100% 100%;text-align:center;border-randius:8px;";
 				/*window.chatSendBottom.style.height='50px';
-        window.chatSendBottom.style.width='25%';
-        window.chatSendBottom.style.left='calc( 60% + 62px )';
-        window.chatSendBottom.style.top='23px';
-        window.chatSendBottom.style.transition='none';
-        window.chatSendBottom.style['text-align']='center';
-        window.chatSendBottom.style.borderRadius='8px';
-        window.chatSendBottom.style.backgroundSize="100% 100%";*/
+		window.chatSendBottom.style.width='25%';
+		window.chatSendBottom.style.left='calc( 60% + 62px )';
+		window.chatSendBottom.style.top='23px';
+		window.chatSendBottom.style.transition='none';
+		window.chatSendBottom.style['text-align']='center';
+		window.chatSendBottom.style.borderRadius='8px';
+		window.chatSendBottom.style.backgroundSize="100% 100%";*/
 
 				window.chatSendBottom.setBackgroundImage("extension/十周年UI/shoushaUI/sayplay/buttonsend.png");
 				window.chatSendBottom.innerHTML = '<span style="color:white;font-size:22px;line-height:32px;font-weight:400;font-family:shousha">发送</span>';
@@ -10663,11 +10663,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				window.chatInputOut = ui.create.div("hidden");
 				window.chatInputOut.style.cssText = "display: block;--w: 265px;--h: calc(var(--w) * 50/280);width: var(--w);height: var(--h);left:30px;top:30px;transition:none;background-size:100% 100%;pointer-events:none;z-index:6;";
 				/*window.chatInputOut.style.height='22px';
-        window.chatInputOut.style.width='60%';
-        window.chatInputOut.style.left='40px';
-        window.chatInputOut.style.top='40px';
-        window.chatInputOut.style.transition='none';
-        window.chatInputOut.style.backgroundSize="100% 100%";*/
+		window.chatInputOut.style.width='60%';
+		window.chatInputOut.style.left='40px';
+		window.chatInputOut.style.top='40px';
+		window.chatInputOut.style.transition='none';
+		window.chatInputOut.style.backgroundSize="100% 100%";*/
 				window.chatInputOut.style.backgroundImage = "url('" + lib.assetURL + "extension/十周年UI/shoushaUI/sayplay/sayX.png')";
 
 				window.chatBg.appendChild(window.chatInputOut);
@@ -10914,9 +10914,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				}
 
 				/*setTimeout(function () {
-          div.style.left = pos[0] + '%';
-          div.style.width = pos[2] + '%';
-        }, 1);*/
+		  div.style.left = pos[0] + '%';
+		  div.style.width = pos[2] + '%';
+		}, 1);*/
 
 				if (time === true) return true;
 				setTimeout(function () {
@@ -11613,7 +11613,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			pack.intro = (pack => {
 				let log = [
 					"魔改十周年 萌修 " + pack.version,
-					"最低适配：v1.10.17",
+					"最低适配：v1.10.17 - 待定", 
 					"新版适配",
 				];
 				return '<a href="https://github.com/mengxinzxz/decadeUI--mx">点击前往萌修十周年Github仓库</a><br><p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join("<br>•") + "</p>";
