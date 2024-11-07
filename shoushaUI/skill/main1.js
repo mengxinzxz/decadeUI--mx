@@ -174,46 +174,18 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
     },
     controlElement: {
       add: function (skill, eSkills) {
-        //-----------//
         var addSpan = function (node, num) {
-          var numArray = [
-            "",
-            "①",
-            "②",
-            "③",
-            "④",
-            "⑤",
-            "⑥",
-            "⑦",
-            "⑧",
-            "⑨",
-            "⑩",
-            "⑪",
-            "⑫",
-            "⑬",
-            "⑭",
-            "⑮",
-            "⑯",
-            "⑰",
-            "⑱",
-            "⑲",
-            "⑳",
-            "㉑",
-            "㉒",
-            "㉓",
-          ];
-
+          var numArray = ["", "①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩", "⑪", "⑫", "⑬", "⑭", "⑮", "⑯", "⑰", "⑱", "⑲", "⑳"];
           var text = document.createElement("span");
           text.classList.add("numText");
           var numTextChild = document.createElement("span");
           //数字阴影
           numTextChild.classList.add("numText-child");
-          numTextChild.innerText = numArray[num];
+          numTextChild.innerText = numArray[num] || ('(' + num + ')');
           node.appendChild(numTextChild);
           node.appendChild(text);
-          text.innerText = numArray[num];
+          text.innerText = numArray[num] || ('(' + num + ')');
         };
-        //--------------//
         //白板锁
         var baibanSkillBlocker = [];
         var fengyinSkillBlocker = [];
