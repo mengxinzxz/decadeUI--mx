@@ -4,7 +4,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
     filter: function () {
       return !["chess", "tafang"].includes(get.mode());
     },
-    content: function (next) {},
+    content: function (next) { },
     precontent: function () {
       Object.assign(ui.create, {
         skills: function (skills) {
@@ -265,25 +265,6 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
         var showSkills = enableSkills.length ? enableSkills : skills;
 
         showSkills.forEach(function (item) {
-          //技能锁，不需要加数字
-          var showAddSpan = true;
-          if (
-            game.me.hasSkill("baiban") &&
-            baibanSkillBlocker &&
-            baibanSkillBlocker.includes(item.id)
-          ) {
-            showAddSpan = false;
-          }
-          if (
-            game.me.hasSkill("fengyin") &&
-            fengyinSkillBlocker &&
-            fengyinSkillBlocker.includes(item.id)
-          ) {
-            showAddSpan = false;
-          }
-          if (game.me.shixiaoedSkills.includes(item.id)) {
-            showAddSpan = false;
-          }
           //势力技能筛选
           if (lib.skill[item.id].filter) {
             if (
@@ -382,158 +363,20 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
               //}
             }
             //--------0---------//
-            //技能剩余次数 showAddSpan==false 技能失效不需要加数字
-            if (showAddSpan) {
-              var boolRename = false;
-
-              if (
-                item.info &&
-                typeof item.info.usable == "number" &&
-                item.info.usable > 1
-              ) {
-                if (game.me.getStat()) {
-                  if (game.me.getStat().skill) {
-                    if (game.me.getStat().skill[item.id]) {
-                      if (game.me.getStat().skill[item.id] < item.info.usable) {
-                        addSpan(
-                          node,
-                          item.info.usable - game.me.getStat().skill[item.id]
-                        );
-                        boolRename = true;
-                      } else if (
-                        game.me.getStat().skill[item.id] == item.info.usable
-                      ) {
-                        boolRename = true;
-                      }
-                    }
-                  }
-                }
-
-                if (
-                  game.me.hasSkill("counttrigger") &&
-                  game.me.storage.counttrigger
-                ) {
-                  if (
-                    item.id &&
-                    game.me.storage.counttrigger[item.id] < item.info.usable
-                  ) {
-                    addSpan(
-                      node,
-                      item.info.usable - game.me.storage.counttrigger[item.id]
-                    );
-                    boolRename = true;
-                  } else if (
-                    item.info.group &&
-                    game.me.storage.counttrigger[item.id] == item.info.usable
-                  ) {
-                    boolRename = true;
-                  }
-                }
-
-                if (
-                  game.me.hasSkill("counttrigger") &&
-                  game.me.storage.counttrigger &&
-                  item.info.subSkill &&
-                  item.info.subSkill.add &&
-                  item.info.subSkill.add.usable
-                ) {
-                  if (
-                    item.info.group &&
-                    game.me.storage.counttrigger[item.info.group] <
-                      item.info.subSkill.add.usable
-                  ) {
-                    addSpan(
-                      node,
-                      item.info.usable - game.me.storage.counttrigger[item.id]
-                    );
-                    boolRename = true;
-                  } else if (
-                    item.info.group &&
-                    game.me.storage.counttrigger[item.info.group] ==
-                      item.info.subSkill.add.usable
-                  ) {
-                    boolRename = true;
-                  }
-                }
-                if (!boolRename) {
-                  addSpan(node, item.info.usable);
-                }
-              } else if (
-                item.info &&
-                item.info.subSkill &&
-                item.info.subSkill.add &&
-                item.info.subSkill.add.usable > 1
-              ) {
-                if (game.me.getStat()) {
-                  if (game.me.getStat().skill) {
-                    if (game.me.getStat().skill[item.info.group]) {
-                      if (
-                        item.info.group &&
-                        game.me.getStat().skill[item.info.group] <
-                          item.info.subSkill.add.usable
-                      ) {
-                        addSpan(
-                          node,
-                          item.info.subSkill.add.usable -
-                            game.me.getStat().skill[item.info.group]
-                        );
-                        boolRename = true;
-                      } else if (
-                        item.info.group &&
-                        game.me.getStat().skill[item.info.group] ==
-                          item.info.subSkill.add.usable
-                      ) {
-                        boolRename = true;
-                      }
-                    }
-                  }
-                }
-
-                if (
-                  game.me.hasSkill("counttrigger") &&
-                  game.me.storage.counttrigger &&
-                  item.info.subSkill &&
-                  item.info.subSkill.add &&
-                  item.info.subSkill.add.usable
-                ) {
-                  if (
-                    item.info.group &&
-                    game.me.storage.counttrigger[item.info.group] <
-                      item.info.subSkill.add.usable
-                  ) {
-                    addSpan(
-                      node,
-                      item.info.subSkill.add.usable -
-                        game.me.storage.counttrigger[item.info.group]
-                    );
-                    boolRename = true;
-                  } else if (
-                    item.info.group &&
-                    game.me.storage.counttrigger[item.info.group] ==
-                      item.info.subSkill.add.usable
-                  ) {
-                    boolRename = true;
-                  }
-                }
-                if (!boolRename) {
-                  addSpan(node, item.info.subSkill.add.usable);
-                }
-              } else if (item.id == "dbquedi") {
-                //却敌特殊机制，每回合限一次usable=1，能重置次数,单独判断
-
-                if (!game.me.storage.counttrigger)
-                  game.me.storage.counttrigger = {};
-                if (!game.me.storage.counttrigger.dbquedi)
-                  game.me.storage.counttrigger.dbquedi = 0;
-
-                if (game.me.storage.counttrigger) {
-                  if (
-                    game.me.storage.counttrigger[item.id] < item.info.usable
-                  ) {
-                    addSpan(
-                      node,
-                      item.info.usable - game.me.storage.counttrigger[item.id]
-                    );
+            //技能剩余次数
+            if (game.me.hasSkill(item.id)) {
+              let skills = [item.id], player = game.me;
+              if (item.info.group) skills.add(...item.info.group);
+              skills = skills.filter(skill => (get.info(skill) || {}.usable) !== undefined);
+              if (skills.length) {
+                for (const skill of skills) {
+                  let num = get.info(skill).usable;
+                  if (typeof num === 'function') num = num(skill, player);
+                  if (typeof num === 'number' && (skill === 'dbquedi' || num > 1)) {
+                    let used = 0;
+                    used += get.skillCount(skill, player);
+                    used += player?.storage?.counttrigger?.[skill] || 0;
+                    addSpan(node, num - used);
                   }
                 }
               }
@@ -559,12 +402,6 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
               ) {
                 //封印锁
                 var img = ui.create.div(".suo1.fengyinsuo", node, "");
-                img.style.position = "absolute";
-                node.style["-webkit-text-fill-color"] = "silver"; //失效变灰
-                node.style["-webkit-text-stroke"] = "0.8px rgba(0,0,0,0.55)";
-              } else if (game.me.shixiaoedSkills.includes(item.id)) {
-                //技能锁
-                var img = ui.create.div(".suo1.jinengsuo", node, "");
                 img.style.position = "absolute";
                 node.style["-webkit-text-fill-color"] = "silver"; //失效变灰
                 node.style["-webkit-text-stroke"] = "0.8px rgba(0,0,0,0.55)";
@@ -629,12 +466,6 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
               img.style.position = "absolute";
               node.style["-webkit-text-fill-color"] = "silver"; //失效变灰
               node.style["-webkit-text-stroke"] = "0.8px rgba(0,0,0,0.55)";
-            } else if (game.me.shixiaoedSkills.includes(item.id)) {
-              //技能锁
-              var img = ui.create.div(".suo1.jinengsuo", node, "");
-              img.style.position = "absolute";
-              node.style["-webkit-text-fill-color"] = "silver"; //失效变灰
-              node.style["-webkit-text-stroke"] = "0.8px rgba(0,0,0,0.55)";
             }
 
             if (
@@ -651,158 +482,20 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
             }
 
             //--------0---------//
-            //技能剩余次数 showAddSpan==false 技能失效不需要加数字
-            if (showAddSpan) {
-              var boolRename = false;
-              if (
-                item.info &&
-                typeof item.info.usable == "number" &&
-                item.info.usable > 1
-              ) {
-                if (game.me.getStat()) {
-                  if (game.me.getStat().skill) {
-                    if (game.me.getStat().skill[item.id]) {
-                      if (game.me.getStat().skill[item.id] < item.info.usable) {
-                        addSpan(
-                          node,
-                          item.info.usable - game.me.getStat().skill[item.id]
-                        );
-
-                        boolRename = true;
-                      } else if (
-                        game.me.getStat().skill[item.id] == item.info.usable
-                      ) {
-                        boolRename = true;
-                      }
-                    }
-                  }
-                }
-                if (
-                  game.me.hasSkill("counttrigger") &&
-                  game.me.storage.counttrigger
-                ) {
-                  if (
-                    item.id &&
-                    game.me.storage.counttrigger[item.id] < item.info.usable
-                  ) {
-                    addSpan(
-                      node,
-                      item.info.usable - game.me.storage.counttrigger[item.id]
-                    );
-                    boolRename = true;
-                  } else if (
-                    item.id &&
-                    game.me.storage.counttrigger[item.id] == item.info.usable
-                  ) {
-                    boolRename = true;
-                  }
-                }
-
-                if (
-                  game.me.hasSkill("counttrigger") &&
-                  game.me.storage.counttrigger &&
-                  item.info.subSkill &&
-                  item.info.subSkill.add &&
-                  item.info.subSkill.add.usable
-                ) {
-                  if (
-                    item.info.group &&
-                    game.me.storage.counttrigger[item.info.group] <
-                      item.info.subSkill.add.usable
-                  ) {
-                    addSpan(
-                      node,
-                      item.info.usable - game.me.storage.counttrigger[item.id]
-                    );
-                    boolRename = true;
-                  } else if (
-                    item.info.group &&
-                    game.me.storage.counttrigger[item.info.group] ==
-                      item.info.subSkill.add.usable
-                  ) {
-                    boolRename = true;
-                  }
-                }
-                if (!boolRename) {
-                  addSpan(node, item.info.usable);
-                }
-              } else if (
-                item.info &&
-                item.info.subSkill &&
-                item.info.subSkill.add &&
-                item.info.subSkill.add.usable > 1
-              ) {
-                if (game.me.getStat()) {
-                  if (game.me.getStat().skill) {
-                    if (game.me.getStat().skill[item.info.group]) {
-                      if (
-                        item.info.group &&
-                        game.me.getStat().skill[item.info.group] <
-                          item.info.subSkill.add.usable
-                      ) {
-                        addSpan(
-                          node,
-                          item.info.subSkill.add.usable -
-                            game.me.getStat().skill[item.info.group]
-                        );
-                        boolRename = true;
-                      } else if (
-                        item.info.group &&
-                        game.me.getStat().skill[item.info.group] ==
-                          item.info.subSkill.add.usable
-                      ) {
-                        boolRename = true;
-                      }
-                    }
-                  }
-                }
-
-                if (
-                  game.me.hasSkill("counttrigger") &&
-                  game.me.storage.counttrigger &&
-                  item.info.subSkill &&
-                  item.info.subSkill.add &&
-                  item.info.subSkill.add.usable
-                ) {
-                  if (
-                    item.info.group &&
-                    game.me.storage.counttrigger[item.info.group] <
-                      item.info.subSkill.add.usable
-                  ) {
-                    addSpan(
-                      node,
-                      item.info.subSkill.add.usable -
-                        game.me.storage.counttrigger[item.info.group]
-                    );
-
-                    boolRename = true;
-                  } else if (
-                    item.info.group &&
-                    game.me.storage.counttrigger[item.info.group] ==
-                      item.info.subSkill.add.usable
-                  ) {
-                    boolRename = true;
-                  }
-                }
-                if (!boolRename) {
-                  addSpan(node, item.info.subSkill.add.usable);
-                }
-              } else if (item.id == "dbquedi") {
-                //却敌特殊机制，每回合限一次usable=1，能重置次数,单独判断
-
-                if (!game.me.storage.counttrigger)
-                  game.me.storage.counttrigger = {};
-                if (!game.me.storage.counttrigger.dbquedi)
-                  game.me.storage.counttrigger.dbquedi = 0;
-
-                if (game.me.storage.counttrigger) {
-                  if (
-                    game.me.storage.counttrigger[item.id] < item.info.usable
-                  ) {
-                    addSpan(
-                      node,
-                      item.info.usable - game.me.storage.counttrigger[item.id]
-                    );
+            //技能剩余次数
+            if (game.me.hasSkill(item.id)) {
+              let skills = [item.id], player = game.me;
+              if (item.info.group) skills.add(...item.info.group);
+              skills = skills.filter(skill => (get.info(skill) || {}.usable) !== undefined);
+              if (skills.length) {
+                for (const skill of skills) {
+                  let num = get.info(skill).usable;
+                  if (typeof num === 'function') num = num(skill, player);
+                  if (typeof num === 'number' && (skill === 'dbquedi' || num > 1)) {
+                    let used = 0;
+                    used += get.skillCount(skill, player);
+                    used += player?.storage?.counttrigger?.[skill] || 0;
+                    addSpan(node, num - used);
                   }
                 }
               }
@@ -840,16 +533,16 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
           ui.skillControl.node.enable.childNodes.length > 2
             ? "200px"
             : ui.skillControl.node.enable.childNodes.length > 0
-            ? "114px"
-            : "0px";
+              ? "114px"
+              : "0px";
 
         var level1 = Math.min(4, this.node.trigger.childNodes.length);
         var level2 =
           this.node.enable.childNodes.length > 2
             ? 4
             : this.node.enable.childNodes.length > 0
-            ? 2
-            : 0;
+              ? 2
+              : 0;
         var level = Math.max(level1, level2);
         ui.arena.dataset.sclevel = level;
       },

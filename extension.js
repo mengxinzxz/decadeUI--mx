@@ -2411,7 +2411,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							}
 						},
 
-						updatem: function (player) {},
+						updatem: function (player) { },
 
 						updatez: function () {
 							window.documentZoom = game.documentZoom;
@@ -7192,7 +7192,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 					return element;
 				},
-				clone: function (element) {},
+				clone: function (element) { },
 			};
 
 			decadeUI.game = {
@@ -9379,8 +9379,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							this.js(
 								layoutPath + pack + "/" + (bool ? "main1.js" : "main2.js"),
 								null,
-								function () {},
-								function () {}
+								function () { },
+								function () { }
 							);
 						});
 					}
@@ -9541,8 +9541,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					var listens = app.listens[event] || [];
 					var filters = listen
 						? listens.filter(function (item) {
-								return item === listen || item.listen === listen;
-						  })
+							return item === listen || item.listen === listen;
+						})
 						: listens.slice(0);
 					filters.forEach(function (item) {
 						listens.remove(item);
@@ -9577,7 +9577,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						});
 						return;
 					}
-					setText = typeof setText === "function" ? setText : function () {};
+					setText = typeof setText === "function" ? setText : function () { };
 					var zip = new JSZip(data);
 					var dirList = [],
 						fileList = [];
@@ -9845,8 +9845,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					lib.init.js(
 						layoutPath + pack + "/" + (bool ? "main1.js" : "main2.js"),
 						null,
-						function () {},
-						function () {}
+						function () { },
+						function () { }
 					);
 					switch (pack) {
 						case "card":
@@ -10459,7 +10459,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				lib.setScroll(window.qicai);
 				clickFK(window.qicai);
 				//-----7---小酒-------//
-				game.open_xiaojiu = function () {};
+				game.open_xiaojiu = function () { };
 				window.xiaojiu = ui.create.div("hidden", "", game.open_xiaojiu);
 				window.xiaojiu.style.cssText = "display: block;--w: 63px;--h: calc(var(--w) * 50/50);width: var(--w);height: var(--h);left:-230px;bottom:36px;transition:none;background-size:100% 100%";
 
@@ -11613,8 +11613,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			pack.intro = (pack => {
 				let log = [
 					"魔改十周年 萌修 " + pack.version,
-					"最低适配：v1.10.17 - 待定", 
+					"最低适配：v1.10.17 - 待定",
 					"新版适配",
+					'大幅简化手杀样式技能剩余次数的写法',
 				];
 				return '<a href="https://github.com/mengxinzxz/decadeUI--mx">点击前往萌修十周年Github仓库</a><br><p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join("<br>•") + "</p>";
 			})(pack);
