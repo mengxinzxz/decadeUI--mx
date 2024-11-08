@@ -11616,6 +11616,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					"最低适配：v1.10.17 - 待定",
 					"新版适配",
 					'大幅简化手杀样式技能剩余次数的写法',
+					'挑战模式boss名称显示位置优化（by - 幻翼幽冥）',
 				];
 				return '<a href="https://github.com/mengxinzxz/decadeUI--mx">点击前往萌修十周年Github仓库</a><br><p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join("<br>•") + "</p>";
 			})(pack);
