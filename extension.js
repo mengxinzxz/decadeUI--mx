@@ -485,7 +485,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 							player: {
 								mark: function (item, info, skill) {
-									if (item &&lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff"&&lib.config["extension_十周年UI_newDecadeStyle"] != "on") {
+									if (item && lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff" && lib.config["extension_十周年UI_newDecadeStyle"] != "on") {
 										const info = get.info(item);
 										if (info && (info.zhuanhuanji || info.limited)) return;
 									}
@@ -557,14 +557,14 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									return mark;
 								},
 								markSkill: function (name, info, card, nobroadcast) {
-									if (name &&lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff"&&lib.config["extension_十周年UI_newDecadeStyle"] != "on") {
+									if (name && lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff" && lib.config["extension_十周年UI_newDecadeStyle"] != "on") {
 										const info = get.info(name);
 										if (info && (info.zhuanhuanji || info.limited)) return;
 									}
 									return base.lib.element.player.markSkill.apply(this, arguments);
 								},
 								unmarkSkill: function (name, info, card, nobroadcast) {
-									if (name &&lib.config["extension_十周年UI_newDecadeStyle"] != "otheroff"&& lib.config["extension_十周年UI_newDecadeStyle"] != "on") {
+									if (name && lib.config["extension_十周年UI_newDecadeStyle"] != "otheroff" && lib.config["extension_十周年UI_newDecadeStyle"] != "on") {
 										const info = get.info(name);
 										if (info && (info.zhuanhuanji || info.limited)) return;
 									}
@@ -832,14 +832,14 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									var that = this;
 									var image = new Image();
 									var identity = decadeUI.getPlayerIdentity(this);
-									var url = decadeUIPath + "image/decoration" + (decadeUI.config.newDecadeStyle == "on" ? "" : "s") + "/dead" + ((lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff"||decadeUI.config.newDecadeStyle == "on" )? "" : "2") + "_" + identity + ".png";
+									var url = decadeUIPath + "image/decoration" + (decadeUI.config.newDecadeStyle == "on" ? "" : "s") + "/dead" + ((lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff" || decadeUI.config.newDecadeStyle == "on") ? "" : "2") + "_" + identity + ".png";
 									image.onerror = function () {
 										that.node.dieidentity.innerHTML = decadeUI.getPlayerIdentity(that, that.identity, true) + "<br>阵亡";
 									};
 
 									// 随机离开效果
 									if ((that._trueMe || that) != game.me && that != game.me && Math.random() < 0.5) {
-										if (lib.config.extension_十周年UI_newDecadeStyle == "on"||lib.config["extension_十周年UI_newDecadeStyle"] == "othersOff") {
+										if (lib.config.extension_十周年UI_newDecadeStyle == "on" || lib.config["extension_十周年UI_newDecadeStyle"] == "othersOff") {
 											that.node.dieidentity.innerHTML = '<div style="width:40.2px; height:20px; left:0px; top:-32px; position:absolute; background-image: url(' + lib.assetURL + 'extension/十周年UI/assets/image/likai_1.png);background-size: 100% 100%;"></div>';
 										}
 
@@ -3195,7 +3195,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					lib.hooks["checkEnd"].push(function decadeUI_UIconfirm() {
 						if (ui.confirm && ui.confirm.lastChild.link == "cancel") {
 							if (_status.event.type == "phase") {
-								const innerHTML = (lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff"||decadeUI.config.newDecadeStyle == "on" ) ? "回合结束" : "结束出牌";
+								const innerHTML = (lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff" || decadeUI.config.newDecadeStyle == "on") ? "回合结束" : "结束出牌";
 								ui.confirm.lastChild.innerHTML = _status.event.skill ? "取消" : innerHTML;
 							}
 						}
@@ -3827,7 +3827,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 										/*-----------------分割线-----------------*/
 										// 不同样式身份标记
-										if (lib.config.extension_十周年UI_newDecadeStyle == "on"||lib.config["extension_十周年UI_newDecadeStyle"] == "othersOff") {
+										if (lib.config.extension_十周年UI_newDecadeStyle == "on" || lib.config["extension_十周年UI_newDecadeStyle"] == "othersOff") {
 											image.src = decadeUIPath + "image/decoration/identity_" + filename + ".png";
 										} else {
 											image.src = decadeUIPath + "image/decorations/identity2_" + filename + ".png";
@@ -3909,7 +3909,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										var html = "";
 										for (var i = 0; i < sender.skills.length; i++) {
 											/*-----------------分割线-----------------*/
-											if (lib.config.extension_十周年UI_newDecadeStyle == "on"||lib.config["extension_十周年UI_newDecadeStyle"] == "othersOff") {
+											if (lib.config.extension_十周年UI_newDecadeStyle == "on" || lib.config["extension_十周年UI_newDecadeStyle"] == "othersOff") {
 												html += "[" + lib.translate[sender.skills[i]] + "]";
 											} else {
 												html += "" + lib.translate[sender.skills[i]] + " ";
@@ -3926,7 +3926,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 										var html = "";
 										for (var i = 0; i < sender.skills.length; i++) {
 											/*-----------------分割线-----------------*/
-											if (lib.config.extension_十周年UI_newDecadeStyle == "on"||lib.config["extension_十周年UI_newDecadeStyle"] == "othersOff") {
+											if (lib.config.extension_十周年UI_newDecadeStyle == "on" || lib.config["extension_十周年UI_newDecadeStyle"] == "othersOff") {
 												html += "[" + lib.translate[sender.skills[i]] + "]";
 											} else {
 												html += "" + lib.translate[sender.skills[i]] + " ";
@@ -7257,7 +7257,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 						var tipbanlist = ["_recasting", "jiu"]; //过滤部分触发技能，可以自己添加
 
-						if (!tipbanlist.includes(name) && lib.config["extension_十周年UI_newDecadeStyle"] != "otheroff"&&lib.config.extension_十周年UI_newDecadeStyle != "on") {
+						if (!tipbanlist.includes(name) && lib.config["extension_十周年UI_newDecadeStyle"] != "otheroff" && lib.config.extension_十周年UI_newDecadeStyle != "on") {
 							var tipskillbox = document.createElement("div"); //盒子
 							var tipshow = document.createElement("img"); //图片思考中
 							var tipskilltext = document.createElement("div"); //技能文本
@@ -7380,7 +7380,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					if (mark) mark.dk = false;
 				}
 				if (mark) {
-					if (lib.config.extension_十周年UI_newDecadeStyle == "on"||lib.config["extension_十周年UI_newDecadeStyle"] == "othersOff") {
+					if (lib.config.extension_十周年UI_newDecadeStyle == "on" || lib.config["extension_十周年UI_newDecadeStyle"] == "othersOff") {
 						if (mark.classList.contains("yin")) {
 							mark.classList.remove("yin");
 							mark.classList.toggle("yang");
@@ -7636,7 +7636,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							for (var i = 0; i < list.length; i++) {
 								list[i].childNodes[0].classList.add("choice"); /*添加类名*/
 								//--------背水-----//
-								if (list[i].childNodes[0].innerText.indexOf("背水") != -1 && lib.config.extension_十周年UI_newDecadeStyle != "on"&&lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff") {
+								if (list[i].childNodes[0].innerText.indexOf("背水") != -1 && lib.config.extension_十周年UI_newDecadeStyle != "on" && lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff") {
 									/*list[i].childNodes[0].setBackgroundImage('extension/无名补丁/image/beishui.png');*/
 									list[i].childNodes[0].setBackgroundImage("extension/十周年UI/shoushaUI/lbtn/images/uibutton/beishui.png");
 									list[i].childNodes[0].innerText = "背水";
@@ -7794,7 +7794,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						var boxTime = document.createElement("div");
 						var imgBg = document.createElement("img");
 						boxContent.classList.add("timeai");
-						if (lib.config.extension_十周年UI_newDecadeStyle != "on"&&lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff") {
+						if (lib.config.extension_十周年UI_newDecadeStyle != "on" && lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff") {
 							//--------手杀样式-------------//
 							boxContent.style.cssText = "display:block;position:absolute;z-index:90;--w: 122px;--h: calc(var(--w) *4/145);width: var(--w);height: var(--h);left:3.5px;bottom:-6.2px;";
 							boxTime.data = 125;
@@ -7871,7 +7871,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						var boxTime = document.createElement("div");
 						var imgBg = document.createElement("img");
 						boxContent.classList.add("timeai");
-						if (lib.config.extension_十周年UI_newDecadeStyle != "on"&&lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff") {
+						if (lib.config.extension_十周年UI_newDecadeStyle != "on" && lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff") {
 							//--------手杀样式-------------//
 							boxContent.style.cssText = "display:block;position:absolute;z-index:90;--w: 122px;--h: calc(var(--w) *4/145);width: var(--w);height: var(--h);left:3.5px;bottom:-6.2px;";
 							boxTime.data = 125;
@@ -7969,7 +7969,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					if (a.length <= 0) {
 						var tipAB = document.createElement("img");
 						tipAB.classList.add("tipshow"); //设置统一类名
-						if (lib.config.extension_十周年UI_newDecadeStyle != "on"&&lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff") {
+						if (lib.config.extension_十周年UI_newDecadeStyle != "on" && lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff") {
 							tipAB.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/shoushatip/tip.png";
 							tipAB.classList.add("playertip");
 							tipAB.style.cssText = "display:block;position:absolute;z-index:91;--w: 133px;--h: calc(var(--w) * 50/431);width: var(--w);height: var(--h);bottom:-22px;";
@@ -8023,7 +8023,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					if (a.length <= 0) {
 						var tipCD = document.createElement("img");
 						tipCD.classList.add("tipshow"); //设置统一类名
-						if (lib.config.extension_十周年UI_newDecadeStyle != "on"&&lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff") {
+						if (lib.config.extension_十周年UI_newDecadeStyle != "on" && lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff") {
 							tipCD.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/shoushatip/tipQP.png";
 							tipCD.classList.add("playertipQP");
 							tipCD.style.cssText = "display:block;position:absolute;z-index:91;--w: 133px;--h: calc(var(--w) * 50/431);width: var(--w);height: var(--h);bottom:-22px;";
@@ -8068,7 +8068,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				charlotte: true,
 				filter: function (event, player) {
 					// if(!player.countCards('h','shan')) return false;
-					return event.card.name == "shan" && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_newDecadeStyle != "on"&&lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff";
+					return event.card.name == "shan" && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_newDecadeStyle != "on" && lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff";
 				},
 				content: function () {
 					var tipss = player.getElementsByClassName("tipskill");
@@ -8116,7 +8116,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				charlotte: true,
 				filter: function (event, player) {
 					// if(!player.countCards('h','sha')) return false;
-					return event.card.name == "sha" && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_newDecadeStyle != "on"&&lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff";
+					return event.card.name == "sha" && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_newDecadeStyle != "on" && lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff";
 				},
 				content: function () {
 					var tipss = player.getElementsByClassName("tipskill");
@@ -8165,7 +8165,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				charlotte: true,
 				filter: function (event, player) {
 					// if(!player.countCards('h','sha')) return false;
-					return event.card.name == "tao" && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_newDecadeStyle != "on"&&lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff";
+					return event.card.name == "tao" && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_newDecadeStyle != "on" && lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff";
 				},
 				content: function () {
 					var tipss = player.getElementsByClassName("tipskill");
@@ -8214,7 +8214,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				silent: true,
 				filter: function (event, player) {
 					// if(!player.countCards('h','sha')) return false;
-					return event.card.name == "jiu" && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_newDecadeStyle != "on"&&lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff";
+					return event.card.name == "jiu" && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_newDecadeStyle != "on" && lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff";
 				},
 				content: function () {
 					var tipss = player.getElementsByClassName("tipskill");
@@ -8271,7 +8271,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					var info = get.info(card);
 					if (info.wuxieable === false) return false;
 
-					return event.card.name == "wuxie" && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_newDecadeStyle != "on"&&lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff";
+					return event.card.name == "wuxie" && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_newDecadeStyle != "on" && lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff";
 				},
 				content: function () {
 					var tipss = player.getElementsByClassName("tipskill");
@@ -8321,7 +8321,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					if (l.length <= 0) {
 						var tipKL = document.createElement("img");
 						tipKL.classList.add("tipshow"); //设置统一类名
-						if (lib.config.extension_十周年UI_newDecadeStyle != "on"&&lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff") {
+						if (lib.config.extension_十周年UI_newDecadeStyle != "on" && lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff") {
 							tipKL.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/shoushatip/tipplay.png";
 							tipKL.classList.add("playertipplay");
 							tipKL.style.cssText = "display:block;position:absolute;z-index:91;--w: 133px;--h: calc(var(--w) * 50/431);width: var(--w);height: var(--h);bottom:-22px;";
@@ -8359,7 +8359,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				silent: true,
 				charlotte: true,
 				filter: function (event, player) {
-					return _status.currentPhase != player && player != game.me && (lib.config.extension_十周年UI_newDecadeStyle == "on"||lib.config["extension_十周年UI_newDecadeStyle"] == "othersOff");
+					return _status.currentPhase != player && player != game.me && (lib.config.extension_十周年UI_newDecadeStyle == "on" || lib.config["extension_十周年UI_newDecadeStyle"] == "othersOff");
 				},
 				content: function () {
 					var tipss = player.getElementsByClassName("tipskill");
@@ -9338,22 +9338,22 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					// 当且仅当初次载入时，newDecadeStyle == void 0
 					// 所以加载了不存在的css: player0.css
 					if (lib.config.extension_十周年UI_newDecadeStyle != void 0) {
-						this.css(decadeUIPath + "player" + parseFloat(["on", "off", "othersOn","othersOff"].indexOf(lib.config.extension_十周年UI_newDecadeStyle) + 1) + ".css");
+						this.css(decadeUIPath + "player" + parseFloat(["on", "off", "othersOn", "othersOff"].indexOf(lib.config.extension_十周年UI_newDecadeStyle) + 1) + ".css");
 					} else {
 						this.css(decadeUIPath + "player2.css");
 					}
-					if(lib.config["extension_十周年UI_newDecadeStyle"] == "othersOff"){
-					    this.css(decadeUIPath +"equip_new_new.css");
-					    this.css(decadeUIPath+"layout_new.css")
-					}else{
-    					this.css(decadeUIPath + (lib.config.extension_十周年UI_newDecadeStyle == "on" ? "equip.css" : "equip_new.css"));
-    					this.css(decadeUIPath + "layout.css");
+					if (lib.config["extension_十周年UI_newDecadeStyle"] == "othersOff") {
+						this.css(decadeUIPath + "equip_new_new.css");
+						this.css(decadeUIPath + "layout_new.css")
+					} else {
+						this.css(decadeUIPath + (lib.config.extension_十周年UI_newDecadeStyle == "on" ? "equip.css" : "equip_new.css"));
+						this.css(decadeUIPath + "layout.css");
 					}
 					if (lib.config.extension_十周年UI_meanPrettify) {
 						this.css(decadeUIPath + "menu.css");
 					}
-					if(lib.config["extension_十周年UI_choosecharboder"]){
-					    this.css(decadeUIPath + "style.css");
+					if (lib.config["extension_十周年UI_choosecharboder"]) {
+						this.css(decadeUIPath + "style.css");
 					}
 					this.js(decadeUIPath + "spine.js");
 					this.js(decadeUIPath + "component.js");
@@ -9369,12 +9369,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					var layoutPath = decadeUIPath + "shoushaUI/";
 					if (lib.config.extension_十周年UI_KGMH == "1") this.css(layoutPath + "KGMH/" + "kaiguan.css");
 					if (lib.config.extension_十周年UI_KGMH == "2") this.css(layoutPath + "KGMH/" + "kaiguan_new.css");
-				
-					var listmap={
-					    on:2,
-					    off:1,
-					    othersOn:1,
-					    othersOff:3
+
+					var listmap = {
+						on: 2,
+						off: 1,
+						othersOn: 1,
+						othersOff: 3
 					}
 					if (!(get.mode() == "chess" || get.mode() == "tafang")) {
 						var list = ["character", "lbtn", "skill"];
@@ -9382,16 +9382,16 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							//css加载
 							switch (pack) {
 								case "character":
-								 this.css(layoutPath + pack + "/main" +listmap[lib.config["extension_十周年UI_newDecadeStyle"]]  + ".css");
+									this.css(layoutPath + pack + "/main" + listmap[lib.config["extension_十周年UI_newDecadeStyle"]] + ".css");
 									break;
-						
+
 								default:
-									this.css(layoutPath + pack + "/main" +listmap[lib.config["extension_十周年UI_newDecadeStyle"]] + (lib.config.touchscreen ? "" : "_window") + ".css");
+									this.css(layoutPath + pack + "/main" + listmap[lib.config["extension_十周年UI_newDecadeStyle"]] + (lib.config.touchscreen ? "" : "_window") + ".css");
 									break;
 							}
 							//js加载
 							this.js(
-								layoutPath + pack + "/" +pack + "/main" +listmap[lib.config["extension_十周年UI_newDecadeStyle"]]+'.js',
+								layoutPath + pack + "/" + pack + "/main" + listmap[lib.config["extension_十周年UI_newDecadeStyle"]] + '.js',
 								null,
 								function () { },
 								function () { }
@@ -9646,66 +9646,66 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							}
 						};
 						floders.forEach(function (dir) {
-						    switch(lib.config.extension_十周年UI_newDecadeStyle){
-						        case "on":
-						        game.readFile(
-									"extension/" + app.name + "/" + dir + "/main1.js",
-									function (data) {
-										var binarry = new Uint8Array(data);
-										var blob = new Blob([binarry]);
-										var reader = new FileReader();
-										reader.readAsText(blob);
-										reader.onload = function () {
-											eval(reader.result);
+							switch (lib.config.extension_十周年UI_newDecadeStyle) {
+								case "on":
+									game.readFile(
+										"extension/" + app.name + "/" + dir + "/main1.js",
+										function (data) {
+											var binarry = new Uint8Array(data);
+											var blob = new Blob([binarry]);
+											var reader = new FileReader();
+											reader.readAsText(blob);
+											reader.onload = function () {
+												eval(reader.result);
+												loaded();
+											};
+										},
+										function (e) {
+											console.info(e);
 											loaded();
-										};
-									},
-									function (e) {
-										console.info(e);
-										loaded();
-									}
-								);
-								break;
+										}
+									);
+									break;
 								case "othersOff":
-								game.readFile(
-									"extension/" + app.name + "/" + dir + "/main3.js",
-									function (data) {
-										var binarry = new Uint8Array(data);
-										var blob = new Blob([binarry]);
-										var reader = new FileReader();
-										reader.readAsText(blob);
-										reader.onload = function () {
-											eval(reader.result);
+									game.readFile(
+										"extension/" + app.name + "/" + dir + "/main3.js",
+										function (data) {
+											var binarry = new Uint8Array(data);
+											var blob = new Blob([binarry]);
+											var reader = new FileReader();
+											reader.readAsText(blob);
+											reader.onload = function () {
+												eval(reader.result);
+												loaded();
+											};
+										},
+										function (e) {
+											console.info(e);
 											loaded();
-										};
-									},
-									function (e) {
-										console.info(e);
-										loaded();
-									}
-								);
-								break;
+										}
+									);
+									break;
 								default:
-								game.readFile(
-									"extension/" + app.name + "/" + dir + "/main2.js",
-									function (data) {
-										var binarry = new Uint8Array(data);
-										var blob = new Blob([binarry]);
-										var reader = new FileReader();
-										reader.readAsText(blob);
-										reader.onload = function () {
-											eval(reader.result);
+									game.readFile(
+										"extension/" + app.name + "/" + dir + "/main2.js",
+										function (data) {
+											var binarry = new Uint8Array(data);
+											var blob = new Blob([binarry]);
+											var reader = new FileReader();
+											reader.readAsText(blob);
+											reader.onload = function () {
+												eval(reader.result);
+												loaded();
+											};
+										},
+										function (e) {
+											console.info(e);
 											loaded();
-										};
-									},
-									function (e) {
-										console.info(e);
-										loaded();
-									}
-								);
-								break;
-						    }
-				
+										}
+									);
+									break;
+							}
+
 						});
 					});
 				},
@@ -9878,26 +9878,26 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			if (lib.config.extension_十周年UI_KGMH == "2") lib.init.css(layoutPath, "KGMH/kaiguan_new");
 			if (!(get.mode() == "chess" || get.mode() == "tafang")) {
 				for (var pack of [/*'card',*/ "character", "lbtn", "skill"]) {
-					var listmap={
-					    on:2,
-					    off:1,
-					    othersOn:1,
-					    othersOff:3
+					var listmap = {
+						on: 2,
+						off: 1,
+						othersOn: 1,
+						othersOff: 3
 					}
 					lib.init.js(
-						layoutPath + pack + "/main" +listmap[lib.config["extension_十周年UI_newDecadeStyle"]] + ".js",
+						layoutPath + pack + "/main" + listmap[lib.config["extension_十周年UI_newDecadeStyle"]] + ".js",
 						null,
 						function () { },
 						function () { }
 					);
 					switch (pack) {
-						
+
 						case "character":
-							lib.init.css(layoutPath + pack+"/main"+listmap[lib.config["extension_十周年UI_newDecadeStyle"]]+".css");
-							
+							lib.init.css(layoutPath + pack + "/main" + listmap[lib.config["extension_十周年UI_newDecadeStyle"]] + ".css");
+
 							break;
 						default:
-							lib.init.css(layoutPath + pack+"/main"+listmap[lib.config["extension_十周年UI_newDecadeStyle"]] + (get.is.phoneLayout() ? "" : "_window")+".css");
+							lib.init.css(layoutPath + pack + "/main" + listmap[lib.config["extension_十周年UI_newDecadeStyle"]] + (get.is.phoneLayout() ? "" : "_window") + ".css");
 							break;
 					}
 				}
@@ -10048,7 +10048,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				window.boxContentAI = document.createElement("div");
 				window.boxTimeAI = document.createElement("div");
 				window.boxContentAI.setAttribute("id", "jindutiaoAI");
-				if (lib.config.extension_十周年UI_newDecadeStyle != "on"&&lib.config.extension_十周年UI_newDecadeStyle != "othersOff") {
+				if (lib.config.extension_十周年UI_newDecadeStyle != "on" && lib.config.extension_十周年UI_newDecadeStyle != "othersOff") {
 					//--------手杀样式-------------//
 					window.boxContentAI.style.cssText = "display:block;position:absolute;z-index:90;--w: 122px;--h: calc(var(--w) *4/145);width: var(--w);height: var(--h);left:3.5px;bottom:-6.2px;";
 					window.boxTimeAI.data = 125;
@@ -11299,7 +11299,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					on: "十周年",
 					off: "新手杀",
 					othersOn: "旧手杀",
-					othersOff:'一将成名',
+					othersOff: '一将成名',
 				},
 				onclick: function (control) {
 					const origin = lib.config["extension_十周年UI_newDecadeStyle"];
@@ -11311,7 +11311,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				update: function () {
 					if (window.decadeUI) {
 						ui.arena.dataset.newDecadeStyle = lib.config["extension_十周年UI_newDecadeStyle"];
-						ui.arena.dataset.decadeLayout = (lib.config["extension_十周年UI_newDecadeStyle"] == "on"||lib.config["extension_十周年UI_newDecadeStyle"] == "othersOff" )? "on" : "off";
+						ui.arena.dataset.decadeLayout = (lib.config["extension_十周年UI_newDecadeStyle"] == "on" || lib.config["extension_十周年UI_newDecadeStyle"] == "othersOff") ? "on" : "off";
 					}
 				},
 			},
@@ -11378,7 +11378,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					on: '<div style="width:60px;height:40px;position:relative;background-image: url(' + lib.assetURL + 'extension/十周年UI/assets/image/dialog2.png);background-size: 100% 100%;"></div>',
 					On: '<div style="width:60px;height:40px;position:relative;background-image: url(' + lib.assetURL + 'extension/十周年UI/assets/image/dialog1.png);background-size: 100% 100%;"></div>',
 					othersOn: '<div style="width:60px;height:40px;position:relative;background-image: url(' + lib.assetURL + 'extension/十周年UI/assets/image/dialog3.png);background-size: 100% 100%;"></div>',
-				
+
 				},
 				update: function () {
 					if (window.decadeUI) ui.arena.dataset.loadingStyle = lib.config["extension_十周年UI_loadingStyle"];
@@ -11656,6 +11656,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					"魔改十周年 萌修 " + pack.version,
 					"最低适配：v1.10.17 - 待定",
 					"新版适配",
+					'整合u的“一将成名”样式',
 					'大幅简化手杀样式技能剩余次数的写法',
 					'挑战模式boss名称显示位置优化（by - 幻翼幽冥）',
 				];

@@ -4,7 +4,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
     filter: function () {
       return !["chess", "tafang"].includes(get.mode());
     },
-    content: function (next) {},
+    content: function (next) { },
     precontent: function () {
       Object.assign(ui.create, {
         skills: function (skills) {
@@ -246,8 +246,8 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
           this.node.enable.childNodes.length > 2
             ? 4
             : this.node.enable.childNodes.length > 0
-            ? 2
-            : 0;
+              ? 2
+              : 0;
         var level = Math.max(level1, level2);
         ui.arena.dataset.sclevel = level;
       },

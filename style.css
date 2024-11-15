@@ -15,7 +15,7 @@
 .button.character>.character {
      left: -4.5px;
      width: 99px;
-	height: 133px; !important
+	height: 133px !important;
 	clip-path: url(#solo-clip);
 	-webkit-clip-path: url(#solo-clip);
 }

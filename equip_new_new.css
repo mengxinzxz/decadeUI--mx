@@ -1,4 +1,4 @@
-#arena>.equips-wrap {
+#arena > .equips-wrap {
 	bottom: 1%;
 	height: 100%;
 	left: auto;
@@ -7,17 +7,18 @@
 	top: auto;
 }
 
-#arena[data-right-layout='on']>.equips-wrap {/*右手布局*/
+#arena[data-right-layout="on"] > .equips-wrap {
+	/*右手布局*/
 	left: 108px;
 	right: auto;
 }
 
-#arena[data-alone-equip='off']>.equips-wrap {
+#arena[data-alone-equip="off"] > .equips-wrap {
 	opacity: 0;
 	left: auto;
 }
 
-.equips-wrap>.equips-back {
+.equips-wrap > .equips-back {
 	align-content: center;
 	align-items: center;
 	display: flex;
@@ -29,7 +30,7 @@
 	width: 100%;
 }
 
-.equips-wrap>.equips {
+.equips-wrap > .equips {
 	align-items: center;
 	bottom: 0px;
 	display: flex;
@@ -44,7 +45,7 @@
 	width: 100%;
 }
 
-.equips-wrap>.equips-back>div {
+.equips-wrap > .equips-back > div {
 	/*background: rgba(0, 0, 0, 0.4);
 	box-shadow: 0 0 6px rgb(200, 150, 80) inset;*/
 	height: 27px;
@@ -54,27 +55,27 @@
 	width: 100%;
 }
 
-.equips-wrap>.equips-back>div[data-type='0']{
+.equips-wrap > .equips-back > div[data-type="0"] {
 	background-image: url("image/decoration/equip1.png");
 }
 
-.equips-wrap>.equips-back>div[data-type='1']{
+.equips-wrap > .equips-back > div[data-type="1"] {
 	background-image: url("image/decoration/equip2.png");
 }
 
-.equips-wrap>.equips-back>div[data-type='2']{
+.equips-wrap > .equips-back > div[data-type="2"] {
 	background-image: url("image/decoration/equip3.png");
 }
 
-.equips-wrap>.equips-back>div[data-type='3']{
+.equips-wrap > .equips-back > div[data-type="3"] {
 	background-image: url("image/decoration/equip4.png");
 }
 
-.equips-wrap>.equips-back>div[data-type='4']{
+.equips-wrap > .equips-back > div[data-type="4"] {
 	background-image: url("image/decoration/equip5.png");
 }
 
-.equips-wrap>.equips>div {
+.equips-wrap > .equips > div {
 	left: 3px;
 	right: 3px;
 	height: 27px;
@@ -91,7 +92,7 @@
 	z-index: 1;
 }
 
-.equips-wrap>.equips>div::before {
+.equips-wrap > .equips > div::before {
 	border: initial;
 	height: inherit;
 	left: auto;
@@ -99,16 +100,8 @@
 	width: inherit;
 }
 
-.equips-wrap>.equips>div::after {
-	background:
-		linear-gradient(to left, yellow, yellow) left top no-repeat,
-		linear-gradient(to bottom, yellow, yellow) left top no-repeat,
-		linear-gradient(to left, yellow, yellow) right top no-repeat,
-		linear-gradient(to bottom, yellow, yellow) right top no-repeat,
-		linear-gradient(to left, yellow, yellow) left bottom no-repeat,
-		linear-gradient(to bottom, yellow, yellow) left bottom no-repeat,
-		linear-gradient(to left, yellow, yellow) right bottom no-repeat,
-		linear-gradient(to left, yellow, yellow) right bottom no-repeat !important;
+.equips-wrap > .equips > div::after {
+	background: linear-gradient(to left, yellow, yellow) left top no-repeat, linear-gradient(to bottom, yellow, yellow) left top no-repeat, linear-gradient(to left, yellow, yellow) right top no-repeat, linear-gradient(to bottom, yellow, yellow) right top no-repeat, linear-gradient(to left, yellow, yellow) left bottom no-repeat, linear-gradient(to bottom, yellow, yellow) left bottom no-repeat, linear-gradient(to left, yellow, yellow) right bottom no-repeat, linear-gradient(to left, yellow, yellow) right bottom no-repeat !important;
 	background-size: 2px 8px, 10px 2px, 2px 8px, 10px 2px !important;
 	border-radius: 0px;
 	box-shadow: none;
@@ -121,33 +114,33 @@
 	z-index: auto;
 }
 
-.equips-wrap>.equips>div.selected {
+.equips-wrap > .equips > div.selected {
 	box-shadow: 0 0 10px yellow;
 }
 
-.equips-wrap>.equips>div.selectable {
+.equips-wrap > .equips > div.selectable {
 	cursor: pointer;
 	transform: translateX(-10px);
 }
 
-.equips-wrap>.equips>div.selectable::before {
+.equips-wrap > .equips > div.selectable::before {
 	animation: fade-in-out-selectable 1s infinite;
 }
 
-#arena[data-right-layout='on']>.equips-wrap>.equips>div.selectable {
+#arena[data-right-layout="on"] > .equips-wrap > .equips > div.selectable {
 	transform: translateX(10px);
 }
 
-.mobile-phone .equips-wrap>.equips>div.selected {
+.mobile-phone .equips-wrap > .equips > div.selected {
 	box-shadow: 0 0 2px yellow, 0 0 4px yellow, 0 0 8px yellow;
 }
 
-.equips-wrap .equips>div[data-card-subype='equip5'] .equips-wrap>.equips-back>div.equip0 {
+.equips-wrap .equips > div[data-card-subype="equip5"] .equips-wrap > .equips-back > div.equip0 {
 	opacity: 1;
 }
 
-.equips-wrap>.equips-back>div>.icon,
-.equips-wrap>.equips>div>.icon {
+.equips-wrap > .equips-back > div > .icon,
+.equips-wrap > .equips > div > .icon {
 	display: block;
 	top: 4px;
 	left: 2px;
@@ -156,12 +149,12 @@
 	transition: opacity 0.5s;
 }
 
-.equips-wrap>.equips>.card>div {
+.equips-wrap > .equips > .card > div {
 	position: absolute;
 	text-shadow: none;
 }
 
-.equips-wrap>.equips>.card>.name2 {
+.equips-wrap > .equips > .card > .name2 {
 	display: flex;
 	align-items: center;
 	align-content: center;
@@ -185,30 +178,30 @@
 }
 
 /*红色装备牌颜色显示*/
-.equips-wrap>.equips>.card[data-suit='heart']>.name2,
-.equips-wrap>.equips>.card[data-suit='diamond']>.name2 {
-	color: #8B0000;
+.equips-wrap > .equips > .card[data-suit="heart"] > .name2,
+.equips-wrap > .equips > .card[data-suit="diamond"] > .name2 {
+	color: #8b0000;
 }
 
 /*黑色装备牌颜色显示*/
-.equips-wrap>.equips>.card[data-suit='spade']>.name2,
-.equips-wrap>.equips>.card[data-suit='club']>.name2 {
+.equips-wrap > .equips > .card[data-suit="spade"] > .name2,
+.equips-wrap > .equips > .card[data-suit="club"] > .name2 {
 	color: #181818;
 }
 
 /*无色装备牌颜色显示*/
-.equips-wrap>.equips>.card[data-suit='none']>.name2 {
+.equips-wrap > .equips > .card[data-suit="none"] > .name2 {
 	background-color: black;
 	color: white;
 }
 
-.equips-wrap>.equips>.card.feichu>.name2 {
+.equips-wrap > .equips > .card.feichu > .name2 {
 	background-color: rgb(57, 48, 33);
 	color: white;
 	font-weight: normal;
 }
 
-.equips-wrap>.equips>.card>.image {
+.equips-wrap > .equips > .card > .image {
 	bottom: auto;
 	display: block;
 	height: 20px;
@@ -219,13 +212,13 @@
 	z-index: 2;
 }
 
-.equips-wrap>.equips>.card:not(.fullskin)>.image {
+.equips-wrap > .equips > .card:not(.fullskin) > .image {
 	display: block !important;
 }
 
 /*其他玩家装备栏*/
-.player>.equips,
-#arena>.player:not(.minskin)>.equips {
+.player > .equips,
+#arena > .player:not(.minskin) > .equips {
 	left: 10%;
 	right: 16%;
 	width: auto;
@@ -287,9 +280,9 @@
 	box-shadow: none;
 }
 
-.player>.equips>.card,
-.player.unseen>.equips>.card,
-.player.unseen2>.equips>.card {
+.player > .equips > .card,
+.player.unseen > .equips > .card,
+.player.unseen2 > .equips > .card {
 	display: flex;
 	align-items: center;
 	align-content: center;
@@ -304,23 +297,23 @@
 	text-shadow: none;
 }
 
-#arena.decadeUI:not(.long).mobile:not(.oldlayout) .player.unseen:not([data-position="0"]) .equips:not(*:empty)>.card,
-#arena.decadeUI:not(.long):not(.mobile):not(.oldlayout) .player.unseen .equips:not(*:empty)>.card:not(.selected),
-#arena.decadeUI.long.mobile:not(.oldlayout) .player.unseen2:not([data-position="0"]) .equips:not(*:empty)>.card,
-#arena.decadeUI.long:not(.mobile):not(.oldlayout) .player.unseen2 .equips:not(*:empty)>.card:not(.selected) {
+#arena.decadeUI:not(.long).mobile:not(.oldlayout) .player.unseen:not([data-position="0"]) .equips:not(*:empty) > .card,
+#arena.decadeUI:not(.long):not(.mobile):not(.oldlayout) .player.unseen .equips:not(*:empty) > .card:not(.selected),
+#arena.decadeUI.long.mobile:not(.oldlayout) .player.unseen2:not([data-position="0"]) .equips:not(*:empty) > .card,
+#arena.decadeUI.long:not(.mobile):not(.oldlayout) .player.unseen2 .equips:not(*:empty) > .card:not(.selected) {
 	background: rgba(228, 207, 166, 0.8) !important;
 }
 
-.player:not(.selectable)>.equips>.card,
-.player:not(.selectable)>.equips>.card>div {
+.player:not(.selectable) > .equips > .card,
+.player:not(.selectable) > .equips > .card > div {
 	pointer-events: auto;
 }
 
-.player>.equips>.card>div {
+.player > .equips > .card > div {
 	position: static;
 }
 
-.player>.equips>.card>.name2 {
+.player > .equips > .card > .name2 {
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -344,7 +337,7 @@
 	pointer-events: none;
 }
 
-.player>.equips>.card[data-suit='heart']>.name2,
-.player>.equips>.card[data-suit='diamond']>.name2 {
-	color: #8B0000;
+.player > .equips > .card[data-suit="heart"] > .name2,
+.player > .equips > .card[data-suit="diamond"] > .name2 {
+	color: #8b0000;
 }
