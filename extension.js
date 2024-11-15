@@ -829,25 +829,18 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									if (!this.node.dieidentity) this.node.dieidentity = ui.create.div("died-identity", this);
 									this.node.dieidentity.classList.add("died-identity");
 
-									var that = this;
-									var image = new Image();
-									var identity = decadeUI.getPlayerIdentity(this);
-									var url = decadeUIPath + "image/decoration" + (decadeUI.config.newDecadeStyle == "on" ? "" : "s") + "/dead" + ((lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff" || decadeUI.config.newDecadeStyle == "on") ? "" : "2") + "_" + identity + ".png";
+									var that = this, image = new Image(), identity = decadeUI.getPlayerIdentity(this);
+									const goon = decadeUI.config.newDecadeStyle === "on" || decadeUI.config.newDecadeStyle === "othersOff";
+									var url = decadeUIPath + "image/decoration" + (goon ? "/dead" : "s/dead2") + "_" + identity + ".png";
 									image.onerror = function () {
 										that.node.dieidentity.innerHTML = decadeUI.getPlayerIdentity(that, that.identity, true) + "<br>阵亡";
 									};
 
 									// 随机离开效果
 									if ((that._trueMe || that) != game.me && that != game.me && Math.random() < 0.5) {
-										if (lib.config.extension_十周年UI_newDecadeStyle == "on" || lib.config["extension_十周年UI_newDecadeStyle"] == "othersOff") {
+										if (goon) {
 											that.node.dieidentity.innerHTML = '<div style="width:40.2px; height:20px; left:0px; top:-32px; position:absolute; background-image: url(' + lib.assetURL + 'extension/十周年UI/assets/image/likai_1.png);background-size: 100% 100%;"></div>';
-										}
-
-										if (lib.config.extension_十周年UI_newDecadeStyle == "off") {
-											that.node.dieidentity.innerHTML = '<div style="width:21px; height:81px; left:22px; top:-12px; position:absolute; background-image: url(' + lib.assetURL + 'extension/十周年UI/assets/image/likai_2.png);background-size: 100% 100%;"></div>';
-										}
-
-										if (lib.config.extension_十周年UI_newDecadeStyle == "othersOn") {
+										} else {
 											that.node.dieidentity.innerHTML = '<div style="width:21px; height:81px; left:18px; top:-12px; position:absolute; background-image: url(' + lib.assetURL + 'extension/十周年UI/assets/image/likai_2.png);background-size: 100% 100%;"></div>';
 										}
 									} else {
