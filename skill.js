@@ -300,7 +300,7 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
 	decadeUI.inheritSkill = {
 		xinfu_dianhua: {
 			content() {
-				player.chooseToGuanxing(lib.suit.filter(suit => player.hasMark('xinfu_falu_' + suit)).length);
+				player.chooseToGuanxing(lib.suit.filter(suit => player.hasMark("xinfu_falu_" + suit)).length);
 			},
 		},
 		identity_junshi: {
@@ -868,7 +868,7 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
 			},
 		},
 		xz_xunxun: {
-			inherit: 'xunxun',
+			inherit: "xunxun",
 			filter(event, player) {
 				return game.hasPlayer(current => current.isDamaged()) && !player.hasSkill("xunxun");
 			},
@@ -1490,7 +1490,7 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
 				next.set("_backupevent", "twtanfeng_backup");
 				next.set("custom", {
 					add: {},
-					replace: { window: function () { } },
+					replace: { window: function () {} },
 				});
 				next.backup("twtanfeng_backup");
 				next.set("targetRequired", true);

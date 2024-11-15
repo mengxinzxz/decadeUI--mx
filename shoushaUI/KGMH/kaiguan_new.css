@@ -1,24 +1,23 @@
 /*十周年样式*/
-.config.config.toggle>div{
-   --w: 60px;
-	--h: calc(var(--w) * 83/158);/*高和长*/
-   width: var(--w);/*比例调节*/
-   height: var(--h);/*同上*/
-   background-color: rgba(0,0,0,0);
-   background-image: url("./switch_off.png");
-   background-position: center center;
-   background-repeat: no-repeat;
-   background-size: 100% 100%;
-   border-radius:0px;
-   box-shadow: none;
+.config.config.toggle > div {
+	--w: 60px;
+	--h: calc(var(--w) * 83 / 158); /*高和长*/
+	width: var(--w); /*比例调节*/
+	height: var(--h); /*同上*/
+	background-color: rgba(0, 0, 0, 0);
+	background-image: url("./switch_off.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	border-radius: 0px;
+	box-shadow: none;
 }
 
-.config.config.toggle.on>div{
-   background-image: url("./switch_on.png");
-   box-shadow: none;
-
+.config.config.toggle.on > div {
+	background-image: url("./switch_on.png");
+	box-shadow: none;
 }
 
-.config.config.toggle>div>div{
-      visibility:hidden;  
+.config.config.toggle > div > div {
+	visibility: hidden;
 }

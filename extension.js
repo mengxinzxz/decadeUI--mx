@@ -829,7 +829,9 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									if (!this.node.dieidentity) this.node.dieidentity = ui.create.div("died-identity", this);
 									this.node.dieidentity.classList.add("died-identity");
 
-									var that = this, image = new Image(), identity = decadeUI.getPlayerIdentity(this);
+									var that = this,
+										image = new Image(),
+										identity = decadeUI.getPlayerIdentity(this);
 									const goon = decadeUI.config.newDecadeStyle === "on" || decadeUI.config.newDecadeStyle === "othersOff";
 									var url = decadeUIPath + "image/decoration" + (goon ? "/dead" : "s/dead2") + "_" + identity + ".png";
 									image.onerror = function () {
@@ -2404,7 +2406,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							}
 						},
 
-						updatem: function (player) { },
+						updatem: function (player) {},
 
 						updatez: function () {
 							window.documentZoom = game.documentZoom;
@@ -3188,7 +3190,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					lib.hooks["checkEnd"].push(function decadeUI_UIconfirm() {
 						if (ui.confirm && ui.confirm.lastChild.link == "cancel") {
 							if (_status.event.type == "phase") {
-								const innerHTML = (lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff" || decadeUI.config.newDecadeStyle == "on") ? "回合结束" : "结束出牌";
+								const innerHTML = lib.config["extension_十周年UI_newDecadeStyle"] != "othersOff" || decadeUI.config.newDecadeStyle == "on" ? "回合结束" : "结束出牌";
 								ui.confirm.lastChild.innerHTML = _status.event.skill ? "取消" : innerHTML;
 							}
 						}
@@ -7185,7 +7187,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 					return element;
 				},
-				clone: function (element) { },
+				clone: function (element) {},
 			};
 
 			decadeUI.game = {
@@ -9325,7 +9327,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 				decadeModule.init = function () {
 					//原十周年UI内容加载
-					this.css(decadeUIPath + "extension.css")
+					this.css(decadeUIPath + "extension.css");
 					this.css(decadeUIPath + "decadeLayout.css");
 					this.css(decadeUIPath + "card.css");
 					// 当且仅当初次载入时，newDecadeStyle == void 0
@@ -9337,7 +9339,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					}
 					if (lib.config["extension_十周年UI_newDecadeStyle"] == "othersOff") {
 						this.css(decadeUIPath + "equip_new_new.css");
-						this.css(decadeUIPath + "layout_new.css")
+						this.css(decadeUIPath + "layout_new.css");
 					} else {
 						this.css(decadeUIPath + (lib.config.extension_十周年UI_newDecadeStyle == "on" ? "equip.css" : "equip_new.css"));
 						this.css(decadeUIPath + "layout.css");
@@ -9367,8 +9369,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						on: 2,
 						off: 1,
 						othersOn: 1,
-						othersOff: 3
-					}
+						othersOff: 3,
+					};
 					if (!(get.mode() == "chess" || get.mode() == "tafang")) {
 						var list = ["character", "lbtn", "skill"];
 						list.forEach(pack => {
@@ -9384,10 +9386,10 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							}
 							//js加载
 							this.js(
-								layoutPath + pack + "/" + pack + "/main" + listmap[lib.config["extension_十周年UI_newDecadeStyle"]] + '.js',
+								layoutPath + pack + "/" + pack + "/main" + listmap[lib.config["extension_十周年UI_newDecadeStyle"]] + ".js",
 								null,
-								function () { },
-								function () { }
+								function () {},
+								function () {}
 							);
 						});
 					}
@@ -9548,8 +9550,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					var listens = app.listens[event] || [];
 					var filters = listen
 						? listens.filter(function (item) {
-							return item === listen || item.listen === listen;
-						})
+								return item === listen || item.listen === listen;
+						  })
 						: listens.slice(0);
 					filters.forEach(function (item) {
 						listens.remove(item);
@@ -9584,7 +9586,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						});
 						return;
 					}
-					setText = typeof setText === "function" ? setText : function () { };
+					setText = typeof setText === "function" ? setText : function () {};
 					var zip = new JSZip(data);
 					var dirList = [],
 						fileList = [];
@@ -9698,7 +9700,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									);
 									break;
 							}
-
 						});
 					});
 				},
@@ -9875,16 +9876,15 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						on: 2,
 						off: 1,
 						othersOn: 1,
-						othersOff: 3
-					}
+						othersOff: 3,
+					};
 					lib.init.js(
 						layoutPath + pack + "/main" + listmap[lib.config["extension_十周年UI_newDecadeStyle"]] + ".js",
 						null,
-						function () { },
-						function () { }
+						function () {},
+						function () {}
 					);
 					switch (pack) {
-
 						case "character":
 							lib.init.css(layoutPath + pack + "/main" + listmap[lib.config["extension_十周年UI_newDecadeStyle"]] + ".css");
 
@@ -10491,7 +10491,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				lib.setScroll(window.qicai);
 				clickFK(window.qicai);
 				//-----7---小酒-------//
-				game.open_xiaojiu = function () { };
+				game.open_xiaojiu = function () {};
 				window.xiaojiu = ui.create.div("hidden", "", game.open_xiaojiu);
 				window.xiaojiu.style.cssText = "display: block;--w: 63px;--h: calc(var(--w) * 50/50);width: var(--w);height: var(--h);left:-230px;bottom:36px;transition:none;background-size:100% 100%";
 
@@ -11292,7 +11292,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					on: "十周年",
 					off: "新手杀",
 					othersOn: "旧手杀",
-					othersOff: '一将成名',
+					othersOff: "一将成名",
 				},
 				onclick: function (control) {
 					const origin = lib.config["extension_十周年UI_newDecadeStyle"];
@@ -11304,7 +11304,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				update: function () {
 					if (window.decadeUI) {
 						ui.arena.dataset.newDecadeStyle = lib.config["extension_十周年UI_newDecadeStyle"];
-						ui.arena.dataset.decadeLayout = (lib.config["extension_十周年UI_newDecadeStyle"] == "on" || lib.config["extension_十周年UI_newDecadeStyle"] == "othersOff") ? "on" : "off";
+						ui.arena.dataset.decadeLayout = lib.config["extension_十周年UI_newDecadeStyle"] == "on" || lib.config["extension_十周年UI_newDecadeStyle"] == "othersOff" ? "on" : "off";
 					}
 				},
 			},
@@ -11371,7 +11371,6 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					on: '<div style="width:60px;height:40px;position:relative;background-image: url(' + lib.assetURL + 'extension/十周年UI/assets/image/dialog2.png);background-size: 100% 100%;"></div>',
 					On: '<div style="width:60px;height:40px;position:relative;background-image: url(' + lib.assetURL + 'extension/十周年UI/assets/image/dialog1.png);background-size: 100% 100%;"></div>',
 					othersOn: '<div style="width:60px;height:40px;position:relative;background-image: url(' + lib.assetURL + 'extension/十周年UI/assets/image/dialog3.png);background-size: 100% 100%;"></div>',
-
 				},
 				update: function () {
 					if (window.decadeUI) ui.arena.dataset.loadingStyle = lib.config["extension_十周年UI_loadingStyle"];
@@ -11649,9 +11648,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					"魔改十周年 萌修 " + pack.version,
 					"最低适配：v1.10.17 - 待定",
 					"新版适配",
-					'整合u的“一将成名”样式',
-					'大幅简化手杀样式技能剩余次数的写法',
-					'挑战模式boss名称显示位置优化（by - 幻翼幽冥）',
+					"对所有文件进行统一prettier格式化，修复css文件里面的报错属性",
+					"整合lone的信息页美化并做适配跟进",
+					"整合u的“一将成名”样式并做适配跟进",
+					"大幅简化手杀样式技能剩余次数的写法",
+					"挑战模式boss名称显示位置优化（by - 幻翼幽冥）",
 				];
 				return '<a href="https://github.com/mengxinzxz/decadeUI--mx">点击前往萌修十周年Github仓库</a><br><p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join("<br>•") + "</p>";
 			})(pack);

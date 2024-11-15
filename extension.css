@@ -1,38 +1,38 @@
 /* 用于技能和身份的字体 */
 @font-face {
-  font-family: 'HYZLSJ';
-  src: url("./shoushaUI/fonts/HYZLSJ.TTF");
+	font-family: "HYZLSJ";
+	src: url("./shoushaUI/fonts/HYZLSJ.TTF");
 }
 /* 用于武将字体 */
 @font-face {
-  font-family: 'WDZLFT';
-  src: url("./shoushaUI/fonts/WDZLFT.TTF");
+	font-family: "WDZLFT";
+	src: url("./shoushaUI/fonts/WDZLFT.TTF");
 }
 @font-face {
-  font-family: 'FZLBJW';
-  src: url("./shoushaUI/fonts/FZLBJW.TTF");
+	font-family: "FZLBJW";
+	src: url("./shoushaUI/fonts/FZLBJW.TTF");
 }
 /* 用于角色弹框标题的字体 */
 @font-face {
-  font-family: 'ATLL';
-  src: url("./shoushaUI/fonts/ATLL.OTF");
+	font-family: "ATLL";
+	src: url("./shoushaUI/fonts/ATLL.OTF");
 }
 
 @font-face {
-  font-family: 'FZLSFT';
-  src: url("./shoushaUI/fonts/FZLSFT.TTF");
+	font-family: "FZLSFT";
+	src: url("./shoushaUI/fonts/FZLSFT.TTF");
 }
 .menu-container > .menu.main.cxy-import-dialog {
-  top: 50% !important;
-  left: 50% !important;
-  width: 420px;
-  height: 130px;
-  padding: 15px;
-  transform: translate(-50%, -50%);
+	top: 50% !important;
+	left: 50% !important;
+	width: 420px;
+	height: 130px;
+	padding: 15px;
+	transform: translate(-50%, -50%);
 }
 .menu.main.cxy-import-dialog > .caption {
-  padding-top: 0;
-  padding-bottom: 8px;
+	padding-top: 0;
+	padding-bottom: 8px;
 }
 
 /*--------（去除按钮虚化）--------*/
@@ -42,18 +42,18 @@
 	top: calc(200% / 3);
 	left: calc(5% + 240px);
 	width: calc(90% - 480px);
-	pointer-events: none
+	pointer-events: none;
 }
-#control>* {
+#control > * {
 	pointer-events: auto;
 }
-#window:not(.nopointer) #control{
-	cursor:pointer;
+#window:not(.nopointer) #control {
+	cursor: pointer;
 }
-#control.nozoom>div {
+#control.nozoom > div {
 	transition-property: opacity;
 }
-#control>div.stayleft{
+#control > div.stayleft {
 	transition-property: opacity !important;
 }
 .control {
@@ -66,21 +66,21 @@
 	font-size: 18px;
 	white-space: nowrap;
 	overflow: hidden;
-	opacity: 0
+	opacity: 0;
 }
 .control.removing.removing2 {
-	transform: scale(0.2)
+	transform: scale(0.2);
 }
-.control>div {
+.control > div {
 	position: relative;
 	padding: 3px;
-	margin: 0
+	margin: 0;
 }
-.control.disabled{
+.control.disabled {
 	opacity: 1 !important;
 	cursor: default !important;
 }
-#control>div {
+#control > div {
 	position: absolute;
 	left: 50%;
 }
@@ -98,11 +98,11 @@
 */
 
 /*-----更改无懈蓝框-------*/
-.glow:not(.button):not(.card){
+.glow:not(.button):not(.card) {
 	box-shadow: none !important;
 	-webkit-filter: grayscale(100%);
 	background-size: 100% 100%;
-	z-index:89;
+	z-index: 89;
 	pointer-events: none;
 }
 
@@ -145,75 +145,82 @@
 */
 
 .shousha_menu {
-    width:100%;
-    border-radius: 3px;
-    background-color: rgba(134,200,241,0.5);
-    font-family:yuanli;
-    padding: 0.5px;
-    /*cursor: pointer;*/
+	width: 100%;
+	border-radius: 3px;
+	background-color: rgba(134, 200, 241, 0.5);
+	font-family: yuanli;
+	padding: 0.5px;
+	/*cursor: pointer;*/
 }
 
-.KZJS,.JDTSM,.JDTSSM,.GTBBSM,.JMYSSM,.QTMHSM>.shousha_text {
-   text-align: left;
-   font-size:14px;
-   width:250px;
-   word-wrap:break-word;
+.KZJS,
+.JDTSM,
+.JDTSSM,
+.GTBBSM,
+.JMYSSM,
+.QTMHSM > .shousha_text {
+	text-align: left;
+	font-size: 14px;
+	width: 250px;
+	word-wrap: break-word;
 }
 
 .shousha_update {
-   z-index:999;
-   background-size: cover;
+	z-index: 999;
+	background-size: cover;
 }
 
-.shousha_update>.shousha_update_close{
-   z-index:999;
-   position:fixed;
-   overflow: hidden;
-    --w: 76px;
-	--h: calc(var(--w) * 64/76);
+.shousha_update > .shousha_update_close {
+	z-index: 999;
+	position: fixed;
+	overflow: hidden;
+	--w: 76px;
+	--h: calc(var(--w) * 64 / 76);
 	width: var(--w);
 	height: var(--h);
-	top:0px;
-	right:0px;
-	margin:23px;
-    background-size: 100% 100%;
-    background-image: url("./shoushaUI/shousha_close.png");
+	top: 0px;
+	right: 0px;
+	margin: 23px;
+	background-size: 100% 100%;
+	background-image: url("./shoushaUI/shousha_close.png");
 }
-
 
 /*细节美化*/
-.nmscore1{/*手牌分十位*/
-display: block;
-position: absolute;
-width:30px;
-left:16px;
-bottom:25px;
-height:30px;
-background-repeat:no-repeat;
-background-size:contain;
-z-index:1;
+.nmscore1 {
+	/*手牌分十位*/
+	display: block;
+	position: absolute;
+	width: 30px;
+	left: 16px;
+	bottom: 25px;
+	height: 30px;
+	background-repeat: no-repeat;
+	background-size: contain;
+	z-index: 1;
 }
-.nmscore2{/*手牌分个位*/
-display: block;
-position: absolute;
-width:30px;
-right:26px;
-bottom:25px;
-height:30px;
-background-repeat:no-repeat;
-background-size:contain;
-z-index:1;
+.nmscore2 {
+	/*手牌分个位*/
+	display: block;
+	position: absolute;
+	width: 30px;
+	right: 26px;
+	bottom: 25px;
+	height: 30px;
+	background-repeat: no-repeat;
+	background-size: contain;
+	z-index: 1;
 }
-.nmcardscore{/*手牌分背景*/
-display: block;
-position: absolute;
-width:90px;
-background-image: url('./shoushaUI/MH/score.png');
-right:36%;
-bottom:20px;
-height:90px;
-background-repeat:no-repeat;
-background-size:contain;
-border-radius:16px;
-z-index:-1;
+.nmcardscore {
+	/*手牌分背景*/
+	display: block;
+	position: absolute;
+	width: 90px;
+	background-image: url("./shoushaUI/MH/score.png");
+	right: 36%;
+	bottom: 20px;
+	height: 90px;
+	background-repeat: no-repeat;
+	background-size: contain;
+	border-radius: 16px;
+	z-index: -1;
 }
