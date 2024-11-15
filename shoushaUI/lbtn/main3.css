@@ -29,7 +29,6 @@
     background-image: url("./images/CD/HOME.png");
     z-index: 68;
     position: relative;
-    translateY(-505px);
 	transition:all 1s;
 }
 

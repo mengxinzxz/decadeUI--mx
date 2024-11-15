@@ -2,10 +2,10 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 
   lib.arenaReady.push(function () {
     //更新轮次
-    var originUpdateRoundNumber=game.updateRoundNumber;
-    game.updateRoundNumber=function(){
-      originUpdateRoundNumber.apply(this,arguments);
-      if(ui.cardRoundTime) ui.cardRoundTime.updateRoundCard();
+    var originUpdateRoundNumber = game.updateRoundNumber;
+    game.updateRoundNumber = function () {
+      originUpdateRoundNumber.apply(this, arguments);
+      if (ui.cardRoundTime) ui.cardRoundTime.updateRoundCard();
     };
     if (lib.config.mode == 'identity' || lib.config.mode == 'doudizhu' || lib.config.mode == 'guozhan' || lib.config.mode == 'versus' || lib.config.mode == 'single' || lib.config.mode == 'martial') {
       var wenhao = ui.create.node('img');
@@ -80,99 +80,100 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
       document.body.appendChild(wenhao);
     }
 
-var head = ui.create.node('img');
+    var head = ui.create.node('img');
     head.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/uibutton/yinying.png"
     head.style.cssText = "display: block;width: 100%;height: 30%;position: absolute;bottom: 0px;background-color: transparent;z-index:-1"
     document.body.appendChild(head);
-  
-    
-  var head = ui.create.node('img');
-  head.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/CD/new_button3.png"
-  head.style.cssText = "display: block;--w: 56px;--h: calc(var(--w) * 74/71);width: var(--w);height: var(--h);position: absolute;bottom: calc(100% - 69px);left: calc(100% - 112.5px);background-color: transparent;z-index:1"
-  head.onclick = function () {
-
-    head.style.transform = 'scale(0.95)';
-
-  }
-  document.body.appendChild(head);
-
-  var head = ui.create.node('div');
-  head.style.cssText = "display: block;--w: 56px;--h: calc(var(--w) * 74/71);width: var(--w);height: var(--h);position: absolute;bottom: calc(100% - 69px);left: calc(100% - 112.5px);background-color: transparent;z-index:1"
-  head.onclick = function () {
-    game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/CD/click.mp3');
-    var popuperContainer = ui.create.div('.popup-container', { background: "rgb(0,0,0,0)" }, ui.window);
-    popuperContainer.addEventListener('click', event => {
-      game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/CD/back.mp3');
-
-      event.stopPropagation();
-      popuperContainer.delete(200);
-    });
-    var HOME = ui.create.div('.HOME', popuperContainer);
-    var SZ = ui.create.div('.SZ', popuperContainer);
-    SZ.addEventListener('click', event => {
-      game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/CD/button.mp3');
-
-      if (!ui.click.configMenu) return;
-      game.closePopped();
-      game.pause2();
-      ui.click.configMenu();
-      ui.system1.classList.remove('shown');
-      ui.system2.classList.remove('shown');
-    });
-    var LK = ui.create.div('.LK', popuperContainer);
-    LK.addEventListener('click', event => {
-      game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/CD/button.mp3');
-
-      window.location.reload();
-    });
-    var BJ = ui.create.div('.BJ', popuperContainer);
-    BJ.addEventListener('click', event => {
-      game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/CD/button.mp3');
-
-      //换背景          
-      var Backgrounds = ["一将成名","新十周年"];
-
-      ui.background.setBackgroundImage("extension/十周年UI/shoushaUI/lbtn/images/background/" + Backgrounds.randomGet() + ".jpg");
-
-    });
-    var TX = ui.create.div('.TX', popuperContainer);
-    TX.addEventListener('click', event => {
-      game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/CD/button.mp3');
-
-      game.over();
-    });
-    var TG = ui.create.div('.TG', popuperContainer);
-    TG.addEventListener('click', event => {
-      game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/CD/button.mp3');
-
-      ui.click.auto();
-    });
-
-  }
-  document.body.appendChild(head);
 
 
+    var head = ui.create.node('img');
+    head.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/CD/new_button3.png"
+    head.style.cssText = "display: block;--w: 56px;--h: calc(var(--w) * 74/71);width: var(--w);height: var(--h);position: absolute;bottom: calc(100% - 69px);left: calc(100% - 112.5px);background-color: transparent;z-index:1"
+    head.onclick = function () {
 
-  var head = ui.create.node('img');
-  head.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/uibutton/new_zhengli.png"
-	head.style.cssText="display: block;--w: 85px;--h: calc(var(--w) * 81/247);width: var(--w);height: var(--h)+4px;position: absolute;top: calc(100% - 30px);left: calc(100% - 390.2px);background-color: transparent;z-index:4"
-  head.onclick = function () {
-    //head.onclick=ui.click.sortCard;
-    var cards = game.me.getCards("hs");
-    var sort2 = function (b, a) {
-      if (a.name != b.name) return lib.sort.card(a.name, b.name);
-      else if (a.suit != b.suit) return lib.suit.indexOf(a) - lib.suit.indexOf(b);
-      else return a.number - b.number;
-    };
-    if (cards.length > 1) {
-      cards.sort(sort2);
-      cards.forEach(function (i, j) {
-        game.me.node.handcards1.insertBefore(cards[j], game.me.node.handcards1.firstChild);
-      });
-      dui.queueNextFrameTick(dui.layoutHand, dui);
+      head.style.transform = 'scale(0.95)';
+
     }
-  }
-  document.body.appendChild(head);
+    document.body.appendChild(head);
+
+    var head = ui.create.node('div');
+    head.style.cssText = "display: block;--w: 56px;--h: calc(var(--w) * 74/71);width: var(--w);height: var(--h);position: absolute;bottom: calc(100% - 69px);left: calc(100% - 112.5px);background-color: transparent;z-index:1"
+    head.onclick = function () {
+      game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/CD/click.mp3');
+      var popuperContainer = ui.create.div('.popup-container', { background: "rgb(0,0,0,0)" }, ui.window);
+      popuperContainer.addEventListener('click', event => {
+        game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/CD/back.mp3');
+
+        event.stopPropagation();
+        popuperContainer.delete(200);
+      });
+      var HOME = ui.create.div('.HOME', popuperContainer);
+      var SZ = ui.create.div('.SZ', popuperContainer);
+      SZ.addEventListener('click', event => {
+        game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/CD/button.mp3');
+
+        if (!ui.click.configMenu) return;
+        game.closePopped();
+        game.pause2();
+        ui.click.configMenu();
+        ui.system1.classList.remove('shown');
+        ui.system2.classList.remove('shown');
+      });
+      var LK = ui.create.div('.LK', popuperContainer);
+      LK.addEventListener('click', event => {
+        game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/CD/button.mp3');
+
+        window.location.reload();
+      });
+      var BJ = ui.create.div('.BJ', popuperContainer);
+      BJ.addEventListener('click', event => {
+        game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/CD/button.mp3');
+
+        //换背景          
+        var Backgrounds = ["一将成名", "新十周年"];
+
+        ui.background.setBackgroundImage("extension/十周年UI/shoushaUI/lbtn/images/background/" + Backgrounds.randomGet() + ".jpg");
+
+      });
+      var TX = ui.create.div('.TX', popuperContainer);
+      TX.addEventListener('click', event => {
+        game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/CD/button.mp3');
+
+        game.over();
+      });
+      var TG = ui.create.div('.TG', popuperContainer);
+      TG.addEventListener('click', event => {
+        game.playAudio('../extension/十周年UI/shoushaUI/lbtn/images/CD/button.mp3');
+
+        ui.click.auto();
+      });
+
+    }
+    document.body.appendChild(head);
+
+
+
+    var head = ui.create.node('img');
+    head.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/uibutton/new_zhengli.png"
+    head.style.cssText = "display: block;--w: 85px;--h: calc(var(--w) * 81/247);width: var(--w);height: var(--h)+4px;position: absolute;top: calc(100% - 30px);left: calc(100% - 390.2px);background-color: transparent;z-index:4"
+    head.onclick = function () {
+      //head.onclick=ui.click.sortCard;
+      if (!game.me || game.me.hasSkillTag("noSortCard")) return;
+      var cards = game.me.getCards("hs");
+      var sort2 = function (b, a) {
+        if (a.name != b.name) return lib.sort.card(a.name, b.name);
+        else if (a.suit != b.suit) return lib.suit.indexOf(a) - lib.suit.indexOf(b);
+        else return a.number - b.number;
+      };
+      if (cards.length > 1) {
+        cards.sort(sort2);
+        cards.forEach(function (i, j) {
+          game.me.node.handcards1.insertBefore(cards[j], game.me.node.handcards1.firstChild);
+        });
+        dui.queueNextFrameTick(dui.layoutHand, dui);
+      }
+    }
+    document.body.appendChild(head);
   });
   var plugin = {
     name: 'lbtn',
@@ -365,12 +366,12 @@ var head = ui.create.node('img');
         var node3 = ui.create.div('.settingButton', ui.arena, plugin.click.setting);
 
         /*ui.create.div('.lbtn-controls', ui.arena);*/
-          //-------新版----------//
-          var node6 = ui.create.div('.huanfuButton_new', ui.arena, plugin.click.huanfu);
-          var node7 = ui.create.div('.jiluButton_new', ui.arena, ui.click.pause);
-          var node8 = ui.create.div('.meiguiButton_new', ui.arena);
-          var node9 = ui.create.div('.xiaolianButton_new', ui.arena);
-          //---------------------//
+        //-------新版----------//
+        var node6 = ui.create.div('.huanfuButton_new', ui.arena, plugin.click.huanfu);
+        var node7 = ui.create.div('.jiluButton_new', ui.arena, ui.click.pause);
+        var node8 = ui.create.div('.meiguiButton_new', ui.arena);
+        var node9 = ui.create.div('.xiaolianButton_new', ui.arena);
+        //---------------------//
         var node4 = ui.create.div('.tuoguanButton', ui.arena, ui.click.auto);
         var node = ui.create.div('.handcardNumber', ui.arena).hide();
         node.node = {
@@ -443,34 +444,34 @@ var head = ui.create.node('img');
         };
 
         ui.time4 = node.node.time;
-        ui.time4.starttime=get.utc();
+        ui.time4.starttime = get.utc();
         ui.time4.interval = setInterval(function () {
-          var num=Math.round((get.utc()-ui.time4.starttime)/1000);
-          if(num>=3600){
-            var num1=Math.floor(num/3600);
-            var num2=Math.floor((num-num1*3600)/60);
-            var num3=num-num1*3600-parseInt(num2)*60;
-            if(num1<10){
-              num1='0'+num1.toString();
+          var num = Math.round((get.utc() - ui.time4.starttime) / 1000);
+          if (num >= 3600) {
+            var num1 = Math.floor(num / 3600);
+            var num2 = Math.floor((num - num1 * 3600) / 60);
+            var num3 = num - num1 * 3600 - parseInt(num2) * 60;
+            if (num1 < 10) {
+              num1 = '0' + num1.toString();
             }
-            if(num2<10){
-              num2='0'+num2.toString();
+            if (num2 < 10) {
+              num2 = '0' + num2.toString();
             }
-            if(num3<10){
-              num3='0'+num3.toString();
+            if (num3 < 10) {
+              num3 = '0' + num3.toString();
             }
-            ui.time4.innerHTML='<span>'+num1+':'+num2+':'+num3+'</span>';
+            ui.time4.innerHTML = '<span>' + num1 + ':' + num2 + ':' + num3 + '</span>';
           }
-          else{
-            var num1=Math.floor(num/60);
-            var num2=num-num1*60;
-            if(num1<10){
-              num1='0'+num1.toString();
+          else {
+            var num1 = Math.floor(num / 60);
+            var num2 = num - num1 * 60;
+            if (num1 < 10) {
+              num1 = '0' + num1.toString();
             }
-            if(num2<10){
-              num2='0'+num2.toString();
+            if (num2 < 10) {
+              num2 = '0' + num2.toString();
             }
-            ui.time4.innerHTML='<span>'+num1+':'+num2+'</span>';
+            ui.time4.innerHTML = '<span>' + num1 + ':' + num2 + '</span>';
           }
         }, 1000);
         game.addVideo('createCardRoundTime');
