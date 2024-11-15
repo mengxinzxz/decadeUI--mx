@@ -1,0 +1,380 @@
+/*这个调整选将框的武将大小*/
+.dialog .buttons>.button.character.decadeUI, .button.character.longcharacter.decadeUI {
+    width: 95.2px;
+    height: 133.21px;
+    background-position: 666px 666px;
+    background-size:100% 100% !important;
+}
+
+.button.character>.showintro.rarity {
+    left: 20px;
+    z-index:100;;
+}
+
+/*选将界面露头高度*/
+.button.character>.character {
+     left: -4.5px;
+     width: 99px;
+	height: 133px; !important
+	clip-path: url(#solo-clip);
+	-webkit-clip-path: url(#solo-clip);
+}
+
+/*选将露头*/
+#arena[data-outcrop-skin='on'] .button.character>.character {
+    height: 142px;
+}
+
+/*这里开始是选将框和换的代码*/
+#arena.decadeUI.dui-mobile[data-loading-style='othersOn']>.dialog.scroll1, #arena.decadeUI.dui-mobile[data-loading-style='othersOn']>.dialog.scroll2{
+	background: none ;
+	box-shadow: none !important;
+	/*overflow-x: scroll !important;
+	white-space:nowrap;*/
+}
+
+/*这里是默认的武将边框为群，大小位置也在这里调*/
+.button.character.newstyle>.identity {
+     left: -16px;
+	height: 152px;
+	width: 122px;
+     top: -15px;
+	font-size: 0px;
+	z-index: 1;
+	background-color: none;
+	background-image: url('image/group/qun.png') !important;
+	background-size: 100% 100% !important;
+}
+
+/*按照下面的格式填写扩展武将的边框，不填写的默认为群*/
+.button.character.newstyle>.identity[data-nature="metal"]{
+	background-image: url('image/group/qun.png') !important;
+	background-size: 100% 100% !important;
+	z-index:0;
+}
+
+.button.character.newstyle>.identity[data-nature="metalmm"]{
+	background-image: url('image/group/qun.png') !important;
+	background-size: 100% 100% !important;
+	z-index:0;
+}
+
+.button.character.newstyle>.identity[data-nature="soil"]{
+	background-image: url('image/group/shu.png') !important;
+	background-size: 100% 100% !important;
+	z-index:0;
+}
+
+.button.character.newstyle>.identity[data-nature="soilmm"]{
+	background-image: url('image/group/shu.png') !important;
+	background-size: 100% 100% !important;
+	z-index:0;
+}
+
+.button.character.newstyle>.identity[data-nature="thunder"]{
+	background-image: url('image/group/jin.png') !important;
+	background-size: 100% 100% !important;
+	z-index:0;
+}
+
+.button.character.newstyle>.identity[data-nature="thundermm"]{
+	background-image: url('image/group/jin.png') !important;
+	background-size: 100% 100% !important;
+	z-index:0;
+}
+
+button.character.newstyle>.identity[data-nature="western"]{
+	background-image: url('image/group/western.png') !important;
+	background-size: 100% 100% !important;
+	z-index:0;
+}
+
+.button.character.newstyle>.identity[data-nature="wood"]{
+	background-image: url('image/group/wu.png') !important;
+	background-size: 100% 100% !important;
+	z-index:0;
+}
+
+.button.character.newstyle>.identity[data-nature="woodmm"]{
+	background-image: url('image/group/wu.png') !important;
+	background-size: 100% 100% !important;
+	z-index:0;
+}
+
+.button.character.newstyle>.identity[data-nature="watermm"]{
+	background-image: url('image/group/wei.png') !important;
+	background-size: 100% 100% !important;
+	z-index:0;
+}
+
+.button.character.newstyle>.identity[data-nature="water"]{
+	background-image: url('image/group/wei.png') !important;
+	background-size: 100% 100% !important;
+	z-index:0;
+}
+
+.button.character.newstyle>.identity[data-nature="shen"]{
+	background-image: url('image/group/shen.png') !important;
+	background-size: 100% 100% !important;
+	z-index:0;
+}
+
+.button.character.newstyle>.identity[data-nature="ye"]{
+	background-image: url('image/group/ye.png') !important;
+	background-size: 100% 100% !important;
+	z-index:0;
+}
+
+.button.character.newstyle>.identity[data-nature="key"]{
+	background-image: url('image/group/key.png') !important;
+	background-size: 100% 100% !important;
+	z-index:0;
+}
+
+.button.character.newstyle>.identity[data-nature="keymm"]{
+	background-image: url('image/group/key.png') !important;
+	background-size: 100% 100% !important;
+	z-index:0;
+}
+/*这里开始复制*/
+.button.character.newstyle>.identity[data-nature="zq_fo"]{ /*添加这一段，用于读取佛势力图片素材*/
+	background-image: url('image/group/zq_fo.png') !important;
+	background-size: 100% 100% !important;
+}
+.button.character.newstyle>.identity[data-nature="song"]{ /*添加这一段，用于读取宋势力图片素材*/
+	background-image: url('image/group/song.png') !important;
+	background-size: 100% 100% !important;
+}
+.button.character.newstyle>.identity[data-nature="han"]{ /*添加这一段，用于读取汉势力图片素材*/
+	background-image: url('image/group/han.png') !important;
+	background-size: 100% 100% !important;
+}
+.button.character.newstyle>.identity[data-nature="daqin"]{ /*添加这一段，用于读取汉势力图片素材*/
+	background-image: url('image/group/daqin.png') !important;
+	background-size: 100% 100% !important;
+}
+/*结束复制*/
+/*武将选将名字位置*/
+#arena .button.character > .name {
+    display: flex;
+	align-items: center;
+	align-content: center;
+	justify-content: center;
+    font-family: yuanli, yuanli !important;
+	bottom: 35px;
+	left:-8px;
+	font-size: 13px;
+	text-align: center;
+	z-index: 100;
+}
+
+.button.character>.name {/*菜单武将名字*/
+	display: flex;
+	align-items: center;
+	align-content: center;
+	justify-content: center;
+    font-family: yuanli !important;
+	bottom: 30px;
+	left:-7px;
+	font-size: 12px;
+	text-align: center;
+	z-index: 100;
+}
+
+/*武将血量图标*/
+.button.character>.hp {
+     word-break: break-word;
+	display: flex;
+     left: 80px;
+     top: 110px;
+	width: 15px;
+	white-space:normal;
+	height:15px;
+	flex-direction: row;
+	flex-wrap: wrap-reverse;
+	justify-content: flex-end;
+	z-index: 100;
+zzoom:1.1
+}
+
+.button.character.decadeUI.newstyle>.hp>.text{
+	left:-1.25px;
+	zoom:0.93;
+   }
+   /*菜单武将血量图标*/
+.button.character.decadeUI.newstyle.noclick>.hp{
+  position: absolute;
+  width:18px;
+  left: 75px;
+   }
+   /*菜单武将学量数字*/
+.button.character.decadeUI.newstyle.noclick>.hp>.text{
+   display:inline;
+	left:-1px;
+	bottom:5px;
+   }
+
+/*选将界面确认*/
+.button.character::before {
+    left: -14px;
+     top: -7px;/*这两条是框的位置*/
+    width: calc(100% + 20px);
+    height: calc(100% + 18px);/*这两条是框的大小*/
+    box-shadow: none;
+    /*盒子阴影不用改*/
+    box-sizing: border-box;
+    /*盒子大小，同框，不用改*/
+    border-image-source: url('image/group/xuanjiang.png');
+    /*边框图片*/
+    background-image: url('image/group/xuanjiang1.png');
+    /*背景图片，也就是确认*/
+    background-size:100px 75px;
+    /*确认图片的宽高*/
+    border-width:6px;
+    /*框的粗细*/
+    background-position:bottom !important;
+    /*用来给确认定位的，前面调上下，后面调左右，不写就是默认居中*/
+   background-repeat: no-repeat;
+   /*图片只显示一次，删掉会出现很多图片*/
+   /* background-attachment:fixed;*/
+	/*border-radius: 10px  7px  7px  10px;
+	框四周的圆角，从左到右顺时针*/
+    border-style: solid;
+    border-color: transparent;
+    /*框的颜色，不用管，这是本体设置的*/
+    z-index:11;/*图层*/
+}
+
+/*选将界面切换按钮*/
+.button.replaceButton ,.button.replaceButton.text{
+     left: 73px;
+     top: auto;
+     bottom: 108px;
+	width: 6px;
+	height: 6px;
+	padding: 10px;
+	box-shadow: none;
+     background-image: url('image/group/huan.png');
+	background-size: 100% 100%;
+	z-index:11;
+}
+
+/*菜单界面武将框*/
+.button.character.decadeUI.newstyle.noclick{
+	height: 135px;
+	width: 95px;
+	margin-bottom: 40px;
+	margin-left:23px;
+	border-style: none;
+	zoom:0.78;
+}
+/*菜单界面武将露头*/
+.button.character.decadeUI.newstyle.noclick>.character{
+height:135px;
+}
+
+#arena[data-outcrop-skin='on'].button.character.decadeUI.newstyle.noclick>.character{
+    height: 144px;
+}
+/*选将框背景*/
+.button.character.decadeUI.newstyle {
+    border-image-source: url('image/group/border.png');
+    border-image-slice: 40 9 9 40;
+    float: top;
+    border-width:25px 5px 5px 12px;
+    border-style: solid;
+    box-shadow: none;
+    margin-left:15px;
+    /*border-radius: 10px;*/
+    background-clip: content-box;
+    /*opacity: 0; /* 更改图片透明度 */
+    transition: opacity 0.3s linear;
+    zoom: 0.9;
+}
+
+#arena.decadeUI.dui-mobile[data-loading-style='othersOn']>.dialog .tdnode {
+    z-index: 100;
+}
+
+/*控制台的边框*/
+.button.character.noclick::before{
+border: none;
+background:none;
+}
+
+.button.character.noclick.glow::after{
+	border: none;
+	background:none;
+	background-image:none;
+}
+
+.menu.main>.menu-content>div>.menubutton.round {
+	z-index: 50;
+}
+
+/*扶汉等按钮图层*/
+#arena.decadeUI.dui-mobile[data-loading-style='othersOn']>.dialog .tdnode {
+    z-index: 100;
+}
+
+/*BOSS框*/
+.player.fullskin.bossplayer::after{
+	background-image: url('image/group/demon.png');
+	zoom: 1.1;
+	border: none;
+	box-shadow: none;
+	width: 160px;
+	height: 210px;
+	top: -4px;
+	left: -10px;
+	background-size: 100% 100% !important;
+	margin-left:15px;
+	border-radius: 10px;
+	z-index:99;
+	opacity: 1;
+	transition: opacity 0.3s linear;
+}
+
+.player.fullskin.bossplayer{
+    border: none;
+    background: none;
+    box-shadow: none;
+}
+
+   .player.bossplayer>.identity {
+    z-index: 91;
+    top: 50px;
+}
+
+.player.fullskin.bossplayer.highlight::after{
+	z-index: -1;
+	animation:0.5s ease 0s 1 normal none running kf-sprites-glow;
+}
+
+.player.fullskin.bossplayer.highlight{
+	border: none;
+	animation:0.5s ease 0s 1 normal none running player-died;
+}
+
+/*按钮框*/
+	.glow:not(.button):not(.card){
+	box-shadow: none!important;
+	-webkit-filter: brightness(70%);
+}
+
+/*这里是单行选将框*/
+
+.dialog.scroll1.scroll2.singlex>.content-container>.content>.caption + .buttons:not(*:last-child) {
+white-space: pre;
+overflow-x: scroll;
+overflow-y: hidden;
+}
+.dialog.scroll1.scroll2.singlex>.content-container>.content {
+    display: flex;
+    flex-direction: column;
+}
+.dialog.scroll1.scroll2.singlex>.content-container>.content>div {
+	white-space: pre;
+	overflow-x: scroll;
+	overflow-y: hidden;
+	}

@@ -233,145 +233,148 @@
 #arena[data-new-decade-style='othersOn']>.player {
 	--w: 128px;
 }
+#arena[data-new-decade-style='othersOff']>.player {
+	--w: 120px;
+}
 /*--------------------分割线--------------------*/
 
 
 
 /*8人座*/
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='8']>.player[data-position='1'] {
+#arena[data-layout='nova'][data-number='8']>.player[data-position='1'] {
 	left: auto;
 	top: 19%;
 	right: 25px;
 }
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='8']>.player[data-position='2'] {
+#arena[data-layout='nova'][data-number='8']>.player[data-position='2'] {
 	left: auto;
 	top: 9px;
 	right: calc(22% - (var(--w)/2));
 }
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='8']>.player[data-position='3'] {
+#arena[data-layout='nova'][data-number='8']>.player[data-position='3'] {
 	left: auto;
 	top: 9px;
 	right: calc(36% - (var(--w)/2));
 }
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='8']>.player[data-position='4'] {
+#arena[data-layout='nova'][data-number='8']>.player[data-position='4'] {
 	left: calc(50% - (var(--w)/2));
 	top: 9px;
 }
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='8']>.player[data-position='5'] {
+#arena[data-layout='nova'][data-number='8']>.player[data-position='5'] {
 	left: calc(36% - (var(--w)/2));
 	top: 9px;
 }
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='8']>.player[data-position='6'] {
+#arena[data-layout='nova'][data-number='8']>.player[data-position='6'] {
 	left: calc(22% - (var(--w)/2));
 	top: 9px;
 }
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='8']>.player[data-position='7'] {
+#arena[data-layout='nova'][data-number='8']>.player[data-position='7'] {
 	left: 25px;
 	top: 19%;
 }
 
 /*7人座*/
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='7']>.player[data-position='1'] {
+#arena[data-layout='nova'][data-number='7']>.player[data-position='1'] {
 	left: auto;
 	top: 19%;
 	right: 25px;
 }
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='7']>.player[data-position='2'] {
+#arena[data-layout='nova'][data-number='7']>.player[data-position='2'] {
 	left: auto;
 	top: 9px;
 	right: calc(24.8% - (var(--w)/2));
 }
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='7']>.player[data-position='3'] {
+#arena[data-layout='nova'][data-number='7']>.player[data-position='3'] {
 	left: auto;
 	top: 9px;
 	right: calc(41.6% - (var(--w)/2));
 }
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='7']>.player[data-position='4'] {
+#arena[data-layout='nova'][data-number='7']>.player[data-position='4'] {
 	left: calc(41.6% - (var(--w)/2));
 	top: 9px;
 }
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='7']>.player[data-position='5'] {
+#arena[data-layout='nova'][data-number='7']>.player[data-position='5'] {
 	left: calc(24.8% - (var(--w)/2));
 	top: 9px;
 }
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='7']>.player[data-position='6'] {
+#arena[data-layout='nova'][data-number='7']>.player[data-position='6'] {
 	left: 25px;
 	top: 19%;
 }
 
 /*6人座*/
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='6']>.player[data-position='1'] {
+#arena[data-layout='nova'][data-number='6']>.player[data-position='1'] {
 	left: auto;
 	top: 19%;
 	right: 25px;
 }
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='6']>.player[data-position='2'] {
+#arena[data-layout='nova'][data-number='6']>.player[data-position='2'] {
 	left: auto;
 	top: 9px;
 	right: calc(28% - (var(--w)/2));
 }
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='6']>.player[data-position='3'] {
+#arena[data-layout='nova'][data-number='6']>.player[data-position='3'] {
 	left: calc(50% - (var(--w)/2));
 	top: 9px;
 }
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='6']>.player[data-position='4'] {
+#arena[data-layout='nova'][data-number='6']>.player[data-position='4'] {
 	left: calc(28% - (var(--w)/2));
 	top: 9px;
 }
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='6']>.player[data-position='5'] {
+#arena[data-layout='nova'][data-number='6']>.player[data-position='5'] {
 	left: 25px;
 	top: 19%;
 }
 
 
 /*5人座*/
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='5']>.player[data-position='1'] {
+#arena[data-layout='nova'][data-number='5']>.player[data-position='1'] {
 	left: auto;
 	top: 19%;
 	right: 25px;
 }
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='5']>.player[data-position='2'] {
+#arena[data-layout='nova'][data-number='5']>.player[data-position='2'] {
 	left: auto;
 	top: 9px;
 	right: calc(35% - (var(--w)/2));
 }
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='5']>.player[data-position='3'] {
+#arena[data-layout='nova'][data-number='5']>.player[data-position='3'] {
 	left: calc(35% - (var(--w)/2));
 	top: 9px;
 }
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='5']>.player[data-position='4'] {
+#arena[data-layout='nova'][data-number='5']>.player[data-position='4'] {
 	left: 25px;
 	top: 19%;
 }
 
 /*4人座*/
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='4']>.player[data-position='1'] {
+#arena[data-layout='nova'][data-number='4']>.player[data-position='1'] {
 	left: auto;
 	top: 19%;
 	right: 25px;
 }
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='4']>.player[data-position='2'] {
+#arena[data-layout='nova'][data-number='4']>.player[data-position='2'] {
 	left: calc(50% - (var(--w)/2));
 	top: 9px;
 }
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='4']>.player[data-position='3'] {
+#arena[data-layout='nova'][data-number='4']>.player[data-position='3'] {
 	left: 25px;
 	top: 19%;
 }
 
 /*3人座*/
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='3']>.player[data-position='1'] {
+#arena[data-layout='nova'][data-number='3']>.player[data-position='1'] {
 	left: auto;
 	top: 9px;
 	right: calc(32.5% - (var(--w)/2));
 }
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='3']>.player[data-position='2'] {
+#arena[data-layout='nova'][data-number='3']>.player[data-position='2'] {
 	left: calc(32.5% - (var(--w)/2));
 	top: 9px;
 }
 
 /*2人座*/
-#arena[data-layout='nova'][data-decade-layout='on'][data-number='2']>.player[data-position='1'] {
+#arena[data-layout='nova'][data-number='2']>.player[data-position='1'] {
 	left: calc(50% - (var(--w)/2));
 	top: 9px;
 }
