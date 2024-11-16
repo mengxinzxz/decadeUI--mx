@@ -4,7 +4,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 		filter: function () {
 			return !["chess", "tafang"].includes(get.mode());
 		},
-		content: function (next) { },
+		content: function (next) {},
 		precontent: function () {
 			app.reWriteFunction(lib, {
 				setIntro: [
@@ -196,7 +196,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 								}
 							}
 						})();
-						ui.create.div(".pack", getName + ((getName2 && getName2 !== getName) ? ("<br>" + getName2) : ""), dialog);
+						ui.create.div(".pack", getName + (getName2 && getName2 !== getName ? "<br>" + getName2 : ""), dialog);
 					}
 					leftPane.innerHTML = "<div></div>";
 					rightPane.innerHTML = "<div></div>";
