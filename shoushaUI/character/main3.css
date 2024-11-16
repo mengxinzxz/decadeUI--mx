@@ -82,16 +82,6 @@
 	position: relative;
 	background-repeat: no-repeat;
 }
-/* .character-dialog > div.pn1 {
-  left: -190px;
-  top: -180px;
-  width: 197px;
-  height: 35px;
-  background-size: cover;
-  position: relative;
-  background-repeat: no-repeat;
-  background-image: url("./images/skinname.png");
-} */
 .character-dialog > div.name {
 	position: relative;
 	left: 55px;
@@ -211,39 +201,4 @@
 	background-size: contain;
 	background-position: left;
 	background-repeat: no-repeat;
-	background-image: url("./images/skinname.png");
 }
-/* hp */
-/* .hp:not(.text):not(.actcount):not(.treasure) > div {
-  box-shadow: none;
-  border: none;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-color: transparent;
-  border-radius: 0px;
-}
-.hp:not(.text):not(.actcount):not(.treasure)[data-condition="high"] > div:not(.lost) {
-  background-image: url('./images/hp/hp-1.png');
-}
-.hp:not(.text):not(.actcount):not(.treasure)[data-condition="mid"]>div:not(.lost){
-  background-image: url('./images/hp/hp-2.png');
-}
-.hp:not(.text):not(.actcount):not(.treasure)[data-condition="low"]>div:not(.lost){
-  background-image: url('./images/hp/hp-3.png');
-}
-.hp:not(.text):not(.actcount):not(.treasure)>.lost{
-  background-image: url('./images/hp/hp-0.png');
-}
-
-#arena[data-double-character] .hp:not(.text):not(.actcount):not(.treasure)[data-condition="high"] > div:not(.lost) {
-  background-image: url('./images/hp/hp-round-1.png');
-}
-#arena[data-double-character] .hp:not(.text):not(.actcount):not(.treasure)[data-condition="mid"]>div:not(.lost){
-  background-image: url('./images/hp/hp-round-2.png');
-}
-#arena[data-double-character] .hp:not(.text):not(.actcount):not(.treasure)[data-condition="low"]>div:not(.lost){
-  background-image: url('./images/hp/hp-round-3.png');
-}
-#arena[data-double-character] .hp:not(.text):not(.actcount):not(.treasure)>.lost{
-  background-image: url('./images/hp/hp-round-0.png');
-} */
