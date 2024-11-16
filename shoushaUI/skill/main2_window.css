@@ -208,3 +208,111 @@
 	filter: grayscale(100%);
 	-webkit-filter: grayscale(100%);
 }
+
+/*左手模式*/
+/*技能区*/
+.skill-controlzuoshou {
+	max-width: 140px;
+	bottom: 25px;
+	left: 150px;
+	z-index: 5;
+}
+.skill-controlzuoshou div {
+	position: relative;
+}
+
+/*技能*/
+.skill-controlzuoshou .skillitem {
+	float: left;
+	white-space: nowrap;
+	color: #f5d78e; /*字体颜色*/
+	font-size: 20px !important; /*字体大小，有用*/
+}
+
+.skill-controlzuoshou > div {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+}
+.skill-controlzuoshou > div::after {
+	content: "";
+	display: block;
+	clear: both;
+}
+.skill-controlzuoshou > .enable {
+	margin: 0 0 0 0;
+}
+
+/*非主动技显示*/
+.skill-controlzuoshou > .trigger > .skillitem {
+	text-align: center;
+	background-image: url("./images/skill.png");
+	padding: 3px 7px; /*技能背景素材(高度+宽度)*
+	background-size: 100% 100%;
+	margin: -1px 0px; /*外边距(纵向间距+横向间距)*/
+	font-family: "yuanli"; /*字体样式*/
+	font-size: 20px; /*字体大小，没用*/
+}
+
+/*主动技显示*/
+.skill-controlzuoshou > .enable > .skillitem {
+	margin: 0px 0px;
+	--w: 75px;
+	--h: calc(var(--w) * 85 / 175);
+	width: var(--w);
+	height: var(--h);
+	line-height: var(--h);
+	text-align: center;
+	/* line-height: 38px; /*文本下移*/
+	/* text-align: center; */
+	display: flex;
+	align-items: center;
+	align-content: center;
+	justify-content: center;
+	font-family: "yuanli"; /*字体样式*/
+	font-size: 20px; /*字体大小，没用*/
+	background-image: url("./images/btno1.png");
+	background-size: 100% 100%;
+	/*border: 1px solid rgb(3,4,5); /*调试用*/
+}
+
+.skill-controlzuoshou > .enable > .skillitem.select {
+	background-image: url("./images/btno3.png");
+}
+.skill-controlzuoshou > .enable > .skillitem:not(.usable):not(.select) {
+	filter: grayscale(100%);
+	-webkit-filter: grayscale(100%);
+	background-image: url("./images/btnn2.png");
+}
+
+.skill-controlzuoshou > .enable > .xiandingji {
+	/*限定技按钮*/
+	margin: -2px -5px;
+	/*--w: 99px;*/
+	/*--h: calc(var(--w) * 91 / 200);*/
+	--w: 85px;
+	--h: 37px;
+	width: var(--w);
+	height: var(--h);
+	line-height: 42px;
+	text-align: center;
+	font-family: "yuanli";
+	font-weight: 500; /*å­—ç²—ç»†*/
+	text-shadow: 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18,
+		0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18, 0.3px 0px 1.8px #332c18;
+	color: #f7f5e7;
+	font-size: 22px;
+	background-image: url("./images/btnn4.png");
+	background-size: 100% 100%;
+	/*border: 1px solid rgb(3,4,5);/*调试用*/
+}
+
+.skill-controlzuoshou > .enable > .xiandingji.select {
+	background-image: url("./images/btnn4.png");
+}
+
+.skill-controlzuoshou > .enable > .xiandingji:not(.usable):not(.select) {
+	/*background-image: url("./images/btn5.png");*/
+	filter: grayscale(100%);
+	-webkit-filter: grayscale(100%);
+}

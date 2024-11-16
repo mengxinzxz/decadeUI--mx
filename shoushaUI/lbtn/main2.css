@@ -616,3 +616,125 @@
 	left: calc(100% - 400.5px);
 	bottom: calc(100% - 145px);
 }
+
+/*左手模式*/
+/*换肤*/
+.huanfuButton1 {
+	display: block;
+	width: 80px;
+	height: 58.6px;
+	position: absolute;
+	bottom: 2%;
+	right: 0;
+	background-image: url("./images/uibutton/huanfu.png");
+	background-size: 100% 100%;
+	border-radius: 10px;
+	z-index: 3;
+}
+
+.jiluButton1 {
+	display: block;
+	width: 80px;
+	height: 58.6px;
+	position: absolute;
+	bottom: 14%;
+	right: 0;
+	background-image: url("./images/uibutton/jilu.png");
+	background-size: 100% 100%;
+	border-radius: 10px;
+	z-index: 3;
+}
+
+.huanfuButton_new1 {
+	display: block;
+	--w: 79px;
+	--h: calc(var(--w) * 1080 / 1626);
+	width: var(--w);
+	height: var(--h);
+	bottom: 1%;
+	position: absolute;
+	right: 0;
+	background-image: url("./images/uibutton/huanfu_new.png");
+	background-size: 100% 100%;
+	border-radius: 1px;
+	z-index: 3;
+}
+
+.jiluButton_new1 {
+	display: block;
+	--w: 79px;
+	--h: calc(var(--w) * 1080 / 1626);
+	width: var(--w);
+	height: var(--h);
+	position: absolute;
+	bottom: 9.9%;
+	right: 0;
+	background-image: url("./images/uibutton/jilu_new.png");
+	background-size: 100% 100%;
+	border-radius: 1px;
+	z-index: 4;
+}
+
+.meiguiButton_new1 {
+	display: block;
+	--w: 79px;
+	--h: calc(var(--w) * 1080 / 1626);
+	width: var(--w);
+	height: var(--h);
+	position: absolute;
+	bottom: 18.4%;
+	right: 0;
+	background-image: url("./images/uibutton/meigui_new.png");
+	background-size: 100% 100%;
+	z-index: 3;
+}
+
+.xiaolianButton_new1 {
+	display: block;
+	--w: 79px;
+	--h: calc(var(--w) * 1080 / 1626);
+	width: var(--w);
+	height: var(--h);
+	position: absolute;
+	bottom: 27.1%;
+	right: 0;
+	background-image: url("./images/uibutton/xiaolian_new.png");
+	background-size: 100% 100%;
+	z-index: 3;
+}
+
+/*------左手手牌显示---------------*/
+.handcardNumber1 {
+	bottom: 0px;
+	left: 0px;
+	font-family: "yuanli";
+	text-shadow: #f5d78e 0 0 1px, black 0 0 2px, black 0 0 2px, black 0 0 2px, black 0 0 2px, black 0 0 2px, black 0 0 2px;
+	color: #f5d78e;
+	z-index: 1;
+}
+
+.handcardNumber1 > .cardPicture {
+	left: 130px;
+	bottom: -6px;
+	--w: 130px;
+	--h: calc(var(--w) * 92 / 400); /*宽和长*/
+	width: var(--w);
+	height: var(--h);
+	background-image: url("./images/uibutton/count1.png");
+	background-size: 100% 100%;
+	position: relative;
+	transform: scaleX(-1);
+	z-index: -1;
+}
+/*手牌数参数*/
+.handcardNumber1 > .cardNumber {
+	left: 160px;
+	bottom: 18px;
+	height: 8px;
+	line-height: 25px;
+	text-align: center;
+	color: #fffcf5;
+	font-size: 20px;
+	white-space: nowrap;
+	letter-spacing: 0.35px; /*字体间距*/
+}

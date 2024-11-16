@@ -103,7 +103,12 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 		if (lib.config.extension_十周年UI_LTAN == false) {
 			var liaotian = ui.create.node("img");
 			liaotian.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/uibutton/liaotian.png";
-			liaotian.style.cssText = "display: block;--w: 135px;--h: calc(var(--w) * 699/960);width: var(--w);height: var(--h);position: absolute;top: calc(100% - 97px);right: calc(100% - 125px);background-color: transparent;z-index:3";
+			if (lib.config["extension_十周年UI_rightLayout"] == "on") {
+				liaotian.style.cssText = "display: block;--w: 135px;--h: calc(var(--w) * 1019/1400);width: var(--w);height: var(--h);position: absolute;top: calc(100% - 97px);right: calc(100% - 129px);background-color: transparent;z-index:3";
+			} else {
+				//左手模式聊天按钮参数
+				liaotian.style.cssText = "display: block; --w: 135px; --h: calc(var(--w) * 1019/1400); width: var(--w); height: var(--h); position: absolute; top: calc(100% - 97px); left: calc(100% - 129px); background-color: transparent; z-index: 3; transform: scaleX(-1);";
+			}
 			liaotian.onclick = function () {
 				if (lib.config["extension_说话_enable"]) {
 					game.showChatWordBackground();
@@ -557,7 +562,14 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				ui.create.div(".lbtn-control", node2, "   ");
 				ui.create.div(".lbtn-control", node2, "   ");
 				/*ui.create.div('.lbtn-control1', node2, plugin.click.paixu);*/
-				var paixuauto = ui.create.div(".lbtn-paixu", ui.arena);
+				//左手模式记录和牌序按钮
+				if (lib.config["extension_十周年UI_rightLayout"] == "on") {
+					var paixuauto = ui.create.div(".lbtn-paixu", ui.arena);
+					var jilu = ui.create.div(".latn-jilu", ui.arena, ui.click.pause);
+				} else {
+					var paixuauto = ui.create.div(".lbtn-paixu1", ui.arena);
+					var jilu = ui.create.div(".latn-jilu1", ui.arena, ui.click.pause);
+				}
 				paixuauto.onclick = function () {
 					if (window.paixuxx == false) {
 						plugin.click.paixu();
@@ -569,14 +581,21 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 						window.paixuxx = false;
 					}
 				};
-				var jilu = ui.create.div(".latn-jilu", ui.arena, ui.click.pause);
+
 				//-----------------//
 				/*ui.create.div('.lbtn-control2', node2, ui.click.pause);*/
 				//var node4 = ui.create.div('.tuoguanButton', ui.arena, ui.click.auto);
-				var node = ui.create.div(".handcardNumber", ui.arena).hide();
+				//左手模式同上继续加一个显示手牌牌量新的按钮css
+				if (lib.config["extension_十周年UI_rightLayout"] == "on") {
+					var node = ui.create.div(".handcardNumber", ui.arena).hide();
+					node.node = {
+						cardPicture: ui.create.div(".cardPicture", node),
+						cardNumber: ui.create.div(".cardNumber1", node),
+					};
+				} else var node = ui.create.div(".handcardNumber1", ui.arena).hide();
 				node.node = {
-					cardPicture: ui.create.div(".cardPicture", node),
-					cardNumber: ui.create.div(".cardNumber", node),
+					cardPicture: ui.create.div(".cardPicture1", node),
+					cardNumber: ui.create.div(".cardNumber1", node),
 				};
 				//手牌显示·---//
 				node.updateCardnumber = function () {

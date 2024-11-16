@@ -215,10 +215,10 @@ body > .background {
 #arena > .hand-wrap,
 #arena > .hand-back {
 	/*手牌区*/ /*左手布局+单独装备栏*/
-	left: 180px;
-	right: 180px;
+	left: 300px;	
+    right: 225px;/*数值越大手牌右边界区域越往左*/
 	width: auto;
-	height: 170px;
+	height: 150px;
 	bottom: 1%;
 	transition: none;
 	z-index: 3;
@@ -235,8 +235,8 @@ body > .background {
 #arena[data-alone-equip="off"][data-right-layout="off"] > .hand-wrap,
 #arena[data-alone-equip="off"][data-right-layout="off"] > .hand-back {
 	/*左手布局+非单独装备栏*/
-	left: 180px;
-	right: 30px;
+	left: 300px;	
+    right: 95px;
 }
 
 #arena[data-alone-equip="off"][data-right-layout="on"] > .hand-wrap,
@@ -252,12 +252,12 @@ body > .background {
 }
 /*挑战模式小头像*/
 .hand-wrap > .fakeme.avatar {
-	left: -150px;
+	left: -270px;/*数值越小越左*/
 	top: auto;
 	right: auto;
 	bottom: 0;
 	width: 120px;
-	height: 120px;
+	height: 130px;
 	border-radius: 8px;
 	background-size: cover;
 }

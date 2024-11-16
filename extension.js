@@ -10979,10 +10979,22 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				init: false,
 			},
 			rightLayout: {
-				name: "右手布局",
-				init: true,
-				update: function () {
-					if (window.decadeUI) ui.arena.dataset.rightLayout = lib.config["extension_十周年UI_rightLayout"] ? "on" : "off";
+				name: '<b><font color="#E600FD">左右布局',
+				init: "on",
+				intro: "切换完以后自动重启游戏",
+				item: {
+					off: "左手",
+					on: "右手",
+				},
+				update() {
+					if (lib.config["extension_十周年UI_rightLayout"] == "on" || lib.config["extension_十周年UI_rightLayout"] == "off") {
+						ui.arena.dataset.rightLayout = lib.config["extension_十周年UI_rightLayout"];
+					}
+				},
+				onclick(item) {
+					lib.config["extension_十周年UI_rightLayout"] = item || "off";
+					game.saveConfig("extension_十周年UI_rightLayout", item);
+					game.reload();
 				},
 			},
 			cardPrettify: {
@@ -11649,10 +11661,11 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					"最低适配：v1.10.17 - 待定",
 					"新版适配",
 					"对所有文件进行统一prettier格式化，修复css文件里面的报错属性",
-					"整合lone的信息页美化并做适配跟进",
-					"整合u的“一将成名”样式并做适配跟进",
-					"大幅简化手杀样式技能剩余次数的写法",
 					"挑战模式boss名称显示位置优化（by - 幻翼幽冥）",
+					"添加“一将成名”界面布局（by - u）并做适配跟进",
+					"“一将成名”界面布局信息页美化（by - lone）并做适配跟进",
+					"完善左右手布局（by - 风中的欧皇）并做适配跟进",
+					"大幅简化手杀样式技能剩余次数的写法",
 				];
 				return '<a href="https://github.com/mengxinzxz/decadeUI--mx">点击前往萌修十周年Github仓库</a><br><p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join("<br>•") + "</p>";
 			})(pack);

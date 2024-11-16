@@ -24,15 +24,30 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				},
 				skillControl: function (clear) {
 					if (!ui.skillControl) {
-						var node = ui.create.div(".skill-control", ui.arena);
-						node.node = {
-							enable: ui.create.div(".enable", node),
-							trigger: ui.create.div(".trigger", node),
-						};
-						for (var i in plugin.controlElement) {
-							node[i] = plugin.controlElement[i];
+						//左手模式添加新的技能按钮位置css
+						if (lib.config["extension_十周年UI_rightLayout"] == "on") {
+							var node = ui.create.div(".skill-control", ui.arena);
+							node.node = {
+								enable: ui.create.div(".enable", node),
+								trigger: ui.create.div(".trigger", node),
+							};
+							for (var i in plugin.controlElement) {
+								node[i] = plugin.controlElement[i];
+							}
+							ui.skillControl = node;
+							//开始复制一遍
+						} else {
+							var node = ui.create.div(".skill-controlzuoshou", ui.arena);
+							node.node = {
+								enable: ui.create.div(".enable", node),
+								trigger: ui.create.div(".trigger", node),
+							};
+							for (var i in plugin.controlElement) {
+								node[i] = plugin.controlElement[i];
+							}
+							ui.skillControl = node;
 						}
-						ui.skillControl = node;
+						//结束
 					}
 					if (clear) {
 						ui.skillControl.node.enable.innerHTML = "";
@@ -41,7 +56,6 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 					return ui.skillControl;
 				},
 			});
-
 			Object.assign(ui, {
 				updateSkillControl: function (player, clear) {
 					var eSkills = player.getSkills("e", true, false).slice(0);

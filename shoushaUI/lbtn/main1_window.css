@@ -673,3 +673,82 @@
 	left: 230px;
 	bottom: 80px;
 }
+
+/*以下左手模式添加的css*/
+.lbtn-paixu1 {
+	width: 68px;
+	height: 55px;
+	background-image: url("./images/uibutton/btn-paixu.png");
+	right: 1.2%;
+	bottom: 25%;
+	z-index: 5;
+	font-size: 18.1px;
+	background-size: 100% 100%;
+	background-color: transparent;
+	line-height: 45px;
+	text-align: center;
+	white-space: nowrap;
+	color: #c5af88;
+	font-family: "shousha";
+	font-weight: bold;
+	-webkit-text-stroke: 1.1px rgba(43, 31, 25, 0.5);
+	text-shadow: none;
+	border-radius: 0px;
+}
+
+.lbtn-controls + .lbtn-controls {
+	margin-top: 1px;
+}
+
+/*记录*/
+.latn-jilu1 {
+	display: block;
+	position: absolute;
+	right: 1.2%;
+	background-size: 100% 100%;
+	border-radius: 1px;
+	width: 68px;
+	height: 55px;
+	/*--w: 68px;
+	--h: calc(var(--w) * 78/91);
+	width: var(--w);
+	height: var(--h);*/
+	background-image: url("./images/uibutton/btn-jilu.png");
+	bottom: 15%;
+	z-index: 5;
+}
+
+/*左手手牌量显示*/
+.handcardNumber1 {
+	bottom: 2px;
+	left: 0px; /* 将right属性值修改为left属性值 */
+	font-family: "HYZLSJ";
+	color: #ffffff;
+	font-weight: 100 !important;
+	font-size: 13px !important;
+}
+
+.handcardNumber1 > .cardPicture1 {
+	left: -50px; /* 调整left属性值 */
+	bottom: -16px;
+	--w: 417px;
+	--h: calc(var(--w) * 235 / 500); /*宽和长*/
+	width: var(--w);
+	height: var(--h);
+	background-image: url("./images/uibutton/shoupai1.png");
+	background-size: 100% 100%;
+	position: relative;
+	z-index: -1;
+	perspective: 800px; /* 设置透视属性值 */
+	transform: rotateY(180deg); /* 添加左右翻转效果 */
+}
+
+.handcardNumber1 > .cardNumber1 {
+	left: 180px;
+	bottom: 12px;
+	height: 8px;
+	line-height: 25px;
+	text-align: center;
+	font-size: 19px;
+	white-space: nowrap;
+}
