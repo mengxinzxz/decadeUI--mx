@@ -9364,29 +9364,29 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					var layoutPath = decadeUIPath + "shoushaUI/";
 					if (lib.config.extension_十周年UI_KGMH == "1") this.css(layoutPath + "KGMH/" + "kaiguan.css");
 					if (lib.config.extension_十周年UI_KGMH == "2") this.css(layoutPath + "KGMH/" + "kaiguan_new.css");
-
-					var listmap = {
-						on: 2,
-						off: 1,
-						othersOn: 1,
-						othersOff: 3,
-					};
+					var listmap =
+						{
+							on: 2,
+							off: 1,
+							othersOn: 1,
+							othersOff: 3,
+						}[lib.config["extension_十周年UI_newDecadeStyle"]] || 2;
 					if (!(get.mode() == "chess" || get.mode() == "tafang")) {
 						var list = ["character", "lbtn", "skill"];
 						list.forEach(pack => {
 							//css加载
 							switch (pack) {
 								case "character":
-									this.css(layoutPath + pack + "/main" + listmap[lib.config["extension_十周年UI_newDecadeStyle"]] + ".css");
+									this.css(layoutPath + pack + "/main" + listmap + ".css");
 									break;
 
 								default:
-									this.css(layoutPath + pack + "/main" + listmap[lib.config["extension_十周年UI_newDecadeStyle"]] + (lib.config.touchscreen ? "" : "_window") + ".css");
+									this.css(layoutPath + pack + "/main" + listmap + (lib.config.touchscreen ? "" : "_window") + ".css");
 									break;
 							}
 							//js加载
 							this.js(
-								layoutPath + pack + "/" + pack + "/main" + listmap[lib.config["extension_十周年UI_newDecadeStyle"]] + ".js",
+								layoutPath + pack + "/" + pack + "/main" + listmap + ".js",
 								null,
 								function () {},
 								function () {}
@@ -9872,25 +9872,26 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			if (lib.config.extension_十周年UI_KGMH == "2") lib.init.css(layoutPath, "KGMH/kaiguan_new");
 			if (!(get.mode() == "chess" || get.mode() == "tafang")) {
 				for (var pack of [/*'card',*/ "character", "lbtn", "skill"]) {
-					var listmap = {
-						on: 2,
-						off: 1,
-						othersOn: 1,
-						othersOff: 3,
-					};
+					var listmap =
+						{
+							on: 2,
+							off: 1,
+							othersOn: 1,
+							othersOff: 3,
+						}[lib.config["extension_十周年UI_newDecadeStyle"]] || 2;
 					lib.init.js(
-						layoutPath + pack + "/main" + listmap[lib.config["extension_十周年UI_newDecadeStyle"]] + ".js",
+						layoutPath + pack + "/main" + listmap + ".js",
 						null,
 						function () {},
 						function () {}
 					);
 					switch (pack) {
 						case "character":
-							lib.init.css(layoutPath + pack + "/main" + listmap[lib.config["extension_十周年UI_newDecadeStyle"]] + ".css");
+							lib.init.css(layoutPath + pack + "/main" + listmap + ".css");
 
 							break;
 						default:
-							lib.init.css(layoutPath + pack + "/main" + listmap[lib.config["extension_十周年UI_newDecadeStyle"]] + (get.is.phoneLayout() ? "" : "_window") + ".css");
+							lib.init.css(layoutPath + pack + "/main" + listmap + (get.is.phoneLayout() ? "" : "_window") + ".css");
 							break;
 					}
 				}
@@ -11383,6 +11384,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					on: '<div style="width:60px;height:40px;position:relative;background-image: url(' + lib.assetURL + 'extension/十周年UI/assets/image/dialog2.png);background-size: 100% 100%;"></div>',
 					On: '<div style="width:60px;height:40px;position:relative;background-image: url(' + lib.assetURL + 'extension/十周年UI/assets/image/dialog1.png);background-size: 100% 100%;"></div>',
 					othersOn: '<div style="width:60px;height:40px;position:relative;background-image: url(' + lib.assetURL + 'extension/十周年UI/assets/image/dialog3.png);background-size: 100% 100%;"></div>',
+					othersOff: '<div style="width:60px;height:40px;position:relative;background-image: url(' + lib.assetURL + 'extension/十周年UI/assets/image/dialog4.png);background-size: 100% 100%;"></div>',
 				},
 				update: function () {
 					if (window.decadeUI) ui.arena.dataset.loadingStyle = lib.config["extension_十周年UI_loadingStyle"];
@@ -11659,6 +11661,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				let log = [
 					"魔改十周年 萌修 " + pack.version,
 					"最低适配：v1.10.17 - 待定",
+					"修复u复现的初加载bug",
+					"补充u未添加的新dialog框显示+适配addNewRow属性",
 				];
 				return '<a href="https://github.com/mengxinzxz/decadeUI--mx">点击前往萌修十周年Github仓库</a><br><p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join("<br>•") + "</p>";
 			})(pack);

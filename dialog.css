@@ -118,6 +118,21 @@
 	left: calc(50% - 450px) !important;
 	height: 200px;
 }
+#arena.decadeUI[data-loading-style="othersOff"] > .dialog.scroll1:not(.dclieqiong),
+#arena.decadeUI[data-loading-style="othersOff"] > .dialog.scroll2:not(.dclieqiong),
+#arena.decadeUI[data-loading-style="othersOff"] > .dialog.addNewRow:not(.dclieqiong) {
+	/*所有选项框*/
+	background-position: center;
+	background-image: url("assets/image/dialog4.png") !important;
+	background-size: 102% 100% !important;
+	background-repeat: no-repeat !important;
+	/*padding: -10px 120px !important; /*高度 + 宽度*/
+	/*margin: -10px -120px !important;*/
+	white-space: normal;
+	width: 900px !important;
+	left: calc(50% - 450px) !important;
+	height: 200px;
+}
 
 /*
 .buttons.guanxing,

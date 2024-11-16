@@ -364,6 +364,10 @@ body > .background {
 	background-size: 100% 100%;
 }
 
+.dialog.addNewRow .button.card {
+	zoom: 0.7;
+}
+
 .card,
 #window:not(*[data-radius_size=""]) .card {
 	border-radius: 2px;
