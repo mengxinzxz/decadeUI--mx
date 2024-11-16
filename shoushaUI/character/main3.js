@@ -4,7 +4,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 		filter: function () {
 			return !["chess", "tafang"].includes(get.mode());
 		},
-		content: function (next) {},
+		content: function (next) { },
 		precontent: function () {
 			app.reWriteFunction(lib, {
 				setIntro: [
@@ -183,7 +183,21 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 							return get.translation(pack + "_character_config");
 						}
 					})();
-					if (getName) ui.create.div(".pack", getName, dialog);
+					if (getName) {
+						const getName2 = (() => {
+							if (name2 && name2 !== name) {
+								const pack = Object.keys(lib.characterPack).find(pak => lib.characterPack[pak][name2]);
+								if (pack) {
+									if (lib.characterSort[pack]) {
+										const sort = Object.keys(lib.characterSort[pack]).find(i => lib.characterSort[pack][i].includes(name2));
+										if (sort) return get.translation(sort);
+									}
+									return get.translation(pack + "_character_config");
+								}
+							}
+						})();
+						ui.create.div(".pack", getName + ((getName2 && getName2 !== getName) ? ("<br>" + getName2) : ""), dialog);
+					}
 					leftPane.innerHTML = "<div></div>";
 					rightPane.innerHTML = "<div></div>";
 					lib.setScroll(rightPane.firstChild);
