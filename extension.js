@@ -11653,19 +11653,12 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				author: "萌新（转型中）<br>十周年UI原作者：短歌<br>手杀UI原名：界面美化<br>手杀UI原作者：橙续缘",
 				diskURL: "",
 				forumURL: "",
-				version: "0.3.7 - 待定",
+				version: "0.3.8 - 待定",
 			};
 			pack.intro = (pack => {
 				let log = [
 					"魔改十周年 萌修 " + pack.version,
 					"最低适配：v1.10.17 - 待定",
-					"新版适配",
-					"对所有文件进行统一prettier格式化，修复css文件里面的报错属性",
-					"挑战模式boss名称显示位置优化（by - 幻翼幽冥）",
-					"添加“一将成名”界面布局（by - u）并做适配跟进",
-					"“一将成名”界面布局信息页美化（by - lone）并做适配跟进",
-					"完善左右手布局（by - 风中的欧皇）并做适配跟进",
-					"大幅简化手杀样式技能剩余次数的写法",
 				];
 				return '<a href="https://github.com/mengxinzxz/decadeUI--mx">点击前往萌修十周年Github仓库</a><br><p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join("<br>•") + "</p>";
 			})(pack);
