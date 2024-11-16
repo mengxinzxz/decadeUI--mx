@@ -562,10 +562,13 @@
 	background-repeat: no-repeat;
 	pointer-events: none;
 	z-index: 60;
+	/*
+	u的动皮圆顶显示，需要的请自行删注释
 	border-top-left-radius: 100px 40px;
 	border-top-right-radius: 100px 40px;
 	border-bottom-right-radius: 8px;
 	border-bottom-left-radius: 8px;
+	*/
 }
 .player > .dynamic-wrap > .animation-player {
 	display: block;
