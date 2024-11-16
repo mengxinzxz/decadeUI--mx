@@ -100,9 +100,9 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 						}
 					}
 
-					//等阶。适配最新版千幻
+					//等阶，适配最新版千幻
 					var rarity = game.getRarity(name);
-					if (!rarity) rarity = "junk";
+					if (!rarity) rarity = "common";
 					var pe = ui.create.div(".pe1", dialog);
 					var url;
 					if (lib.config["extension_千幻聆音_enable"]) {
@@ -165,12 +165,6 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 						namestyle.style.fontSize = "18px";
 						namestyle.style.letterSpacing = "1px";
 					}
-
-					//等阶图标
-					var head = ui.create.node("img");
-					head.src = extensionPath + "character/images/rarity_" + rarity + ".png";
-					head.style.cssText = "display:inline-block;width:61.6px;height:53.2px;top:-13px; position:absolute;background-color: transparent;z-index:1;margin-left:5px;";
-					namestyle.appendChild(head);
 
 					//分包
 					const getName = (() => {
