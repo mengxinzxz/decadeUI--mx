@@ -11659,11 +11659,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			pack.intro = (pack => {
 				let log = [
 					"魔改十周年 萌修 " + pack.version,
-					"最低适配：v1.10.17 - 待定",
-					"修复复现的初加载bug",
-					'修复PC端新手杀样式转换技报错bug',
-					"修复两个手杀样式手牌数显示错位bug",
-					"补充u未添加的新dialog框显示+适配addNewRow属性",
+					"最低适配：v1.10.17",
 				];
 				return '<a href="https://github.com/mengxinzxz/decadeUI--mx">点击前往萌修十周年Github仓库</a><br><p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join("<br>•") + "</p>";
 			})(pack);
