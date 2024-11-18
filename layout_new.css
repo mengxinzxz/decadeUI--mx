@@ -296,7 +296,7 @@ body > .background {
 	transition-property: transform, opacity, left, top;
 	border: 1px solid;
 	border-radius: 6px;
-	border-image-source: url("assets/image/card1.png");
+	/*border-image-source: url("assets/image/card1.png");
 	border-image-slice: 20 20 20 20;
 	border-image-width: 20px 20px 20px 20px; /*此处调节边框大小*/
 	z-index: 1;

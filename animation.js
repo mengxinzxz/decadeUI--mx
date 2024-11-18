@@ -1692,9 +1692,9 @@ if (decadeModule)
 					//由于设备不同，无法完美适配，自行调参数
 					城主边框: {
 						name: "skin_chengzhu_ChengZhuBianKuang",
-						x: [16, 0.89],
-						y: [20, 0.15],
-						height: [0, 0.55],
+						x: [24, 0.89],
+						y: [17, 0.15],
+						height: [0, 0.5],
 					},
 					/*动态边框: {//这部分别管
           name: 'skin_chengzhu_ChengZhuBianKuang',
@@ -2136,7 +2136,7 @@ if (decadeModule)
 					},
 				},
 			};
-
+ 
 			animation.stop = animation.stopSpineAll;
 			animation.play = function (name, skin) {
 				var definedAssets = this.definedAssets;

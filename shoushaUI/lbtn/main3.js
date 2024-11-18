@@ -141,9 +141,9 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 		head.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/uibutton/new_zhengli.png";
 		//左手整理手牌按钮位置
 		if (lib.config["extension_十周年UI_rightLayout"] == "on") {
-			head.style.cssText = "display: block;--w: 88px;--h: calc(var(--w) * 81/247);width: var(--w);height: var(--h);position: absolute;top: calc(100% - 33px);left: calc(100% - 376.2px);background-color: transparent;z-index:7";
+			head.style.cssText = "display: block;--w: 88px;--h: calc(var(--w) * 81/247);width: var(--w);height: var(--h);position: absolute;top: calc(100% - 33px);left: calc(100% - 376.2px);background-color: transparent;z-index:2";
 		} else {
-			head.style.cssText = "display: block;--w: 88px;--h: calc(var(--w) * 81/247);width: var(--w);height: var(--h);position: absolute;top: calc(100% - 33px);right: calc(100% - 367.2px);background-color: transparent;z-index:4;";
+			head.style.cssText = "display: block;--w: 88px;--h: calc(var(--w) * 81/247);width: var(--w);height: var(--h);position: absolute;top: calc(100% - 33px);right: calc(100% - 367.2px);background-color: transparent;z-index:2;";
 		}
 		head.onclick = function () {
 			//head.onclick=ui.click.sortCard;

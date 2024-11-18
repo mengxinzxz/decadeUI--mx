@@ -11660,6 +11660,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				let log = [
 					"魔改十周年 萌修 " + pack.version,
 					"最低适配：v1.10.17",
+					'继续修复u的遗留问题+整合u的部分优化',
+					'修复拼点点数异常问题',
 				];
 				return '<a href="https://github.com/mengxinzxz/decadeUI--mx">点击前往萌修十周年Github仓库</a><br><p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join("<br>•") + "</p>";
 			})(pack);

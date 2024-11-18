@@ -92,6 +92,8 @@
 	background-image: url("assets/image/dialog1.png") !important;
 	background-size: 100% 100% !important;
 	background-repeat: no-repeat !important;
+	background: none ;
+	box-shadow: none !important;
 }
 #arena.decadeUI[data-loading-style="on"] > .dialog.scroll1:not(.dclieqiong),
 #arena.decadeUI[data-loading-style="on"] > .dialog.scroll2:not(.dclieqiong),
@@ -101,6 +103,8 @@
 	background-image: url("assets/image/dialog2.png") !important;
 	background-size: 104% 100% !important;
 	background-repeat: no-repeat !important;
+	background: none ;
+	box-shadow: none !important;
 	/* padding: 10px 50px; /*高度 + 宽度*/
 }
 #arena.decadeUI[data-loading-style="othersOn"] > .dialog.scroll1:not(.dclieqiong),
@@ -117,6 +121,8 @@
 	width: 900px !important;
 	left: calc(50% - 450px) !important;
 	height: 200px;
+	background: none ;
+	box-shadow: none !important;
 }
 #arena.decadeUI[data-loading-style="othersOff"] > .dialog.scroll1:not(.dclieqiong),
 #arena.decadeUI[data-loading-style="othersOff"] > .dialog.scroll2:not(.dclieqiong),
@@ -132,6 +138,8 @@
 	width: 900px !important;
 	left: calc(50% - 450px) !important;
 	height: 200px;
+	background: none ;
+	box-shadow: none !important;
 }
 
 /*
