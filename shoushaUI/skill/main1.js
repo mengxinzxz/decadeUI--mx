@@ -540,8 +540,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 						if (a) {
 							item = ui.create.div(".skillMarkItem.zhuanhuanji", node, "");
 							item.setBackgroundImage("extension/十周年UI/shoushaUI/skill/images/" + k + "_yang.png");
-						}
-						else {
+						} else {
 							item = ui.create.div(".skillMarkItem.zhuanhuanji", node, get.skillTranslation(k, player));
 							item.setBackgroundImage("extension/十周年UI/shoushaUI/skill/images/ditu_yang.png");
 							item.style.setProperty("--w", "42px");
