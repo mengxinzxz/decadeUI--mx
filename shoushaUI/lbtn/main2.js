@@ -75,12 +75,12 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 		var head = ui.create.node("img");
 		head.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/uibutton/zhengli.png";
 		//左手整理手牌按钮位置
-        if( lib.config['extension_十周年UI_rightLayout']== 'on') {
-          head.style.cssText = "display: block;--w: 88px;--h: calc(var(--w) * 81/247);width: var(--w);height: var(--h);position: absolute;top: calc(100% - 33px);left: calc(100% - 376.2px);background-color: transparent;z-index:7"
-        }else{
-          head.style.cssText = "display: block;--w: 88px;--h: calc(var(--w) * 81/247);width: var(--w);height: var(--h);position: absolute;top: calc(100% - 33px);right: calc(100% - 367.2px);background-color: transparent;z-index:4;"
-        };
-    head.onclick = function () {
+		if (lib.config["extension_十周年UI_rightLayout"] == "on") {
+			head.style.cssText = "display: block;--w: 88px;--h: calc(var(--w) * 81/247);width: var(--w);height: var(--h);position: absolute;top: calc(100% - 33px);left: calc(100% - 376.2px);background-color: transparent;z-index:7";
+		} else {
+			head.style.cssText = "display: block;--w: 88px;--h: calc(var(--w) * 81/247);width: var(--w);height: var(--h);position: absolute;top: calc(100% - 33px);right: calc(100% - 367.2px);background-color: transparent;z-index:4;";
+		}
+		head.onclick = function () {
 			//head.onclick=ui.click.sortCard;
 			if (!game.me || game.me.hasSkillTag("noSortCard")) return;
 			var cards = game.me.getCards("hs");
@@ -365,62 +365,50 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				var node3 = ui.create.div(".settingButton", ui.arena, plugin.click.setting);
 
 				/*ui.create.div('.lbtn-controls', ui.arena);*/
-                //-------原版---------//
-        	  //左手模式加开关
-              if( lib.config['extension_十周年UI_rightLayout']== 'on'){
-                if (lib.config.extension_十周年UI_XPJ == "on") {
-                  var node5 = ui.create.div(
-                    ".huanfuButton",
-                    ui.arena,
-                    plugin.click.huanfu
-                  );
-                  var node2 = ui.create.div(".jiluButton", ui.arena, ui.click.pause);
-                  //-------------------//
-                } else {
-                  //-------新版----------//
-                  var node6 = ui.create.div(
-                    ".huanfuButton_new",
-                    ui.arena,
-                    plugin.click.huanfu
-                  );
-                  var node7 = ui.create.div(
-                    ".jiluButton_new",
-                    ui.arena,
-                    ui.click.pause
-                  );
-                  var node8 = ui.create.div(".meiguiButton_new", ui.arena);
-                  var node9 = ui.create.div(".xiaolianButton_new", ui.arena);
-                  //---------------------//
-                }
-              }else{
-                  if (lib.config.extension_十周年UI_XPJ == "on") {
-                  var node5 = ui.create.div('.huanfuButton1', ui.arena, plugin.click.huanfu);
-                  var node2 = ui.create.div('.jiluButton1', ui.arena, ui.click.pause);
-                  //-------------------//
-                } else {
-                  //-------新版----------//
-                  var node6 = ui.create.div('.huanfuButton_new1', ui.arena, plugin.click.huanfu);
-                  var node7 = ui.create.div('.jiluButton_new1', ui.arena, ui.click.pause);
-                  var node8 = ui.create.div('.meiguiButton_new1', ui.arena,plugin.click.meigui);
-                  var node9 = ui.create.div('.xiaolianButton_new1', ui.arena,plugin.click.xiaolian);
-                  //---------------------//
-                }
-              };
-                var node4 = ui.create.div(".tuoguanButton", ui.arena, ui.click.auto);
-                if( lib.config['extension_十周年UI_rightLayout']== 'on'){
-                var node = ui.create.div(".handcardNumber", ui.arena).hide();
-                node.node = {
-                  cardPicture: ui.create.div(".cardPicture", node),
-                  cardNumber: ui.create.div(".cardNumber", node),
-                };
-                }else{
-                var node = ui.create.div('.handcardNumber1', ui.arena).hide();
-                node.node = {
-                  cardPicture: ui.create.div('.cardPicture', node),
-                  cardNumber: ui.create.div('.cardNumber', node),
-                };
-                };
-                //结束
+				//-------原版---------//
+				//左手模式加开关
+				if (lib.config["extension_十周年UI_rightLayout"] == "on") {
+					if (lib.config.extension_十周年UI_XPJ == "on") {
+						var node5 = ui.create.div(".huanfuButton", ui.arena, plugin.click.huanfu);
+						var node2 = ui.create.div(".jiluButton", ui.arena, ui.click.pause);
+						//-------------------//
+					} else {
+						//-------新版----------//
+						var node6 = ui.create.div(".huanfuButton_new", ui.arena, plugin.click.huanfu);
+						var node7 = ui.create.div(".jiluButton_new", ui.arena, ui.click.pause);
+						var node8 = ui.create.div(".meiguiButton_new", ui.arena);
+						var node9 = ui.create.div(".xiaolianButton_new", ui.arena);
+						//---------------------//
+					}
+				} else {
+					if (lib.config.extension_十周年UI_XPJ == "on") {
+						var node5 = ui.create.div(".huanfuButton1", ui.arena, plugin.click.huanfu);
+						var node2 = ui.create.div(".jiluButton1", ui.arena, ui.click.pause);
+						//-------------------//
+					} else {
+						//-------新版----------//
+						var node6 = ui.create.div(".huanfuButton_new1", ui.arena, plugin.click.huanfu);
+						var node7 = ui.create.div(".jiluButton_new1", ui.arena, ui.click.pause);
+						var node8 = ui.create.div(".meiguiButton_new1", ui.arena, plugin.click.meigui);
+						var node9 = ui.create.div(".xiaolianButton_new1", ui.arena, plugin.click.xiaolian);
+						//---------------------//
+					}
+				}
+				var node4 = ui.create.div(".tuoguanButton", ui.arena, ui.click.auto);
+				if (lib.config["extension_十周年UI_rightLayout"] == "on") {
+					var node = ui.create.div(".handcardNumber", ui.arena).hide();
+					node.node = {
+						cardPicture: ui.create.div(".cardPicture", node),
+						cardNumber: ui.create.div(".cardNumber", node),
+					};
+				} else {
+					var node = ui.create.div(".handcardNumber1", ui.arena).hide();
+					node.node = {
+						cardPicture: ui.create.div(".cardPicture", node),
+						cardNumber: ui.create.div(".cardNumber", node),
+					};
+				}
+				//结束
 				node.updateCardnumber = function () {
 					if (!game.me) return;
 

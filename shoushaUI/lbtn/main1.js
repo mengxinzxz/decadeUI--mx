@@ -583,20 +583,20 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				};
 
 				//-----------------//
-				/*ui.create.div('.lbtn-control2', node2, ui.click.pause);*/
-				//var node4 = ui.create.div('.tuoguanButton', ui.arena, ui.click.auto);
 				//左手模式同上继续加一个显示手牌牌量新的按钮css
 				if (lib.config["extension_十周年UI_rightLayout"] == "on") {
 					var node = ui.create.div(".handcardNumber", ui.arena).hide();
 					node.node = {
 						cardPicture: ui.create.div(".cardPicture", node),
+						cardNumber: ui.create.div(".cardNumber", node),
+					};
+				} else {
+					var node = ui.create.div(".handcardNumber1", ui.arena).hide();
+					node.node = {
+						cardPicture: ui.create.div(".cardPicture1", node),
 						cardNumber: ui.create.div(".cardNumber1", node),
 					};
-				} else var node = ui.create.div(".handcardNumber1", ui.arena).hide();
-				node.node = {
-					cardPicture: ui.create.div(".cardPicture1", node),
-					cardNumber: ui.create.div(".cardNumber1", node),
-				};
+				}
 				//手牌显示·---//
 				node.updateCardnumber = function () {
 					if (!game.me) return;

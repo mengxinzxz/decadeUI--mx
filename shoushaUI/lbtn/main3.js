@@ -396,8 +396,8 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				} else {
 					var node = ui.create.div(".handcardNumber1", ui.arena).hide();
 					node.node = {
-						cardPicture: ui.create.div(".cardPicture", node),
-						cardNumber: ui.create.div(".cardNumber", node),
+						cardPicture: ui.create.div(".cardPicture1", node),
+						cardNumber: ui.create.div(".cardNumber1", node),
 					};
 				}
 				//结束
