@@ -7370,7 +7370,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 				}
 				try {
 					var a = ImageIsExist(url);
-					mark.dk = true;
+					if (a) mark.dk = true;
 				} catch (err) {
 					if (mark) mark.dk = false;
 				}
