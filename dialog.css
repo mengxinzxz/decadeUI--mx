@@ -81,6 +81,23 @@
 #arena.decadeUI[data-loading-style="othersOn"] > .dialog .tdnode.bluebg {
 	background-image: url("assets/image/tnode-C2.png") !important;
 }
+#arena.decadeUI[data-loading-style="othersOff"] > .dialog .tdnode {
+	--h: 30px;
+	--w: calc(var(--h) * 77 / 44);
+	width: auto;
+	height: auto;
+	min-width: var(--w);
+	min-height: var(--h);
+	padding: 0 !important;
+	border-radius: 0 !important;
+	background-image: url("assets/image/tnode-A1.png");
+	background-size: 100% 100%;
+	line-height: var(--h);
+	text-align: center;
+}
+#arena.decadeUI[data-loading-style="othersOff"] > .dialog .tdnode.bluebg {
+	background-image: url("assets/image/tnode-A2.png") !important;
+}
 /*-----------------分割线-----------------*/
 
 /*-----------------分割线-----------------*/
@@ -92,7 +109,7 @@
 	background-image: url("assets/image/dialog1.png") !important;
 	background-size: 100% 100% !important;
 	background-repeat: no-repeat !important;
-	background: none ;
+	background: none;
 	box-shadow: none !important;
 }
 #arena.decadeUI[data-loading-style="on"] > .dialog.scroll1:not(.dclieqiong),
@@ -103,7 +120,7 @@
 	background-image: url("assets/image/dialog2.png") !important;
 	background-size: 104% 100% !important;
 	background-repeat: no-repeat !important;
-	background: none ;
+	background: none;
 	box-shadow: none !important;
 	/* padding: 10px 50px; /*高度 + 宽度*/
 }
@@ -121,7 +138,7 @@
 	width: 900px !important;
 	left: calc(50% - 450px) !important;
 	height: 200px;
-	background: none ;
+	background: none;
 	box-shadow: none !important;
 }
 #arena.decadeUI[data-loading-style="othersOff"] > .dialog.scroll1:not(.dclieqiong),
@@ -138,7 +155,7 @@
 	width: 900px !important;
 	left: calc(50% - 450px) !important;
 	height: 200px;
-	background: none ;
+	background: none;
 	box-shadow: none !important;
 }
 
