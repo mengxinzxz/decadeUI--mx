@@ -4186,7 +4186,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						game.log(target, "的拼点牌为", event.card2);
 						var getNum = function (card) {
 							for (var i of event.lose_list) {
-								if (i[1] == card) return get.number(card, i[0]);
+								if (i[1].includes(card)) return get.number(card, i[0]);
 							}
 							return get.number(card, false);
 						};
@@ -4357,7 +4357,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 						event.lose_list = lose_list;
 						event.getNum = function (card) {
 							for (var i of event.lose_list) {
-								if (i[1].includes && i[1].includes(card)) return get.number(card, i[0]);
+								if (i[1].includes(card)) return get.number(card, i[0]);
 							}
 							return get.number(card, false);
 						};
