@@ -536,11 +536,19 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 							if (xmlHttp.status === 404) return false;
 							else return true;
 						}
-						var a = ImageIsExist(url);
-						if (a) {
-							item = ui.create.div(".skillMarkItem.zhuanhuanji", node, "");
-							item.setBackgroundImage("extension/十周年UI/shoushaUI/skill/images/" + k + "_yang.png");
-						} else {
+						try {
+							//容错函数，优先执行try的内容，try报错时自动执行catch内容
+							var a = ImageIsExist(url);
+							if (a) {
+								item = ui.create.div(".skillMarkItem.zhuanhuanji", node, "");
+								item.setBackgroundImage("extension/十周年UI/shoushaUI/skill/images/" + k + "_yang.png");
+							}
+							else {
+								item = ui.create.div(".skillMarkItem.zhuanhuanji", node, get.skillTranslation(k, player));
+								item.setBackgroundImage("extension/十周年UI/shoushaUI/skill/images/ditu_yang.png");
+								item.style.setProperty("--w", "42px");
+							}
+						} catch (err) {
 							item = ui.create.div(".skillMarkItem.zhuanhuanji", node, get.skillTranslation(k, player));
 							item.setBackgroundImage("extension/十周年UI/shoushaUI/skill/images/ditu_yang.png");
 							item.style.setProperty("--w", "42px");
