@@ -564,7 +564,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									return base.lib.element.player.markSkill.apply(this, arguments);
 								},
 								unmarkSkill: function (name, info, card, nobroadcast) {
-									if (name && lib.config.extension_十周年UI_newDecadeStyle != "othersoff" && lib.config.extension_十周年UI_newDecadeStyle != "on") {
+									if (name && lib.config.extension_十周年UI_newDecadeStyle != "othersOff" && lib.config.extension_十周年UI_newDecadeStyle != "on") {
 										const info = get.info(name);
 										if (info && (info.zhuanhuanji || info.limited)) return;
 									}
