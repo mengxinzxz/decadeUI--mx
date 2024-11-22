@@ -564,7 +564,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 									return base.lib.element.player.markSkill.apply(this, arguments);
 								},
 								unmarkSkill: function (name, info, card, nobroadcast) {
-									if (name && lib.config.extension_十周年UI_newDecadeStyle != "otheroff" && lib.config.extension_十周年UI_newDecadeStyle != "on") {
+									if (name && lib.config.extension_十周年UI_newDecadeStyle != "othersoff" && lib.config.extension_十周年UI_newDecadeStyle != "on") {
 										const info = get.info(name);
 										if (info && (info.zhuanhuanji || info.limited)) return;
 									}
@@ -7252,7 +7252,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
 						var tipbanlist = ["_recasting", "jiu"]; //过滤部分触发技能，可以自己添加
 
-						if (!tipbanlist.includes(name) && lib.config.extension_十周年UI_newDecadeStyle != "otheroff" && lib.config.extension_十周年UI_newDecadeStyle != "on") {
+						if (!tipbanlist.includes(name) && lib.config.extension_十周年UI_newDecadeStyle != "othersOff" && lib.config.extension_十周年UI_newDecadeStyle != "on") {
 							var tipskillbox = document.createElement("div"); //盒子
 							var tipshow = document.createElement("img"); //图片思考中
 							var tipskilltext = document.createElement("div"); //技能文本
