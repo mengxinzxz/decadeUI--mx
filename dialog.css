@@ -457,10 +457,19 @@
 	border-radius: 8px;
 }
 
-#arena[data-outcrop-skin="on"] > .skill-dialog.compare > .content > .player-character > .image {
+/* 拼点框露头高度 */
+/* 十周年露头高度 */
+#arena[data-outcrop-skin="shizhounian"] > .skill-dialog.compare > .content > .player-character > .image {
 	height: 192px;
 	clip-path: url(#solo-clip);
 	-webkit-clip-path: url(#solo-clip);
+}
+
+/* 手杀露头高度 */
+#arena[data-outcrop-skin="shousha"] > .skill-dialog.compare > .content > .player-character > .image {
+	height: 207px;
+	clip-path: url(#soloss-clip);
+	-webkit-clip-path: url(#soloss-clip);
 }
 
 .skill-dialog.compare > .content > .vs {

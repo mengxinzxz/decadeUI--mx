@@ -215,8 +215,8 @@ body > .background {
 #arena > .hand-wrap,
 #arena > .hand-back {
 	/*手牌区*/ /*左手布局+单独装备栏*/
-	left: 300px;	
-    right: 225px;/*数值越大手牌右边界区域越往左*/
+	left: 300px;
+	right: 225px; /*数值越大手牌右边界区域越往左*/
 	width: auto;
 	height: 150px;
 	bottom: 1%;
@@ -235,8 +235,8 @@ body > .background {
 #arena[data-alone-equip="off"][data-right-layout="off"] > .hand-wrap,
 #arena[data-alone-equip="off"][data-right-layout="off"] > .hand-back {
 	/*左手布局+非单独装备栏*/
-	left: 300px;	
-    right: 95px;
+	left: 300px;
+	right: 95px;
 }
 
 #arena[data-alone-equip="off"][data-right-layout="on"] > .hand-wrap,
@@ -252,7 +252,7 @@ body > .background {
 }
 /*挑战模式小头像*/
 .hand-wrap > .fakeme.avatar {
-	left: -270px;/*数值越小越左*/
+	left: -270px; /*数值越小越左*/
 	top: auto;
 	right: auto;
 	bottom: 0;
@@ -737,10 +737,19 @@ body > .background {
 	transition: none;
 }
 
-#arena[data-outcrop-skin="on"] .button.character > .character {
+/* 游戏开局前选将框露头高度调整 */
+/* 十周年露头*/
+#arena[data-outcrop-skin="shizhounian"] .button.character > .character {
 	height: 128px;
 	clip-path: url(#solo-clip);
 	-webkit-clip-path: url(#solo-clip);
+}
+
+/* 手杀露头 */
+#arena[data-outcrop-skin="shousha"] .button.character > .character {
+	height: 140px;
+	clip-path: url(#soloss-clip);
+	-webkit-clip-path: url(#soloss-clip);
 }
 
 #arena > .card > .judge-mark {

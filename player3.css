@@ -588,21 +588,28 @@
 	opacity: 0.3;
 }
 
-#arena[data-outcrop-skin="on"] > .player > .primary-avatar {
+/*单将露头*/
+#arena[data-outcrop-skin="shizhounian"] > .player > .primary-avatar {
 	height: 183px;
 	clip-path: url(#solo-clip); /*新增*/
 	-webkit-clip-path: url(#solo-clip);
 }
-
-#arena[data-outcrop-skin="on"] > .player > .deputy-avatar {
-	height: 183px;
-	clip-path: url(#duor-clip); /*新增*/
-	-webkit-clip-path: url(#duor-clip);
+#arena[data-outcrop-skin="shousha"] > .player > .primary-avatar {
+	height: 195px;
+	clip-path: url(#solo-clip); /*新增*/
+	-webkit-clip-path: url(#solo-clip);
 }
 
-#arena[data-outcrop-skin="on"] > .player.fullskin2 > .primary-avatar {
-	clip-path: url(#duol-clip); /*新增*/
-	-webkit-clip-path: url(#duol-clip);
+/*双将露头*/
+#arena[data-outcrop-skin="shizhounian"] > .player > .deputy-avatar {
+	height: 183px;
+	clip-path: url(#solo-clip); /*新增*/
+	-webkit-clip-path: url(#duor-clip);
+}
+#arena[data-outcrop-skin="shousha"] > .player > .deputy-avatar {
+	height: 195px;
+	clip-path: url(#solo-clip); /*新增*/
+	-webkit-clip-path: url(#duor-clip);
 }
 
 /*武将牌动皮显示*/
