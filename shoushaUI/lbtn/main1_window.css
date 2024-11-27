@@ -225,9 +225,9 @@
 	overflow: visible;
 	transition: none;
 }
-.control>div.primary,
-.control>div.qi,
-.control>div.huan {
+.control > div.primary,
+.control > div.qi,
+.control > div.huan {
 	--p: calc(var(--h) * 11 / 75);
 	background-image: none;
 }
@@ -288,10 +288,10 @@
 	display: none;
 }
 
-.control>div.qi>span {
+.control > div.qi > span {
 	background-image: url("./images/uibutton/qipai.png");
 }
-.control>div.huan>span {
+.control > div.huan > span {
 	background-image: url("./images/uibutton/huanpai.png");
 }
 /*手牌*/
