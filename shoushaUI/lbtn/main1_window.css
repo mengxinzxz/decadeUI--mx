@@ -225,7 +225,9 @@
 	overflow: visible;
 	transition: none;
 }
-.control > div.primary {
+.control>div.primary,
+.control>div.qi,
+.control>div.huan {
 	--p: calc(var(--h) * 11 / 75);
 	background-image: none;
 }
@@ -286,6 +288,12 @@
 	display: none;
 }
 
+.control>div.qi>span {
+	background-image: url("./images/uibutton/qipai.png");
+}
+.control>div.huan>span {
+	background-image: url("./images/uibutton/huanpai.png");
+}
 /*手牌*/
 /*这里给这个元素设置了一些默认值，如果在这个标签下的元素，不再设置其他值时，将调用这些默认值*/
 .handcardNumber {
