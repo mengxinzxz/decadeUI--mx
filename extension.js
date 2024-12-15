@@ -1,14 +1,16 @@
 import { ChildNodesWatcher } from "../../noname/library/cache/childNodesWatcher.js";
 import { nonameInitialized } from "../../noname/util/index.js";
-game.import("extension", function (lib, game, ui, get, ai, _status) {
+import { lib, game, ui, get, ai, _status } from "../../noname.js";
+export const type = "extension";
+export default function () {
 	const decadeUIName = (window.decadeUIName = "十周年UI");
 	const decadeUIPath = (window.decadeUIPath = lib.assetURL + "extension/" + decadeUIName + "/");
 	const decadeUIResolvePath = (window.decadeUIResolvePath = nonameInitialized + "extension/" + decadeUIName + "/");
 	return {
 		name: "十周年UI",
-		content: function (config, pack) {
+		content (config, pack) {
 			/*-----------------分割线-----------------*/
-			if (get.mode() == "chess" || get.mode() == "tafang") return;
+			if (get.mode() === "chess" || get.mode() === "tafang" || get.mode === "hs_hearthstone") return;
 			var extension = lib.extensionMenu["extension_" + decadeUIName];
 			if (!(extension && extension.enable && extension.enable.init)) return;
 			/*-----------------分割线-----------------*/
@@ -9291,8 +9293,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			}
 			//手杀UI
 		},
-		precontent: function () {
-			if (get.mode() == "chess" || get.mode() == "tafang") return;
+		precontent () {
+			if (get.mode() === "chess" || get.mode() === "tafang" || get.mode === "hs_hearthstone") return;
 			if (lib.config["extension_" + decadeUIName + "_eruda"]) {
 				var script = document.createElement("script");
 				script.src = decadeUIPath + "eruda.js";
@@ -9372,7 +9374,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 							othersOn: 1,
 							othersOff: 3,
 						}[lib.config.extension_十周年UI_newDecadeStyle] || 2;
-					if (!(get.mode() == "chess" || get.mode() == "tafang")) {
+					if (!(get.mode() == "chess" || get.mode() == "tafang" || get.mode == "hs_hearthstone")) {
 						var list = ["character", "lbtn", "skill"];
 						list.forEach(pack => {
 							//css加载
@@ -9870,7 +9872,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 			var layoutPath = lib.assetURL + "extension/十周年UI/shoushaUI/";
 			if (lib.config.extension_十周年UI_KGMH == "1") lib.init.css(layoutPath, "KGMH/kaiguan");
 			if (lib.config.extension_十周年UI_KGMH == "2") lib.init.css(layoutPath, "KGMH/kaiguan_new");
-			if (!(get.mode() == "chess" || get.mode() == "tafang")) {
+			if (!(get.mode() == "chess" || get.mode() == "tafang" || get.mode == "hs_hearthstone")) {
 				for (var pack of [/*'card',*/ "character", "lbtn", "skill"]) {
 					var listmap =
 						{
@@ -11670,6 +11672,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 					"修复拼点点数异常问题",
 					"整合风中的欧皇的小配件修复和露头参数补充",
 					"修复PC端手杀UI开局换牌和弃牌提示的显示bug",
+					"适配炉石传说扩展",
 				];
 				return '<a href="https://github.com/mengxinzxz/decadeUI--mx">点击前往萌修十周年Github仓库</a><br><p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join("<br>•") + "</p>";
 			})(pack);
@@ -11682,4 +11685,4 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 		},
 		editable: false,
 	};
-});
+};
