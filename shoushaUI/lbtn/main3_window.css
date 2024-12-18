@@ -18,89 +18,38 @@
 	display: block;
 	position: relative;
 }
-/*二级菜单页面*/
-.HOME {
-	--w: 69px;
-	--h: calc(var(--w) * 446 / 81); /*高和长*/
+.buttonyjcm {
+	--w: 56px;
+	--h: calc(var(--w) * 275 / 71);
 	width: var(--w);
 	height: var(--h);
-	top: 0%;
-	left: calc(100% - 119px);
+	overflow-y: scroll;
+	/*  display: flex;*/
+	flex-direction: column;
+	align-items: flex-start;
+	white-space: normal;
+	position: fixed;
+	bottom: calc(100% - 280px);
+	left: calc(100% - 112.5px);
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.buttonyjcm > .controls {
+	--w: 56px;
+	--h: calc(var(--w) * 55 / 71);
+	width: var(--w);
+	height: var(--h);
 	background-size: 100% 100%;
-	background-image: url("./images/CD/HOME.png");
-	z-index: 68;
+	z-index: 99;
 	position: relative;
-	transition: all 1s;
-}
-
-/*设置*/
-.SZ {
-	--w: 56px;
-	--h: calc(var(--w) * 73 / 71);
-	width: var(--w);
-	height: var(--h);
-	bottom: calc(100% - 373px);
-	left: calc(100% - 112.5px);
-	background-size: 100% 100%;
-	background-image: url("./images/CD/SZ.png");
-	z-index: 99;
-	position: fixed;
-}
-
-/*离开*/
-.LK {
-	--w: 56px;
-	--h: calc(var(--w) * 73 / 71);
-	width: var(--w);
-	height: var(--h);
-	bottom: calc(100% - 248px);
-	left: calc(100% - 112.5px);
-	background-size: 100% 100%;
-	background-image: url("./images/CD/LK.png");
-	z-index: 99;
-	position: fixed;
-}
-
-/*背景*/
-.BJ {
-	--w: 56px;
-	--h: calc(var(--w) * 73 / 71);
-	width: var(--w);
-	height: var(--h);
-	bottom: calc(100% - 310px);
-	left: calc(100% - 112.5px);
-	background-size: 100% 100%;
-	background-image: url("./images/CD/BJ.png");
-	z-index: 99;
-	position: fixed;
-}
-
-/*投降*/
-.TX {
-	--w: 56px;
-	--h: calc(var(--w) * 73 / 71);
-	width: var(--w);
-	height: var(--h);
-	bottom: calc(100% - 187px);
-	left: calc(100% - 112.5px);
-	background-size: 100% 100%;
-	background-image: url("./images/CD/TX.png");
-	z-index: 99;
-	position: fixed;
-}
-
-/*托管*/
-.TG {
-	--w: 56px;
-	--h: calc(var(--w) * 74 / 71);
-	width: var(--w);
-	height: var(--h);
-	bottom: calc(100% - 126px);
-	left: calc(100% - 112.5px);
-	background-size: 100% 100%;
-	background-image: url("./images/CD/TG.png");
-	z-index: 99;
-	position: fixed;
+	margin-top: 10px;
+	font-size: 14px;
+	font-family: yuanli;
+	font-weight: 600;
+	color: #e3b88b;
+	display: flex; /* 开启flex布局 */
+	align-items: flex-end; /* 上下以底边对齐 */
+	justify-content: center; /* 文字左右居中 */
 }
 
 /*---------新版小配件--------*/
@@ -165,27 +114,18 @@
 }
 
 .control > div {
-	/*选将按钮，提示之类*/
-	/*height: var(--h) !important;
-	width: calc(var(--h)*90/32) !important;*/
-	background-image: url("./images/uibutton/new_btnn2.png");
+	background-image: url("./images/uibutton/new_btnn.png");
 	background-size: 100% 100%;
 	line-height: var(--h);
-	padding: 2.6px 25px !important; /*按钮高度+宽度 (前置定位条件:字体大小) 建议别调1  10*/
-	min-width: 100px !important; /*限制最小宽度100*/
+	padding: 2.6px 23px !important; /*按钮高度+宽度 (前置定位条件:字体大小) 建议别调1  10*/
+	min-width: 90px !important; /*限制最小宽度100*/
 	max-height: 50px !important; /*限制最大高度35*/
 	text-align: center;
 	margin-top: 0px !important;
 	margin-bottom: -15px !important;
-	color: #2f4f4f;
-	-webkit-text-stroke: 0.4px #803b02;
+	color: #f5d79e;
 	font-family: "yuanli";
-	text-shadow: 0 0 2px #ffffd5, 0 0 2px #ffffd5;
-	/*text-shadow: #F5D78E 1px 1px 1px,
-			#F5D78E 1px -1px 1px,
-			#F5D78E -1px 1px 1px,
-			#F5D78E -1px -1px 1px;*/
-	font-size: 25px;
+	font-size: 20px;
 }
 
 /*无懈按钮位置*/
@@ -196,22 +136,13 @@
 }
 
 .control > div.primary2 {
-	/*(取消/结束)按钮*/
-	/*width: 100px;
-	--p: calc(var(--h) * 11 / 75);*/
-	color: rgb(250, 250, 200);
-	/*margin-left: 50px;*/
+	/*取消按钮*/
 	bottom: 1.8px;
-	color: #2f4f4f;
-	-webkit-text-stroke: 0.4px #803b02;
-	text-shadow: 0 0 2px #ffffd5, 0 0 2px #ffffd5;
-	/*text-shadow: #AB9372 1px 1px 1px,
-			#AB9372 1px -1px 1px,
-			#AB9372 -1px 1px 1px,
-			#AB9372 -1px -1px 1px;*/
-	font-size: 25px; /*字体大小*/
+	color: #f5d79e;
+	font-family: "yuanli";
+	font-size: 20px; /*字体大小*/
 	line-height: 35px; /*建议别调*/
-	padding: 2.6px 25px !important; /*按钮高度+宽度 (前置定位条件:字体大小) 建议别调1  10*/
+	padding: 2.6px 23px !important; /*按钮高度+宽度 (前置定位条件:字体大小) 建议别调1  10*/
 	margin-left: 55px !important;
 	margin-right: 0px !important;
 	margin-top: 0px !important;
@@ -223,26 +154,18 @@
 }
 .control > div.primary {
 	/*确认按钮*/
-	/*width: 100px;
-	--p: calc(var(--h) * 11 / 75);*/
-	/*color: rgb(250, 250, 200);*/
-	color: #2f4f4f;
-	-webkit-text-stroke: 0.4px #803b02;
-	text-shadow: 0 0 2px #ffffd5, 0 0 2px #ffffd5;
-	/*text-shadow: #F5D78E 1px 1px 1px,
-			#F5D78E 1px -1px 1px,
-			#F5D78E -1px 1px 1px,
-			#F5D78E -1px -1px 1px;*/
-	font-size: 25px; /*字体大小*/
+	color: #f5d79e;
+	font-family: "yuanli";
+	font-size: 20px; /*字体大小*/
 	line-height: 35px; /*建议别调*/
-	padding: 2.6px 25px !important; /*按钮高度+宽度 (前置定位条件:字体大小) 建议别调0 10*/
+	padding: 2.6px 23px !important; /*按钮高度+宽度 (前置定位条件:字体大小) 建议别调0 10*/
 	/*margin: 0px 55px !important;*/
 	margin-left: 10px !important;
 	margin-right: 10px !important;
 	margin-top: 0px !important;
 	margin-bottom: -15px !important;
 	background-size: 100% 100%;
-	background-image: url("./images/uibutton/new_btnn2.png");
+	background-image: url("./images/uibutton/new_btnn.png");
 }
 
 .control > div.disabled:not([data-type="endButton"]) {
@@ -251,7 +174,8 @@
 
 .control > div.disabled:not([data-type="endButton"]) {
 	/*-webkit-filter: grayscale(100%);*/
-	-webkit-filter: brightness(70%);
+	filter: grayscale(100%);
+	/*-webkit-filter: brightness(100%);*/
 }
 
 .lbtn-confirm[data-skill] > [data-type="skill2"] {

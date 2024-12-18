@@ -95,8 +95,16 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				event.stopPropagation();
 				popuperContainer.delete(200);
 			});
-			var HOME = ui.create.div(".HOME", popuperContainer);
-			var SZ = ui.create.div(".SZ", popuperContainer);
+			var HOME = ui.create.div(".buttonyjcm", popuperContainer);
+			/*for(let i in ui.system1){
+			    let control=ui.create.div(".controls", HOME);
+			    let Control=ui.system1[i];
+			    console.log(Control.name)
+			    control.setBackgroundImage('extension/十周年UI/shoushaUI/lbtn/images/button/'+Control.name+'.png');
+			    control.addEventListener("click", event=>Control.click);
+			};*/
+			var SZ = ui.create.div(".controls", HOME);
+			SZ.setBackgroundImage("extension/十周年UI/shoushaUI/lbtn/images/button/button_sz.png");
 			SZ.addEventListener("click", event => {
 				game.playAudio("../extension/十周年UI/shoushaUI/lbtn/images/CD/button.mp3");
 
@@ -107,32 +115,25 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				ui.system1.classList.remove("shown");
 				ui.system2.classList.remove("shown");
 			});
-			var LK = ui.create.div(".LK", popuperContainer);
-			LK.addEventListener("click", event => {
-				game.playAudio("../extension/十周年UI/shoushaUI/lbtn/images/CD/button.mp3");
-
-				window.location.reload();
-			});
-			var BJ = ui.create.div(".BJ", popuperContainer);
+			var BJ = ui.create.div(".controls", HOME);
+			BJ.setBackgroundImage("extension/十周年UI/shoushaUI/lbtn/images/button/button_bj.png");
 			BJ.addEventListener("click", event => {
 				game.playAudio("../extension/十周年UI/shoushaUI/lbtn/images/CD/button.mp3");
-
-				//换背景
-				var Backgrounds = ["一将成名", "新十周年"];
-
+				var Backgrounds = ["一将成名"];
 				ui.background.setBackgroundImage("extension/十周年UI/shoushaUI/lbtn/images/background/" + Backgrounds.randomGet() + ".jpg");
 			});
-			var TX = ui.create.div(".TX", popuperContainer);
-			TX.addEventListener("click", event => {
-				game.playAudio("../extension/十周年UI/shoushaUI/lbtn/images/CD/button.mp3");
-
-				game.over();
-			});
-			var TG = ui.create.div(".TG", popuperContainer);
+			var TG = ui.create.div(".controls", HOME);
+			TG.setBackgroundImage("extension/十周年UI/shoushaUI/lbtn/images/button/button_tg.png");
 			TG.addEventListener("click", event => {
 				game.playAudio("../extension/十周年UI/shoushaUI/lbtn/images/CD/button.mp3");
 
 				ui.click.auto();
+			});
+			var TC = ui.create.div(".controls", HOME);
+			TC.setBackgroundImage("extension/十周年UI/shoushaUI/lbtn/images/button/button_tc.png");
+			TC.addEventListener("click", event => {
+				game.playAudio("../extension/十周年UI/shoushaUI/lbtn/images/CD/button.mp3");
+				window.location.reload();
 			});
 		};
 		document.body.appendChild(head);
@@ -366,15 +367,23 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				//-------原版---------//
 				//左手模式加开关
 				if (lib.config["extension_十周年UI_rightLayout"] == "on") {
-					var node6 = ui.create.div(".huanfuButton_new", ui.arena, plugin.click.huanfu);
-					var node7 = ui.create.div(".jiluButton_new", ui.arena, ui.click.pause);
-					//var node8 = ui.create.div(".meiguiButton_new", ui.arena);
-					var node9 = ui.create.div(".xiaolianButton_new", ui.arena);
-					//---------------------//
+					if (lib.config.extension_十周年UI_XPJ == "on") {
+						var node5 = ui.create.div(".huanfuButton", ui.arena, plugin.click.huanfu);
+						var node2 = ui.create.div(".jiluButton", ui.arena, ui.click.pause);
+						//-------------------//
+					} else {
+						//-------新版----------//
+						var node6 = ui.create.div(".huanfuButton_new", ui.arena, plugin.click.huanfu);
+						var node7 = ui.create.div(".jiluButton_new", ui.arena, ui.click.pause);
+						var node8 = ui.create.div(".meiguiButton_new", ui.arena);
+						var node9 = ui.create.div(".xiaolianButton_new", ui.arena);
+						//---------------------//
+					}
 				} else {
+					//-------新版----------//
 					var node6 = ui.create.div(".huanfuButton_new1", ui.arena, plugin.click.huanfu);
 					var node7 = ui.create.div(".jiluButton_new1", ui.arena, ui.click.pause);
-					//var node8 = ui.create.div(".meiguiButton_new1", ui.arena, plugin.click.meigui);
+					var node8 = ui.create.div(".meiguiButton_new1", ui.arena, plugin.click.meigui);
 					var node9 = ui.create.div(".xiaolianButton_new1", ui.arena, plugin.click.xiaolian);
 					//---------------------//
 				}

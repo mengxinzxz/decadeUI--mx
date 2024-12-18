@@ -8,7 +8,7 @@ export default function () {
 	const decadeUIResolvePath = (window.decadeUIResolvePath = nonameInitialized + "extension/" + decadeUIName + "/");
 	return {
 		name: "十周年UI",
-		content (config, pack) {
+		content(config, pack) {
 			/*-----------------分割线-----------------*/
 			if (get.mode() === "chess" || get.mode() === "tafang" || get.mode === "hs_hearthstone") return;
 			var extension = lib.extensionMenu["extension_" + decadeUIName];
@@ -9293,7 +9293,7 @@ export default function () {
 			}
 			//手杀UI
 		},
-		precontent () {
+		precontent() {
 			if (get.mode() === "chess" || get.mode() === "tafang" || get.mode === "hs_hearthstone") return;
 			if (lib.config["extension_" + decadeUIName + "_eruda"]) {
 				var script = document.createElement("script");
@@ -10000,6 +10000,29 @@ export default function () {
 					var imgBg2 = document.createElement("img");
 					imgBg2.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/uibutton/jindutiao2.1.png";
 					imgBg2.style.cssText = "width: 400px;height:14px;position: absolute;top: 0;z-index: -1;";
+					boxContent.appendChild(imgBg2);
+				}
+				if (lib.config.extension_十周年UI_jindutiaoYangshi == "4") {
+					if (window.jindutiaoTeshu) {
+						delete window.jindutiaoTeshu;
+					}
+					boxContent.style.width = "400px";
+					boxContent.style.height = "13px";
+					boxContent.style.display = "block";
+					boxContent.style["boxShadow"] = "0 0 4px #000000";
+					boxContent.style.margin = "0 0 !important";
+					boxContent.style.position = "fixed";
+					boxContent.style.left = "calc(50% - 197px)";
+					boxContent.style.bottom = parseFloat(lib.config["extension_十周年UI_jindutiaoSet"]) + "%";
+
+					var boxTime = document.createElement("div");
+					boxTime.data = 395; /*黄色条长度*/
+					boxTime.style.cssText = "z-index:1;width:399px;height:10px;margin:0 0 0 0px;background-color: #A56C41;position: absolute;top: 1px;";
+					boxContent.appendChild(boxTime);
+					/*底图*/
+					var imgBg2 = document.createElement("img");
+					imgBg2.src = lib.assetURL + "extension/十周年UI/shoushaUI/lbtn/images/uibutton/newTimeBarBg.png";
+					imgBg2.style.cssText = "width: 400px;height:12px;position: absolute;top: -3;z-index: -1;";
 					boxContent.appendChild(imgBg2);
 				}
 				document.body.appendChild(boxContent);
@@ -11435,6 +11458,7 @@ export default function () {
 					1: "手杀进度条",
 					2: "十周年PC端进度条",
 					3: "十周年客户端进度条",
+					4: "一将成名进度条",
 				},
 			},
 			jindutiaotuoguan: {
@@ -11685,4 +11709,4 @@ export default function () {
 		},
 		editable: false,
 	};
-};
+}
