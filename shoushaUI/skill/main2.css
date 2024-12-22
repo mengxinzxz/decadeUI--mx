@@ -18,8 +18,8 @@
 }
 .skill-control > div {
 	display: flex;
-	flex-wrap: wrap-reverse;
-	flex-direction: row-reverse;
+	flex-wrap: wrap;
+	flex-direction: row;
 }
 .skill-control > div::after {
 	content: "";
