@@ -11696,6 +11696,7 @@ export default function () {
 					"整合风中的欧皇的小配件修复和露头参数补充",
 					"修复PC端手杀UI开局换牌和弃牌提示的显示bug",
 					"适配炉石传说扩展",
+					"修复webview内核版本大于128的阵亡图片错位bug",
 				];
 				return '<a href="https://github.com/mengxinzxz/decadeUI--mx">点击前往萌修十周年Github仓库</a><br><p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join("<br>•") + "</p>";
 			})(pack);
