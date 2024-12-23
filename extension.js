@@ -2,25 +2,20 @@ import { ChildNodesWatcher } from "../../noname/library/cache/childNodesWatcher.
 import { nonameInitialized } from "../../noname/util/index.js";
 import { lib, game, ui, get, ai, _status } from "../../noname.js";
 export const type = "extension";
-export default function () {
-	const decadeUIName = (window.decadeUIName = "十周年UI");
-	const decadeUIPath = (window.decadeUIPath = lib.assetURL + "extension/" + decadeUIName + "/");
-	const decadeUIResolvePath = (window.decadeUIResolvePath = nonameInitialized + "extension/" + decadeUIName + "/");
+export default async function () {
+	const { name, ...otherInfo } = await lib.init.promises.json(`${lib.assetURL}extension/十周年UI/info.json`);
+	const decadeUIName = (window.decadeUIName = name);
+	const decadeUIPath = (window.decadeUIPath = `${lib.assetURL}extension/${decadeUIName}/`);
+	const decadeUIResolvePath = (window.decadeUIResolvePath = `${nonameInitialized}extension/${decadeUIName}/`);
 	return {
-		name: "十周年UI",
+		name,
+		editable: false,
 		content(config, pack) {
-			/*-----------------分割线-----------------*/
 			if (get.mode() === "chess" || get.mode() === "tafang" || get.mode === "hs_hearthstone") return;
-			var extension = lib.extensionMenu["extension_" + decadeUIName];
-			if (!(extension && extension.enable && extension.enable.init)) return;
-			/*-----------------分割线-----------------*/
-
 			//菜单栏错位bugfix
 			game.menuZoom = 1;
-
 			//单独装备栏
 			_status.nopopequip = lib.config.extension_十周年UI_aloneEquip;
-
 			//布局
 			switch (lib.config.layout) {
 				case "long2":
@@ -95,34 +90,8 @@ export default function () {
 							ok = false;
 						}
 						return ok;
-					}
-					/*
-		  function override(dest, src) {
-			const getCover = function (from, to, getCover) {
-			  if (get.is.object(from)) {
-				console.log(from);
-				for (const key in from) {
-				  getCover(from[key], to[key], getCover);
-				}
-			  }
-			  else {
-				to = from;
-			  }
-			};
-			getCover(src, dest, getCover);
-		  };
-		  */
-					//暂时用不上你了
-					/*
-		  function overrides(dest, src) {
-			if (!dest._super) dest._super = {};
-			for (var key in src) {
-			  if (dest[key]) dest._super[key] = dest[key];
-			  dest[key] = src[key];
-			}
-		  };
-		  */
-					var base = {
+					};
+					const base = {
 						ui: {
 							create: {
 								cards: ui.create.cards,
@@ -167,7 +136,7 @@ export default function () {
 						},
 					};
 
-					var ride = {};
+					const ride = {};
 					ride.lib = {
 						element: {
 							dialog: {
@@ -9303,9 +9272,6 @@ export default function () {
 				};
 			}
 
-			const extension = lib.extensionMenu[`extension_${decadeUIName}`];
-			if (!(extension && extension.enable && extension.enable.init)) return;
-
 			if (window.require && !window.fs) window.fs = require("fs");
 
 			lib.configMenu.appearence.config.layout.visualMenu = (node, link) => {
@@ -9366,13 +9332,12 @@ export default function () {
 					var layoutPath = decadeUIPath + "shoushaUI/";
 					if (lib.config.extension_十周年UI_KGMH == "1") this.css(layoutPath + "KGMH/" + "kaiguan.css");
 					if (lib.config.extension_十周年UI_KGMH == "2") this.css(layoutPath + "KGMH/" + "kaiguan_new.css");
-					var listmap =
-						{
-							on: 2,
-							off: 1,
-							othersOn: 1,
-							othersOff: 3,
-						}[lib.config.extension_十周年UI_newDecadeStyle] || 2;
+					var listmap = {
+						on: 2,
+						off: 1,
+						othersOn: 1,
+						othersOff: 3,
+					}[lib.config.extension_十周年UI_newDecadeStyle] || 2;
 					if (!(get.mode() == "chess" || get.mode() == "tafang" || get.mode == "hs_hearthstone")) {
 						var list = ["character", "lbtn", "skill"];
 						list.forEach(pack => {
@@ -9387,12 +9352,7 @@ export default function () {
 									break;
 							}
 							//js加载
-							this.js(
-								layoutPath + pack + "/" + pack + "/main" + listmap + ".js",
-								null,
-								function () {},
-								function () {}
-							);
+							this.js(layoutPath + pack + "/" + pack + "/main" + listmap + ".js", null, function () {}, function () {});
 						});
 					}
 					return this;
@@ -10252,7 +10212,6 @@ export default function () {
 					lib.setScroll(window.dialog_lifesayBgColor);
 					window.dialog_lifesay.appendChild(window.dialog_lifesayBgColor);
 					window.lifesayWord = [
-						//添加常用语
 						"能不能快点呀，兵贵神速啊",
 						"主公，别开枪，自己人",
 						"小内再不跳，后面还怎么玩啊",
@@ -10294,11 +10253,11 @@ export default function () {
 				window.chatButton1 = ui.create.div("hidden", "", game.open_lifesay);
 				window.chatButton1.style.cssText = "display: block;--w: 80px;--h: calc(var(--w) * 82/98);width: var(--w);height: var(--h);left:40px;bottom:25px;transition:none;background-size:100% 100%";
 				/*window.chatButton1.style.height='70px';
-		window.chatButton1.style.width='80px';
-		window.chatButton1.style.left='40px';
-		window.chatButton1.style.bottom='10px';
-		window.chatButton1.style.transition='none';
-		window.chatButton1.style.backgroundSize="100% 100%";*/
+				window.chatButton1.style.width='80px';
+				window.chatButton1.style.left='40px';
+				window.chatButton1.style.bottom='10px';
+				window.chatButton1.style.transition='none';
+				window.chatButton1.style.backgroundSize="100% 100%";*/
 				window.chatButton1.setBackgroundImage("extension/十周年UI/shoushaUI/sayplay/lifesay.png");
 
 				lib.setScroll(window.chatButton1);
@@ -10658,11 +10617,11 @@ export default function () {
 				window.chatButton2 = ui.create.div("hidden", "", game.open_emoji);
 				window.chatButton2.style.cssText = "display: block;--w: 80px;--h: calc(var(--w) * 82/98);width: var(--w);height: var(--h);left:150px;bottom:25px;transition:none;background-size:100% 100%";
 				/*window.chatButton2.style.height='70px';
-		window.chatButton2.style.width='80px';
-		window.chatButton2.style.left='150px';
-		window.chatButton2.style.bottom='10px';
-		window.chatButton2.style.transition='none';
-		window.chatButton2.style.backgroundSize="100% 100%";*/
+				window.chatButton2.style.width='80px';
+				window.chatButton2.style.left='150px';
+				window.chatButton2.style.bottom='10px';
+				window.chatButton2.style.transition='none';
+				window.chatButton2.style.backgroundSize="100% 100%";*/
 				window.chatButton2.setBackgroundImage("extension/十周年UI/shoushaUI/sayplay/emoji.png");
 
 				lib.setScroll(window.chatButton2);
@@ -10676,11 +10635,11 @@ export default function () {
 				window.chatButton3 = ui.create.div("hidden", "", game.open_jilu);
 				window.chatButton3.style.cssText = "display: block;--w: 80px;--h: calc(var(--w) * 82/98);width: var(--w);height: var(--h);left:260px;bottom:25px;transition:none;background-size:100% 100%";
 				/*window.chatButton3.style.height='70px';
-		window.chatButton3.style.width='80px';
-		window.chatButton3.style.left='260px';
-		window.chatButton3.style.bottom='10px';
-		window.chatButton3.style.transition='none';
-		window.chatButton3.style.backgroundSize="100% 100%";*/
+				window.chatButton3.style.width='80px';
+				window.chatButton3.style.left='260px';
+				window.chatButton3.style.bottom='10px';
+				window.chatButton3.style.transition='none';
+				window.chatButton3.style.backgroundSize="100% 100%";*/
 				window.chatButton3.setBackgroundImage("extension/十周年UI/shoushaUI/sayplay/jilu.png");
 
 				lib.setScroll(window.chatButton3);
@@ -10695,13 +10654,13 @@ export default function () {
 				});
 				window.chatSendBottom.style.cssText = "display: block;--w: 91px;--h: calc(var(--w) * 62/160);width: var(--w);height: var(--h);left:70%;top:33px;transition:none;background-size:100% 100%;text-align:center;border-randius:8px;";
 				/*window.chatSendBottom.style.height='50px';
-		window.chatSendBottom.style.width='25%';
-		window.chatSendBottom.style.left='calc( 60% + 62px )';
-		window.chatSendBottom.style.top='23px';
-		window.chatSendBottom.style.transition='none';
-		window.chatSendBottom.style['text-align']='center';
-		window.chatSendBottom.style.borderRadius='8px';
-		window.chatSendBottom.style.backgroundSize="100% 100%";*/
+				window.chatSendBottom.style.width='25%';
+				window.chatSendBottom.style.left='calc( 60% + 62px )';
+				window.chatSendBottom.style.top='23px';
+				window.chatSendBottom.style.transition='none';
+				window.chatSendBottom.style['text-align']='center';
+				window.chatSendBottom.style.borderRadius='8px';
+				window.chatSendBottom.style.backgroundSize="100% 100%";*/
 
 				window.chatSendBottom.setBackgroundImage("extension/十周年UI/shoushaUI/sayplay/buttonsend.png");
 				window.chatSendBottom.innerHTML = '<span style="color:white;font-size:22px;line-height:32px;font-weight:400;font-family:shousha">发送</span>';
@@ -10720,11 +10679,11 @@ export default function () {
 				window.chatInputOut = ui.create.div("hidden");
 				window.chatInputOut.style.cssText = "display: block;--w: 265px;--h: calc(var(--w) * 50/280);width: var(--w);height: var(--h);left:30px;top:30px;transition:none;background-size:100% 100%;pointer-events:none;z-index:6;";
 				/*window.chatInputOut.style.height='22px';
-		window.chatInputOut.style.width='60%';
-		window.chatInputOut.style.left='40px';
-		window.chatInputOut.style.top='40px';
-		window.chatInputOut.style.transition='none';
-		window.chatInputOut.style.backgroundSize="100% 100%";*/
+				window.chatInputOut.style.width='60%';
+				window.chatInputOut.style.left='40px';
+				window.chatInputOut.style.top='40px';
+				window.chatInputOut.style.transition='none';
+				window.chatInputOut.style.backgroundSize="100% 100%";*/
 				window.chatInputOut.style.backgroundImage = "url('" + lib.assetURL + "extension/十周年UI/shoushaUI/sayplay/sayX.png')";
 
 				window.chatBg.appendChild(window.chatInputOut);
@@ -10969,12 +10928,6 @@ export default function () {
 				if (_status.as_showText) {
 					_status.as_showImage.hide();
 				}
-
-				/*setTimeout(function () {
-		  div.style.left = pos[0] + '%';
-		  div.style.width = pos[2] + '%';
-		}, 1);*/
-
 				if (time === true) return true;
 				setTimeout(function () {
 					if (_status.as_showImage) {
@@ -11036,7 +10989,7 @@ export default function () {
 				name: "菜单美化",
 				intro: "开启全屏的菜单样式",
 				init: false,
-				onclick: function (bool) {
+				onclick (bool) {
 					game.saveConfig("extension_十周年UI_meanPrettify", bool);
 					if (bool) lib.init.css(lib.assetURL + "extension/十周年UI", "menu");
 					else {
@@ -11117,7 +11070,7 @@ export default function () {
 					skin_zhouyi_剑舞浏漓: "周　夷-剑舞浏漓",
 					skin_zhangxingcai_凯旋星花: "张星彩-凯旋星花",
 				},
-				update: function () {
+				update () {
 					if (!window.decadeUI) return;
 
 					var item = lib.config["extension_十周年UI_dynamicBackground"];
@@ -11138,7 +11091,7 @@ export default function () {
 			dynamicSkinOutcrop: {
 				name: "动皮露头",
 				init: true,
-				update: function () {
+				update () {
 					if (window.decadeUI) {
 						var enable = lib.config["extension_十周年UI_dynamicSkinOutcrop"];
 						ui.arena.dataset.dynamicSkinOutcrop = enable ? "on" : "off";
@@ -11161,7 +11114,7 @@ export default function () {
 			cardAlternateNameVisible: {
 				name: "牌名辅助显示",
 				init: false,
-				update: function () {
+				update () {
 					if (window.decadeUI) ui.window.dataset.cardAlternateNameVisible = lib.config["extension_十周年UI_cardAlternateNameVisible"] ? "on" : "off";
 				},
 			},
@@ -11172,7 +11125,7 @@ export default function () {
 			playerKillEffect: {
 				name: "玩家击杀特效",
 				init: true,
-				onclick: function (value) {
+				onclick (value) {
 					game.saveConfig("extension_十周年UI_playerKillEffect", value);
 					if (window.decadeUI) decadeUI.config.playerKillEffect = value;
 				},
@@ -11184,7 +11137,7 @@ export default function () {
 			playerDieEffect: {
 				name: "玩家阵亡特效",
 				init: true,
-				onclick: function (value) {
+				onclick (value) {
 					game.saveConfig("extension_十周年UI_playerDieEffect", value);
 					if (window.decadeUI) decadeUI.config.playerDieEffect = value;
 				},
@@ -11192,7 +11145,7 @@ export default function () {
 			cardUseEffect: {
 				name: "卡牌使用特效",
 				init: true,
-				onclick: function (value) {
+				onclick (value) {
 					game.saveConfig("extension_十周年UI_cardUseEffect", value);
 					if (window.decadeUI) decadeUI.config.cardUseEffect = value;
 				},
@@ -11200,7 +11153,7 @@ export default function () {
 			playerLineEffect: {
 				name: "玩家指示线特效",
 				init: true,
-				onclick: function (value) {
+				onclick (value) {
 					game.saveConfig("extension_十周年UI_playerLineEffect", value);
 					if (window.decadeUI) decadeUI.config.playerLineEffect = value;
 				},
@@ -11213,7 +11166,7 @@ export default function () {
 					shousha: "手杀露头",
 					off: "关闭",
 				},
-				update: function () {
+				update () {
 					if (window.decadeUI) ui.arena.dataset.outcropSkin = lib.config["extension_十周年UI_outcropSkin"];
 				},
 			},
@@ -11221,7 +11174,7 @@ export default function () {
 				name: "视为卡牌显示",
 				init: false,
 				intro: "开启此选项后，视为卡牌显示将会替换为十周年UI内置替换显示",
-				onclick: function (bool) {
+				onclick (bool) {
 					game.saveConfig("extension_十周年UI_showTemp", bool);
 					if (game.me && lib.config.cardtempname != "off") {
 						let cards = game.me.getCards("h", card => card._tempName);
@@ -11277,7 +11230,7 @@ export default function () {
 					four: "四阶",
 					five: "五阶",
 				},
-				update: function () {
+				update () {
 					if (window.decadeUI) ui.arena.dataset.borderLevel = lib.config["extension_十周年UI_borderLevel"];
 				},
 			},
@@ -11289,7 +11242,7 @@ export default function () {
 					off: "不显示",
 					othersOn: "显示他人",
 				},
-				update: function () {
+				update () {
 					if (window.decadeUI) ui.arena.dataset.gainSkillsVisible = lib.config["extension_十周年UI_gainSkillsVisible"];
 				},
 			},
@@ -11322,7 +11275,7 @@ export default function () {
 					yellow: "黄灯笼",
 					decade: "十周年",
 				},
-				update: function () {
+				update () {
 					if (window.decadeUI) ui.arena.dataset.playerMarkStyle = lib.config["extension_十周年UI_playerMarkStyle"];
 				},
 			},
@@ -11336,14 +11289,14 @@ export default function () {
 					othersOn: "旧手杀",
 					othersOff: "一将成名",
 				},
-				onclick: function (control) {
+				onclick (control) {
 					const origin = lib.config.extension_十周年UI_newDecadeStyle;
 					game.saveConfig("extension_十周年UI_newDecadeStyle", control);
 					if (origin != control) {
 						setTimeout(() => game.reload(), 100);
 					}
 				},
-				update: function () {
+				update () {
 					if (window.decadeUI) {
 						ui.arena.dataset.newDecadeStyle = lib.config.extension_十周年UI_newDecadeStyle;
 						ui.arena.dataset.decadeLayout = lib.config.extension_十周年UI_newDecadeStyle == "on" || lib.config.extension_十周年UI_newDecadeStyle == "othersOff" ? "on" : "off";
@@ -11358,7 +11311,7 @@ export default function () {
 					on: "原样式",
 					off: "新样式",
 				},
-				update: function () {
+				update () {
 					if (window.decadeUI) ui.arena.dataset.shadowStyle = lib.config["extension_十周年UI_shadowStyle"];
 				},
 			},
@@ -11375,7 +11328,7 @@ export default function () {
 					seven: "评级",
 					eight: "关闭",
 				},
-				update: function () {
+				update () {
 					if (window.decadeUI) ui.arena.dataset.longLevel = lib.config["extension_十周年UI_longLevel"];
 				},
 			},
@@ -11383,7 +11336,7 @@ export default function () {
 				name: '<b><font color="#99FF75">单独装备栏',
 				intro: '<b><font color="#99FF75">切换玩家装备栏为单独装备栏或非单独装备栏，初始为单独装备栏，根据个人喜好调整',
 				init: true,
-				update: function () {
+				update () {
 					const config = lib.config["extension_十周年UI_aloneEquip"];
 					if (window.decadeUI) ui.arena.dataset.aloneEquip = config ? "on" : "off";
 					_status.nopopequip = config;
@@ -11415,7 +11368,7 @@ export default function () {
 					othersOn: '<div style="width:60px;height:40px;position:relative;background-image: url(' + lib.assetURL + 'extension/十周年UI/assets/image/dialog3.png);background-size: 100% 100%;"></div>',
 					othersOff: '<div style="width:60px;height:40px;position:relative;background-image: url(' + lib.assetURL + 'extension/十周年UI/assets/image/dialog4.png);background-size: 100% 100%;"></div>',
 				},
-				update: function () {
+				update () {
 					if (window.decadeUI) ui.arena.dataset.loadingStyle = lib.config["extension_十周年UI_loadingStyle"];
 				},
 			},
@@ -11430,7 +11383,7 @@ export default function () {
 			JDTSM: {
 				name: '<div class="shousha_menu">进度条·查看</div>',
 				clear: true,
-				onclick: function () {
+				onclick () {
 					if (this.JDTSM == undefined) {
 						var more = ui.create.div(".JDTSM", '<div class="shousha_text"><li><b>进度条</b>:完善时机包括玩家回合内、人机回合内、玩家回合外、人机回合外。<li><b>进度条时间间隔</b>:设置玩家进度条的时间间隔，默认100毫秒/次<li><b>时间间隔</b>：通俗点说，就是进度条刷新的自定义时间单位/次。时间间隔越小，进度条总时间越少，反之亦然。<li><b>切换不生效？</b>:在游戏里切换时间间隔后不会马上生效，会在下一次进度条出现时生效。<li><b>进度条高度百分比</b>:现在可以在游戏里动态调节进度条高度了，变化发生在每次刷新时，建议开启<b>进度条刷新</b>功能搭配使用。可调节的范围在10%-40%左右。<li><b>进度条刷新</b>:在游戏里开启后，进度条会在每个节点进行刷新（也就是大伙说的旧版进度条）。</div>');
 						this.parentNode.insertBefore(more, this.nextSibling);
@@ -11498,9 +11451,6 @@ export default function () {
 					10: "10%",
 					15: "15%",
 					20: "20%",
-					10: "10%",
-					15: "15%",
-					20: "20%",
 					21: "21%",
 					22: "22%",
 					23: "23%",
@@ -11532,7 +11482,7 @@ export default function () {
 			JDTSSM: {
 				name: '<div class="shousha_menu">阶段提示·查看</div>',
 				clear: true,
-				onclick: function () {
+				onclick () {
 					if (this.JDTSSM == undefined) {
 						var more = ui.create.div(".JDTSSM", '<div class="shousha_text"><li><b>阶段提示</b>:回合开始、判定阶段、摸牌阶段、出牌阶段、弃牌阶段、等待响应、对方思考中，其中[对方思考中]，在游戏人数不大于两人时才会出现。<li><b>位置微调</b>：在游玩太虚幻境模式或者使用Eng侍灵扩展时，为避免遮挡，会自动判断并调整阶段提示位置<li><b>人机也有？</b>:人机做了进度条美化和阶段提示美化，样式跟随UI切换。</div>');
 						this.parentNode.insertBefore(more, this.nextSibling);
@@ -11570,7 +11520,7 @@ export default function () {
 			GTBBSM: {
 				name: '<div class="shousha_menu">狗托播报·查看</div>',
 				clear: true,
-				onclick: function () {
+				onclick () {
 					if (this.GTBBSM == undefined) {
 						var more = ui.create.div(".GTBBSM", '<div class="shousha_text"><li><b>狗托播报</b>:开启后，顶部会出现滚动播报栏。PS:狗托误我啊!<li><b>播报样式</b>：新增一种样式，可选择切换，需重启。【手杀/十周年】<li><b>播报时间间隔</b>:需重启，调整每条播报的出现频率。</div>');
 						this.parentNode.insertBefore(more, this.nextSibling);
@@ -11654,9 +11604,9 @@ export default function () {
 				init: "default",
 				intro: "更改自由选将筛选框",
 				item: {
-					default: "默认本体框",
+					"default": "默认本体框",
 					"extension-OL-system": "扩展内置框",
-					offDialog: "关闭筛选框",
+					"offDialog": "关闭筛选框",
 				},
 			},
 			//手杀UI
@@ -11668,7 +11618,7 @@ export default function () {
 			},
 		},
 		package: (() => {
-			const pack = {
+			const pkg = {
 				character: {
 					character: {},
 					translate: {},
@@ -11682,14 +11632,14 @@ export default function () {
 					skill: {},
 					translate: {},
 				},
-				author: "萌新（转型中）<br>十周年UI原作者：短歌<br>手杀UI原名：界面美化<br>手杀UI原作者：橙续缘",
-				diskURL: "",
-				forumURL: "",
-				version: "0.3.8 - 待定",
+			};
+			const pack = {
+				...pkg,
+				...otherInfo
 			};
 			pack.intro = (pack => {
 				let log = [
-					"魔改十周年 萌修 " + pack.version,
+					`魔改十周年 萌修 ${pack.version}`,
 					"最低适配：v1.10.17",
 					"继续修复u的遗留问题+整合u的部分优化",
 					"修复拼点点数异常问题",
@@ -11698,15 +11648,15 @@ export default function () {
 					"适配炉石传说扩展",
 					"修复webview内核版本大于128的阵亡图片错位bug",
 				];
-				return '<a href="https://github.com/mengxinzxz/decadeUI--mx">点击前往萌修十周年Github仓库</a><br><p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">' + log.join("<br>•") + "</p>";
+				return `<a href=${pack.otherInfo.diskURL}>点击前往萌修十周年Github仓库</a><br><p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">${log.join("<br>•")}</p>`;
 			})(pack);
 			return pack;
 		})(),
 		files: {
-			character: [],
-			card: [],
-			skill: [],
-		},
-		editable: false,
+			"character": [],
+			"card": [],
+			"skill": [],
+			"audio": []
+		}
 	};
-}
+};
