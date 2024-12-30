@@ -11637,7 +11637,7 @@ export default async function () {
 					"适配炉石传说扩展",
 					"修复webview内核版本大于128的阵亡图片错位bug",
 				];
-				return `<a href=${pack.otherInfo.diskURL}>点击前往萌修十周年Github仓库</a><br><p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">${log.join("<br>•")}</p>`;
+				return `<a href=${pack.diskURL}>点击前往萌修十周年Github仓库</a><br><p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">${log.join("<br>•")}</p>`;
 			})(pack);
 			return pack;
 		})(),
