@@ -90,7 +90,7 @@ export default async function () {
 							ok = false;
 						}
 						return ok;
-					};
+					}
 					const base = {
 						ui: {
 							create: {
@@ -9332,12 +9332,13 @@ export default async function () {
 					var layoutPath = decadeUIPath + "shoushaUI/";
 					if (lib.config.extension_十周年UI_KGMH == "1") this.css(layoutPath + "KGMH/" + "kaiguan.css");
 					if (lib.config.extension_十周年UI_KGMH == "2") this.css(layoutPath + "KGMH/" + "kaiguan_new.css");
-					var listmap = {
-						on: 2,
-						off: 1,
-						othersOn: 1,
-						othersOff: 3,
-					}[lib.config.extension_十周年UI_newDecadeStyle] || 2;
+					var listmap =
+						{
+							on: 2,
+							off: 1,
+							othersOn: 1,
+							othersOff: 3,
+						}[lib.config.extension_十周年UI_newDecadeStyle] || 2;
 					if (!(get.mode() == "chess" || get.mode() == "tafang" || get.mode == "hs_hearthstone")) {
 						var list = ["character", "lbtn", "skill"];
 						list.forEach(pack => {
@@ -9352,7 +9353,12 @@ export default async function () {
 									break;
 							}
 							//js加载
-							this.js(layoutPath + pack + "/" + pack + "/main" + listmap + ".js", null, function () {}, function () {});
+							this.js(
+								layoutPath + pack + "/" + pack + "/main" + listmap + ".js",
+								null,
+								function () {},
+								function () {}
+							);
 						});
 					}
 					return this;
@@ -10211,24 +10217,7 @@ export default async function () {
 					window.dialog_lifesayBgColor.style["overflow-y"] = "scroll";
 					lib.setScroll(window.dialog_lifesayBgColor);
 					window.dialog_lifesay.appendChild(window.dialog_lifesayBgColor);
-					window.lifesayWord = [
-						"能不能快点呀，兵贵神速啊",
-						"主公，别开枪，自己人",
-						"小内再不跳，后面还怎么玩啊",
-						"你们怎么忍心就这么让我酱油了",
-						"我，我惹你们了吗",
-						"姑娘，你真是条汉子",
-						"三十六计，走为上，容我去去便回",
-						"人心散了，队伍不好带啊",
-						"昏君，昏君啊",
-						"风吹鸡蛋壳，牌去人安乐",
-						"小内啊，您老悠着点儿",
-						"不好意思，刚才卡了",
-						"你可以打得再烂一点吗",
-						"哥们儿，给力点行吗",
-						"哥，交个朋友吧",
-						"妹子，交个朋友吧",
-					];
+					window.lifesayWord = ["能不能快点呀，兵贵神速啊", "主公，别开枪，自己人", "小内再不跳，后面还怎么玩啊", "你们怎么忍心就这么让我酱油了", "我，我惹你们了吗", "姑娘，你真是条汉子", "三十六计，走为上，容我去去便回", "人心散了，队伍不好带啊", "昏君，昏君啊", "风吹鸡蛋壳，牌去人安乐", "小内啊，您老悠着点儿", "不好意思，刚才卡了", "你可以打得再烂一点吗", "哥们儿，给力点行吗", "哥，交个朋友吧", "妹子，交个朋友吧"];
 					for (var i = 0; i < window.lifesayWord.length; i++) {
 						window["dialog_lifesayContent_" + i] = ui.create.div("hidden", "", function () {
 							game.me.say(this.content);
@@ -10989,7 +10978,7 @@ export default async function () {
 				name: "菜单美化",
 				intro: "开启全屏的菜单样式",
 				init: false,
-				onclick (bool) {
+				onclick(bool) {
 					game.saveConfig("extension_十周年UI_meanPrettify", bool);
 					if (bool) lib.init.css(lib.assetURL + "extension/十周年UI", "menu");
 					else {
@@ -11070,7 +11059,7 @@ export default async function () {
 					skin_zhouyi_剑舞浏漓: "周　夷-剑舞浏漓",
 					skin_zhangxingcai_凯旋星花: "张星彩-凯旋星花",
 				},
-				update () {
+				update() {
 					if (!window.decadeUI) return;
 
 					var item = lib.config["extension_十周年UI_dynamicBackground"];
@@ -11091,7 +11080,7 @@ export default async function () {
 			dynamicSkinOutcrop: {
 				name: "动皮露头",
 				init: true,
-				update () {
+				update() {
 					if (window.decadeUI) {
 						var enable = lib.config["extension_十周年UI_dynamicSkinOutcrop"];
 						ui.arena.dataset.dynamicSkinOutcrop = enable ? "on" : "off";
@@ -11114,7 +11103,7 @@ export default async function () {
 			cardAlternateNameVisible: {
 				name: "牌名辅助显示",
 				init: false,
-				update () {
+				update() {
 					if (window.decadeUI) ui.window.dataset.cardAlternateNameVisible = lib.config["extension_十周年UI_cardAlternateNameVisible"] ? "on" : "off";
 				},
 			},
@@ -11125,7 +11114,7 @@ export default async function () {
 			playerKillEffect: {
 				name: "玩家击杀特效",
 				init: true,
-				onclick (value) {
+				onclick(value) {
 					game.saveConfig("extension_十周年UI_playerKillEffect", value);
 					if (window.decadeUI) decadeUI.config.playerKillEffect = value;
 				},
@@ -11137,7 +11126,7 @@ export default async function () {
 			playerDieEffect: {
 				name: "玩家阵亡特效",
 				init: true,
-				onclick (value) {
+				onclick(value) {
 					game.saveConfig("extension_十周年UI_playerDieEffect", value);
 					if (window.decadeUI) decadeUI.config.playerDieEffect = value;
 				},
@@ -11145,7 +11134,7 @@ export default async function () {
 			cardUseEffect: {
 				name: "卡牌使用特效",
 				init: true,
-				onclick (value) {
+				onclick(value) {
 					game.saveConfig("extension_十周年UI_cardUseEffect", value);
 					if (window.decadeUI) decadeUI.config.cardUseEffect = value;
 				},
@@ -11153,7 +11142,7 @@ export default async function () {
 			playerLineEffect: {
 				name: "玩家指示线特效",
 				init: true,
-				onclick (value) {
+				onclick(value) {
 					game.saveConfig("extension_十周年UI_playerLineEffect", value);
 					if (window.decadeUI) decadeUI.config.playerLineEffect = value;
 				},
@@ -11166,7 +11155,7 @@ export default async function () {
 					shousha: "手杀露头",
 					off: "关闭",
 				},
-				update () {
+				update() {
 					if (window.decadeUI) ui.arena.dataset.outcropSkin = lib.config["extension_十周年UI_outcropSkin"];
 				},
 			},
@@ -11174,7 +11163,7 @@ export default async function () {
 				name: "视为卡牌显示",
 				init: false,
 				intro: "开启此选项后，视为卡牌显示将会替换为十周年UI内置替换显示",
-				onclick (bool) {
+				onclick(bool) {
 					game.saveConfig("extension_十周年UI_showTemp", bool);
 					if (game.me && lib.config.cardtempname != "off") {
 						let cards = game.me.getCards("h", card => card._tempName);
@@ -11230,7 +11219,7 @@ export default async function () {
 					four: "四阶",
 					five: "五阶",
 				},
-				update () {
+				update() {
 					if (window.decadeUI) ui.arena.dataset.borderLevel = lib.config["extension_十周年UI_borderLevel"];
 				},
 			},
@@ -11242,7 +11231,7 @@ export default async function () {
 					off: "不显示",
 					othersOn: "显示他人",
 				},
-				update () {
+				update() {
 					if (window.decadeUI) ui.arena.dataset.gainSkillsVisible = lib.config["extension_十周年UI_gainSkillsVisible"];
 				},
 			},
@@ -11275,7 +11264,7 @@ export default async function () {
 					yellow: "黄灯笼",
 					decade: "十周年",
 				},
-				update () {
+				update() {
 					if (window.decadeUI) ui.arena.dataset.playerMarkStyle = lib.config["extension_十周年UI_playerMarkStyle"];
 				},
 			},
@@ -11289,14 +11278,14 @@ export default async function () {
 					othersOn: "旧手杀",
 					othersOff: "一将成名",
 				},
-				onclick (control) {
+				onclick(control) {
 					const origin = lib.config.extension_十周年UI_newDecadeStyle;
 					game.saveConfig("extension_十周年UI_newDecadeStyle", control);
 					if (origin != control) {
 						setTimeout(() => game.reload(), 100);
 					}
 				},
-				update () {
+				update() {
 					if (window.decadeUI) {
 						ui.arena.dataset.newDecadeStyle = lib.config.extension_十周年UI_newDecadeStyle;
 						ui.arena.dataset.decadeLayout = lib.config.extension_十周年UI_newDecadeStyle == "on" || lib.config.extension_十周年UI_newDecadeStyle == "othersOff" ? "on" : "off";
@@ -11311,7 +11300,7 @@ export default async function () {
 					on: "原样式",
 					off: "新样式",
 				},
-				update () {
+				update() {
 					if (window.decadeUI) ui.arena.dataset.shadowStyle = lib.config["extension_十周年UI_shadowStyle"];
 				},
 			},
@@ -11328,7 +11317,7 @@ export default async function () {
 					seven: "评级",
 					eight: "关闭",
 				},
-				update () {
+				update() {
 					if (window.decadeUI) ui.arena.dataset.longLevel = lib.config["extension_十周年UI_longLevel"];
 				},
 			},
@@ -11336,7 +11325,7 @@ export default async function () {
 				name: '<b><font color="#99FF75">单独装备栏',
 				intro: '<b><font color="#99FF75">切换玩家装备栏为单独装备栏或非单独装备栏，初始为单独装备栏，根据个人喜好调整',
 				init: true,
-				update () {
+				update() {
 					const config = lib.config["extension_十周年UI_aloneEquip"];
 					if (window.decadeUI) ui.arena.dataset.aloneEquip = config ? "on" : "off";
 					_status.nopopequip = config;
@@ -11368,7 +11357,7 @@ export default async function () {
 					othersOn: '<div style="width:60px;height:40px;position:relative;background-image: url(' + lib.assetURL + 'extension/十周年UI/assets/image/dialog3.png);background-size: 100% 100%;"></div>',
 					othersOff: '<div style="width:60px;height:40px;position:relative;background-image: url(' + lib.assetURL + 'extension/十周年UI/assets/image/dialog4.png);background-size: 100% 100%;"></div>',
 				},
-				update () {
+				update() {
 					if (window.decadeUI) ui.arena.dataset.loadingStyle = lib.config["extension_十周年UI_loadingStyle"];
 				},
 			},
@@ -11383,7 +11372,7 @@ export default async function () {
 			JDTSM: {
 				name: '<div class="shousha_menu">进度条·查看</div>',
 				clear: true,
-				onclick () {
+				onclick() {
 					if (this.JDTSM == undefined) {
 						var more = ui.create.div(".JDTSM", '<div class="shousha_text"><li><b>进度条</b>:完善时机包括玩家回合内、人机回合内、玩家回合外、人机回合外。<li><b>进度条时间间隔</b>:设置玩家进度条的时间间隔，默认100毫秒/次<li><b>时间间隔</b>：通俗点说，就是进度条刷新的自定义时间单位/次。时间间隔越小，进度条总时间越少，反之亦然。<li><b>切换不生效？</b>:在游戏里切换时间间隔后不会马上生效，会在下一次进度条出现时生效。<li><b>进度条高度百分比</b>:现在可以在游戏里动态调节进度条高度了，变化发生在每次刷新时，建议开启<b>进度条刷新</b>功能搭配使用。可调节的范围在10%-40%左右。<li><b>进度条刷新</b>:在游戏里开启后，进度条会在每个节点进行刷新（也就是大伙说的旧版进度条）。</div>');
 						this.parentNode.insertBefore(more, this.nextSibling);
@@ -11482,7 +11471,7 @@ export default async function () {
 			JDTSSM: {
 				name: '<div class="shousha_menu">阶段提示·查看</div>',
 				clear: true,
-				onclick () {
+				onclick() {
 					if (this.JDTSSM == undefined) {
 						var more = ui.create.div(".JDTSSM", '<div class="shousha_text"><li><b>阶段提示</b>:回合开始、判定阶段、摸牌阶段、出牌阶段、弃牌阶段、等待响应、对方思考中，其中[对方思考中]，在游戏人数不大于两人时才会出现。<li><b>位置微调</b>：在游玩太虚幻境模式或者使用Eng侍灵扩展时，为避免遮挡，会自动判断并调整阶段提示位置<li><b>人机也有？</b>:人机做了进度条美化和阶段提示美化，样式跟随UI切换。</div>');
 						this.parentNode.insertBefore(more, this.nextSibling);
@@ -11520,7 +11509,7 @@ export default async function () {
 			GTBBSM: {
 				name: '<div class="shousha_menu">狗托播报·查看</div>',
 				clear: true,
-				onclick () {
+				onclick() {
 					if (this.GTBBSM == undefined) {
 						var more = ui.create.div(".GTBBSM", '<div class="shousha_text"><li><b>狗托播报</b>:开启后，顶部会出现滚动播报栏。PS:狗托误我啊!<li><b>播报样式</b>：新增一种样式，可选择切换，需重启。【手杀/十周年】<li><b>播报时间间隔</b>:需重启，调整每条播报的出现频率。</div>');
 						this.parentNode.insertBefore(more, this.nextSibling);
@@ -11604,9 +11593,9 @@ export default async function () {
 				init: "default",
 				intro: "更改自由选将筛选框",
 				item: {
-					"default": "默认本体框",
+					default: "默认本体框",
 					"extension-OL-system": "扩展内置框",
-					"offDialog": "关闭筛选框",
+					offDialog: "关闭筛选框",
 				},
 			},
 			//手杀UI
@@ -11635,7 +11624,7 @@ export default async function () {
 			};
 			const pack = {
 				...pkg,
-				...otherInfo
+				...otherInfo,
 			};
 			pack.intro = (pack => {
 				let log = [
@@ -11653,10 +11642,10 @@ export default async function () {
 			return pack;
 		})(),
 		files: {
-			"character": [],
-			"card": [],
-			"skill": [],
-			"audio": []
-		}
+			character: [],
+			card: [],
+			skill: [],
+			audio: [],
+		},
 	};
-};
+}
