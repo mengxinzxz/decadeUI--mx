@@ -2191,13 +2191,14 @@ export default async function () {
 										if (!evt.orderingCards) evt.orderingCards = [];
 										if (!event.noOrdering && !event.cardsOrdered) {
 											event.cardsOrdered = true;
-											var next = game.createEvent("orderingDiscard", false, evt.getParent());
+											var next = game.createEvent("orderingDiscard", false);
+											event.next.remove(next);
+											evt.after.push(next);
 											next.relatedEvent = evt;
 											next.setContent("orderingDiscard");
 										}
 										if (!event.noOrdering) {
 											evt.orderingCards.addArray(cards);
-											evt.orderingCards.addArray(ss);
 										}
 									} else if (event.position == ui.cardPile) {
 										game.updateRoundNumber();
@@ -11636,6 +11637,7 @@ export default async function () {
 					"修复PC端手杀UI开局换牌和弃牌提示的显示bug",
 					"适配炉石传说扩展",
 					"修复webview内核版本大于128的阵亡图片错位bug",
+					"修复lose覆盖后的函数的orderingDiscard时机节点生成错误的bug",
 				];
 				return `<a href=${pack.diskURL}>点击前往萌修十周年Github仓库</a><br><p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">${log.join("<br>•")}</p>`;
 			})(pack);
