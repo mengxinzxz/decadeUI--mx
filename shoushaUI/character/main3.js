@@ -115,7 +115,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 								value += "<br>";
 								if (lib.config["extension_千幻聆音_enable"]) {
 									value3 = game.qhly_getSkin(name2);
-									if (value) value3 = value3.substring(0, value3.lastIndexOf("."));
+									if (value3) value3 = value3.substring(0, value3.lastIndexOf("."));
 									else value3 = "经典形象";
 								} else value3 = "经典形象";
 								value += value3 + "*" + get.translation(name2);
