@@ -383,7 +383,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 							let str = [get.translation(card), get.translation(card.name + "_info")];
 							if (card.cards?.length) str[0] += "（" + get.translation(card.cards) + "）";
 							const special = card.cards?.find(item => item.name == card.name && lib.card[item.name]?.cardPrompt);
-							if (special) str[1] = lib.card[special.name].cardPrompt(special);
+							if (special) str[1] = lib.card[special.name].cardPrompt(special, player);
 							ui.create.div(".xskill", "<div data-color>" + str[0] + "</div><div>" + str[1] + "</div>", rightPane.firstChild);
 						});
 					}
