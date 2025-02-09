@@ -893,48 +893,6 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
 				}
 			},
 		},
-		huashen: {
-			async content(event, trigger, player) {
-				const map = event.cost_data;
-				if (!map.logged) player.logSkill("huashen");
-				const skill = map.skill,
-					character = map.character;
-				if (character != player.storage.huashen.current) {
-					const old = player.storage.huashen.current;
-					player.storage.huashen.current = character;
-					player.markSkill("huashen");
-					game.broadcastAll(
-						function (player, character, old) {
-							player.tempname.remove(old);
-							player.tempname.add(character);
-							player.sex = lib.character[character].sex;
-							//player.group=lib.character[character][1];
-							//player.node.name.dataset.nature=get.groupnature(player.group);
-							const mark = player.marks.huashen;
-							if (mark) {
-								mark.setBackground(character, "character");
-								mark._name = character;
-								mark.style.setProperty("background-size", "cover", "important");
-								mark.text.style.setProperty("font-size", "0px", "important");
-							}
-						},
-						player,
-						character,
-						old
-					);
-					game.log(player, "将性别变为了", "#y" + get.translation(lib.character[character].sex) + "性");
-					await player.changeGroup(lib.character[character].group);
-				}
-				player.storage.huashen.current2 = skill;
-				if (!player.additionalSkills.huashen || !player.additionalSkills.huashen.includes(skill)) {
-					player.flashAvatar("huashen", character);
-					player.syncStorage("huashen");
-					player.updateMarks("huashen");
-					await player.addAdditionalSkills("huashen", skill);
-					// lib.skill.rehuashen.createAudio(character,skill,'zuoci');
-				}
-			},
-		},
 		dcqixin: {
 			mark: undefined,
 			init(player, skill) {
