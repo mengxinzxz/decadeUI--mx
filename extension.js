@@ -1656,86 +1656,6 @@ export default async function () {
 									event.trigger("changeHp");
 									dui.delay(68);
 								},
-								respond: function () {
-									"step 0";
-									var cardaudio = true;
-									if (event.skill) {
-										if (lib.skill[event.skill].audio) {
-											cardaudio = false;
-										}
-										player.logSkill(event.skill);
-										player.checkShow(event.skill, true);
-										if (lib.skill[event.skill].onrespond && !game.online) {
-											lib.skill[event.skill].onrespond(event, player);
-										}
-									} else if (!event.nopopup) player.tryCardAnimate(card, card.name, "wood");
-									if (cardaudio && event.getParent(3).name == "useCard") {
-										game.broadcastAll(
-											function (player, card) {
-												if (lib.config.background_audio) {
-													var sex = player.sex == "female" ? "female" : "male";
-													var audioinfo = lib.card[card.name].audio;
-													if (typeof audioinfo == "string" && audioinfo.indexOf("ext:") == 0) {
-														game.playAudio("..", "extension", audioinfo.slice(4), card.name + "_" + sex);
-													} else {
-														game.playAudio("card", sex, card.name);
-													}
-												}
-											},
-											player,
-											card
-										);
-									}
-									if (event.skill) {
-										if (player.stat[player.stat.length - 1].skill[event.skill] == undefined) {
-											player.stat[player.stat.length - 1].skill[event.skill] = 1;
-										} else {
-											player.stat[player.stat.length - 1].skill[event.skill]++;
-										}
-										var sourceSkill = get.info(event.skill).sourceSkill;
-										if (sourceSkill) {
-											if (player.stat[player.stat.length - 1].skill[sourceSkill] == undefined) {
-												player.stat[player.stat.length - 1].skill[sourceSkill] = 1;
-											} else {
-												player.stat[player.stat.length - 1].skill[sourceSkill]++;
-											}
-										}
-									}
-									if (cards.length && (cards.length > 1 || cards[0].name != card.name)) {
-										game.log(player, "打出了", card, "（", cards, "）");
-									} else {
-										game.log(player, "打出了", card);
-									}
-									player.actionHistory[player.actionHistory.length - 1].respond.push(event);
-									var cards2 = cards.concat();
-									if (cards2.length) {
-										var next = player.lose(cards2, ui.ordering, "visible");
-										cards2.removeArray(next.cards);
-										if (event.noOrdering) next.noOrdering = true;
-
-										if (event.animate != false && event.throw !== false) {
-											next.animate = true;
-											next.blameEvent = event;
-										}
-
-										if (cards2.length) {
-											var next2 = game.cardsGotoOrdering(cards2);
-											if (event.noOrdering) next2.noOrdering = true;
-										}
-									} else {
-										var evt = _status.event;
-										if (evt && evt.card && evt.cards === cards) {
-											var card = ui.create.card().init([evt.card.suit, evt.card.number, evt.card.name, evt.card.nature]);
-											if (evt.card.suit == "none") card.node.suitnum.style.display = "none";
-											card.dataset.virtual = 1;
-											cards2 = [card];
-										}
-									}
-									player.$throw(cards2);
-									event.trigger("respond");
-									"step 1";
-									game.delayx(0.5);
-								},
 								gain: function () {
 									"step 0";
 									if (event.animate == "give") event.visible = true;
@@ -6006,39 +5926,18 @@ export default async function () {
 
 				tryAddPlayerCardUseTag: function (card, player, event) {
 					if (!card || !player || !event) return;
-
-					var noname;
-					var tagText = "";
 					var tagNode = card.querySelector(".used-info");
 					if (tagNode == null) tagNode = card.appendChild(dui.element.create("used-info"));
-
 					card.$usedtag = tagNode;
 					if (event.blameEvent) event = event.blameEvent;
-
-					switch (event.name.toLowerCase()) {
-						case "choosetocomparemultiple":
-							tagText = "拼点置入";
-							break;
-						case "choosetocompare":
-							tagText = "拼点置入";
-							break;
-						case "usecard":
-							tagText = "使用";
-							if (
-								!event.player.hasSkillTag("ignoreLogAI", null, {
-									card: event.card,
-								}) &&
-								!event.hideTargets &&
-								event.targets.length == 1
-							) {
-								if (event.targets[0] == event.player) tagText = "对自己";
-								else tagText = "对" + get.translation(event.targets[0]);
-							} else {
-								tagText = "使用";
-							}
+					let tagText;
+					const playername = get.slimName(player?.name);
+					let border = get.groupnature(get.bordergroup(player?.name), "raw");
+					let eventInfo = `<span style="font-weight:700"><span data-nature=${border}>${playername}</span><br/><span style="color:#FFD700">`;
+					switch (event.name) {
+						case "useCard":
 						case "respond":
-							if (tagText == "") tagText = "打出";
-
+							tagText = eventInfo + (event.name === "useCard" ? "使用" : "打出") + "</span>";
 							const cardname = event.card.name,
 								cardnature = get.nature(event.card);
 							if (lib.config.cardtempname != "off" && (card.name != cardname || !get.is.sameNature(cardnature, card.nature, true))) {
@@ -6053,7 +5952,6 @@ export default async function () {
 										}
 									}
 									tempname += tempname2;
-
 									card._tempName.innerHTML = tempname;
 									card._tempName.tempname = tempname;
 								} else {
@@ -6067,7 +5965,6 @@ export default async function () {
 							if (card.dataset.views != 1 && event.card.cards && event.card.cards.length == 1 && (card.number != cardnumber || card.suit != cardsuit)) {
 								dui.cardTempSuitNum(card, cardsuit, cardnumber);
 							}
-
 							if (duicfg.cardUseEffect && event.card && (!event.card.cards || !event.card.cards.length || event.card.cards.length == 1)) {
 								var name = event.card.name,
 									nature = event.card.nature;
@@ -6157,77 +6054,18 @@ export default async function () {
 								}
 							}
 							break;
-						case "useskill":
-							tagText = "发动" + get.skillTranslation(event.skill, event.player);
-							break;
-						case "die":
-							tagText = "弃置";
-							card.classList.add("invalided");
-							dui.layout.delayClear();
-							break;
-						case "discardmultiple":
-							var skillEvent = event.parent.parent.parent;
-							if (skillEvent) {
-								tagText = lib.translate[skillEvent.name != "useSkill" ? skillEvent.name : skillEvent.skill];
-								if (!tagText) tagText = "";
-								tagText += "弃置";
-							} else tagText = "弃置";
-						case "choosetoduiben":
-							var skillEvent = event.parent;
-							if (skillEvent) {
-								tagText = lib.translate[skillEvent.name];
-								if (!tagText) tagText = "";
-							}
-							tagText += (event.title || "对策") + "策略";
-							break;
-						case "loseasync":
-							noname = true;
-							var skillEvent = event.parent.parent.parent;
-							tagText += get.translation(player);
-							if (skillEvent && lib.translate[skillEvent.name != "useSkill" ? skillEvent.name : skillEvent.skill]) {
-								tagText += lib.translate[skillEvent.name != "useSkill" ? skillEvent.name : skillEvent.skill];
-							}
-							tagText += "弃置";
-							break;
-						case "lose":
-							if (event.parent && event.parent.name == "discard") {
-								var skillEvent = event.parent.parent.parent;
-								if (skillEvent) {
-									tagText = lib.translate[skillEvent.name != "useSkill" ? skillEvent.name : skillEvent.skill];
-									if (!tagText) tagText = "";
-									tagText += "弃置";
-								} else tagText = "弃置";
-							} else {
-								var skillEvent = event.parent.parent.parent;
-								if (skillEvent) {
-									tagText = lib.translate[skillEvent.name != "useSkill" ? skillEvent.name : skillEvent.skill];
-									if (!tagText || tagText == "重铸") tagText = "";
-									if (event.parent.parent.name != "recast") tagText += "置入弃牌堆";
-									else tagText += "重铸";
-								} else tagText = "置入弃牌堆";
-							}
-							break;
-						case "lose_muniu":
-							tagText = "木牛流马流失";
-							break;
-						case "phasejudge":
-							tagText = "即将生效";
-							break;
 						case "judge":
-							noname = true;
 							tagText = event.judgestr + "的判定牌";
 							event.addMessageHook("judgeResult", function () {
 								var event = this;
 								var card = event.result.card.clone;
 								var apcard = event.apcard;
-
 								var tagText = "";
 								var tagNode = card.querySelector(".used-info");
 								if (tagNode == null) tagNode = card.appendChild(dui.element.create("used-info"));
 								if (event.result.suit != get.suit(card) || event.result.number != get.number(card)) {
 									dui.cardTempSuitNum(card, event.result.suit, event.result.number);
 								}
-
 								var action;
 								var judgeValue;
 								var getEffect = event.judge2;
@@ -6236,13 +6074,11 @@ export default async function () {
 								} else {
 									judgeValue = decadeUI.get.judgeEffect(event.judgestr, event.result.judge);
 								}
-
 								if (typeof judgeValue == "boolean") {
 									judgeValue = judgeValue ? 1 : -1;
 								} else {
 									judgeValue = event.result.judge;
 								}
-
 								if (judgeValue >= 0) {
 									action = "play4";
 									tagText = "判定生效";
@@ -6250,7 +6086,6 @@ export default async function () {
 									action = "play5";
 									tagText = "判定失效";
 								}
-
 								if (apcard && apcard._ap) apcard._ap.stopSpineAll();
 								if (apcard && apcard._ap && apcard == card) {
 									apcard._ap.playSpine({
@@ -6263,29 +6098,23 @@ export default async function () {
 										action: action,
 									});
 								}
-
 								event.apcard = undefined;
-								tagNode.textContent = get.translation(event.judgestr) + tagText;
+								tagNode.innerHTML = get.translation(event.judgestr) + tagText;
 							});
-
 							if (duicfg.cardUseEffect) {
 								decadeUI.animation.cap.playSpineTo(card, {
 									name: "effect_panding",
 									action: "play",
 									loop: true,
 								});
-
 								event.apcard = card;
 							}
 							break;
 						default:
-							tagText = get.translation(event.name);
-							if (tagText == event.name) tagText = "";
-							else tagText += "效果";
+							tagText = get.cardsetion(player);
 							break;
 					}
-
-					tagNode.textContent = (noname ? "" : get.translation(event.player)) + tagText;
+					tagNode.innerHTML = tagText;
 				},
 
 				getRandom: function (min, max) {
