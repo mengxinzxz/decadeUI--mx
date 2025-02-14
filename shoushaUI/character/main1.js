@@ -1,11 +1,11 @@
 app.import(function (lib, game, ui, get, ai, _status, app) {
 	var plugin = {
 		name: "character",
-		filter: function () {
+		filter() {
 			return !["chess", "tafang"].includes(get.mode());
 		},
-		content: function (next) {},
-		precontent: function () {
+		content(next) {},
+		precontent() {
 			app.reWriteFunction(lib, {
 				setIntro: [
 					function (args, node) {
@@ -25,7 +25,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 		},
 
 		click: {
-			identity: function (e) {
+			identity(e) {
 				e.stopPropagation();
 				var player = this.parentNode;
 				if (!game.getIdentityList) return;
@@ -41,7 +41,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 					player.node.guessDialog = guessDialog;
 				}
 			},
-			playerIntro: function (e) {
+			playerIntro(e) {
 				e.stopPropagation();
 
 				if (plugin.playerDialog) {

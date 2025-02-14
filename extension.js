@@ -31,7 +31,7 @@ export default async function () {
 
 			window.duicfg = config;
 			window.dui = window.decadeUI = {
-				init: function () {
+				init() {
 					this.extensionName = decadeUIName;
 
 					var sensor = decadeUI.element.create("sensor", document.body);
@@ -75,7 +75,7 @@ export default async function () {
 					this.initOverride();
 					return this;
 				},
-				initOverride: function () {
+				initOverride() {
 					function override(dest, src) {
 						var ok = true;
 						for (const key in src) {
@@ -140,7 +140,7 @@ export default async function () {
 					ride.lib = {
 						element: {
 							dialog: {
-								open: function () {
+								open() {
 									if (this.noopen) return;
 									for (let i = 0; i < ui.dialogs.length; i++) {
 										if (ui.dialogs[i] == this) {
@@ -163,7 +163,7 @@ export default async function () {
 									}
 									return this;
 								},
-								close: function () {
+								close() {
 									if (this.intersection) {
 										this.intersection.disconnect();
 										this.intersection = undefined;
@@ -172,7 +172,7 @@ export default async function () {
 								},
 							},
 							event: {
-								addMessageHook: function (message, callback) {
+								addMessageHook(message, callback) {
 									if (this._messages == undefined) this._messages = {};
 
 									message = message.toLowerCase();
@@ -181,7 +181,7 @@ export default async function () {
 									message = this._messages[message];
 									message.push(callback);
 								},
-								triggerMessage: function (message) {
+								triggerMessage(message) {
 									if (this._messages == undefined) return;
 
 									message = message.toLowerCase();
@@ -196,7 +196,7 @@ export default async function () {
 								},
 							},
 							card: {
-								$init: function (card) {
+								$init(card) {
 									base.lib.element.card.$init.apply(this, arguments);
 
 									this.node.range.innerHTML = "";
@@ -333,7 +333,7 @@ export default async function () {
 									}
 									return this;
 								},
-								updateTransform: function (bool, delay) {
+								updateTransform(bool, delay) {
 									if (delay) {
 										var that = this;
 										setTimeout(function () {
@@ -350,7 +350,7 @@ export default async function () {
 										}
 									}
 								},
-								moveTo: function (player) {
+								moveTo(player) {
 									if (!player) return;
 									var arena = dui.boundsCaches.arena;
 									if (!arena.updated) arena.update();
@@ -367,7 +367,7 @@ export default async function () {
 									this.style.transform = "translate(" + x + "px," + y + "px) scale(" + scale + ")";
 									return this;
 								},
-								moveDelete: function (player) {
+								moveDelete(player) {
 									this.fixed = true;
 									this.moveTo(player);
 									setTimeout(
@@ -381,7 +381,7 @@ export default async function () {
 							},
 
 							control: {
-								add: function (item) {
+								add(item) {
 									var node = document.createElement("div");
 									node.link = item;
 									node.innerHTML = get.translation(item);
@@ -390,13 +390,13 @@ export default async function () {
 									this.updateLayout();
 								},
 
-								open: function () {
+								open() {
 									ui.control.insertBefore(this, _status.createControl || ui.confirm);
 									ui.controls.unshift(this);
 									return this;
 								},
 
-								close: function () {
+								close() {
 									this.remove();
 									ui.controls.remove(this);
 									if (ui.confirm == this) ui.confirm = null;
@@ -405,7 +405,7 @@ export default async function () {
 									if (ui.skills3 == this) ui.skills3 = null;
 								},
 
-								replace: function () {
+								replace() {
 									var items;
 									var index = 0;
 									var nodes = this.childNodes;
@@ -442,7 +442,7 @@ export default async function () {
 									return this;
 								},
 
-								updateLayout: function () {
+								updateLayout() {
 									var nodes = this.childNodes;
 									if (nodes.length >= 2) {
 										this.classList.add("combo-control");
@@ -455,7 +455,7 @@ export default async function () {
 							},
 
 							player: {
-								mark: function (item, info, skill) {
+								mark(item, info, skill) {
 									if (item && lib.config.extension_十周年UI_newDecadeStyle != "othersOff" && lib.config.extension_十周年UI_newDecadeStyle != "on") {
 										const info = get.info(item);
 										if (info && (info.zhuanhuanji || info.limited)) return;
@@ -527,21 +527,21 @@ export default async function () {
 									ui.updatem(this);
 									return mark;
 								},
-								markSkill: function (name, info, card, nobroadcast) {
+								markSkill(name, info, card, nobroadcast) {
 									if (name && lib.config.extension_十周年UI_newDecadeStyle != "othersOff" && lib.config.extension_十周年UI_newDecadeStyle != "on") {
 										const info = get.info(name);
 										if (info && (info.zhuanhuanji || info.limited)) return;
 									}
 									return base.lib.element.player.markSkill.apply(this, arguments);
 								},
-								unmarkSkill: function (name, info, card, nobroadcast) {
+								unmarkSkill(name, info, card, nobroadcast) {
 									if (name && lib.config.extension_十周年UI_newDecadeStyle != "othersOff" && lib.config.extension_十周年UI_newDecadeStyle != "on") {
 										const info = get.info(name);
 										if (info && (info.zhuanhuanji || info.limited)) return;
 									}
 									return base.lib.element.player.unmarkSkill.apply(this, arguments);
 								},
-								markCharacter: function (name, info, learn, learn2) {
+								markCharacter(name, info, learn, learn2) {
 									if (typeof name == "object") name = name.name;
 
 									var nodeMark = ui.create.div(".card.mark");
@@ -577,7 +577,7 @@ export default async function () {
 									ui.updatem(this);
 									return nodeMark;
 								},
-								markSkillCharacter: function (id, target, name, content) {
+								markSkillCharacter(id, target, name, content) {
 									if (typeof target == "object") target = target.name;
 									game.broadcastAll(
 										function (player, target, name, content, id) {
@@ -620,7 +620,7 @@ export default async function () {
 									);
 									return this;
 								},
-								playDynamic: function (animation, deputy) {
+								playDynamic(animation, deputy) {
 									deputy = deputy === true;
 									if (animation == undefined) return console.error("playDynamic: 参数1不能为空");
 									var dynamic = this.dynamic;
@@ -674,7 +674,7 @@ export default async function () {
 									this.classList.add(deputy ? "d-skin2" : "d-skin");
 								},
 
-								stopDynamic: function (primary, deputy) {
+								stopDynamic(primary, deputy) {
 									var dynamic = this.dynamic;
 									if (!dynamic) return;
 
@@ -700,7 +700,7 @@ export default async function () {
 									}
 								},
 
-								say: function (str) {
+								say(str) {
 									str = str.replace(/##assetURL##/g, lib.assetURL);
 
 									if (!this.$chatBubble) {
@@ -739,7 +739,7 @@ export default async function () {
 								},
 
 								/*-----------------分割线-----------------*/
-								updateMark: function (name, storage) {
+								updateMark(name, storage) {
 									if (!this.marks[name]) {
 										if (lib.skill[name] && lib.skill[name].intro && (this.storage[name] || lib.skill[name].intro.markcount)) {
 											this.markSkill(name);
@@ -788,7 +788,7 @@ export default async function () {
 									return this;
 								},
 
-								$dieAfter: function () {
+								$dieAfter() {
 									if (!config.dynamicSkin_dieAfter) this.stopDynamic();
 									this.node.gainSkill.innerHTML = null;
 
@@ -831,7 +831,7 @@ export default async function () {
 									}, 250);
 								},
 
-								$skill: function (name, type, color, avatar) {
+								$skill(name, type, color, avatar) {
 									if (!decadeUI.config.gameAnimationEffect || !decadeUI.animation.gl) return base.lib.element.player.$skill.apply(this, arguments);
 									var _this = this;
 									if (typeof type != "string") type = "legend";
@@ -855,7 +855,7 @@ export default async function () {
 										avatar
 									);
 								},
-								$syncExpand: function (map) {
+								$syncExpand(map) {
 									if (this != game.me) return;
 									//if (base.lib.element.player.$syncExpand) base.lib.element.player.$syncExpand.apply(this, arguments);
 									if (!map) map = this.expandedSlots || {};
@@ -888,7 +888,7 @@ export default async function () {
 										ediv.dataset.type = repetition;
 									}
 								},
-								$init: function (character, character2) {
+								$init(character, character2) {
 									base.lib.element.player.$init.apply(this, arguments);
 									this.doubleAvatar = (character2 && lib.character[character2]) != undefined;
 
@@ -958,7 +958,7 @@ export default async function () {
 									}
 									return this;
 								},
-								$uninit: function () {
+								$uninit() {
 									this.stopDynamic();
 									this.doubleAvatar = false;
 									delete this.node.campWrap.dataset.camp;
@@ -972,7 +972,7 @@ export default async function () {
 									base.lib.element.player.$uninit.apply(this, arguments);
 									return this;
 								},
-								setSeatNum: function () {
+								setSeatNum() {
 									base.lib.element.player.setSeatNum.apply(this, arguments);
 									this.seat = this.getSeatNum();
 									game.broadcastAll(function (player) {
@@ -980,7 +980,7 @@ export default async function () {
 										player.node.seat.innerHTML = get.cnNumber(player.seat, true);
 									}, this);
 								},
-								$update: function () {
+								$update() {
 									base.lib.element.player.$update.apply(this, arguments);
 									//护甲显示修改
 									let hujiat = this.node.hpWrap.querySelector(".hujia");
@@ -1010,7 +1010,7 @@ export default async function () {
 									if (count >= 10) this.node.count.innerHTML = count;
 									return this;
 								},
-								directgain: function (cards, broadcast, gaintag) {
+								directgain(cards, broadcast, gaintag) {
 									if (!cards || !cards.length) return;
 									var player = this;
 									var handcards = player.node.handcards1;
@@ -1087,7 +1087,7 @@ export default async function () {
 									});
 									ui.updatej(player);
 								},
-								useCard: function () {
+								useCard() {
 									var event = base.lib.element.player.useCard.apply(this, arguments);
 									event.finish = function () {
 										this.finished = true;
@@ -1106,7 +1106,7 @@ export default async function () {
 									});
 									return event;
 								},
-								lose: function () {
+								lose() {
 									var next = base.lib.element.player.lose.apply(this, arguments);
 									var event = _status.event;
 									if (event.name == "useCard") {
@@ -1116,7 +1116,7 @@ export default async function () {
 									}
 									return next;
 								},
-								line: function (target, config) {
+								line(target, config) {
 									if (get.itemtype(target) == "players") {
 										for (var i = 0; i < target.length; i++) {
 											this.line(target[i], config);
@@ -1161,7 +1161,7 @@ export default async function () {
 										game.linexy([x1, y1, x2, y2], config, true);
 									}
 								},
-								checkBoundsCache: function (forceUpdate) {
+								checkBoundsCache(forceUpdate) {
 									var update;
 									var refer = dui.boundsCaches.arena;
 									refer.check();
@@ -1180,7 +1180,7 @@ export default async function () {
 										this.cacheHeight = this.offsetHeight;
 									}
 								},
-								queueCssAnimation: function (animation) {
+								queueCssAnimation(animation) {
 									var current = this.style.animation;
 									var animations = this._cssanimations;
 									if (animations == undefined) {
@@ -1211,7 +1211,7 @@ export default async function () {
 									animations.current = animation;
 									this.style.animation = animation;
 								},
-								$draw: function (num, init, config) {
+								$draw(num, init, config) {
 									if (game.chess) return base.lib.element.player.$draw.call(this, num, init, config);
 
 									if (init !== false && init !== "nobroadcast") {
@@ -1279,7 +1279,7 @@ export default async function () {
 										dui.delayRemoveCards(cards, 460, 220);
 									});
 								},
-								$give: function (cards, target, log, record) {
+								$give(cards, target, log, record) {
 									var itemtype;
 									var duiMod = cards.duiMod && game.me == target;
 									if (typeof cards == "number") {
@@ -1375,7 +1375,7 @@ export default async function () {
 										dui.delayRemoveCards(cards, 460, 220);
 									});
 								},
-								$gain2: function (cards, log) {
+								$gain2(cards, log) {
 									var type = get.itemtype(cards);
 									if (type != "cards") {
 										if (type != "card") return;
@@ -1431,7 +1431,7 @@ export default async function () {
 										dui.delayRemoveCards(cards, 460, 220);
 									});
 								},
-								$handleEquipChange: function () {
+								$handleEquipChange() {
 									base.lib.element.player.$handleEquipChange.apply(this, arguments);
 									const player = this;
 									if (!(player == game.me && ui.equipSolts)) return;
@@ -1457,11 +1457,11 @@ export default async function () {
 										}
 									}
 								},
-								removeVirtualEquip: function () {
+								removeVirtualEquip() {
 									base.lib.element.player.removeVirtualEquip.apply(this, arguments);
 									if (!lib.config.equip_span) this.$handleEquipChange();
 								},
-								$damage: function (source) {
+								$damage(source) {
 									if (get.itemtype(source) == "player") {
 										game.addVideo("damage", this, source.dataset.position);
 									} else {
@@ -1477,7 +1477,7 @@ export default async function () {
 
 									this.queueCssAnimation("player-hurt 0.3s");
 								},
-								$throw: function (cards, time, record, nosource) {
+								$throw(cards, time, record, nosource) {
 									var itemtype;
 									var duiMod = cards.duiMod && game.me == this && !nosource;
 									if (typeof cards == "number") {
@@ -1562,7 +1562,7 @@ export default async function () {
 
 									return cards[cards.length - 1];
 								},
-								$throwordered2: function (card, nosource) {
+								$throwordered2(card, nosource) {
 									if (_status.connectMode) ui.todiscard = [];
 
 									if (card.throwordered == undefined) {
@@ -1613,7 +1613,7 @@ export default async function () {
 									dui.queueNextFrameTick(dui.layoutDiscard, dui);
 									return card;
 								},
-								$phaseJudge: function (card) {
+								$phaseJudge(card) {
 									game.addVideo("phaseJudge", this, get.cardInfo(card));
 									if (card.cards?.length) {
 										const cards = card.cards;
@@ -1626,7 +1626,7 @@ export default async function () {
 								},
 							},
 							content: {
-								changeHp: function () {
+								changeHp() {
 									game.getGlobalHistory().changeHp.push(event);
 									if (num < 0 && player.hujia > 0 && event.getParent().name == "damage" && !player.hasSkillTag("nohujia")) {
 										event.hujia = Math.min(-num, player.hujia);
@@ -1656,7 +1656,7 @@ export default async function () {
 									event.trigger("changeHp");
 									dui.delay(68);
 								},
-								gain: function () {
+								gain() {
 									"step 0";
 									if (event.animate == "give") event.visible = true;
 									if (cards) {
@@ -1821,7 +1821,7 @@ export default async function () {
 									"step 4";
 									if (event.updatePile) game.updateRoundNumber();
 								},
-								judge: function () {
+								judge() {
 									"step 0";
 									var judgestr = get.translation(player) + "的" + event.judgestr + "判定";
 									event.videoId = lib.status.videoId++;
@@ -1921,7 +1921,7 @@ export default async function () {
 										}
 									}
 								},
-								lose: function () {
+								lose() {
 									"step 0";
 									var evt = event.getParent();
 									if ((evt.name != "discard" || event.type != "discard") && (evt.name != "loseToDiscardpile" || event.type != "loseToDiscardpile")) {
@@ -2223,7 +2223,7 @@ export default async function () {
 									}
 								},
 								/*-----------------分割线-----------------*/
-								turnOver: function () {
+								turnOver() {
 									game.log(player, "翻面");
 									player.classList.toggle("turnedover");
 									game.broadcast(function (player) {
@@ -2238,7 +2238,7 @@ export default async function () {
 
 					ride.ui = {
 						create: {
-							prebutton: function (item, type, position, noclick) {
+							prebutton(item, type, position, noclick) {
 								var button = ui.create.div();
 								button.style.display = "none";
 								button.link = item;
@@ -2251,7 +2251,7 @@ export default async function () {
 								return button;
 							},
 						},
-						updatec: function () {
+						updatec() {
 							var controls = ui.control.childNodes;
 							var stayleft;
 							var offsetLeft;
@@ -2279,11 +2279,11 @@ export default async function () {
 							}
 						},
 
-						updatehl: function () {
+						updatehl() {
 							dui.queueNextFrameTick(dui.layoutHand, dui);
 						},
 
-						updatej: function (player) {
+						updatej(player) {
 							if (!player) return;
 
 							var judges = player.node.judges.childNodes;
@@ -2297,9 +2297,9 @@ export default async function () {
 							}
 						},
 
-						updatem: function (player) {},
+						updatem(player) {},
 
-						updatez: function () {
+						updatez() {
 							window.documentZoom = game.documentZoom;
 							document.body.style.zoom = game.documentZoom;
 							document.body.style.width = "100%";
@@ -2307,7 +2307,7 @@ export default async function () {
 							document.body.style.transform = "";
 						},
 
-						update: function () {
+						update() {
 							for (var i = 0; i < ui.updates.length; i++) ui.updates[i]();
 							if (ui.dialog == undefined || ui.dialog.classList.contains("noupdate")) return;
 							if (game.chess) return base.ui.update();
@@ -2333,7 +2333,7 @@ export default async function () {
 						},
 
 						create: {
-							rarity: function (button) {
+							rarity(button) {
 								if (!lib.config.show_rarity) return;
 								var rarity = game.getRarity(button.link);
 								var intro = button.node.intro;
@@ -2343,13 +2343,13 @@ export default async function () {
 								intro.style.backgroundImage = 'url("' + decadeUIPath + "assets/image/rarity_" + rarity + '.png")';
 							},
 
-							button: function (item, type, position, noclick, node) {
+							button(item, type, position, noclick, node) {
 								const button = base.ui.create.button.apply(this, arguments);
 								if (position) position.appendChild(button);
 								return button;
 							},
 
-							control: function () {
+							control() {
 								var i, controls;
 								var nozoom = false;
 								if (Array.isArray(arguments[0])) {
@@ -2381,7 +2381,7 @@ export default async function () {
 								return control;
 							},
 
-							dialog: function () {
+							dialog() {
 								var hidden = false;
 								var notouchscroll = false;
 								var forcebutton = false;
@@ -2417,7 +2417,7 @@ export default async function () {
 								return dialog;
 							},
 
-							selectlist: function (list, init, position, onchange) {
+							selectlist(list, init, position, onchange) {
 								var select = document.createElement("select");
 								for (var i = 0; i < list.length; i++) {
 									var option = document.createElement("option");
@@ -2436,7 +2436,7 @@ export default async function () {
 								return select;
 							},
 
-							identityCard: function (identity, position, info, noclick) {
+							identityCard(identity, position, info, noclick) {
 								const card = ui.create.card(position, info, noclick);
 								card.removeEventListener(lib.config.touchscreen ? "touchend" : "click", ui.click.card);
 								card.classList.add("button");
@@ -2461,7 +2461,7 @@ export default async function () {
 								return card;
 							},
 
-							spinningIdentityCard: function (identity, dialog) {
+							spinningIdentityCard(identity, dialog) {
 								const card = ui.create.identityCard(identity);
 								const buttons = ui.create.div(".buttons", dialog.content);
 								buttons.appendChild(card);
@@ -2472,7 +2472,7 @@ export default async function () {
 							},
 
 							buttonPresets: {
-								character: function (item, type, position, noclick, node) {
+								character(item, type, position, noclick, node) {
 									if (node) {
 										node.classList.add("button");
 										node.classList.add("character");
@@ -2642,7 +2642,7 @@ export default async function () {
 						},
 
 						click: {
-							card: function (e) {
+							card(e) {
 								delete this._waitingfordrag;
 								if (_status.dragged) return;
 								if (_status.clicked) return;
@@ -2773,7 +2773,7 @@ export default async function () {
 					};
 
 					ride.game = {
-						logv: function (player, card, targets, event, forced, logvid) {
+						logv(player, card, targets, event, forced, logvid) {
 							if (!player) {
 								player = _status.event.getParent().logvid;
 								if (!player) return;
@@ -2926,14 +2926,14 @@ export default async function () {
 							}
 							return node;
 						},
-						swapSeat: function (player1, player2, prompt, behind, noanimate) {
+						swapSeat(player1, player2, prompt, behind, noanimate) {
 							base.game.swapSeat.apply(this, arguments);
 							player1.seat = player1.getSeatNum();
 							if (player1.node.seat) player1.node.seat.innerHTML = get.cnNumber(player1.seat, true);
 							player2.seat = player2.getSeatNum();
 							if (player2.node.seat) player2.node.seat.innerHTML = get.cnNumber(player2.seat, true);
 						},
-						addOverDialog: function (dialog, result) {
+						addOverDialog(dialog, result) {
 							var sprite = decadeUI.backgroundAnimation.current;
 							if (!(sprite && sprite.name == "skin_xiaosha_default")) return;
 
@@ -2955,7 +2955,7 @@ export default async function () {
 					};
 
 					ride.get = {
-						objtype: function (obj) {
+						objtype(obj) {
 							obj = Object.prototype.toString.call(obj);
 							switch (obj) {
 								case "[object Array]":
@@ -3581,10 +3581,10 @@ export default async function () {
 						Object.defineProperties(realIdentity, {
 							innerHTML: {
 								configurable: true,
-								get: function () {
+								get() {
 									return this.innerText;
 								},
-								set: function (value) {
+								set(value) {
 									if (get.mode() == "guozhan" || _status.mode == "jiange" || _status.mode == "siguo") {
 										this.style.display = "none";
 										this.innerText = value;
@@ -3729,10 +3729,10 @@ export default async function () {
 						Object.defineProperties(player.node.count, {
 							innerHTML: {
 								configurable: true,
-								get: function () {
+								get() {
 									return this.textContent;
 								},
-								set: function (value) {
+								set(value) {
 									if (this.textContent == value) return;
 									this.textContent = value;
 									this.dataset.text = value;
@@ -3784,7 +3784,7 @@ export default async function () {
 						var properties = {
 							gainSkill: {
 								player: player,
-								gain: function (skill) {
+								gain(skill) {
 									var sender = this;
 									if (!sender.skills) sender.skills = [];
 									if (!sender.skills.includes(skill) && lib.translate[skill]) {
@@ -3805,7 +3805,7 @@ export default async function () {
 										}
 									}
 								},
-								lose: function (skill) {
+								lose(skill) {
 									var sender = this;
 									var index = sender.skills.indexOf(skill);
 									if (index >= 0) {
@@ -4658,10 +4658,10 @@ export default async function () {
 					Object.defineProperties(lib.element.player, {
 						group: {
 							configurable: true,
-							get: function () {
+							get() {
 								return this._group;
 							},
-							set: function (group) {
+							set(group) {
 								if (!group) return;
 								this._group = group;
 								this.node.campWrap.dataset.camp = get.character(this.name)?.groupBorder || group;
@@ -4883,7 +4883,7 @@ export default async function () {
 					};
 				},
 				dialog: {
-					create: function (className, parentNode, tagName) {
+					create(className, parentNode, tagName) {
 						var element = !tagName ? document.createElement("div") : document.createElement(tagName);
 						for (var i in decadeUI.dialog) {
 							if (decadeUI.dialog[i]) element[i] = decadeUI.dialog[i];
@@ -4902,20 +4902,20 @@ export default async function () {
 
 						return element;
 					},
-					open: function () {
+					open() {
 						if (this == decadeUI.dialog) return console.error("undefined");
 					},
-					show: function () {
+					show() {
 						if (this == decadeUI.dialog) return console.error("undefined");
 
 						this.classList.remove("hidden");
 					},
-					hide: function () {
+					hide() {
 						if (this == decadeUI.dialog) return console.error("undefined");
 
 						this.classList.add("hidden");
 					},
-					animate: function (property, duration, toArray, fromArrayOptional) {
+					animate(property, duration, toArray, fromArrayOptional) {
 						if (this == decadeUI.dialog) return console.error("undefined");
 						if (property == null || duration == null || toArray == null) return console.error("arguments");
 
@@ -4963,7 +4963,7 @@ export default async function () {
 							restore.style.transitionProperty = propBefore;
 						}, realDuration);
 					},
-					close: function (delayTime, fadeOut) {
+					close(delayTime, fadeOut) {
 						if (this == decadeUI.dialog) return console.error("undefined");
 						this.listens.clear();
 
@@ -4986,14 +4986,14 @@ export default async function () {
 						return;
 					},
 					listens: {
-						add: function (listenElement, event, func, useCapture) {
+						add(listenElement, event, func, useCapture) {
 							if (!this._dialog || !this._list) return console.error("undefined");
 							if (!(listenElement instanceof HTMLElement) || !event || typeof func !== "function") return console.error("arguments");
 
 							this._list.push(new Array(listenElement, event, func));
 							listenElement.addEventListener(event, func);
 						},
-						remove: function (listenElementOptional, eventOptional, funcOptional) {
+						remove(listenElementOptional, eventOptional, funcOptional) {
 							if (!this._dialog || !this._list) return console.error("undefined");
 
 							var list = this._list;
@@ -5048,7 +5048,7 @@ export default async function () {
 								}
 							}
 						},
-						clear: function () {
+						clear() {
 							if (!this._dialog || !this._list) return console.error("undefined");
 
 							var list = this._list;
@@ -5061,7 +5061,7 @@ export default async function () {
 					},
 				},
 				animate: {
-					check: function () {
+					check() {
 						if (!ui.arena) return false;
 						if (this.updates == undefined) this.updates = [];
 						if (this.canvas == undefined) {
@@ -5071,7 +5071,7 @@ export default async function () {
 
 						return true;
 					},
-					add: function (frameFunc) {
+					add(frameFunc) {
 						if (typeof frameFunc != "function") return;
 						if (!this.check()) return;
 
@@ -5091,7 +5091,7 @@ export default async function () {
 						this.updates.push(obj);
 						if (this.frameId == undefined) this.frameId = requestAnimationFrame(this.update.bind(this));
 					},
-					update: function () {
+					update() {
 						var frameTime = performance.now();
 						var delta = frameTime - (this.frameTime == undefined ? frameTime : this.frameTime);
 
@@ -5100,15 +5100,15 @@ export default async function () {
 							canvas: this.canvas,
 							context: this.canvas.getContext("2d"),
 							deltaTime: delta,
-							save: function () {
+							save() {
 								this.context.save();
 								return this.context;
 							},
-							restore: function () {
+							restore() {
 								this.context.restore();
 								return this.context;
 							},
-							drawLine: function (x1, y1, x2, y2, color, lineWidth) {
+							drawLine(x1, y1, x2, y2, color, lineWidth) {
 								if (x1 == null || y1 == null) throw "arguments";
 
 								var context = this.context;
@@ -5126,7 +5126,7 @@ export default async function () {
 
 								context.stroke();
 							},
-							drawRect: function (x, y, width, height, color, lineWidth) {
+							drawRect(x, y, width, height, color, lineWidth) {
 								if (x == null || y == null || width == null || height == null) throw "arguments";
 
 								var ctx = this.context;
@@ -5137,7 +5137,7 @@ export default async function () {
 								ctx.rect(x, y, width, height);
 								ctx.stroke();
 							},
-							drawText: function (text, font, color, x, y, textAlign, textBaseline, stroke) {
+							drawText(text, font, color, x, y, textAlign, textBaseline, stroke) {
 								if (!text) return;
 								if (x == null || y == null) throw "x or y";
 								var context = this.context;
@@ -5153,10 +5153,10 @@ export default async function () {
 								if (!stroke) context.fillText(text, x, y);
 								else context.strokeText(text, x, y);
 							},
-							drawStrokeText: function (text, font, color, x, y, textAlign, textBaseline) {
+							drawStrokeText(text, font, color, x, y, textAlign, textBaseline) {
 								this.drawText(text, font, color, x, y, textAlign, textBaseline, true);
 							},
-							fillRect: function (x, y, width, height, color) {
+							fillRect(x, y, width, height, color) {
 								if (color) this.context.fillStyle = color;
 								this.context.fillRect(x, y, width, height);
 							},
@@ -5295,7 +5295,7 @@ export default async function () {
 					return ResizeSensor;
 				})(),
 				sheet: {
-					init: function () {
+					init() {
 						if (!this.sheetList) {
 							this.sheetList = [];
 							for (var i = 0; i < document.styleSheets.length; i++) {
@@ -5306,7 +5306,7 @@ export default async function () {
 						}
 						if (this.sheetList) delete this.init;
 					},
-					getStyle: function (selector, cssName) {
+					getStyle(selector, cssName) {
 						if (!this.sheetList) this.init();
 						if (!this.sheetList) throw "sheet not loaded";
 						if (typeof selector != "string" || !selector) throw 'parameter "selector" error';
@@ -5359,7 +5359,7 @@ export default async function () {
 
 						return null;
 					},
-					insertRule: function (rule, index, cssName) {
+					insertRule(rule, index, cssName) {
 						if (!this.sheetList) this.init();
 						if (!this.sheetList) throw "sheet not loaded";
 						if (typeof rule != "string" || !rule) throw 'parameter "rule" error';
@@ -5388,11 +5388,11 @@ export default async function () {
 					},
 				},
 				layout: {
-					update: function () {
+					update() {
 						this.updateHand();
 						this.updateDiscard();
 					},
-					updateHand: function () {
+					updateHand() {
 						if (!game.me) return;
 
 						var handNode = ui.handcards1;
@@ -5481,7 +5481,7 @@ export default async function () {
 							handNode.style.width = "100%";
 						}
 					},
-					updateDiscard: function () {
+					updateDiscard() {
 						if (!ui.thrown) ui.thrown = [];
 
 						for (var i = ui.thrown.length - 1; i >= 0; i--) {
@@ -5529,7 +5529,7 @@ export default async function () {
 							card.style.transform = "translate(" + x + "px," + y + "px) scale(" + cs + ")";
 						}
 					},
-					clearout: function (card) {
+					clearout(card) {
 						if (!card) return;
 
 						if (card.fixed || card.classList.contains("removing")) return;
@@ -5549,7 +5549,7 @@ export default async function () {
 							card
 						);
 					},
-					delayClear: function () {
+					delayClear() {
 						var timestamp = 500;
 						var nowTime = new Date().getTime();
 						if (this._delayClearTimeout) {
@@ -5571,11 +5571,11 @@ export default async function () {
 							ui.clear();
 						}, timestamp);
 					},
-					invalidate: function () {
+					invalidate() {
 						this.invalidateHand();
 						this.invalidateDiscard();
 					},
-					invalidateHand: function (debugName) {
+					invalidateHand(debugName) {
 						//和上下面的有点重复，有空合并
 						var timestamp = 40;
 						var nowTime = new Date().getTime();
@@ -5598,7 +5598,7 @@ export default async function () {
 							decadeUI.layout.updateHand();
 						}, timestamp);
 					},
-					invalidateDiscard: function () {
+					invalidateDiscard() {
 						var timestamp = ui.thrown && ui.thrown.length > 15 ? 80 : 40;
 						var nowTime = new Date().getTime();
 						if (this._discardTimeout) {
@@ -5620,7 +5620,7 @@ export default async function () {
 							decadeUI.layout.updateDiscard();
 						}, timestamp);
 					},
-					resize: function () {
+					resize() {
 						if (decadeUI.isMobile()) ui.arena.classList.add("dui-mobile");
 						else ui.arena.classList.remove("dui-mobile");
 
@@ -5659,7 +5659,7 @@ export default async function () {
 					},
 				},
 				handler: {
-					handMousewheel: function (e) {
+					handMousewheel(e) {
 						if (!ui.handcards1Container) return console.error("ui.handcards1Container");
 
 						var hand = ui.handcards1Container;
@@ -5705,17 +5705,17 @@ export default async function () {
 					body: 1,
 					card: 1,
 				},
-				isMobile: function () {
+				isMobile() {
 					return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|OperaMini/i.test(navigator.userAgent);
 				},
-				delay: function (milliseconds) {
+				delay(milliseconds) {
 					if (typeof milliseconds != "number") throw "milliseconds is not number";
 					if (_status.paused) return;
 					game.pause();
 					_status.timeout = setTimeout(game.resume, milliseconds);
 				},
 
-				queueNextTick: function (callback, ctx) {
+				queueNextTick(callback, ctx) {
 					if (!dui._tickEntries) dui._tickEntries = [];
 
 					dui._tickEntries.push({
@@ -5732,7 +5732,7 @@ export default async function () {
 						for (var i = 0; i < entries.length; i++) entries[i].callback.call(entries[i].ctx);
 					});
 				},
-				queueNextFrameTick: function (callback, ctx) {
+				queueNextFrameTick(callback, ctx) {
 					if (!dui._frameTickEntries) dui._frameTickEntries = [];
 
 					dui._frameTickEntries.push({
@@ -5755,11 +5755,11 @@ export default async function () {
 					});
 				},
 
-				layoutHand: function () {
+				layoutHand() {
 					dui.layout.updateHand();
 				},
 
-				layoutHandDraws: function (cards) {
+				layoutHandDraws(cards) {
 					var bounds = dui.boundsCaches.hand;
 					bounds.check();
 
@@ -5830,7 +5830,7 @@ export default async function () {
 					}
 				},
 
-				layoutDrawCards: function (cards, player, center) {
+				layoutDrawCards(cards, player, center) {
 					var bounds = dui.boundsCaches.arena;
 					if (!bounds.updated) bounds.update();
 
@@ -5874,11 +5874,11 @@ export default async function () {
 					}
 				},
 
-				layoutDiscard: function () {
+				layoutDiscard() {
 					dui.layout.updateDiscard();
 				},
 
-				delayRemoveCards: function (cards, delay, delay2) {
+				delayRemoveCards(cards, delay, delay2) {
 					if (!Array.isArray(cards)) cards = [cards];
 
 					setTimeout(
@@ -5905,7 +5905,7 @@ export default async function () {
 				},
 
 				//虚拟卡牌花色点数显示
-				cardTempSuitNum: function (card, cardsuit, cardnumber) {
+				cardTempSuitNum(card, cardsuit, cardnumber) {
 					var remain = false;
 					if (card._tempSuitNum) remain = true;
 					let snnode = card._tempSuitNum || ui.create.div(".tempsuitnum", card);
@@ -5924,7 +5924,7 @@ export default async function () {
 					card.dataset.tempsn = cardsuit;
 				},
 
-				tryAddPlayerCardUseTag: function (card, player, event) {
+				tryAddPlayerCardUseTag(card, player, event) {
 					if (!card || !player || !event) return;
 					var tagNode = card.querySelector(".used-info");
 					if (tagNode == null) tagNode = card.appendChild(dui.element.create("used-info"));
@@ -6055,7 +6055,7 @@ export default async function () {
 							}
 							break;
 						case "judge":
-							tagText = event.judgestr + "的判定牌";
+							tagText = eventInfo + event.judgestr + "判定" + "</span>";
 							event.addMessageHook("judgeResult", function () {
 								var event = this;
 								var card = event.result.card.clone;
@@ -6099,7 +6099,7 @@ export default async function () {
 									});
 								}
 								event.apcard = undefined;
-								tagNode.innerHTML = get.translation(event.judgestr) + tagText;
+								tagNode.innerHTML = '<span style="color:#FFD700">' + tagText + "</span>";
 							});
 							if (duicfg.cardUseEffect) {
 								decadeUI.animation.cap.playSpineTo(card, {
@@ -6117,7 +6117,7 @@ export default async function () {
 					tagNode.innerHTML = tagText;
 				},
 
-				getRandom: function (min, max) {
+				getRandom(min, max) {
 					if (min == null) {
 						min = -2147483648;
 					}
@@ -6141,13 +6141,13 @@ export default async function () {
 
 					return Math.floor(Math.random() * (max + 1 - min)) + min + diff;
 				},
-				getCardBestScale: function (size) {
+				getCardBestScale(size) {
 					if (!(size && size.height)) size = decadeUI.getHandCardSize();
 
 					var bodySize = decadeUI.get.bodySize();
 					return Math.min((bodySize.height * (decadeUI.isMobile() ? 0.23 : 0.18)) / size.height, 1);
 				},
-				getHandCardSize: function (canUseDefault) {
+				getHandCardSize(canUseDefault) {
 					var style = decadeUI.sheet.getStyle(".media_defined > .card");
 					if (style == null) style = decadeUI.sheet.getStyle(".hand-cards > .handcards > .card");
 					if (style == null) return canUseDefault ? { width: 108, height: 150 } : { width: 0, height: 0 };
@@ -6157,7 +6157,7 @@ export default async function () {
 					};
 					return size;
 				},
-				getMapElementPos: function (elementFrom, elementTo) {
+				getMapElementPos(elementFrom, elementTo) {
 					if (!(elementFrom instanceof HTMLElement) || !(elementTo instanceof HTMLElement)) return console.error("arguments");
 					var rectFrom = elementFrom.getBoundingClientRect();
 					var rectTo = elementTo.getBoundingClientRect();
@@ -6169,7 +6169,7 @@ export default async function () {
 					pos.top = pos.y;
 					return pos;
 				},
-				getPlayerIdentity: function (player, identity, chinese, isMark) {
+				getPlayerIdentity(player, identity, chinese, isMark) {
 					if (!(player instanceof HTMLElement && get.itemtype(player) == "player")) throw "player";
 					if (!identity) identity = player.identity;
 
@@ -6332,7 +6332,7 @@ export default async function () {
 				},
 
 				create: {
-					skillDialog: function () {
+					skillDialog() {
 						var dialog = document.createElement("div");
 						dialog.className = "skill-dialog";
 
@@ -6340,7 +6340,7 @@ export default async function () {
 							caption: undefined,
 							tip: undefined,
 
-							open: function (customParent) {
+							open(customParent) {
 								if (!customParent) {
 									var size = decadeUI.get.bodySize();
 									this.style.minHeight = parseInt(size.height * 0.42) + "px";
@@ -6350,13 +6350,13 @@ export default async function () {
 								this.style.animation = "open-dialog 0.4s";
 								return this;
 							},
-							show: function () {
+							show() {
 								this.style.animation = "open-dialog 0.4s";
 							},
-							hide: function () {
+							hide() {
 								this.style.animation = "close-dialog 0.1s forwards";
 							},
-							close: function () {
+							close() {
 								var func = function (e) {
 									if (e.animationName != "close-dialog") return;
 									this.remove();
@@ -6378,7 +6378,7 @@ export default async function () {
 								}
 							},
 
-							appendControl: function (text, clickFunc) {
+							appendControl(text, clickFunc) {
 								var control = document.createElement("div");
 								control.className = "control-button";
 								control.textContent = text;
@@ -6399,20 +6399,20 @@ export default async function () {
 						Object.defineProperties(dialog, {
 							caption: {
 								configurable: true,
-								get: function () {
+								get() {
 									return this.$caption.innerHTML;
 								},
-								set: function (value) {
+								set(value) {
 									if (this.$caption.innerHTML == value) return;
 									this.$caption.innerHTML = value;
 								},
 							},
 							tip: {
 								configurable: true,
-								get: function () {
+								get() {
 									return this.$tip.innerHTML;
 								},
-								set: function (value) {
+								set(value) {
 									if (this.$tip.innerHTML == value) return;
 									this.$tip.innerHTML = value;
 								},
@@ -6422,7 +6422,7 @@ export default async function () {
 						return dialog;
 					},
 
-					compareDialog: function (player, target) {
+					compareDialog(player, target) {
 						var dialog = decadeUI.create.skillDialog();
 						dialog.classList.add("compare");
 						dialog.$content.classList.add("buttons");
@@ -6446,10 +6446,10 @@ export default async function () {
 							Object.defineProperties(dialog, {
 								player: {
 									configurable: true,
-									get: function () {
+									get() {
 										return this._player;
 									},
-									set: function (value) {
+									set(value) {
 										if (this._player == value) return;
 										this._player = value;
 
@@ -6464,10 +6464,10 @@ export default async function () {
 								},
 								target: {
 									configurable: true,
-									get: function () {
+									get() {
 										return this._target;
 									},
-									set: function (value) {
+									set(value) {
 										if (this._target == value) return;
 										this._target = value;
 										if (value == null || value.isUnseen()) {
@@ -6481,10 +6481,10 @@ export default async function () {
 								},
 								playerCard: {
 									configurable: true,
-									get: function () {
+									get() {
 										return this._playerCard;
 									},
-									set: function (value) {
+									set(value) {
 										if (this._playerCard == value) return;
 										if (this._playerCard) this._playerCard.remove();
 										this._playerCard = value;
@@ -6493,10 +6493,10 @@ export default async function () {
 								},
 								targetCard: {
 									configurable: true,
-									get: function () {
+									get() {
 										return this._targetCard;
 									},
-									set: function (value) {
+									set(value) {
 										if (this._targetCard == value) return;
 										if (this._targetCard) this._targetCard.remove();
 										this._targetCard = value;
@@ -6513,7 +6513,7 @@ export default async function () {
 				},
 
 				get: {
-					judgeEffect: function (name, value) {
+					judgeEffect(name, value) {
 						switch (name) {
 							case "caomu":
 							case "草木皆兵":
@@ -6531,20 +6531,20 @@ export default async function () {
 						return value;
 					},
 
-					isWebKit: function () {
+					isWebKit() {
 						return document.body.style.WebkitBoxShadow !== undefined;
 					},
 
-					lerp: function (min, max, fraction) {
+					lerp(min, max, fraction) {
 						return (max - min) * fraction + min;
 					},
 
-					ease: function (fraction) {
+					ease(fraction) {
 						if (!decadeUI.get._bezier3) decadeUI.get._bezier3 = new duilib.CubicBezierEase(0.25, 0.1, 0.25, 1);
 						return decadeUI.get._bezier3.ease(fraction);
 					},
 
-					extend: function (target, source) {
+					extend(target, source) {
 						if (source === null || typeof source !== "object") return target;
 
 						var keys = Object.keys(source);
@@ -6556,7 +6556,7 @@ export default async function () {
 						return target;
 					},
 
-					bodySize: function () {
+					bodySize() {
 						var size = decadeUI.dataset.bodySize;
 						if (!size.updated) {
 							var body = document.body;
@@ -6568,7 +6568,7 @@ export default async function () {
 						return size;
 					},
 
-					bestValueCards: function (cards, player) {
+					bestValueCards(cards, player) {
 						if (!player) player = _status.event.player;
 
 						var matchs = [];
@@ -6619,7 +6619,7 @@ export default async function () {
 						cards = matchs.concat(cards);
 						return cards;
 					},
-					cheatJudgeCards: function (cards, judges, friendly) {
+					cheatJudgeCards(cards, judges, friendly) {
 						if (!cards || !judges) throw arguments;
 
 						var cheats = [];
@@ -6640,7 +6640,7 @@ export default async function () {
 
 						return cheats;
 					},
-					elementLeftFromWindow: function (element) {
+					elementLeftFromWindow(element) {
 						var left = element.offsetLeft;
 						var current = element.offsetParent;
 
@@ -6651,7 +6651,7 @@ export default async function () {
 
 						return left;
 					},
-					elementTopFromWindow: function (element) {
+					elementTopFromWindow(element) {
 						var top = element.offsetTop;
 						var current = element.offsetParent;
 
@@ -6662,7 +6662,7 @@ export default async function () {
 
 						return top;
 					},
-					handcardInitPos: function () {
+					handcardInitPos() {
 						var hand = dui.boundsCaches.hand;
 						if (!hand.updated) hand.update();
 
@@ -6844,41 +6844,41 @@ export default async function () {
 					Object.defineProperties(this, {
 						x: {
 							configurable: true,
-							get: function () {
+							get() {
 								if (!this.updated) this.update();
 								return this._x;
 							},
-							set: function (value) {
+							set(value) {
 								this._x == value;
 							},
 						},
 						y: {
 							configurable: true,
-							get: function () {
+							get() {
 								if (!this.updated) this.update();
 								return this._y;
 							},
-							set: function (value) {
+							set(value) {
 								this._y == value;
 							},
 						},
 						width: {
 							configurable: true,
-							get: function () {
+							get() {
 								if (!this.updated) this.update();
 								return this._width;
 							},
-							set: function (value) {
+							set(value) {
 								this._width == value;
 							},
 						},
 						height: {
 							configurable: true,
-							get: function () {
+							get() {
 								if (!this.updated) this.update();
 								return this._height;
 							},
-							set: function (value) {
+							set(value) {
 								this._height == value;
 							},
 						},
@@ -6959,7 +6959,7 @@ export default async function () {
 
 			decadeUI.element = {
 				base: {
-					removeSelf: function (milliseconds) {
+					removeSelf(milliseconds) {
 						var remove = this;
 						if (milliseconds) {
 							milliseconds = typeof milliseconds == "number" ? milliseconds : parseInt(milliseconds);
@@ -6973,7 +6973,7 @@ export default async function () {
 						return;
 					},
 				},
-				create: function (className, parentNode, tagName) {
+				create(className, parentNode, tagName) {
 					var tag = tagName == void 0 ? "div" : tagName;
 					var element = document.createElement(tag);
 					element.view = {};
@@ -6988,14 +6988,14 @@ export default async function () {
 
 					return element;
 				},
-				clone: function (element) {},
+				clone(element) {},
 			};
 
 			decadeUI.game = {
-				wait: function () {
+				wait() {
 					game.pause();
 				},
-				resume: function () {
+				resume() {
 					if (!game.loopLocked) {
 						var ok = false;
 						try {
@@ -7492,14 +7492,14 @@ export default async function () {
 					trigger: {
 						player: ["phaseZhunbeiBegin", "phaseBegin", "phaseJudgeBegin", "phaseDrawBegin", "useCardAfter", "phaseDiscardBegin", "useSkillBefore", "loseAfter"],
 					},
-					filter: function (event, player) {
+					filter(event, player) {
 						if (document.querySelector("#jindutiaoAI") && lib.config.extension_十周年UI_jindutiaoaiUpdata == false) return false;
 						return player != game.me && _status.currentPhase == player;
 					},
 					forced: true,
 					silent: true,
 					charlotte: true,
-					content: function () {
+					content() {
 						var ab = player.getElementsByClassName("timePhase");
 						if (ab[0]) ab[0].parentNode.removeChild(ab[0]);
 						game.JindutiaoAIplayer();
@@ -7513,12 +7513,12 @@ export default async function () {
 							trigger: {
 								player: ["phaseEnd", "dieBegin", "phaseJieshuBegin"],
 							},
-							filter: function (event, player) {
+							filter(event, player) {
 								return player != game.me && _status.currentPhase == player;
 							},
 							forced: true,
 							charlotte: true,
-							content: function () {
+							content() {
 								if (window.timerai) {
 									clearInterval(window.timerai);
 									delete window.timerai;
@@ -7540,11 +7540,11 @@ export default async function () {
 					silent: true,
 					forced: true,
 					charlotte: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						if (document.querySelector("#jindutiaoAI") && lib.config.extension_十周年UI_jindutiaoaiUpdata == false) return false;
 						return _status.currentPhase != player && player != game.me;
 					},
-					content: function () {
+					content() {
 						var ab = player.getElementsByClassName("timeai");
 						if (ab[0]) ab[0].parentNode.removeChild(ab[0]);
 						game.JindutiaoAIplayer();
@@ -7559,10 +7559,10 @@ export default async function () {
 							},
 							forced: true,
 							charlotte: true,
-							filter: function (event, player) {
+							filter(event, player) {
 								return player != game.me && _status.currentPhase != player;
 							},
-							content: function () {
+							content() {
 								if (window.timerai) {
 									clearInterval(window.timerai);
 									delete window.timerai;
@@ -7582,10 +7582,10 @@ export default async function () {
 					silent: true,
 					priority: -10,
 					charlotte: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						return event.card && event.targets && event.targets.length;
 					},
-					content: function () {
+					content() {
 						var boxContent = document.createElement("div");
 						var boxTime = document.createElement("div");
 						var imgBg = document.createElement("img");
@@ -7630,7 +7630,7 @@ export default async function () {
 							trigger: {
 								global: ["phaseEnd", "useCardAfter", "dieBegin"],
 							},
-							filter: function (event, player) {
+							filter(event, player) {
 								event.respondix = 0;
 								for (var i = 0; i < game.players.length; i++) {
 									var ab = game.players[i].getElementsByClassName("timeai");
@@ -7641,7 +7641,7 @@ export default async function () {
 							forced: true,
 							priority: -1,
 							charlotte: true,
-							content: function () {
+							content() {
 								for (var i = 0; i < game.players.length; i++) {
 									var ab = game.players[i].getElementsByClassName("timeai");
 									if (ab[0]) ab[0].parentNode.removeChild(ab[0]);
@@ -7659,10 +7659,10 @@ export default async function () {
 					forced: true,
 					priority: -1,
 					charlotte: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						return true;
 					},
-					content: function () {
+					content() {
 						var boxContent = document.createElement("div");
 						var boxTime = document.createElement("div");
 						var imgBg = document.createElement("img");
@@ -7704,7 +7704,7 @@ export default async function () {
 							trigger: {
 								global: "phaseBefore",
 							},
-							filter: function (event, player) {
+							filter(event, player) {
 								event.respondx = 0;
 								for (var i = 0; i < game.players.length; i++) {
 									var ab = game.players[i].getElementsByClassName("timeai");
@@ -7716,7 +7716,7 @@ export default async function () {
 							forced: true,
 							priority: -1,
 							charlotte: true,
-							content: function () {
+							content() {
 								for (var i = 0; i < game.players.length; i++) {
 									var ab = game.players[i].getElementsByClassName("timeai");
 									if (ab[0]) ab[0].parentNode.removeChild(ab[0]);
@@ -7732,13 +7732,13 @@ export default async function () {
 						trigger: {
 							player: ["phaseEnd", "useCardAfter", "gainEnd", "loseEnd", "damageAfter"],
 						},
-						filter: function (event, player) {
+						filter(event, player) {
 							return player != game.me && _status.currentPhase != player;
 						},
 						forced: true,
 						priority: -1,
 						charlotte: true,
-						content: function () {
+						content() {
 							var ab = player.getElementsByClassName("timeai");
 							if (ab[0]) ab[0].parentNode.removeChild(ab[0]);
 						},
@@ -7753,11 +7753,11 @@ export default async function () {
 				silent: true,
 				forced: true,
 				charlotte: true,
-				filter: function (event, player) {
+				filter(event, player) {
 					var a = player.getElementsByClassName("playertip");
 					return player != game.me && _status.currentPhase == player && player.isPhaseUsing() && a.length <= 0;
 				},
-				content: function () {
+				content() {
 					var tipss = player.getElementsByClassName("tipskill");
 					if (tipss[0]) tipss[0].parentNode.removeChild(tipss[0]);
 
@@ -7786,7 +7786,7 @@ export default async function () {
 				forced: true,
 				priority: -1,
 				charlotte: true,
-				filter: function (event, player) {
+				filter(event, player) {
 					event.respondix = 0;
 					for (var i = 0; i < game.players.length; i++) {
 						var ab = game.players[i].getElementsByClassName("playertip");
@@ -7794,7 +7794,7 @@ export default async function () {
 					}
 					return event.respondix > 0;
 				},
-				content: function () {
+				content() {
 					for (var i = 0; i < game.players.length; i++) {
 						var ab = game.players[i].getElementsByClassName("playertip");
 						if (ab[0]) ab[0].parentNode.removeChild(ab[0]);
@@ -7809,10 +7809,10 @@ export default async function () {
 				silent: true,
 				forced: true,
 				charlotte: true,
-				filter: function (event, player) {
+				filter(event, player) {
 					return player != game.me;
 				},
-				content: function () {
+				content() {
 					var tipss = player.getElementsByClassName("tipskill");
 					if (tipss[0]) tipss[0].parentNode.removeChild(tipss[0]);
 					var a = player.getElementsByClassName("playertipQP");
@@ -7839,7 +7839,7 @@ export default async function () {
 				silent: true,
 				forced: true,
 				charlotte: true,
-				filter: function (event, player) {
+				filter(event, player) {
 					event.respondix = 0;
 					for (var i = 0; i < game.players.length; i++) {
 						var ab = game.players[i].getElementsByClassName("playertipQP");
@@ -7847,7 +7847,7 @@ export default async function () {
 					}
 					return event.respondix > 0;
 				},
-				content: function () {
+				content() {
 					for (var i = 0; i < game.players.length; i++) {
 						var ab = game.players[i].getElementsByClassName("playertipQP");
 						if (ab[0]) ab[0].parentNode.removeChild(ab[0]);
@@ -7862,11 +7862,11 @@ export default async function () {
 				silent: true,
 				forced: true,
 				charlotte: true,
-				filter: function (event, player) {
+				filter(event, player) {
 					// if(!player.countCards('h','shan')) return false;
 					return event.card.name == "shan" && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_newDecadeStyle != "on" && lib.config.extension_十周年UI_newDecadeStyle != "othersOff";
 				},
-				content: function () {
+				content() {
 					var tipss = player.getElementsByClassName("tipskill");
 					if (tipss[0]) tipss[0].parentNode.removeChild(tipss[0]);
 					var d = player.getElementsByClassName("playertipshan");
@@ -7887,7 +7887,7 @@ export default async function () {
 				silent: true,
 				forced: true,
 				charlotte: true,
-				filter: function (event, player) {
+				filter(event, player) {
 					event.respondix = 0;
 					for (var i = 0; i < game.players.length; i++) {
 						var ab = game.players[i].getElementsByClassName("playertipshan");
@@ -7895,7 +7895,7 @@ export default async function () {
 					}
 					return event.respondix > 0;
 				},
-				content: function () {
+				content() {
 					for (var i = 0; i < game.players.length; i++) {
 						var ab = game.players[i].getElementsByClassName("playertipshan");
 						if (ab[0]) ab[0].parentNode.removeChild(ab[0]);
@@ -7910,11 +7910,11 @@ export default async function () {
 				silent: true,
 				forced: true,
 				charlotte: true,
-				filter: function (event, player) {
+				filter(event, player) {
 					// if(!player.countCards('h','sha')) return false;
 					return event.card.name == "sha" && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_newDecadeStyle != "on" && lib.config.extension_十周年UI_newDecadeStyle != "othersOff";
 				},
-				content: function () {
+				content() {
 					var tipss = player.getElementsByClassName("tipskill");
 					if (tipss[0]) tipss[0].parentNode.removeChild(tipss[0]);
 					var e = player.getElementsByClassName("playertipsha");
@@ -7936,7 +7936,7 @@ export default async function () {
 				forced: true,
 				silent: true,
 				charlotte: true,
-				filter: function (event, player) {
+				filter(event, player) {
 					event.respondix = 0;
 					for (var i = 0; i < game.players.length; i++) {
 						var ab = game.players[i].getElementsByClassName("playertipsha");
@@ -7944,7 +7944,7 @@ export default async function () {
 					}
 					return event.respondix > 0;
 				},
-				content: function () {
+				content() {
 					for (var i = 0; i < game.players.length; i++) {
 						var ab = game.players[i].getElementsByClassName("playertipsha");
 						if (ab[0]) ab[0].parentNode.removeChild(ab[0]);
@@ -7959,11 +7959,11 @@ export default async function () {
 				silent: true,
 				forced: true,
 				charlotte: true,
-				filter: function (event, player) {
+				filter(event, player) {
 					// if(!player.countCards('h','sha')) return false;
 					return event.card.name == "tao" && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_newDecadeStyle != "on" && lib.config.extension_十周年UI_newDecadeStyle != "othersOff";
 				},
-				content: function () {
+				content() {
 					var tipss = player.getElementsByClassName("tipskill");
 					if (tipss[0]) tipss[0].parentNode.removeChild(tipss[0]);
 					var k = player.getElementsByClassName("playertiptao");
@@ -7985,7 +7985,7 @@ export default async function () {
 				forced: true,
 				silent: true,
 				charlotte: true,
-				filter: function (event, player) {
+				filter(event, player) {
 					event.respondix = 0;
 					for (var i = 0; i < game.players.length; i++) {
 						var ab = game.players[i].getElementsByClassName("playertiptao");
@@ -7993,7 +7993,7 @@ export default async function () {
 					}
 					return event.respondix > 0;
 				},
-				content: function () {
+				content() {
 					for (var i = 0; i < game.players.length; i++) {
 						var ab = game.players[i].getElementsByClassName("playertiptao");
 						if (ab[0]) ab[0].parentNode.removeChild(ab[0]);
@@ -8008,11 +8008,11 @@ export default async function () {
 				forced: true,
 				charlotte: true,
 				silent: true,
-				filter: function (event, player) {
+				filter(event, player) {
 					// if(!player.countCards('h','sha')) return false;
 					return event.card.name == "jiu" && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_newDecadeStyle != "on" && lib.config.extension_十周年UI_newDecadeStyle != "othersOff";
 				},
-				content: function () {
+				content() {
 					var tipss = player.getElementsByClassName("tipskill");
 					if (tipss[0]) tipss[0].parentNode.removeChild(tipss[0]);
 					var n = player.getElementsByClassName("playertipjiu");
@@ -8034,7 +8034,7 @@ export default async function () {
 				forced: true,
 				charlotte: true,
 				silent: true,
-				filter: function (event, player) {
+				filter(event, player) {
 					event.respondix = 0;
 					for (var i = 0; i < game.players.length; i++) {
 						var ab = game.players[i].getElementsByClassName("playertipjiu");
@@ -8042,7 +8042,7 @@ export default async function () {
 					}
 					return event.respondix > 0;
 				},
-				content: function () {
+				content() {
 					for (var i = 0; i < game.players.length; i++) {
 						var ab = game.players[i].getElementsByClassName("playertipjiu");
 						if (ab[0]) ab[0].parentNode.removeChild(ab[0]);
@@ -8057,7 +8057,7 @@ export default async function () {
 				forced: true,
 				charlotte: true,
 				silent: true,
-				filter: function (event, player) {
+				filter(event, player) {
 					if (event.card.storage && event.card.storage.nowuxie) return false;
 					var card = event.card;
 					if (event.name == "phaseJudge" && card.viewAs)
@@ -8069,7 +8069,7 @@ export default async function () {
 
 					return event.card.name == "wuxie" && _status.currentPhase != player && player != game.me && lib.config.extension_十周年UI_newDecadeStyle != "on" && lib.config.extension_十周年UI_newDecadeStyle != "othersOff";
 				},
-				content: function () {
+				content() {
 					var tipss = player.getElementsByClassName("tipskill");
 					if (tipss[0]) tipss[0].parentNode.removeChild(tipss[0]);
 					var g = player.getElementsByClassName("playertipwuxie");
@@ -8091,11 +8091,11 @@ export default async function () {
 				forced: true,
 				silent: true,
 				charlotte: true,
-				filter: function (event, player) {
+				filter(event, player) {
 					var h = event.player.getElementsByClassName("playertipwuxie");
 					return h.length > 0 && player != game.me && _status.currentPhase != player;
 				},
-				content: function () {
+				content() {
 					var h = trigger.player.getElementsByClassName("playertipwuxie");
 					h[0].parentNode.removeChild(h[0]);
 				},
@@ -8107,10 +8107,10 @@ export default async function () {
 				forced: true,
 				silent: true,
 				charlotte: true,
-				filter: function (event, player) {
+				filter(event, player) {
 					return player != game.me;
 				},
-				content: function () {
+				content() {
 					var tipss = player.getElementsByClassName("tipskill");
 					if (tipss[0]) tipss[0].parentNode.removeChild(tipss[0]);
 					var l = player.getElementsByClassName("playertipplay");
@@ -8137,11 +8137,11 @@ export default async function () {
 				forced: true,
 				charlotte: true,
 				silent: true,
-				filter: function (event, player) {
+				filter(event, player) {
 					var m = event.player.getElementsByClassName("playertipplay");
 					return m.length > 0 && player != game.me;
 				},
-				content: function () {
+				content() {
 					var m = trigger.player.getElementsByClassName("playertipplay");
 					m[0].parentNode.removeChild(m[0]);
 				},
@@ -8154,10 +8154,10 @@ export default async function () {
 				forced: true,
 				silent: true,
 				charlotte: true,
-				filter: function (event, player) {
+				filter(event, player) {
 					return _status.currentPhase != player && player != game.me && (lib.config.extension_十周年UI_newDecadeStyle == "on" || lib.config.extension_十周年UI_newDecadeStyle == "othersOff");
 				},
-				content: function () {
+				content() {
 					var tipss = player.getElementsByClassName("tipskill");
 					if (tipss[0]) tipss[0].parentNode.removeChild(tipss[0]);
 					var d = player.getElementsByClassName("playertipthink");
@@ -8179,11 +8179,11 @@ export default async function () {
 				forced: true,
 				silent: true,
 				charlotte: true,
-				filter: function (event, player) {
+				filter(event, player) {
 					var e = event.player.getElementsByClassName("playertipthink");
 					return e.length > 0 && player != game.me && _status.currentPhase != player;
 				},
-				content: function () {
+				content() {
 					var e = trigger.player.getElementsByClassName("playertipthink");
 					e[0].parentNode.removeChild(e[0]);
 				},
@@ -8197,7 +8197,7 @@ export default async function () {
 				forced: true,
 				priority: -2,
 				charlotte: true,
-				filter: function (event, player) {
+				filter(event, player) {
 					event.respondix = 0;
 					for (var i = 0; i < game.players.length; i++) {
 						var ab = game.players[i].getElementsByClassName("tipskill");
@@ -8205,7 +8205,7 @@ export default async function () {
 					}
 					return event.respondix > 0;
 				},
-				content: function () {
+				content() {
 					for (var i = 0; i < game.players.length; i++) {
 						var ab = game.players[i].getElementsByClassName("tipskill");
 						if (ab[0]) ab[0].parentNode.removeChild(ab[0]);
@@ -8454,10 +8454,10 @@ export default async function () {
 					},
 					silent: true,
 					direct: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						return player == game.me && _status.auto == false;
 					},
-					content: function () {
+					content() {
 						trigger._jd_ddxy = true;
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == "taixuhuanjing" || lib.config["extension_EngEX_SSServant"]) {
@@ -8476,12 +8476,12 @@ export default async function () {
 						target: "shaBegin",
 					},
 					silent: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						return game.me == event.target;
 					},
 					charlotte: true,
 					forced: true,
-					content: function () {
+					content() {
 						trigger._jd_ddxy = true;
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == "taixuhuanjing" || lib.config["extension_EngEX_SSServant"]) {
@@ -8499,7 +8499,7 @@ export default async function () {
 						player: ["useCardToBegin", "phaseJudge"],
 					},
 					silent: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						if (event.card.storage && event.card.storage.nowuxie) return false;
 						var card = event.card;
 						var info = get.info(card);
@@ -8517,7 +8517,7 @@ export default async function () {
 					},
 					charlotte: true,
 					forced: true,
-					content: function () {
+					content() {
 						trigger._jd_ddxy = true;
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == "taixuhuanjing" || lib.config["extension_EngEX_SSServant"]) {
@@ -8538,10 +8538,10 @@ export default async function () {
 						player: ["useCard", "respondAfter"],
 					},
 					silent: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						return player == game.me && event.card.name == "shan";
 					},
-					content: function () {
+					content() {
 						trigger._jd_ddxy = true;
 						game.as_removeImage();
 						if (_status.as_showImage_phase) {
@@ -8563,12 +8563,12 @@ export default async function () {
 						player: ["chooseToRespondEnd", "useCardToEnd", "phaseJudgeEnd", "respondSha", "shanBegin"],
 					},
 					silent: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						if (!event._jd_ddxy) return false;
 						return player == game.me && _status.auto == false;
 					},
 					direct: true,
-					content: function () {
+					content() {
 						game.as_removeImage();
 						if (_status.as_showImage_phase) {
 							if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
@@ -8591,11 +8591,11 @@ export default async function () {
 					silent: true,
 					charlotte: true,
 					forced: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						//剩余人数两人时
 						if (game.players.length == 2 && _status.currentPhase != game.me) return true;
 					},
-					content: function () {
+					content() {
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == "taixuhuanjing" || lib.config["extension_EngEX_SSServant"]) {
 								game.as_showImage("extension/十周年UI/shoushaUI/lbtn/images/JDTS/dfsk.jpg", [10, 58, 7, 6], true);
@@ -8613,12 +8613,12 @@ export default async function () {
 						global: ["phaseEnd", "useCardAfter"],
 					},
 					silent: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						return _status.currentPhase != game.me && player != game.me;
 					},
 					forced: true,
 					charlotte: true,
-					content: function () {
+					content() {
 						game.as_removeImage();
 					},
 				};
@@ -8629,10 +8629,10 @@ export default async function () {
 					silent: true,
 					forced: true,
 					charlotte: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						return player == game.me && _status.auto == false;
 					},
-					content: function () {
+					content() {
 						game.as_removeImage();
 					},
 				};
@@ -8642,7 +8642,7 @@ export default async function () {
 						player: ["phaseBegin"],
 					},
 					silent: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						return player == game.me && _status.currentPhase == player;
 					},
 					charlotte: true,
@@ -8650,7 +8650,7 @@ export default async function () {
 					direct: true,
 					priority: Infinity,
 					firstDo: true,
-					content: function () {
+					content() {
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == "taixuhuanjing" || lib.config["extension_EngEX_SSServant"]) {
 								game.as_showImage("extension/十周年UI/shoushaUI/lbtn/images/JDTS/hhks.jpg", [10, 58, 7, 6], true);
@@ -8669,7 +8669,7 @@ export default async function () {
 						player: ["phaseZhunbeiBefore"],
 					},
 					silent: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						return player == game.me && _status.currentPhase == player;
 					},
 					charlotte: true,
@@ -8677,7 +8677,7 @@ export default async function () {
 					direct: true,
 					priority: Infinity,
 					firstDo: true,
-					content: function () {
+					content() {
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == "taixuhuanjing" || lib.config["extension_EngEX_SSServant"]) {
 								game.as_showImage("extension/十周年UI/shoushaUI/lbtn/images/JDTS/pdjd.jpg", [10, 58, 7, 6], true);
@@ -8695,7 +8695,7 @@ export default async function () {
 						player: ["phaseZhunbeiAfter"],
 					},
 					silent: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						return player == game.me && _status.currentPhase == player;
 					},
 					charlotte: true,
@@ -8703,7 +8703,7 @@ export default async function () {
 					direct: true,
 					priority: -Infinity,
 					lastDo: true,
-					content: function () {
+					content() {
 						if (_status.as_showImage_phase && _status.as_showImage_phase == "zbjd") {
 							game.as_removeImage();
 							delete _status.as_showImage_phase;
@@ -8716,7 +8716,7 @@ export default async function () {
 						player: ["phaseJudgeBefore"],
 					},
 					silent: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						return player == game.me && _status.currentPhase == player;
 					},
 					charlotte: true,
@@ -8724,7 +8724,7 @@ export default async function () {
 					direct: true,
 					priority: Infinity,
 					firstDo: true,
-					content: function () {
+					content() {
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == "taixuhuanjing" || lib.config["extension_EngEX_SSServant"]) {
 								game.as_showImage("extension/十周年UI/shoushaUI/lbtn/images/JDTS/pdjd.jpg", [10, 58, 7, 6], true);
@@ -8742,7 +8742,7 @@ export default async function () {
 						player: ["phaseJudgeAfter"],
 					},
 					silent: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						return player == game.me && _status.currentPhase == player;
 					},
 					charlotte: true,
@@ -8750,7 +8750,7 @@ export default async function () {
 					direct: true,
 					priority: -Infinity,
 					lastDo: true,
-					content: function () {
+					content() {
 						if (_status.as_showImage_phase && _status.as_showImage_phase == "pdjd") {
 							game.as_removeImage();
 							delete _status.as_showImage_phase;
@@ -8763,7 +8763,7 @@ export default async function () {
 						player: ["phaseDrawBefore"],
 					},
 					silent: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						return player == game.me && _status.currentPhase == player;
 					},
 					charlotte: true,
@@ -8771,7 +8771,7 @@ export default async function () {
 					direct: true,
 					priority: Infinity,
 					firstDo: true,
-					content: function () {
+					content() {
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == "taixuhuanjing" || lib.config["extension_EngEX_SSServant"]) {
 								game.as_showImage("extension/十周年UI/shoushaUI/lbtn/images/JDTS/mpjd.jpg", [10, 58, 7, 6], true);
@@ -8789,7 +8789,7 @@ export default async function () {
 						player: ["phaseDrawAfter"],
 					},
 					silent: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						return player == game.me && _status.currentPhase == player;
 					},
 					charlotte: true,
@@ -8797,7 +8797,7 @@ export default async function () {
 					direct: true,
 					priority: -Infinity,
 					lastDo: true,
-					content: function () {
+					content() {
 						if (_status.as_showImage_phase && _status.as_showImage_phase == "mpjd") {
 							game.as_removeImage();
 							delete _status.as_showImage_phase;
@@ -8810,7 +8810,7 @@ export default async function () {
 						player: ["phaseUseBefore"],
 					},
 					silent: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						return player == game.me && _status.currentPhase == player;
 					},
 					charlotte: true,
@@ -8818,7 +8818,7 @@ export default async function () {
 					direct: true,
 					priority: Infinity,
 					firstDo: true,
-					content: function () {
+					content() {
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == "taixuhuanjing" || lib.config["extension_EngEX_SSServant"]) {
 								game.as_showImage("extension/十周年UI/shoushaUI/lbtn/images/JDTS/cpjd.jpg", [10, 58, 7, 6], true);
@@ -8836,7 +8836,7 @@ export default async function () {
 						player: ["phaseUseAfter"],
 					},
 					silent: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						return player == game.me && _status.currentPhase == player;
 					},
 					charlotte: true,
@@ -8844,7 +8844,7 @@ export default async function () {
 					direct: true,
 					priority: -Infinity,
 					lastDo: true,
-					content: function () {
+					content() {
 						if (_status.as_showImage_phase && _status.as_showImage_phase == "cpjd") {
 							game.as_removeImage();
 							delete _status.as_showImage_phase;
@@ -8857,7 +8857,7 @@ export default async function () {
 						player: ["phaseDiscardBefore"],
 					},
 					silent: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						return player == game.me && _status.currentPhase == player;
 					},
 					charlotte: true,
@@ -8865,7 +8865,7 @@ export default async function () {
 					direct: true,
 					priority: Infinity,
 					firstDo: true,
-					content: function () {
+					content() {
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == "taixuhuanjing" || lib.config["extension_EngEX_SSServant"]) {
 								game.as_showImage("extension/十周年UI/shoushaUI/lbtn/images/JDTS/qpjd.jpg", [10, 58, 7, 6], true);
@@ -8883,7 +8883,7 @@ export default async function () {
 						player: ["phaseDiscardAfter"],
 					},
 					silent: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						return player == game.me && _status.currentPhase == player;
 					},
 					charlotte: true,
@@ -8891,7 +8891,7 @@ export default async function () {
 					direct: true,
 					priority: -Infinity,
 					lastDo: true,
-					content: function () {
+					content() {
 						if (_status.as_showImage_phase && _status.as_showImage_phase == "qpjd") {
 							game.as_removeImage();
 							delete _status.as_showImage_phase;
@@ -8904,7 +8904,7 @@ export default async function () {
 						player: ["phaseJieshuBefore"],
 					},
 					silent: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						return player == game.me && _status.currentPhase == player;
 					},
 					charlotte: true,
@@ -8912,7 +8912,7 @@ export default async function () {
 					direct: true,
 					priority: Infinity,
 					firstDo: true,
-					content: function () {
+					content() {
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == "taixuhuanjing" || lib.config["extension_EngEX_SSServant"]) {
 								game.as_showImage("extension/十周年UI/shoushaUI/lbtn/images/JDTS/pdjd.jpg", [10, 58, 7, 6], true);
@@ -8930,7 +8930,7 @@ export default async function () {
 						player: ["phaseJieshuAfter"],
 					},
 					silent: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						return player == game.me && _status.currentPhase == player;
 					},
 					charlotte: true,
@@ -8938,7 +8938,7 @@ export default async function () {
 					direct: true,
 					priority: -Infinity,
 					lastDo: true,
-					content: function () {
+					content() {
 						if (_status.as_showImage_phase && _status.as_showImage_phase == "jsjd") {
 							game.as_removeImage();
 							delete _status.as_showImage_phase;
@@ -8951,7 +8951,7 @@ export default async function () {
 						player: ["phaseEnd"],
 					},
 					silent: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						return player == game.me && _status.currentPhase == player;
 					},
 					charlotte: true,
@@ -8959,7 +8959,7 @@ export default async function () {
 					direct: true,
 					priority: Infinity,
 					firstDo: true,
-					content: function () {
+					content() {
 						if (lib.config.extension_十周年UI_JDTSYangshi == "1") {
 							if (get.mode() == "taixuhuanjing" || lib.config["extension_EngEX_SSServant"]) {
 								game.as_showImage("extension/十周年UI/shoushaUI/lbtn/images/JDTS/hhjs.jpg", [10, 58, 7, 6], true);
@@ -8977,7 +8977,7 @@ export default async function () {
 						player: ["phaseAfter"],
 					},
 					silent: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						return player == game.me && _status.currentPhase == player;
 					},
 					charlotte: true,
@@ -8985,7 +8985,7 @@ export default async function () {
 					direct: true,
 					priority: -Infinity,
 					lastDo: true,
-					content: function () {
+					content() {
 						if (_status.as_showImage_phase && _status.as_showImage_phase == "hhjs") {
 							game.as_removeImage();
 							delete _status.as_showImage_phase;
@@ -9006,12 +9006,12 @@ export default async function () {
 						player: ["phaseZhunbeiBegin", "phaseBegin", "phaseJudgeBegin", "phaseDrawBegin", "useCardAfter", "phaseDiscardBegin", "useSkillBefore", "loseAfter"],
 					},
 					silent: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						if (document.querySelector("#jindutiaopl") && lib.config.extension_十周年UI_jindutiaoUpdata == false) return false;
 						return player == game.me && _status.currentPhase == player;
 					},
 					forced: true,
-					content: function () {
+					content() {
 						game.Jindutiaoplayer();
 					},
 					group: ["_jindutiao_jieshu"],
@@ -9021,10 +9021,10 @@ export default async function () {
 								player: ["phaseEnd", "phaseJieshuBegin"],
 							},
 							forced: true,
-							filter: function (event, player) {
+							filter(event, player) {
 								return player == game.me;
 							},
-							content: function () {
+							content() {
 								if (window.timer) {
 									clearInterval(window.timer);
 									delete window.timer;
@@ -9052,12 +9052,12 @@ export default async function () {
 					silent: true,
 					forced: true,
 					charlotte: true,
-					filter: function (event, player) {
+					filter(event, player) {
 						if (document.querySelector("#jindutiaopl") && lib.config.extension_十周年UI_jindutiaoUpdata == false) return false;
 						if (event.name == "gameStart" && lib.config["extension_无名补丁_enable"]) return false;
 						return _status.currentPhase != player && player == game.me;
 					},
-					content: function () {
+					content() {
 						game.Jindutiaoplayer();
 					},
 					group: ["_jindutiaopl_jieshu"],
@@ -9068,11 +9068,11 @@ export default async function () {
 							},
 							forced: true,
 							charlotte: true,
-							filter: function (event, player) {
+							filter(event, player) {
 								if (document.querySelector("#jindutiaopl")) return _status.currentPhase != game.me;
 								return false;
 							},
-							content: function () {
+							content() {
 								if (window.timer) {
 									clearInterval(window.timer);
 									delete window.timer;
@@ -9227,10 +9227,10 @@ export default async function () {
 			Object.defineProperties(_status, {
 				connectMode: {
 					configurable: true,
-					get: function () {
+					get() {
 						return this._connectMode;
 					},
-					set: function (value) {
+					set(value) {
 						this._connectMode = value;
 						if (!value || !lib.extensions) return;
 						const decadeExtension = lib.extensions.find(value => value[0] == decadeUIName);
@@ -9260,7 +9260,7 @@ export default async function () {
 			});
 			//手杀UI
 			window.app = {
-				each: function (obj, fn, node) {
+				each(obj, fn, node) {
 					if (!obj) return node;
 					if (typeof obj.length === "number") {
 						for (var i = 0; i < obj.length; i++) {
@@ -9277,12 +9277,12 @@ export default async function () {
 					}
 					return node;
 				},
-				isFunction: function (fn) {
+				isFunction(fn) {
 					return typeof fn === "function";
 				},
 				event: {
 					listens: {},
-					on: function (name, listen, remove) {
+					on(name, listen, remove) {
 						if (!this.listens[name]) {
 							this.listens[name] = [];
 						}
@@ -9292,7 +9292,7 @@ export default async function () {
 						});
 						return this;
 					},
-					off: function (name, listen) {
+					off(name, listen) {
 						return app.each(
 							this.listens[name],
 							function (item, index) {
@@ -9303,7 +9303,7 @@ export default async function () {
 							this
 						);
 					},
-					emit: function (name) {
+					emit(name) {
 						var args = Array.from(arguments).slice(1);
 						return app.each(
 							this.listens[name],
@@ -9314,7 +9314,7 @@ export default async function () {
 							this
 						);
 					},
-					once: function (name, listen) {
+					once(name, listen) {
 						return this.on(name, listen, true);
 					},
 				},
@@ -9323,18 +9323,18 @@ export default async function () {
 				plugins: [],
 				pluginsMap: {},
 				path: {
-					ext: function (path, ext) {
+					ext(path, ext) {
 						ext = ext || app.name;
 						return lib.assetURL + "extension/" + ext + "/" + path;
 					},
 				},
-				on: function (event, listen) {
+				on(event, listen) {
 					if (!app.listens[event]) {
 						app.listens[event] = [];
 					}
 					app.listens[event].add(listen);
 				},
-				once: function (event, listen) {
+				once(event, listen) {
 					if (!app.listens[event]) {
 						app.listens[event] = [];
 					}
@@ -9343,7 +9343,7 @@ export default async function () {
 						remove: true,
 					});
 				},
-				off: function (event, listen) {
+				off(event, listen) {
 					var listens = app.listens[event] || [];
 					var filters = listen
 						? listens.filter(function (item) {
@@ -9354,7 +9354,7 @@ export default async function () {
 						listens.remove(item);
 					});
 				},
-				emit: function (event) {
+				emit(event) {
 					var args = Array.from(arguments).slice(1);
 					var listens = app.listens[event] || [];
 					listens.forEach(function (item) {
@@ -9366,7 +9366,7 @@ export default async function () {
 						}
 					});
 				},
-				import: function (fn) {
+				import(fn) {
 					var obj = fn(lib, game, ui, get, ai, _status, app);
 					if (obj) {
 						if (obj.name) app.pluginsMap[obj.name] = obj;
@@ -9375,7 +9375,7 @@ export default async function () {
 					app.plugins.push(obj);
 				},
 
-				importPlugin: function (data, setText) {
+				importPlugin(data, setText) {
 					if (!window.JSZip) {
 						var args = arguments;
 						lib.init.js(lib.assetURL + "game", "jszip", function () {
@@ -9383,7 +9383,7 @@ export default async function () {
 						});
 						return;
 					}
-					setText = typeof setText === "function" ? setText : function () {};
+					setText = typeof setText === "function" ? setText() : function () {};
 					var zip = new JSZip(data);
 					var dirList = [],
 						fileList = [];
@@ -9424,7 +9424,7 @@ export default async function () {
 					};
 					ensureDir();
 				},
-				loadPlugins: function (callback) {
+				loadPlugins(callback) {
 					game.getFileList("extension/" + app.name, function (floders) {
 						var total = floders.length;
 						var current = 0;
@@ -9500,7 +9500,7 @@ export default async function () {
 						});
 					});
 				},
-				reWriteFunction: function (target, name, replace, str) {
+				reWriteFunction(target, name, replace, str) {
 					if (name && typeof name === "object") {
 						return app.each(
 							name,
@@ -9529,7 +9529,7 @@ export default async function () {
 					}
 					return target[name];
 				},
-				reWriteFunctionX: function (target, name, replace, str) {
+				reWriteFunctionX(target, name, replace, str) {
 					if (name && typeof name === "object") {
 						return app.each(
 							name,
@@ -9572,7 +9572,7 @@ export default async function () {
 					}
 					return target[name];
 				},
-				waitAllFunction: function (fnList, callback) {
+				waitAllFunction(fnList, callback) {
 					var list = fnList.slice(0);
 					var runNext = function () {
 						var item = list.shift();
@@ -9588,13 +9588,13 @@ export default async function () {
 				},
 				element: {
 					runNext: {
-						setTip: function (tip) {
+						setTip(tip) {
 							console.info(tip);
 						},
 					},
 				},
 				get: {
-					playerSkills: function (node, arg1, arg2) {
+					playerSkills(node, arg1, arg2) {
 						var skills = node.getSkills(arg1, arg2).slice(0);
 						skills.addArray(Object.keys(node.forbiddenSkills));
 						skills.addArray(
@@ -9604,7 +9604,7 @@ export default async function () {
 						);
 						return skills;
 					},
-					skillInfo: function (skill, node) {
+					skillInfo(skill, node) {
 						var obj = {};
 						obj.id = skill;
 						if (lib.translate[skill + "_ab"]) {
@@ -9634,18 +9634,18 @@ export default async function () {
 						return obj;
 					},
 				},
-				listen: function (node, func) {
+				listen(node, func) {
 					node.addEventListener(lib.config.touchscreen ? "touchend" : "click", func);
 					return function () {
 						node.removeEventLisnter(lib.config.touchscreen ? "touchend" : "click", func);
 					};
 				},
-				mockTouch: function (node) {
+				mockTouch(node) {
 					var event = new Event(lib.config.touchscreen ? "touchend" : "click");
 					node.dispatchEvent(event);
 					return node;
 				},
-				nextTick: function (func, time) {
+				nextTick(func, time) {
 					var funcs;
 					if (Array.isArray(func)) funcs = func;
 					else funcs = [func];
@@ -10651,10 +10651,10 @@ export default async function () {
 				},
 				forced: true,
 				silent: true,
-				filter: function (event, player) {
+				filter(event, player) {
 					return player.change_sayFunction != true;
 				},
-				content: function () {
+				content() {
 					player.change_sayFunction = true;
 					player.sayTextWord = player.say;
 					player.say = function (str) {

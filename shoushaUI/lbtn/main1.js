@@ -306,10 +306,10 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 
 	var plugin = {
 		name: "lbtn",
-		filter: function () {
+		filter() {
 			return !["chess", "tafang"].includes(get.mode());
 		},
-		content: function (next) {
+		content(next) {
 			(lib.skill._uicardupdate = {
 				trigger: { player: "phaseJieshuBegin" },
 				forced: true,
@@ -320,10 +320,10 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				noGain: true,
 				noDeprive: true,
 				priority: -Infinity,
-				filter: function (event, player) {
+				filter(event, player) {
 					return player == game.me;
 				},
-				content: function () {
+				content() {
 					if (ui.updateSkillControl) ui.updateSkillControl(game.me, true);
 				},
 			}),
@@ -338,7 +338,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 					},
 					silent: true,
 					forced: true,
-					content: function () {
+					content() {
 						var cards = game.me.getCards("hs");
 						var sort2 = function (b, a) {
 							if (a.name != b.name) return lib.sort.card(a.name, b.name);
@@ -355,20 +355,20 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 					},
 				});
 		},
-		precontent: function () {
+		precontent() {
 			Object.assign(game.videoContent, {
-				createCardRoundTime: function () {
+				createCardRoundTime() {
 					ui.cardRoundTime = plugin.create.cardRoundTime();
 				},
-				createhandcardNumber: function () {
+				createhandcardNumber() {
 					ui.handcardNumber = plugin.create.handcardNumber();
 				},
-				updateCardRoundTime: function (opts) {
+				updateCardRoundTime(opts) {
 					if (!ui.cardRoundTime) return;
 					ui.cardRoundTime.node.roundNumber.innerHTML = "<span>第" + game.roundNumber + "轮</span>";
 					ui.cardRoundTime.setNumberAnimation(opts.cardNumber);
 				},
-				updateCardnumber: function (opts) {
+				updateCardnumber(opts) {
 					if (!ui.handcardNumber) return;
 					// ui.handcardNumber.setNumberAnimation(opts.cardNumber);
 				},
@@ -453,8 +453,8 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 			};
 		},
 		create: {
-			control: function () {},
-			confirm: function () {
+			control() {},
+			confirm() {
 				//确定文本
 				var confirm = ui.create.control("<span></span>", "cancel");
 				confirm.classList.add("lbtn-confirm");
@@ -556,7 +556,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				return confirm;
 			},
 
-			handcardNumber: function () {
+			handcardNumber() {
 				var node3 = ui.create.div(".settingButton", ui.arena, plugin.click.setting);
 				var node2 = ui.create.div(".lbtn-controls", ui.arena);
 				ui.create.div(".lbtn-control", node2, "   ");
@@ -623,7 +623,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				game.addVideo("createhandcardNumber");
 				return node;
 			},
-			cardRoundTime: function () {
+			cardRoundTime() {
 				var node = ui.create.div(".cardRoundNumber", ui.arena).hide();
 				node.node = {
 					/*cardPileNumber: ui.create.div('.cardPileNumber', node),*/
@@ -701,7 +701,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 			},
 		},
 		click: {
-			setting: function () {
+			setting() {
 				if (lib.extensionMenu.extension_概念武将.zyile_skin_Menu) {
 					lib.extensionMenu.extension_概念武将.zyile_skin_Menu.onclick();
 				} else {
@@ -714,7 +714,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				}
 			},
 
-			paixu: function () {
+			paixu() {
 				if (!game.me || game.me.hasSkillTag("noSortCard")) return;
 				var cards = game.me.getCards("hs");
 				var sort2 = function (b, a) {
@@ -731,7 +731,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				}
 			},
 			//可点击函数（牌堆）
-			paidui: function () {
+			paidui() {
 				if (!_status.gameStarted) return;
 				game.pause2();
 
@@ -854,7 +854,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				}
 			},
 
-			confirm: function (link, target) {
+			confirm(link, target) {
 				if (link === "ok") {
 					ui.click.ok(target);
 				} else if (link === "cancel") {
@@ -865,26 +865,26 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 			},
 		},
 		compare: {
-			type: function (a, b) {
+			type(a, b) {
 				if (a === b) return 0;
 				var types = ["basic", "trick", "delay", "equip"].addArray([a, b]);
 				return types.indexOf(a) - types.indexOf(b);
 			},
-			name: function (a, b) {
+			name(a, b) {
 				if (a === b) return 0;
 				return a > b ? 1 : -1;
 			},
-			nature: function (a, b) {
+			nature(a, b) {
 				if (a === b) return 0;
 				var nature = [undefined, "fire", "thunder"].addArray([a, b]);
 				return nature.indexOf(a) - nature.indexOf(b);
 			},
-			suit: function (a, b) {
+			suit(a, b) {
 				if (a === b) return 0;
 				var suit = ["diamond", "heart", "club", "spade"].addArray([a, b]);
 				return suit.indexOf(a) - suit.indexOf(b);
 			},
-			number: function (a, b) {
+			number(a, b) {
 				return a - b;
 			},
 		},

@@ -1,7 +1,7 @@
 "use strict";
 decadeModule.import(function (lib, game, ui, get, ai, _status) {
 	decadeUI.component = {
-		slider: function (min, max, value) {
+		slider(min, max, value) {
 			var slider = document.createElement("input");
 			var onchange = function () {
 				var percent = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
@@ -12,10 +12,10 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
 			Object.defineProperties(slider, {
 				value: {
 					configurable: true,
-					get: function () {
+					get() {
 						return valueProp.get.call(this);
 					},
-					set: function (value) {
+					set(value) {
 						valueProp.set.call(this, value);
 						onchange();
 					},
@@ -31,7 +31,7 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
 			slider.value = typeof value == "number" ? value : (max - min) * 0.5;
 			return slider;
 		},
-		chatBox: function () {
+		chatBox() {
 			var box = decadeUI.dialog.create("chat-box folded");
 			box.container = decadeUI.dialog.create("container", box);
 			box.operation = decadeUI.dialog.create("operation", box);

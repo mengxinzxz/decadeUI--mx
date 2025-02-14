@@ -2,10 +2,10 @@
 decadeModule.import(function (lib, game, ui, get, ai, _status) {
 	decadeUI.effect = {
 		dialog: {
-			create: function (titleText) {
+			create(titleText) {
 				return decadeUI.dialog.create("effect-dialog dui-dialog");
 			},
-			compare: function (source, target) {
+			compare(source, target) {
 				var dialog = this.create();
 
 				dialog.characters = [decadeUI.dialog.create("player1 character", dialog), decadeUI.dialog.create("player2 character", dialog)];
@@ -71,7 +71,7 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
 				return dialog;
 			},
 		},
-		line: function (dots) {
+		line(dots) {
 			decadeUI.animate.add(
 				function (source, target, e) {
 					var ctx = e.context;
@@ -106,7 +106,7 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
 			);
 		},
 
-		kill: function (source, target) {
+		kill(source, target) {
 			if (get.itemtype(source) != "player" || get.itemtype(target) != "player") throw "arguments";
 			if (source == target) return;
 
@@ -178,7 +178,7 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
 			effect = null;
 		},
 
-		skill: function (player, skillName, vice) {
+		skill(player, skillName, vice) {
 			if (get.itemtype(player) != "player") return console.error("player");
 
 			var animation = decadeUI.animation;

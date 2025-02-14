@@ -1,28 +1,28 @@
 app.import(function (lib, game, ui, get, ai, _status, app) {
 	var plugin = {
 		name: "skill",
-		filter: function () {
+		filter() {
 			return !["chess", "tafang"].includes(get.mode());
 		},
-		content: function (next) {},
-		precontent: function () {
+		content(next) {},
+		precontent() {
 			Object.assign(ui.create, {
-				skills: function (skills) {
+				skills(skills) {
 					ui.skills = plugin.createSkills(skills, ui.skills);
 					ui.skillControl.update();
 					return ui.skills;
 				},
-				skills2: function (skills) {
+				skills2(skills) {
 					ui.skills2 = plugin.createSkills(skills, ui.skills2);
 					ui.skillControl.update();
 					return ui.skills2;
 				},
-				skills3: function (skills) {
+				skills3(skills) {
 					ui.skills3 = plugin.createSkills(skills, ui.skills3);
 					ui.skillControl.update();
 					return ui.skills3;
 				},
-				skillControl: function (clear) {
+				skillControl(clear) {
 					if (!ui.skillControl) {
 						//左手模式添加新的技能css布局
 						if (lib.config["extension_十周年UI_rightLayout"] == "on") {
@@ -58,7 +58,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 			});
 
 			Object.assign(ui, {
-				updateSkillControl: function (player, clear) {
+				updateSkillControl(player, clear) {
 					var eSkills = player.getSkills("e", true, false).slice(0);
 					var skills = app.get.playerSkills(player, true);
 
@@ -176,14 +176,14 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 			});
 
 			Object.assign(game.videoContent, {
-				updateSkillControl: function (player, clear) {
+				updateSkillControl(player, clear) {
 					ui.updateSkillControl(player, clear);
 				},
 			});
 			ui.skillControlArea = ui.create.div();
 		},
 		controlElement: {
-			add: function (skill, eSkills) {
+			add(skill, eSkills) {
 				var addSpan = function (node, num) {
 					var numArray = ["", "①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩", "⑪", "⑫", "⑬", "⑭", "⑮", "⑯", "⑰", "⑱", "⑲", "⑳"];
 					var text = document.createElement("span");
@@ -438,7 +438,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				});
 				return this;
 			},
-			update: function () {
+			update() {
 				var skills = [];
 				if (ui.skills) skills.addArray(ui.skills.skills);
 				if (ui.skills2) skills.addArray(ui.skills2.skills);
@@ -466,20 +466,20 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				ui.arena.dataset.sclevel = level;
 			},
 		},
-		checkSkill: function (skill) {
+		checkSkill(skill) {
 			var info = lib.skill[skill];
 			if (!info) return -1;
 			if (info.enable) return 1;
 			return 0;
 		},
-		clickSkill: function (e) {
+		clickSkill(e) {
 			if (this.classList.contains("usable")) {
 				var skill = this.dataset.id;
 				var item = ui.skillControlArea.querySelector('[data-id="' + skill + '"]');
 				item && app.mockTouch(item);
 			}
 		},
-		createSkills: function (skills, node) {
+		createSkills(skills, node) {
 			var same = true;
 			if (node) {
 				if (skills && skills.length) {
@@ -508,7 +508,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 			node.custom = ui.click.skill;
 			return node;
 		},
-		updateSkillMarks: function (player, skills1, skills2) {
+		updateSkillMarks(player, skills1, skills2) {
 			var node = player.node.xSkillMarks;
 			if (!node) {
 				node = player.node.xSkillMarks = ui.create.div(".skillMarks", player);
@@ -578,7 +578,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 			}
 			//这里结束4}
 		},
-		recontent: function () {
+		recontent() {
 			app.reWriteFunction(ui.create, {
 				dialog: [
 					null,
@@ -637,10 +637,10 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 		},
 		element: {
 			mark: {
-				delete: function () {
+				delete() {
 					this.remove();
 				},
-				setName: function (name) {
+				setName(name) {
 					name = get.translation(name) || name;
 					if (!name || !name.trim()) {
 						this.classList.add("unshow");
@@ -651,7 +651,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 					}
 					return this;
 				},
-				setCount: function (count) {
+				setCount(count) {
 					if (typeof count === "number") {
 						this.node.count.innerHTML = count;
 						this.node.count.classList.remove("unshow");
@@ -661,7 +661,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 					}
 					return this;
 				},
-				setExtra: function (extra) {
+				setExtra(extra) {
 					var str = "";
 
 					if (!Array.isArray(extra)) extra = [extra];
@@ -683,7 +683,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 					}
 					return this;
 				},
-				setBackground: function (name, type) {
+				setBackground(name, type) {
 					var skill = lib.skill[this.name];
 					if (skill && skill.intro && skill.intro.markExtra) return this;
 					if (type === "character") {
@@ -693,7 +693,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 					}
 					return this;
 				},
-				_customintro: function (uiintro) {
+				_customintro(uiintro) {
 					var node = this;
 					var info = node.info;
 					var player = node.parentNode.parentNode;
@@ -736,7 +736,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 			},
 		},
 		click: {
-			mark: function (e) {
+			mark(e) {
 				e.stopPropagation();
 				delete this._waitingfordrag;
 				if (_status.dragged) return;
@@ -751,7 +751,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				_status.clicked = false;
 			},
 		},
-		updateMark: function (player) {
+		updateMark(player) {
 			var eh = player.node.equips.childNodes.length * 22;
 			var bv = Math.max(88, eh) * 0.8 + 1.6;
 			player.node.marks.style.bottom = bv + "px";

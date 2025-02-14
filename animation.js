@@ -478,21 +478,21 @@ var duilib;
 
 			Object.defineProperties(this, {
 				dprAdaptive: {
-					get: function () {
+					get() {
 						return this._dprAdaptive;
 					},
-					set: function (value) {
+					set(value) {
 						if (this._dprAdaptive == value) return;
 						this._dprAdaptive = value;
 						this.resized = false;
 					},
 				},
 				useMipMaps: {
-					get: function () {
+					get() {
 						if (!gl) return;
 						return this.gl.useMipMaps;
 					},
-					set: function (value) {
+					set(value) {
 						if (!gl) return;
 						this.gl.useMipMaps = value;
 					},
@@ -577,7 +577,7 @@ var duilib;
 				loaded: 0,
 				errors: 0,
 				toLoad: 2,
-				onerror: function (path, msg) {
+				onerror(path, msg) {
 					var _this = reader;
 					_this.toLoad--;
 					_this.errors++;
@@ -586,7 +586,7 @@ var duilib;
 						if (_this.onfailed) _this.onfailed();
 					}
 				},
-				onload: function (path, data) {
+				onload(path, data) {
 					var _this = reader;
 					_this.toLoad--;
 					_this.loaded++;
@@ -603,7 +603,7 @@ var duilib;
 						}
 					}
 				},
-				ontextLoad: function (path, data) {
+				ontextLoad(path, data) {
 					var _this = reader;
 					var imageName = null;
 					var atlasReader = new spine.TextureAtlasReader(data);
@@ -700,7 +700,7 @@ var duilib;
 			skeleton.updateWorldTransform();
 			skeleton.state = new spine.AnimationState(new spine.AnimationStateData(skeleton.data));
 			skeleton.state.addListener({
-				complete: function (track) {
+				complete(track) {
 					var node = skeleton.node;
 					if (node) {
 						track.loop = node.loop == undefined ? false : node.loop;
@@ -1582,7 +1582,7 @@ if (decadeModule)
 				var trigger = {
 					card: {
 						nvzhuang: {
-							onEquip: function () {
+							onEquip() {
 								if (
 									player.sex == "male" &&
 									player.countCards("he", function (cardx) {
@@ -1601,7 +1601,7 @@ if (decadeModule)
 										.set("card", card);
 								}
 							},
-							onLose: function () {
+							onLose() {
 								if (player.sex != "male") return;
 								var next = game.createEvent("nvzhuang_lose");
 								event.next.remove(next);
@@ -1618,17 +1618,17 @@ if (decadeModule)
 							},
 						},
 						zheji: {
-							onEquip: function () {
+							onEquip() {
 								lib.animate.skill["zheji"].call(player, "zheji");
 							},
 						},
 						numa: {
-							onEquip: function () {
+							onEquip() {
 								lib.animate.skill["numa"].call(player, "numa");
 							},
 						},
 						lebu: {
-							effect: function () {
+							effect() {
 								if (result.bool == false) {
 									lib.animate.skill["lebu"].call(player, "lebu");
 									player.skip("phaseUse");
@@ -1636,7 +1636,7 @@ if (decadeModule)
 							},
 						},
 						bingliang: {
-							effect: function () {
+							effect() {
 								if (result.bool == false) {
 									if (get.is.changban()) {
 										player.addTempSkill("bingliang_changban");
@@ -1648,7 +1648,7 @@ if (decadeModule)
 							},
 						},
 						shandian: {
-							effect: function () {
+							effect() {
 								if (result.bool == false) {
 									lib.animate.skill["shandian"].call(player, "shandian");
 									player.damage(3, "thunder", "nosource");

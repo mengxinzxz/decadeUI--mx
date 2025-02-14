@@ -168,10 +168,10 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 
 	var plugin = {
 		name: "lbtn",
-		filter: function () {
+		filter() {
 			return !["chess", "tafang"].includes(get.mode());
 		},
-		content: function (next) {
+		content(next) {
 			lib.skill._uicardupdate = {
 				trigger: { player: "phaseJieshuBegin" },
 				forced: true,
@@ -182,28 +182,28 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				noGain: true,
 				noDeprive: true,
 				priority: -Infinity,
-				filter: function (event, player) {
+				filter(event, player) {
 					return player == game.me;
 				},
-				content: function () {
+				content() {
 					if (ui.updateSkillControl) ui.updateSkillControl(game.me, true);
 				},
 			};
 		},
-		precontent: function () {
+		precontent() {
 			Object.assign(game.videoContent, {
-				createCardRoundTime: function () {
+				createCardRoundTime() {
 					ui.cardRoundTime = plugin.create.cardRoundTime();
 				},
-				createhandcardNumber: function () {
+				createhandcardNumber() {
 					ui.handcardNumber = plugin.create.handcardNumber();
 				},
-				updateCardRoundTime: function (opts) {
+				updateCardRoundTime(opts) {
 					if (!ui.cardRoundTime) return;
 					ui.cardRoundTime.node.roundNumber.innerHTML = "<span>第" + game.roundNumber + "轮</span>";
 					ui.cardRoundTime.setNumberAnimation(opts.cardNumber);
 				},
-				updateCardnumber: function (opts) {
+				updateCardnumber(opts) {
 					if (!ui.handcardNumber) return;
 					// ui.handcardNumber.setNumberAnimation(opts.cardNumber);
 				},
@@ -279,8 +279,8 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 			};
 		},
 		create: {
-			control: function () {},
-			confirm: function () {
+			control() {},
+			confirm() {
 				var confirm = ui.create.control("<span>确定</span>", "cancel");
 				confirm.classList.add("lbtn-confirm");
 				confirm.node = {
@@ -361,7 +361,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				return confirm;
 			},
 
-			handcardNumber: function () {
+			handcardNumber() {
 				var node3 = ui.create.div(".settingButton", ui.arena, plugin.click.setting);
 
 				/*ui.create.div('.lbtn-controls', ui.arena);*/
@@ -432,7 +432,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				game.addVideo("createhandcardNumber");
 				return node;
 			},
-			cardRoundTime: function () {
+			cardRoundTime() {
 				var node = ui.create.div(".cardRoundNumber", ui.arena).hide();
 				node.node = {
 					cardPileNumber: ui.create.div(".cardPileNumber", node),
@@ -508,11 +508,11 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 			},
 		},
 		click: {
-			huanfu: function () {
+			huanfu() {
 				game.playAudio("../extension/十周年UI/shoushaUI/lbtn/images/CD/huanfu.mp3");
 				window.zyile_charactercard ? window.zyile_charactercard(player, false) : ui.click.charactercard(game.me.name, game.zhu, lib.config.mode == "mode_guozhan" ? "guozhan" : true);
 			},
-			confirm: function (link, target) {
+			confirm(link, target) {
 				if (link === "ok") {
 					ui.click.ok(target);
 				} else if (link === "cancel") {
@@ -523,26 +523,26 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 			},
 		},
 		compare: {
-			type: function (a, b) {
+			type(a, b) {
 				if (a === b) return 0;
 				var types = ["basic", "trick", "delay", "equip"].addArray([a, b]);
 				return types.indexOf(a) - types.indexOf(b);
 			},
-			name: function (a, b) {
+			name(a, b) {
 				if (a === b) return 0;
 				return a > b ? 1 : -1;
 			},
-			nature: function (a, b) {
+			nature(a, b) {
 				if (a === b) return 0;
 				var nature = [undefined, "fire", "thunder"].addArray([a, b]);
 				return nature.indexOf(a) - nature.indexOf(b);
 			},
-			suit: function (a, b) {
+			suit(a, b) {
 				if (a === b) return 0;
 				var suit = ["diamond", "heart", "club", "spade"].addArray([a, b]);
 				return suit.indexOf(a) - suit.indexOf(b);
 			},
-			number: function (a, b) {
+			number(a, b) {
 				return a - b;
 			},
 		},
