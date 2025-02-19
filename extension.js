@@ -11459,6 +11459,8 @@ export default async function () {
 			pack.intro = (pack => {
 				let log = [
 					`魔改十周年 萌修 ${pack.version}`,
+					"从下版本开始，萌修十周年将由“点点”进行更新",
+					"点点的十周年UI-QQ群：985914900",
 					"最低适配：v1.10.17",
 					"适配炉石传说扩展",
 					"继续修复u的遗留问题+整合u的部分优化",
