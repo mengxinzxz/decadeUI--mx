@@ -12228,7 +12228,7 @@ export default async function() {
 					"最低适配：v1.10.18",
 					"修复技能靠左排列问题",
 					"修复手杀UI换牌时按钮重叠",
-					"注释指示线美化，需要自行接触",
+					"注释指示线美化，需要自行解除",
 				];
 				return `<a href=${pack.diskURL}>点击前往Github仓库</a><br><p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">${log.join("<br>•")}</p>`;
 			})(pack);
