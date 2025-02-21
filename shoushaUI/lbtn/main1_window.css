@@ -406,6 +406,7 @@
 	right: 123px;
 	/*牌堆数及游戏时间，轮数整体。越大越往左*/
 	font-family: "shousha";
+	text-shadow: black 1px 1px 1px, black 1px -1px 1px, black -1px 1px 1px, black -1px -1px 1px;
 }
 
 /*牌堆图片*/
@@ -433,6 +434,9 @@
 	font-family: "HYZLSJ";
 	font-stretch: ultra-condensed;
 	font-size: 29px;
+	/*牌堆数*/
+	filter: drop-shadow(0 0 0.5px #2b1f19) drop-shadow(0 0 0.5px #2b1f19);
+	text-shadow: -1.5px 0px 1.5px #2b1f19, 0px -1.5px 1.5px #2b1f19, 1.5px 0px 1.5px #2b1f19, 0px 1.5px 1.5px #2b1f19;
 	font-weight: 600;
 }
 
@@ -449,6 +453,9 @@
 	font-family: "shousha";
 	font-size: 21px;
 	font-weight: 900;
+	text-shadow: -1.7px 0px 3px #2b1f19, 0px -1.7px 3px #2b1f19, 1.7px 0px 3px #2b1f19, 0px 1.7px 3px #2b1f19;
+	/*这个是文字阴影*/
+	filter: drop-shadow(0 0 0.5px #2b1f19) drop-shadow(0 0 0.5px #2b1f19);
 	white-space: nowrap;
 	color: #97856a;
 }

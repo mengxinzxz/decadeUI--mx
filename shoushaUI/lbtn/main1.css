@@ -340,6 +340,7 @@
 	line-height: var(--sh);
 	margin: 0px 5px !important;
 	/*元素离边缘的距离，外边距，简单说就是确定与取消之间的距离*/
+	background-image: url("./images/uibutton/huanpai.png");
 	padding: 12px 36px !important;
 	/*按钮高度+宽度 建议别调*/
 	min-height: 20px;
@@ -422,6 +423,7 @@
 	line-height: 25px;
 	text-align: right;
 	font-size: 18px;
+	-webkit-text-stroke: 0.4px black;
 	white-space: nowrap;
 }
 
@@ -432,6 +434,7 @@
 	right: 123px;
 	/*牌堆数及游戏时间，轮数整体。越大越往左*/
 	font-family: "shousha";
+	text-shadow: black 1px 1px 1px, black 1px -1px 1px, black -1px 1px 1px, black -1px -1px 1px;
 }
 
 /*牌堆图片*/
@@ -459,6 +462,9 @@
 	font-family: "HYZLSJ";
 	font-stretch: ultra-condensed;
 	font-size: 25px;
+	/*牌堆数*/
+	-webkit-text-stroke: 1.25px #2b1f19;
+	text-shadow: -1.5px 0px 1.5px #2b1f19, 0px -1.5px 1.5px #2b1f19, 1.5px 0px 1.5px #2b1f19, 0px 1.5px 1.5px #2b1f19;
 	font-weight: 600;
 }
 
@@ -475,6 +481,9 @@
 	font-family: "shousha";
 	font-size: 20px;
 	font-weight: 900;
+	text-shadow: -1.7px 0px 3px #2b1f19, 0px -1.7px 3px #2b1f19, 1.7px 0px 3px #2b1f19, 0px 1.7px 3px #2b1f19;
+	/*这个是文字阴影*/
+	-webkit-text-stroke: 0.85px #2b1f19;
 	white-space: nowrap;
 	color: #97856a;
 }
