@@ -1,9 +1,13 @@
 .lbtn-controls {
 	/*牌序，记录按钮*/
-	--width: 66px; /*按钮宽度*/
-	--height: 55px; /*按钮高度*/
-	left: 18px; /*左边距，越大越靠右*/
-	bottom: 14.2%; /*整体上移*/
+	--width: 66px;
+	/*按钮宽度*/
+	--height: 55px;
+	/*按钮高度*/
+	left: 18px;
+	/*左边距，越大越靠右*/
+	bottom: 14.2%;
+	/*整体上移*/
 	width: var(--width);
 	z-index: 4;
 }
@@ -11,15 +15,19 @@
 /*右上角弹出的二级菜单页面*/
 .yemian {
 	--w: 566px;
-	--h: calc(var(--w) * 360 / 1560); /*高和长*/
-	width: var(--w); /*按比例调节*/
-	height: var(--h); /*同理*/
+	--h: calc(var(--w) * 360 / 1560);
+	/*高和长*/
+	width: var(--w);
+	/*按比例调节*/
+	height: var(--h);
+	/*同理*/
 	top: 0%;
 	left: calc(100% - 562px);
 	background-size: 100% 100%;
 	background-image: url("./images/SSCD/yemian.png");
 	z-index: 68;
-	position: relative; /*定位位置*/
+	position: relative;
+	/*定位位置*/
 	-webkit-transition: opacity 1s ease-in-out;
 	-moz-transition: opacity 1s ease-in-out;
 	-o-transition: opacity 1s ease-in-out;
@@ -32,12 +40,16 @@
 	--h: calc(var(--w) * 82 / 107);
 	width: var(--w);
 	height: var(--h);
-	bottom: calc(100% - 69px); /*calc提高位置布局精度*/
+	bottom: calc(100% - 69px);
+	/*calc提高位置布局精度*/
 	left: calc(100% - 498px);
 	background-size: 100% 100%;
-	background-image: url("./images/SSCD/shezhi.png"); /*图片路径*/
-	z-index: 99; /*元素堆叠层级，越大越往前*/
-	position: fixed; /*固定位置，防止元素乱跑*/
+	background-image: url("./images/SSCD/shezhi.png");
+	/*图片路径*/
+	z-index: 99;
+	/*元素堆叠层级，越大越往前*/
+	position: fixed;
+	/*固定位置，防止元素乱跑*/
 }
 
 /*元素·退出*/
@@ -51,7 +63,8 @@
 	background-size: 100% 100%;
 	background-image: url("./images/SSCD/tuichu.png");
 	z-index: 99;
-	position: fixed; /*固定位置防止元素乱跑*/
+	position: fixed;
+	/*固定位置防止元素乱跑*/
 }
 
 /*元素·逃跑*/
@@ -96,15 +109,16 @@
 	position: fixed;
 }
 
-#arena:not(.single-handcard):not(.chess).cxy-new-ui > .lbtn-controls ~ #mebg,
-#arena:not(.single-handcard):not(.chess).cxy-new-ui > .lbtn-controls ~ #me {
+#arena:not(.single-handcard):not(.chess).cxy-new-ui>.lbtn-controls~#mebg,
+#arena:not(.single-handcard):not(.chess).cxy-new-ui>.lbtn-controls~#me {
 	left: 40px !important;
 }
-.lbtn-controls ~ #me #handcards1 {
+
+.lbtn-controls~#me #handcards1 {
 	--lessw: 40px;
 }
 
-.lbtn-controls > div {
+.lbtn-controls>div {
 	display: block;
 	position: relative;
 }
@@ -115,20 +129,29 @@
 	height: 55px;
 	background-image: none;
 	left: 1.6%;
-	font-size: 19px; /*字体大小*/
+	font-size: 19px;
+	/*字体大小*/
 	background-size: 100% 100%;
 	background-color: transparent;
 	line-height: 45px;
-	text-align: center; /*使文本位于元素中心*/
+	text-align: center;
+	/*使文本位于元素中心*/
 	white-space: nowrap;
-	color: #a08850; /*颜色色值*/
-	font-family: "shousha"; /*字体*/
-	font-weight: bold; /*字体加粗*/
-	-webkit-text-stroke: 1.5px rgba(43, 31, 25, 0.4); /*描边*/
-	text-shadow: none; /*文字阴影*/
-	border-radius: 0px; /*元素边缘圆角大小*/
+	color: #a08850;
+	/*颜色色值*/
+	font-family: "shousha";
+	/*字体*/
+	font-weight: bold;
+	/*字体加粗*/
+	-webkit-text-stroke: 1.5px rgba(43, 31, 25, 0.4);
+	/*描边*/
+	text-shadow: none;
+	/*文字阴影*/
+	border-radius: 0px;
+	/*元素边缘圆角大小*/
 }
-.lbtn-control + .lbtn-control {
+
+.lbtn-control+.lbtn-control {
 	margin-top: 1px;
 }
 
@@ -140,20 +163,29 @@
 	left: 1.6%;
 	bottom: 25.2%;
 	z-index: 5;
-	font-size: 18.1px; /*字体大小*/
+	font-size: 18.1px;
+	/*字体大小*/
 	background-size: 100% 100%;
 	background-color: transparent;
 	line-height: 45px;
-	text-align: center; /*使文本位于元素中心*/
+	text-align: center;
+	/*使文本位于元素中心*/
 	white-space: nowrap;
-	color: #c5af88; /*颜色色值*/
-	font-family: "shousha"; /*字体*/
-	font-weight: bold; /*字体加粗*/
-	-webkit-text-stroke: 1.1px rgba(43, 31, 25, 0.5); /*描边*/
-	text-shadow: none; /*文字阴影*/
-	border-radius: 0px; /*元素边缘圆角大小*/
+	color: #c5af88;
+	/*颜色色值*/
+	font-family: "shousha";
+	/*字体*/
+	font-weight: bold;
+	/*字体加粗*/
+	-webkit-text-stroke: 1.1px rgba(43, 31, 25, 0.5);
+	/*描边*/
+	text-shadow: none;
+	/*文字阴影*/
+	border-radius: 0px;
+	/*元素边缘圆角大小*/
 }
-.lbtn-control + .lbtn-control {
+
+.lbtn-control+.lbtn-control {
 	margin-top: 1px;
 }
 
@@ -180,7 +212,8 @@
 }
 
 .control {
-	--height: 40px; /*40*/
+	--height: 40px;
+	/*40*/
 	width: auto !important;
 	background: transparent;
 	box-shadow: none;
@@ -189,20 +222,24 @@
 }
 
 /*无懈按钮位置*/
-#arena > #dui-controls > .control.stayleft {
+#arena>#dui-controls>.control.stayleft {
 	left: calc(50% - 420px) !important;
 	margin-bottom: 0px !important;
 	order: 3;
 }
-.control > div {
+
+.control>div {
 	/*其他按钮(与下面的相反)*/
 	background-image: url("./images/uibutton/cbtn.png");
 	background-size: 100% 100%;
 	line-height: 30px;
 	text-align: center;
-	padding: 10px 15px !important; /*按钮高度+宽度 建议别调5.5 10.5*/
-	min-width: 140px !important; /*限制最小宽度*/
-	min-height: 18px !important; /*限制最大高度*/
+	padding: 10px 15px !important;
+	/*按钮高度+宽度 建议别调5.5 10.5*/
+	min-width: 140px !important;
+	/*限制最小宽度*/
+	min-height: 18px !important;
+	/*限制最大高度*/
 	/*margin: 0px 5px !important;/*与其他按钮之间的距离，越小越靠近0 5*/
 	margin-left: 2px !important;
 	margin-right: 2px !important;
@@ -218,23 +255,30 @@
 	overflow: visible;
 	transition: none;
 }
-.control > div.primary {
+
+.control>div.primary {
 	--p: calc(var(--h) * 11 / 75);
 	background-image: none;
 }
 
 /*分离选项类名*/
-.control > div.choice {
+.control>div.choice {
 	/*其他按钮(确认/取消除外)*/
 	background-image: url("./images/uibutton/cbtn.png");
 	background-size: 100% 100%;
 	text-align: center;
-	padding: 10px 15px !important; /*按钮高度+宽度 建议别调*/
-	min-width: 120px !important; /*限制最小宽度*/
-	min-height: 25px !important; /*限制最小高度*/
-	margin: 2px 20px 3px 20px !important; /*外边距，别管*/
-	font-family: "shousha"; /*字体样式*/
-	font-size: 30px; /*字体大小*/
+	padding: 10px 15px !important;
+	/*按钮高度+宽度 建议别调*/
+	min-width: 120px !important;
+	/*限制最小宽度*/
+	min-height: 25px !important;
+	/*限制最小高度*/
+	margin: 2px 20px 3px 20px !important;
+	/*外边距，别管*/
+	font-family: "shousha";
+	/*字体样式*/
+	font-size: 30px;
+	/*字体大小*/
 	border-radius: 4px;
 	color: #c2c374;
 	-webkit-text-stroke: 0.7px #5b6727;
@@ -244,77 +288,95 @@
 }
 
 /*取消按键*/
-.control > div.primary2 {
-	font-size: 30px !important; /*字体大小*/
+.control>div.primary2 {
+	font-size: 30px !important;
+	/*字体大小*/
 	background-image: url("./images/uibutton/confirm-bg-c.png");
 	padding: 8px 12px !important;
 }
 
-.control > div + div {
+.control>div+div {
 	margin-left: 15px;
 }
 
 /*按钮虚化*/
-.control > div.disabled:not([data-type="endButton"]) {
+.control>div.disabled:not([data-type="endButton"]) {
 	background-size: 100% 100%;
 	filter: grayscale(100%);
-	-webkit-filter: grayscale(100%); /*按钮变灰*/
+	-webkit-filter: grayscale(100%);
+	/*按钮变灰*/
 }
-.control > div.primary > span {
+
+.control>div.primary>span {
 	/*确认按钮*/
 	--sh: calc(var(--h) - 6px);
 	display: block;
 	font-size: 40px;
 	line-height: var(--sh);
 	/*top: calc(100% - 44px);/*按钮位置数字越小越往下*/
-	margin: 0px 5px !important; /*0 35*/
+	margin: 0px 5px !important;
+	/*0 35*/
 	background-image: url("./images/uibutton/btn.png");
-	padding: 20px 60px !important; /*按钮高度+宽度 建议别调22 68*/
-	min-height: 20px; /*限制最小高度*/
-	min-width: 60px; /*限制最小宽度*/
+	padding: 20px 60px !important;
+	/*按钮高度+宽度 建议别调22 68*/
+	min-height: 20px;
+	/*限制最小高度*/
+	min-width: 60px;
+	/*限制最小宽度*/
 	background-size: 100% 108%;
 	text-shadow: 1px 1px 2.5px rgba(62, 57, 38, 0.1);
 	bottom: 0px;
 	position: relative;
 }
-.lbtn-confirm[data-skill] > [data-type="skill2"] {
+
+.lbtn-confirm[data-skill]>[data-type="skill2"] {
 	display: none;
 }
 
-.control > div.huan {
+.control>div.huan {
 	--sh: calc(var(--h) - 6px);
 	display: block;
 	font-size: 40px;
 	line-height: var(--sh);
-	margin: 0px 5px !important; /*元素离边缘的距离，外边距，简单说就是确定与取消之间的距离*/
-	background-image: url("./images/uibutton/huanpai.png");
-	padding: 12px 36px !important; /*按钮高度+宽度 建议别调*/
-	min-height: 20px; /*限制最小高度*/
-	min-width: 60px; /*限制最小宽度*/
+	margin: 0px 5px !important;
+	/*元素离边缘的距离，外边距，简单说就是确定与取消之间的距离*/
+	padding: 12px 36px !important;
+	/*按钮高度+宽度 建议别调*/
+	min-height: 20px;
+	/*限制最小高度*/
+	min-width: 60px;
+	/*限制最小宽度*/
 	background-size: 100% 108%;
 	background-repeat: no-repeat;
 	text-shadow: 1px 1px 2.5px rgba(62, 57, 38, 0.1);
 	margin-top: 20px !important;
 	position: relative;
 }
-.control > div.huan.huan2 {
+
+.control>div.huan.huan2 {
 	background-image: url("./images/uibutton/huanpai2.png");
 }
-.control > div.qi {
+
+.control>div.qi {
 	--sh: calc(var(--h) - 6px);
 	display: block;
 	font-size: 40px;
 	line-height: var(--sh);
-	margin: 0px 5px !important; /*元素离边缘的距离，外边距，简单说就是确定与取消之间的距离*/
+	margin: 0px 5px !important;
+	/*元素离边缘的距离，外边距，简单说就是确定与取消之间的距离*/
 	background-image: url("./images/uibutton/qipai.png");
-	padding: 15px 30px !important; /*按钮高度+宽度 建议别调*/
-	min-height: 20px; /*限制最小高度*/
-	min-width: 60px; /*限制最小宽度*/
+	padding: 15px 30px !important;
+	/*按钮高度+宽度 建议别调*/
+	min-height: 20px;
+	/*限制最小高度*/
+	min-width: 60px;
+	/*限制最小宽度*/
 	background-size: 100% 100%;
 	text-shadow: 1px 1px 2.5px rgba(62, 57, 38, 0.1);
 	margin-top: 21px !important;
 	position: relative;
 }
+
 /*手牌*/
 /*这里给这个元素设置了一些默认值，如果在这个标签下的元素，不再设置其他值时，将调用这些默认值*/
 .handcardNumber {
@@ -334,11 +396,12 @@
 }
 
 /*手牌数图片*/
-.handcardNumber > .cardPicture {
+.handcardNumber>.cardPicture {
 	left: 354px;
 	bottom: -10px;
 	--w: 450px;
-	--h: calc(var(--w) * 300 / 720); /*宽和长*/
+	--h: calc(var(--w) * 300 / 720);
+	/*宽和长*/
 	width: var(--w);
 	height: var(--h);
 	background-image: url("./images/uibutton/shoupai1.png");
@@ -350,7 +413,7 @@
 
 /*手牌数值
 /*由于重新设置了数值，所以不调用默认值*/
-.handcardNumber > .cardNumber {
+.handcardNumber>.cardNumber {
 	left: 500px;
 	bottom: 15px;
 	height: 8px;
@@ -359,7 +422,6 @@
 	line-height: 25px;
 	text-align: right;
 	font-size: 18px;
-	-webkit-text-stroke: 0.4px black;
 	white-space: nowrap;
 }
 
@@ -367,12 +429,13 @@
 /*同理，定义整体*/
 .cardRoundNumber {
 	top: 30px;
-	right: 123px; /*牌堆数及游戏时间，轮数整体。越大越往左*/
+	right: 123px;
+	/*牌堆数及游戏时间，轮数整体。越大越往左*/
 	font-family: "shousha";
-	text-shadow: black 1px 1px 1px, black 1px -1px 1px, black -1px 1px 1px, black -1px -1px 1px;
 }
+
 /*牌堆图片*/
-.cardRoundNumber > .cardPileNumber {
+.cardRoundNumber>.cardPileNumber {
 	bottom: 10px;
 	width: 40px;
 	height: 52px;
@@ -380,9 +443,11 @@
 	background-size: 100% 100%;
 	left: 1px;
 	position: relative;
-	z-index: 92px; /*为了兼容武将界面*/
+	z-index: 92px;
+	/*为了兼容武将界面*/
 }
-.cardRoundNumber > .cardPileNumber > span {
+
+.cardRoundNumber>.cardPileNumber>span {
 	left: 3.7px;
 	bottom: 24px;
 	width: 100%;
@@ -393,16 +458,14 @@
 	text-align: center;
 	font-family: "HYZLSJ";
 	font-stretch: ultra-condensed;
-	font-size: 25px; /*牌堆数*/
-	-webkit-text-stroke: 1.25px #2b1f19;
-	text-shadow: -1.5px 0px 1.5px #2b1f19, 0px -1.5px 1.5px #2b1f19, 1.5px 0px 1.5px #2b1f19, 0px 1.5px 1.5px #2b1f19;
+	font-size: 25px;
 	font-weight: 600;
 }
 
 /*游戏轮数和时间*/
 /*这里要为轮数和时间一起设置参数，但又不能调用默认值，所以用，连写*/
-.cardRoundNumber > .roundNumber,
-.cardRoundNumber > .time {
+.cardRoundNumber>.roundNumber,
+.cardRoundNumber>.time {
 	/*游戏轮数显示*/
 	left: 10px;
 	bottom: 70px;
@@ -412,33 +475,34 @@
 	font-family: "shousha";
 	font-size: 20px;
 	font-weight: 900;
-	text-shadow: -1.7px 0px 3px #2b1f19, 0px -1.7px 3px #2b1f19, 1.7px 0px 3px #2b1f19, 0px 1.7px 3px #2b1f19; /*这个是文字阴影*/
-	-webkit-text-stroke: 0.85px #2b1f19;
 	white-space: nowrap;
 	color: #97856a;
 }
 
 /*游戏时间显示*/
 /*Q：可能有小伙伴不李姐了，说上面不是定义了游戏时间的参数了吗？为啥这里又来一遍？A：js里创造了两个布局一个是时间，另一个是游戏轮数。关于位置关系，不能一同用一种参数调用，不然会叠在一起（不信你试试），当然下面的颜色属性是可以删掉的，不影响。*/
-.cardRoundNumber > .time {
+.cardRoundNumber>.time {
 	bottom: 70px;
 	font-size: 20px;
 	font-family: "shousha";
-	line-height: 16px; /*文字行高*/
+	line-height: 16px;
+	/*文字行高*/
 	letter-spacing: 3.2px;
 	left: -60px;
 	color: #97856a;
 	/*font-size: 0px;*/
 }
 
-.control.dou3 > div {
+.control.dou3>div {
 	/*无懈按钮*/
 	background-size: contain;
-	font-size: 0px; /*字体大小*/
+	font-size: 0px;
+	/*字体大小*/
 	margin-top: 3px !important;
 	margin-left: 152px !important;
 	background-repeat: no-repeat;
-	padding: 6px 24px !important; /*按钮高度+宽度 建议别调*/
+	padding: 6px 24px !important;
+	/*按钮高度+宽度 建议别调*/
 }
 
 /*假装无敌牌堆计数*/
@@ -467,7 +531,7 @@
 	background-image: url("./images/uibutton/paiduiming.png");
 }
 
-.card-statistics-title > div {
+.card-statistics-title>div {
 	position: relative;
 	flex: 1;
 	text-align: center;
@@ -483,18 +547,20 @@
 	display: flex;
 	width: 100%;
 	height: 80%;
-	font-size: 18px; /*单个项目文字大小*/
+	font-size: 18px;
+	/*单个项目文字大小*/
 	position: relative;
 }
 
-.card-statistics-content > div {
+.card-statistics-content>div {
 	overflow: auto;
 	flex: 1;
 	position: relative;
 	border-right: 3px solid;
 	border-image-slice: 0 100% 0 0;
 	border-image-source: url("./images/uibutton/paiduixian.png");
-	height: 96%; /*明细项目长度*/
+	height: 96%;
+	/*明细项目长度*/
 }
 
 .card-statistics-content .items {
@@ -527,7 +593,7 @@
 	flex: 0.2;
 }
 
-#arenalog > div {
+#arenalog>div {
 	position: relative;
 	display: block;
 	width: calc(100% - 23px);
@@ -538,22 +604,26 @@
 	/*background-image: url("./info.png");*/
 	background-size: 100% 100%;
 }
-#window:not(.low_performance) #arena #arenalog > div {
+
+#window:not(.low_performance) #arena #arenalog>div {
 	animation: game_start 0.5s;
 	-webkit-animation: game_start 0.5s;
 }
 
 /*托管中图片（手杀）*/
-#autonode > div:last-child {
+#autonode>div:last-child {
 	z-index: 10;
 	margin-left: 150px !important;
 	margin-bottom: -46px !important;
 	font-size: 0px;
 	text-shadow: none;
 	--w: 285px;
-	--h: calc(var(--w) * 169 / 365); /*高和长*/
-	width: var(--w); /*按比例调节*/
-	height: var(--h); /*同理*/
+	--h: calc(var(--w) * 169 / 365);
+	/*高和长*/
+	width: var(--w);
+	/*按比例调节*/
+	height: var(--h);
+	/*同理*/
 	/*display: table;*/
 	background-image: url("./images/SSCD/tuoguan2.png");
 	background-size: 100% 100%;
@@ -574,6 +644,7 @@
 	left: 110px;
 	bottom: 60px;
 }
+
 /*身份任务忠臣*/
 .sfrwchongchen {
 	position: fixed;
@@ -586,6 +657,7 @@
 	left: 110px;
 	bottom: 60px;
 }
+
 /*身份任务反贼*/
 .sfrwfanzei {
 	position: fixed;
@@ -598,6 +670,7 @@
 	left: 110px;
 	bottom: 60px;
 }
+
 /*身份任务内奸*/
 .sfrwneijian {
 	position: fixed;
@@ -610,6 +683,7 @@
 	left: 110px;
 	bottom: 60px;
 }
+
 /*身份任务地主*/
 .sfrwdizhu {
 	position: fixed;
@@ -622,6 +696,7 @@
 	left: 110px;
 	bottom: 60px;
 }
+
 /*身份任务农民*/
 .sfrwnongmin {
 	position: fixed;
@@ -634,6 +709,7 @@
 	left: 110px;
 	bottom: 60px;
 }
+
 /*身份任务虎队*/
 .sfrwhu {
 	position: fixed;
@@ -646,6 +722,7 @@
 	left: 110px;
 	bottom: 60px;
 }
+
 /*身份任务魏国*/
 .sfrwweiguo {
 	position: fixed;
@@ -658,6 +735,7 @@
 	left: 110px;
 	bottom: 60px;
 }
+
 /*身份任务蜀国*/
 .sfrwshuguo {
 	position: fixed;
@@ -670,6 +748,7 @@
 	left: 110px;
 	bottom: 60px;
 }
+
 /*身份任务吴国*/
 .sfrwwuguo {
 	position: fixed;
@@ -682,6 +761,7 @@
 	left: 110px;
 	bottom: 60px;
 }
+
 /*身份任务晋国*/
 .sfrwjinguo {
 	position: fixed;
@@ -694,6 +774,7 @@
 	left: 110px;
 	bottom: 60px;
 }
+
 /*身份任务野心家*/
 .sfrwyexinjia {
 	position: fixed;
@@ -706,6 +787,7 @@
 	left: 110px;
 	bottom: 60px;
 }
+
 /*身份任务群雄*/
 .sfrwqunxiong {
 	position: fixed;
@@ -718,6 +800,7 @@
 	left: 110px;
 	bottom: 60px;
 }
+
 /*身份任务未知*/
 .sfrwundefined {
 	position: fixed;
@@ -730,6 +813,7 @@
 	left: 110px;
 	bottom: 60px;
 }
+
 /*单挑任务先手*/
 .sfrwxianshou {
 	position: fixed;
@@ -742,6 +826,7 @@
 	left: 110px;
 	bottom: 60px;
 }
+
 /*单挑任务后手*/
 .sfrwhoushou {
 	position: fixed;
@@ -777,7 +862,7 @@
 	border-radius: 0px;
 }
 
-.lbtn-controls + .lbtn-controls {
+.lbtn-controls+.lbtn-controls {
 	margin-top: 1px;
 }
 
@@ -802,29 +887,34 @@
 /*左手手牌量显示*/
 .handcardNumber1 {
 	bottom: 2px;
-	left: 0px; /* 将right属性值修改为left属性值 */
+	left: 0px;
+	/* 将right属性值修改为left属性值 */
 	font-family: "HYZLSJ";
 	color: #ffffff;
 	font-weight: 100 !important;
 	font-size: 13px !important;
 }
 
-.handcardNumber1 > .cardPicture1 {
-	left: -50px; /* 调整left属性值 */
+.handcardNumber1>.cardPicture1 {
+	left: -50px;
+	/* 调整left属性值 */
 	bottom: -16px;
 	--w: 417px;
-	--h: calc(var(--w) * 235 / 500); /*宽和长*/
+	--h: calc(var(--w) * 235 / 500);
+	/*宽和长*/
 	width: var(--w);
 	height: var(--h);
 	background-image: url("./images/uibutton/shoupai1.png");
 	background-size: 100% 100%;
 	position: relative;
 	z-index: -1;
-	perspective: 800px; /* 设置透视属性值 */
-	transform: rotateY(180deg); /* 添加左右翻转效果 */
+	perspective: 800px;
+	/* 设置透视属性值 */
+	transform: rotateY(180deg);
+	/* 添加左右翻转效果 */
 }
 
-.handcardNumber1 > .cardNumber1 {
+.handcardNumber1>.cardNumber1 {
 	left: 180px;
 	bottom: 12px;
 	height: 8px;
