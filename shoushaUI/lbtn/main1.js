@@ -91,6 +91,45 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 			}
 		}
 	};
+	
+	lib.skill._SPZLX = {
+		trigger: { player: ["gainAfter", "loseAfter"] },
+		fixed: true,
+		popup: false,
+		forced: true,
+		charlotte: true,
+		priority: Infinity,
+		filter: function(event, player) {
+		    return window.paixuxx == false && player == game.me && !player.hasSkillTag("noSortCard");
+		},
+		content: function() {
+		    var cards = player.getCards("hs");
+		    if (cards.length <= 1) return;
+		    
+		    cards.sort((a, b) => {
+		        // 位置排序
+		        var p1 = get.position(a);
+		        var p2 = get.position(b);
+		        if (p1 != p2) return p1 == "h" ? 1 : -1;
+		        
+		        // 卡牌排序
+		        if (a.name != b.name) return lib.sort.card(b.name, a.name);
+		        if (a.suit != b.suit) return lib.suit.indexOf(b.suit) - lib.suit.indexOf(a.suit);
+		        if (a.number != b.number) return b.number - a.number;
+		        if (a.nature != b.nature) return b.nature - a.nature;
+		        return parseInt(b.cardid) - parseInt(a.cardid);
+		    });
+					
+		    if (window.dui && dui.queueNextFrameTick) {
+		        cards.forEach(card => player.node.handcards1.insertBefore(card, player.node.handcards1.firstChild));
+		        dui.queueNextFrameTick(dui.layoutHand, dui);
+		    } else {
+		        game.addVideo('lose', player, [get.cardsInfo(cards), [], []]);
+		        cards.forEach(card => card.goto(ui.special));
+		        player.directgain(cards, false);
+		    }
+		}
+	};
 
 	lib.arenaReady.push(function () {
 		//更新轮次
@@ -326,34 +365,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				content() {
 					if (ui.updateSkillControl) ui.updateSkillControl(game.me, true);
 				},
-			}),
-				/*来自瓜瓜 自动牌序*/
-				(lib.skill._paixu_paixu_paixu = {
-					charlotte: true,
-					trigger: {
-						player: ["gainEnd"],
-					},
-					filter(event, player) {
-						return window.paixuxx == false && player == game.me && !player.hasSkillTag("noSortCard");
-					},
-					silent: true,
-					forced: true,
-					content() {
-						var cards = game.me.getCards("hs");
-						var sort2 = function (b, a) {
-							if (a.name != b.name) return lib.sort.card(a.name, b.name);
-							else if (a.suit != b.suit) return lib.suit.indexOf(a) - lib.suit.indexOf(b);
-							else return a.number - b.number;
-						};
-						if (cards.length > 1) {
-							cards.sort(sort2);
-							cards.forEach(function (i, j) {
-								game.me.node.handcards1.insertBefore(cards[j], game.me.node.handcards1.firstChild);
-							});
-							dui.queueNextFrameTick(dui.layoutHand, dui);
-						}
-					},
-				});
+			});
 		},
 		precontent() {
 			Object.assign(game.videoContent, {
