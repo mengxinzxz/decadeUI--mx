@@ -1,15 +1,11 @@
 .skill-control {
 	/*技能按钮*/
-	max-width: 191px;
-	/*同列技能可容纳最大宽度，建议别调180*/
-	bottom: 30px;
-	/*整体上移，建议别调*/
-	right: 175px;
-	/*技能显示右移，越小越靠右，建议别调*/
+	max-width: 191px; /*同列技能可容纳最大宽度，建议别调180*/
+	bottom: 30px; /*整体上移，建议别调*/
+	right: 175px; /*技能显示右移，越小越靠右，建议别调*/
 	/*border: 3px solid rgb(255, 255, 255);/*调试用*/
 	z-index: 6;
 }
-
 .skill-control div {
 	position: relative;
 	height: 40px;
@@ -18,15 +14,12 @@
 	justify-content: center;
 	align-items: center;
 }
-
 .skill-control .trigger,
 .skill-control .enable {
 	height: auto;
 	width: auto;
-	justify-content: right;
-	/*自动向右对齐*/
+	justify-content: right; /*自动向右对齐*/
 }
-
 .skill-control {
 	float: right;
 	white-space: nowrap;
@@ -36,52 +29,45 @@
 	font-size: 24px;
 	/*字体渐变色，色调*/
 }
-
-.skill-control>div {
+.skill-control > div {
 	display: flex;
 	flex-wrap: wrap-reverse;
 	flex-direction: row-reverse;
 }
-
 /*伪类*/
-.skill-control>div::after {
-	content: "";
-	/*防止元素浮动*/
+.skill-control > div::after {
+	content: ""; /*防止元素浮动*/
 	display: block;
 	clear: both;
 }
-
-.skill-control>.enable {
+.skill-control > .enable {
 	margin: 0 0 0 auto;
 	font-size: 20.5px;
 	font-weight: bold;
 	font-family: "HYZLSJ";
 }
 
-.skill-control>.trigger>* .skillitem-child {
+.skill-control > .trigger > * .skillitem-child {
 	position: absolute;
-	-webkit-text-stroke: 4.3px #102030;
-	/*5.1px #40404096*/
+	-webkit-text-stroke: 4.3px #102030; /*5.1px #40404096*/
 	opacity: 0.5;
 	z-index: -1;
 }
 
-.skill-control>.enable>* .skillitem-child {
+.skill-control > .enable > * .skillitem-child {
 	position: absolute;
-	-webkit-text-stroke: 4.3px rgba(2, 3, 2);
-	/*#575755;/*#686860;/*5.1px #40404096*/
+	-webkit-text-stroke: 4.3px rgba(2, 3, 2); /*#575755;/*#686860;/*5.1px #40404096*/
 	opacity: 0.35;
 	z-index: -1;
 }
 
-.skill-control>.trigger>div {
+.skill-control > .trigger > div {
 	margin: -6px 2px;
 	font-family: "HYZLSJ";
 	text-align: center;
 	-webkit-text-stroke: 0px rgba(38, 37, 34, 0.5);
 	text-shadow: none;
-	background-image: linear-gradient(180deg, #f0d775 30%, #ab8c31 57%, #b0a04d 67%);
-	/*字体渐变色，色调*/
+	background-image: linear-gradient(180deg, #f0d775 30%, #ab8c31 57%, #b0a04d 67%); /*字体渐变色，色调*/
 	font-weight: lighter;
 	/*background-image: url("./images/底图.png");*/
 	-webkit-background-clip: text;
@@ -91,28 +77,30 @@
 	width: auto;
 }
 
-.skill-control>.enable>* {
+.skill-control > .enable > * {
 	/*-webkit-text-stroke: 0.8px rgba(38,37,34,0.5);
 	text-shadow: none;*/
 	background-size: 100% 100%;
-	background-image: linear-gradient(180deg, #f0d775 30%, #ab8c31 57%, #b0a04d 67%);
-	/*字体渐变色，色调*/
+	background-image: linear-gradient(180deg, #f0d775 30%, #ab8c31 57%, #b0a04d 67%); /*字体渐变色，色调*/
 	/*background-image: url("./images/底图.png");*/
+	-webkit-text-stroke: 0.5px #3e362a;
+	text-shadow: none;
+	/*background: linear-gradient(180deg, #fcfcbf 40%, #b58b59 50%);*/
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 	position: relative;
 	font-size: 22px;
 	white-space: nowrap;
-	margin: 1px 9px;
-	/*上下 左右间隔*/
+	margin: 1px 9px; /*上下 左右间隔*/
 	margin-top: 3px;
-	/*width: auto;*/
-	/*此数值控制技能按文本与按钮之间的关联性，但不美观。*/
+	/*width: auto;*/ /*此数值控制技能按文本与按钮之间的关联性，但不美观。*/
 	index: 4;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
 
 /*---司马徽按钮分离--*/
-.skill-control>.enable>.skillitem_smh_lianhuan::before {
+.skill-control > .enable > .skillitem_smh_lianhuan::before {
 	z-index: -1;
 	content: "";
 	text-align: center;
@@ -121,21 +109,19 @@
 	margin: 1px 12px;
 	width: 147%;
 	height: 170%;
+
 	font-family: "HanYiZhongLiShuFan", "HYZLSJ";
 	background-image: url("./images/feng.png");
 	background-size: 100% 100%;
 }
-
-.skill-control>.enable>*.select:not(.skillitem_smh_yeyan):not(.skillitem_smh_huoji)::before {
+.skill-control > .enable > *.select:not(.skillitem_smh_yeyan):not(.skillitem_smh_huoji)::before {
 	background-image: url("./images/feng_selected.png");
 }
-
-.skill-control>.enable>.skillitem_smh_lianhuan:not(.usable):not(.select)::before {
+.skill-control > .enable > .skillitem_smh_lianhuan:not(.usable):not(.select)::before {
 	background-image: url("./images/feng_no.png");
 }
-
 /*司马徽火计*/
-.skill-control>.enable>.skillitem_smh_huoji::before {
+.skill-control > .enable > .skillitem_smh_huoji::before {
 	z-index: -1;
 	content: "";
 	text-align: center;
@@ -144,21 +130,19 @@
 	margin: 1px 12px;
 	width: 147%;
 	height: 170%;
+
 	font-family: "HanYiZhongLiShuFan", "HYZLSJ";
 	background-image: url("./images/long.png");
 	background-size: 100% 100%;
 }
-
-.skill-control>.enable>*.select:not(.skillitem_smh_yeyan):not(.skillitem_smh_lianhuan)::before {
+.skill-control > .enable > *.select:not(.skillitem_smh_yeyan):not(.skillitem_smh_lianhuan)::before {
 	background-image: url("./images/long_selected.png");
 }
-
-.skill-control>.enable>.skillitem_smh_huoji:not(.usable):not(.select)::before {
+.skill-control > .enable > .skillitem_smh_huoji:not(.usable):not(.select)::before {
 	background-image: url("./images/long_no.png");
 }
-
 /*司马徽业炎*/
-.skill-control>.enable>.skillitem_smh_yeyan::before {
+.skill-control > .enable > .skillitem_smh_yeyan::before {
 	z-index: -1;
 	content: "";
 	--w: auto;
@@ -174,18 +158,15 @@
 	background-image: url("./images/longfeng.png");
 	background-size: 100% 100%;
 }
-
-.skill-control>.enable>*.select:not(.skillitem_smh_huoji):not(.skillitem_smh_lianhuan)::before {
+.skill-control > .enable > *.select:not(.skillitem_smh_huoji):not(.skillitem_smh_lianhuan)::before {
 	background-image: url("./images/longfeng_selected.png");
 }
-
-.skill-control>.enable>.skillitem_smh_yeyan:not(.usable):not(.select)::before {
+.skill-control > .enable > .skillitem_smh_yeyan:not(.usable):not(.select)::before {
 	background-image: url("./images/longfeng_no.png");
 }
-
 /*-----*/
 
-.skill-control>.enable>.skillitem::before {
+.skill-control > .enable > .skillitem::before {
 	z-index: -1;
 	content: "";
 	--w: auto;
@@ -203,13 +184,12 @@
 	/*border: 1px solid rgb(3,4,5);/*调试用*/
 }
 
-.skill-control>.enable>*.select:not(.skillitem_smh_yeyan):not(.skillitem_smh_huoji):not(.skillitem_smh_lianhuan)::before {
+.skill-control > .enable > *.select:not(.skillitem_smh_yeyan):not(.skillitem_smh_huoji):not(.skillitem_smh_lianhuan)::before {
 	background-image: url("./images/btn1.png");
 	/*filter: grayscale(100%);
 	-webkit-filter: grayscale(100%);*/
 }
-
-.skill-control>.enable>.skillitem:not(.usable):not(.select)::before {
+.skill-control > .enable > .skillitem:not(.usable):not(.select)::before {
 	background-image: url("./images/btn2.png");
 	/*filter: grayscale(100%);
 	-webkit-filter: grayscale(100%);*/
@@ -224,8 +204,7 @@
 	justify-content: center;
 	align-items: center;
 }
-
-.skillMarks>.skillMarkItem {
+.skillMarks > .skillMarkItem {
 	--h: 19px;
 	width: 34px;
 	height: 20px;
@@ -242,25 +221,19 @@
 	font-family: "HYZLSJ";
 	font-size: 15.5px;
 }
-
 .skillMarkItem.xiandingji {
 	background-image: url("./images/xianding.png");
 	background-size: 100% 100%;
 	text-shadow: none;
 	font-family: "HYZLSJ";
-	font-weight: 500;
-	/*字体加粗*/
+	font-weight: 500; /*字体加粗*/
 	text-shadow: 0px 0px 1px #b80b0b, 0px 0px 1px #b80b0b, 0px 0px 1px #b80b0b, 0px 0px 1px #b80b0b, 0px 0px 1px #b80b0b, 0px 0px 1px #b80b0b, 0px 0px 1px #b80b0b, 0px 0px 1px #b80b0b, 0px 0px 1px #b80b0b;
 	--w: 45px;
 	font-size: 16px;
-	--h: calc(var(--w) * 90 / 165);
-	/*高和长*/
-	width: var(--w);
-	/*按比例调节*/
-	height: var(--h);
-	/*同理*/
+	--h: calc(var(--w) * 90 / 165); /*高和长*/
+	width: var(--w); /*按比例调节*/
+	height: var(--h); /*同理*/
 }
-
 /*转换技*/
 .skillMarkItem.zhuanhuanji {
 	background-size: 100% 100%;
@@ -270,30 +243,22 @@
 	font-size: 13px;
 	font-family: "FZLBJW";
 	font-weight: bold;
-	--h: calc(var(--w) * 85 / 165);
-	/*高和长*/
-	width: var(--w);
-	/*按比例调节*/
-	height: var(--h);
-	/*同理*/
+	--h: calc(var(--w) * 85 / 165); /*高和长*/
+	width: var(--w); /*按比例调节*/
+	height: var(--h); /*同理*/
 }
-
 .skillMarkItem.xiandingji.used {
 	position: relative;
 
 	--w: 45px;
-	--h: calc(var(--w) * 85 / 165);
-	/*高和长*/
-	width: var(--w);
-	/*按比例调节*/
-	height: var(--h);
-	/*同理*/
+	--h: calc(var(--w) * 85 / 165); /*高和长*/
+	width: var(--w); /*按比例调节*/
+	height: var(--h); /*同理*/
 	background-image: url("./images/used.png");
 	background-size: 100% 100%;
 	text-shadow: none;
 	font-family: "HYZLSJ";
-	font-weight: bold;
-	/*字体加粗*/
+	font-weight: bold; /*字体加粗*/
 	-webkit-text-stroke: 1px #51524c;
 	font-size: 16px;
 }
@@ -304,12 +269,9 @@
 	display: block;
 	position: absolute;
 	--w: 45.5px;
-	--h: calc(var(--w) * 36 / 56);
-	/*高和长*/
-	width: var(--w);
-	/*按比例调节*/
-	height: var(--h);
-	/*同理*/
+	--h: calc(var(--w) * 36 / 56); /*高和长*/
+	width: var(--w); /*按比例调节*/
+	height: var(--h); /*同理*/
 	background-image: url("./images/noxianding.png");
 	background-size: 100% 100%;
 	right: -2px;
@@ -327,11 +289,9 @@
 	font-size: 16px;
 	text-shadow: none;
 	font-family: "HYZLSJ";
-	font-weight: bold;
-	/*字体加粗*/
+	font-weight: bold; /*字体加粗*/
 	-webkit-text-stroke: 1px #483d8b;
 }
-
 .skillMarkItem.duty {
 	/*background-image: linear-gradient(to bottom right, #437cbe 27%, #5183bc 50%, #012a3a 68%);
 	box-shadow: 0px -2px 3px #5a4a31  , 0px 2px 3px #5a4a31  ,2px 0px 3px #5a4a31  ,2px 0px 3px #5a4a31, 0.6px 0.6px 1.5px #a1fafa inset, 0.3px -0.5px 1px #a1fafa inset , 1px 1px 1.5px #a1fafa inset;*/
@@ -342,28 +302,22 @@
 	font-size: 16px;
 	text-shadow: none;
 	font-family: "HYZLSJ";
-	font-weight: bold;
-	/*字体加粗*/
+	font-weight: bold; /*字体加粗*/
 	-webkit-text-stroke: 1px #dc143c;
 }
-
 .skillMarkItem.duty.fail {
 	position: relative;
 
 	--w: 45px;
-	--h: calc(var(--w) * 85 / 165);
-	/*高和长*/
-	width: var(--w);
-	/*按比例调节*/
-	height: var(--h);
-	/*同理*/
+	--h: calc(var(--w) * 85 / 165); /*高和长*/
+	width: var(--w); /*按比例调节*/
+	height: var(--h); /*同理*/
 	background-image: url("./images/used.png");
 	background-size: 100% 100%;
 	text-shadow: none;
 	font-family: "HYZLSJ";
 	font-size: 16px;
-	font-weight: bold;
-	/*字体加粗*/
+	font-weight: bold; /*字体加粗*/
 	-webkit-text-stroke: 1px #51524c;
 }
 
@@ -373,23 +327,18 @@
 	display: block;
 	position: absolute;
 	--w: 45.5px;
-	--h: calc(var(--w) * 36 / 56);
-	/*高和长*/
-	width: var(--w);
-	/*按比例调节*/
-	height: var(--h);
-	/*同理*/
+	--h: calc(var(--w) * 36 / 56); /*高和长*/
+	width: var(--w); /*按比例调节*/
+	height: var(--h); /*同理*/
 	background-image: url("./images/noxianding.png");
 	background-size: 100% 100%;
 	right: -2px;
 	top: -4.4px;
 	pointer-events: none;
 }
-
-.skillMarkItem+.skillMarkItem {
+.skillMarkItem + .skillMarkItem {
 	margin-top: 3.5px;
 }
-
 /*技能失效*/
 .skillitem .suo {
 	height: 30px;
@@ -410,10 +359,8 @@
 	left: 20px;
 	z-index: 6;
 	filter: grayscale(100%);
-	-webkit-filter: grayscale(100%);
-	/*按钮变灰*/
+	-webkit-filter: grayscale(100%); /*按钮变灰*/
 }
-
 .skillitem .yang {
 	/*	height: 80px;*/
 	width: 90px;
@@ -423,7 +370,6 @@
 	/*left: 20px;*/
 	z-index: 6;
 }
-
 .skillitem .ying {
 	/*	height: 80px;*/
 	width: 90px;
@@ -433,7 +379,6 @@
 	/*left: 20px;*/
 	z-index: 6;
 }
-
 .trigger .yang {
 	height: 20px;
 	width: 60px;
@@ -443,7 +388,6 @@
 	left: -7px;
 	z-index: -1;
 }
-
 .trigger .ying {
 	height: 20px;
 	width: 60px;
@@ -453,7 +397,6 @@
 	left: -7px;
 	z-index: -1;
 }
-
 .trigger .suo1 {
 	height: 35px;
 	width: 35px;
@@ -464,11 +407,10 @@
 	z-index: 6;
 	bottom: 5.5px;
 	filter: grayscale(100%);
-	-webkit-filter: grayscale(100%);
-	/*按钮变灰*/
+	-webkit-filter: grayscale(100%); /*按钮变灰*/
 }
 
-.skill-control>.enable>.skillitem_smh_huoji>.numText {
+.skill-control > .enable > .skillitem_smh_huoji > .numText {
 	font-size: 16px;
 	right: 3px;
 	top: 5px;
@@ -484,9 +426,8 @@
 	white-space: nowrap;
 	position: absolute;
 }
-
 /* 技能剩余次数 */
-.skill-control>.enable>.skillitem>.numText {
+.skill-control > .enable > .skillitem > .numText {
 	font-size: 16px;
 	right: 3px;
 	top: 5px;
@@ -503,7 +444,7 @@
 	position: absolute;
 }
 
-.skill-control>.trigger>.skillitem>.numText {
+.skill-control > .trigger > .skillitem > .numText {
 	font-size: 16px;
 	right: -9px;
 	top: 5px;
@@ -520,7 +461,7 @@
 	position: absolute;
 }
 
-.skill-control>.enable>.skillitemxianding>.numText {
+.skill-control > .enable > .skillitemxianding > .numText {
 	font-size: 16px;
 	right: 3px;
 	top: 5px;
@@ -537,7 +478,7 @@
 	position: absolute;
 }
 
-.skill-control>.trigger>.skillitemxianding>.numText {
+.skill-control > .trigger > .skillitemxianding > .numText {
 	font-size: 16px;
 	right: -9px;
 	top: 5px;
@@ -554,14 +495,13 @@
 	position: absolute;
 }
 
-.skill-control>.enable>.skillitem>.numText-child {
+.skill-control > .enable > .skillitem > .numText-child {
 	font-size: 16px;
 	right: 3px;
 	top: 5px;
 	font-family: "HYZLSJ";
 	text-align: center;
-	-webkit-text-stroke: 2.7px #102030;
-	/*5.1px #40404096*/
+	-webkit-text-stroke: 2.7px #102030; /*5.1px #40404096*/
 	opacity: 0.5;
 	z-index: -1;
 	text-shadow: none;
@@ -572,14 +512,13 @@
 	position: absolute;
 }
 
-.skill-control>.enable>.skillitem_smh_huoji>.numText-child {
+.skill-control > .enable > .skillitem_smh_huoji > .numText-child {
 	font-size: 16px;
 	right: 3px;
 	top: 5px;
 	font-family: "HYZLSJ";
 	text-align: center;
-	-webkit-text-stroke: 2.7px #102030;
-	/*5.1px #40404096*/
+	-webkit-text-stroke: 2.7px #102030; /*5.1px #40404096*/
 	opacity: 0.5;
 	z-index: -1;
 	text-shadow: none;
@@ -590,14 +529,13 @@
 	position: absolute;
 }
 
-.skill-control>.trigger>.skillitem>.numText-child {
+.skill-control > .trigger > .skillitem > .numText-child {
 	font-size: 16px;
 	right: 3px;
 	top: 5px;
 	font-family: "HYZLSJ";
 	text-align: center;
-	-webkit-text-stroke: 2.7px #102030;
-	/*5.1px #40404096*/
+	-webkit-text-stroke: 2.7px #102030; /*5.1px #40404096*/
 	opacity: 0.5;
 	z-index: -1;
 	text-shadow: none;
@@ -608,14 +546,13 @@
 	position: absolute;
 }
 
-.skill-control>.enable>.skillitemxianding>.numText-child {
+.skill-control > .enable > .skillitemxianding > .numText-child {
 	font-size: 16px;
 	right: 3px;
 	top: 5px;
 	font-family: "HYZLSJ";
 	text-align: center;
-	-webkit-text-stroke: 2.7px #102030;
-	/*5.1px #40404096*/
+	-webkit-text-stroke: 2.7px #102030; /*5.1px #40404096*/
 	opacity: 0.5;
 	z-index: -1;
 	text-shadow: none;
@@ -626,14 +563,13 @@
 	position: absolute;
 }
 
-.skill-control>.trigger>.skillitemxianding>.numText-child {
+.skill-control > .trigger > .skillitemxianding > .numText-child {
 	font-size: 16px;
 	right: 3px;
 	top: 5px;
 	font-family: "HYZLSJ";
 	text-align: center;
-	-webkit-text-stroke: 2.7px #102030;
-	/*5.1px #40404096*/
+	-webkit-text-stroke: 2.7px #102030; /*5.1px #40404096*/
 	opacity: 0.5;
 	z-index: -1;
 	text-shadow: none;
@@ -647,16 +583,12 @@
 /*以下左手布局*/
 .skill-controlzuoshou {
 	/*技能按钮*/
-	max-width: 120px;
-	/*同列技能可容纳最大宽度，建议别调180*/
-	bottom: 30px;
-	/*整体上移，建议别调*/
-	left: 165px;
-	/*技能显示右移，越小越靠右，建议别调*/
+	max-width: 120px; /*同列技能可容纳最大宽度，建议别调180*/
+	bottom: 30px; /*整体上移，建议别调*/
+	left: 165px; /*技能显示右移，越小越靠右，建议别调*/
 	/*border: 3px solid rgb(255, 255, 255);/*调试用*/
 	z-index: 5;
 }
-
 .skill-controlzuoshou div {
 	position: relative;
 	height: 40px;
@@ -665,15 +597,12 @@
 	justify-content: center;
 	align-items: center;
 }
-
 .skill-controlzuoshou .trigger,
 .skill-controlzuoshou .enable {
 	height: auto;
 	width: auto;
-	justify-content: left;
-	/*自动向右对齐*/
+	justify-content: left; /*自动向右对齐*/
 }
-
 .skill-controlzuoshou {
 	float: right;
 	white-space: nowrap;
@@ -683,54 +612,46 @@
 	font-size: 24px;
 	/*字体渐变色，色调*/
 }
-
-.skill-controlzuoshou>div {
+.skill-controlzuoshou > div {
 	display: flex;
 	flex-wrap: wrap-reverse;
 	flex-direction: row-reverse;
 }
-
 /*伪类*/
-.skill-controlzuoshou>div::after {
-	content: "";
-	/*防止元素浮动*/
+.skill-controlzuoshou > div::after {
+	content: ""; /*防止元素浮动*/
 	display: block;
 	clear: both;
 }
-
-.skill-controlzuoshou>.enable {
+.skill-controlzuoshou > .enable {
 	margin: 0 0 0 auto;
-	max-width: 120px;
-	/*给有三个主动技的武将限制宽度以免遮挡手牌区*/
+	max-width: 120px; /*给有三个主动技的武将限制宽度以免遮挡手牌区*/
 	font-size: 20.5px;
 	font-weight: bold;
 	font-family: "HYZLSJ";
 }
 
-.skill-controlzuoshou>.trigger>* .skillitem-child {
+.skill-controlzuoshou > .trigger > * .skillitem-child {
 	position: absolute;
-	-webkit-text-stroke: 4.3px #102030;
-	/*5.1px #40404096*/
+	-webkit-text-stroke: 4.3px #102030; /*5.1px #40404096*/
 	opacity: 0.5;
 	z-index: -1;
 }
 
-.skill-controlzuoshou>.enable>* .skillitem-child {
+.skill-controlzuoshou > .enable > * .skillitem-child {
 	position: absolute;
-	-webkit-text-stroke: 4.3px rgba(2, 3, 2);
-	/*#575755;/*#686860;/*5.1px #40404096*/
+	-webkit-text-stroke: 4.3px rgba(2, 3, 2); /*#575755;/*#686860;/*5.1px #40404096*/
 	opacity: 0.35;
 	z-index: -1;
 }
 
-.skill-controlzuoshou>.trigger>div {
+.skill-controlzuoshou > .trigger > div {
 	margin: -6px 2px;
 	font-family: "HYZLSJ";
 	text-align: center;
 	-webkit-text-stroke: 0px rgba(38, 37, 34, 0.5);
 	text-shadow: none;
-	background-image: linear-gradient(180deg, #f0d775 30%, #ab8c31 57%, #b0a04d 67%);
-	/*字体渐变色，色调*/
+	background-image: linear-gradient(180deg, #f0d775 30%, #ab8c31 57%, #b0a04d 67%); /*字体渐变色，色调*/
 	font-weight: lighter;
 	/*background-image: url("./images/底图.png");*/
 	-webkit-background-clip: text;
@@ -740,12 +661,11 @@
 	width: auto;
 }
 
-.skill-controlzuoshou>.enable>* {
+.skill-controlzuoshou > .enable > * {
 	/*-webkit-text-stroke: 0.8px rgba(38,37,34,0.5);
 	text-shadow: none;*/
 	background-size: 100% 100%;
-	background-image: linear-gradient(180deg, #f0d775 30%, #ab8c31 57%, #b0a04d 67%);
-	/*字体渐变色，色调*/
+	background-image: linear-gradient(180deg, #f0d775 30%, #ab8c31 57%, #b0a04d 67%); /*字体渐变色，色调*/
 	/*background-image: url("./images/底图.png");*/
 	-webkit-text-stroke: 0.5px #3e362a;
 	text-shadow: none;
@@ -755,18 +675,16 @@
 	position: relative;
 	font-size: 22px;
 	white-space: nowrap;
-	margin: 1px 9px;
-	/*上下 左右间隔*/
+	margin: 1px 9px; /*上下 左右间隔*/
 	margin-top: 3px;
-	/*width: auto;*/
-	/*此数值控制技能按文本与按钮之间的关联性，但不美观。*/
+	/*width: auto;*/ /*此数值控制技能按文本与按钮之间的关联性，但不美观。*/
 	index: 4;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
 
 /*---司马徽按钮分离--*/
-.skill-controlzuoshou>.enable>.skillitem_smh_lianhuan::before {
+.skill-controlzuoshou > .enable > .skillitem_smh_lianhuan::before {
 	z-index: -1;
 	content: "";
 	text-align: center;
@@ -780,17 +698,14 @@
 	background-image: url("./images/feng.png");
 	background-size: 100% 100%;
 }
-
-.skill-controlzuoshou>.enable>*.select:not(.skillitem_smh_yeyan):not(.skillitem_smh_huoji)::before {
+.skill-controlzuoshou > .enable > *.select:not(.skillitem_smh_yeyan):not(.skillitem_smh_huoji)::before {
 	background-image: url("./images/feng_selected.png");
 }
-
-.skill-controlzuoshou>.enable>.skillitem_smh_lianhuan:not(.usable):not(.select)::before {
+.skill-controlzuoshou > .enable > .skillitem_smh_lianhuan:not(.usable):not(.select)::before {
 	background-image: url("./images/feng_no.png");
 }
-
 /*司马徽火计*/
-.skill-controlzuoshou>.enable>.skillitem_smh_huoji::before {
+.skill-controlzuoshou > .enable > .skillitem_smh_huoji::before {
 	z-index: -1;
 	content: "";
 	text-align: center;
@@ -804,17 +719,14 @@
 	background-image: url("./images/long.png");
 	background-size: 100% 100%;
 }
-
-.skill-controlzuoshou>.enable>*.select:not(.skillitem_smh_yeyan):not(.skillitem_smh_lianhuan)::before {
+.skill-controlzuoshou > .enable > *.select:not(.skillitem_smh_yeyan):not(.skillitem_smh_lianhuan)::before {
 	background-image: url("./images/long_selected.png");
 }
-
-.skill-controlzuoshou>.enable>.skillitem_smh_huoji:not(.usable):not(.select)::before {
+.skill-controlzuoshou > .enable > .skillitem_smh_huoji:not(.usable):not(.select)::before {
 	background-image: url("./images/long_no.png");
 }
-
 /*司马徽业炎*/
-.skill-controlzuoshou>.enable>.skillitem_smh_yeyan::before {
+.skill-controlzuoshou > .enable > .skillitem_smh_yeyan::before {
 	z-index: -1;
 	content: "";
 	--w: auto;
@@ -830,18 +742,15 @@
 	background-image: url("./images/longfeng.png");
 	background-size: 100% 100%;
 }
-
-.skill-controlzuoshou>.enable>*.select:not(.skillitem_smh_huoji):not(.skillitem_smh_lianhuan)::before {
+.skill-controlzuoshou > .enable > *.select:not(.skillitem_smh_huoji):not(.skillitem_smh_lianhuan)::before {
 	background-image: url("./images/longfeng_selected.png");
 }
-
-.skill-controlzuoshou>.enable>.skillitem_smh_yeyan:not(.usable):not(.select)::before {
+.skill-controlzuoshou > .enable > .skillitem_smh_yeyan:not(.usable):not(.select)::before {
 	background-image: url("./images/longfeng_no.png");
 }
-
 /*-----*/
 
-.skill-controlzuoshou>.enable>.skillitem::before {
+.skill-controlzuoshou > .enable > .skillitem::before {
 	z-index: -1;
 	content: "";
 	--w: auto;
@@ -859,13 +768,12 @@
 	/*border: 1px solid rgb(3,4,5);/*调试用*/
 }
 
-.skill-controlzuoshou>.enable>*.select:not(.skillitem_smh_yeyan):not(.skillitem_smh_huoji):not(.skillitem_smh_lianhuan)::before {
+.skill-controlzuoshou > .enable > *.select:not(.skillitem_smh_yeyan):not(.skillitem_smh_huoji):not(.skillitem_smh_lianhuan)::before {
 	background-image: url("./images/btn1.png");
 	/*filter: grayscale(100%);
 	-webkit-filter: grayscale(100%);*/
 }
-
-.skill-controlzuoshou>.enable>.skillitem:not(.usable):not(.select)::before {
+.skill-controlzuoshou > .enable > .skillitem:not(.usable):not(.select)::before {
 	background-image: url("./images/btn2.png");
 	/*filter: grayscale(100%);
 	-webkit-filter: grayscale(100%);*/
