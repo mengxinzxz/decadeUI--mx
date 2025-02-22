@@ -161,7 +161,7 @@
 	height: 55px;
 	background-image: url("./images/uibutton/btn-paixu.png");
 	left: 1.6%;
-	bottom: 25.2%;
+	bottom: 22%;
 	z-index: 5;
 	font-size: 18.1px;
 	/*字体大小*/
@@ -198,12 +198,8 @@
 	border-radius: 1px;
 	width: 68px;
 	height: 55px;
-	/*--w: 68px;
-	--h: calc(var(--w) * 78/91);
-	width: var(--w);
-	height: var(--h);*/
 	background-image: url("./images/uibutton/btn-jilu.png");
-	bottom: 15%;
+	bottom: 12%;
 	z-index: 5;
 }
 
@@ -387,13 +383,6 @@
 	color: #ffffff;
 	font-weight: 100 !important;
 	font-size: 13px !important;
-	/*	text-shadow: #F5D78E 0 0 1px,
-		black 0 0 2px,
-		black 0 0 2px,
-		black 0 0 2px, 
-		black 0 0 2px,
-		black 0 0 2px,
-		black 0 0 2px;*/
 }
 
 /*手牌数图片*/
@@ -407,7 +396,6 @@
 	height: var(--h);
 	background-image: url("./images/uibutton/shoupai1.png");
 	background-size: 100% 100%;
-	/*	box-shadow: 2px 2px 1px #2b2219;*/
 	position: relative;
 	z-index: -1;
 }
@@ -462,9 +450,6 @@
 	font-family: "HYZLSJ";
 	font-stretch: ultra-condensed;
 	font-size: 25px;
-	/*牌堆数*/
-	-webkit-text-stroke: 1.25px #2b1f19;
-	text-shadow: -1.5px 0px 1.5px #2b1f19, 0px -1.5px 1.5px #2b1f19, 1.5px 0px 1.5px #2b1f19, 0px 1.5px 1.5px #2b1f19;
 	font-weight: 600;
 }
 
@@ -481,9 +466,6 @@
 	font-family: "shousha";
 	font-size: 20px;
 	font-weight: 900;
-	text-shadow: -1.7px 0px 3px #2b1f19, 0px -1.7px 3px #2b1f19, 1.7px 0px 3px #2b1f19, 0px 1.7px 3px #2b1f19;
-	/*这个是文字阴影*/
-	-webkit-text-stroke: 0.85px #2b1f19;
 	white-space: nowrap;
 	color: #97856a;
 }
@@ -855,7 +837,7 @@
 	height: 55px;
 	background-image: url("./images/uibutton/btn-paixu.png");
 	right: 1.2%;
-	bottom: 25%;
+	bottom: 22%;
 	z-index: 5;
 	font-size: 18.1px;
 	background-size: 100% 100%;
@@ -884,12 +866,8 @@
 	border-radius: 1px;
 	width: 68px;
 	height: 55px;
-	/*--w: 68px;
-	--h: calc(var(--w) * 78/91);
-	width: var(--w);
-	height: var(--h);*/
 	background-image: url("./images/uibutton/btn-jilu.png");
-	bottom: 15%;
+	bottom: 12%;
 	z-index: 5;
 }
 

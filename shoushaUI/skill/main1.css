@@ -98,11 +98,6 @@
 	background-image: linear-gradient(180deg, #f0d775 30%, #ab8c31 57%, #b0a04d 67%);
 	/*字体渐变色，色调*/
 	/*background-image: url("./images/底图.png");*/
-	-webkit-text-stroke: 0.5px #3e362a;
-	text-shadow: none;
-	/*background: linear-gradient(180deg, #fcfcbf 40%, #b58b59 50%);*/
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
 	position: relative;
 	font-size: 22px;
 	white-space: nowrap;
@@ -126,7 +121,6 @@
 	margin: 1px 12px;
 	width: 147%;
 	height: 170%;
-
 	font-family: "HanYiZhongLiShuFan", "HYZLSJ";
 	background-image: url("./images/feng.png");
 	background-size: 100% 100%;
@@ -150,7 +144,6 @@
 	margin: 1px 12px;
 	width: 147%;
 	height: 170%;
-
 	font-family: "HanYiZhongLiShuFan", "HYZLSJ";
 	background-image: url("./images/long.png");
 	background-size: 100% 100%;

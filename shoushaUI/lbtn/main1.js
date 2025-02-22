@@ -92,6 +92,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 		}
 	};
 	
+	//标记下，以后出问题改监听
 	lib.skill._SPZLX = {
 		trigger: { player: ["gainAfter", "loseAfter"] },
 		fixed: true,
@@ -105,13 +106,11 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 		content: function() {
 		    var cards = player.getCards("hs");
 		    if (cards.length <= 1) return;
-		    
 		    cards.sort((a, b) => {
 		        // 位置排序
 		        var p1 = get.position(a);
 		        var p2 = get.position(b);
 		        if (p1 != p2) return p1 == "h" ? 1 : -1;
-		        
 		        // 卡牌排序
 		        if (a.name != b.name) return lib.sort.card(b.name, a.name);
 		        if (a.suit != b.suit) return lib.suit.indexOf(b.suit) - lib.suit.indexOf(a.suit);
@@ -119,7 +118,6 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 		        if (a.nature != b.nature) return b.nature - a.nature;
 		        return parseInt(b.cardid) - parseInt(a.cardid);
 		    });
-					
 		    if (window.dui && dui.queueNextFrameTick) {
 		        cards.forEach(card => player.node.handcards1.insertBefore(card, player.node.handcards1.firstChild));
 		        dui.queueNextFrameTick(dui.layoutHand, dui);

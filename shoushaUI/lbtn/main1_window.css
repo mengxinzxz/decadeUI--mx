@@ -161,7 +161,7 @@
 	height: 55px;
 	background-image: url("./images/uibutton/btn-paixu.png");
 	left: 1.6%;
-	bottom: 23.2%;
+	bottom: 22%;
 	z-index: 5;
 	font-size: 18.1px;
 	/*字体大小*/
@@ -198,12 +198,8 @@
 	border-radius: 1px;
 	width: 68px;
 	height: 55px;
-	/*--w: 68px;
-	--h: calc(var(--w) * 78/91);
-	width: var(--w);
-	height: var(--h);*/
 	background-image: url("./images/uibutton/btn-jilu.png");
-	bottom: 15%;
+	bottom: 12%;
 	z-index: 5;
 }
 
@@ -434,9 +430,6 @@
 	font-family: "HYZLSJ";
 	font-stretch: ultra-condensed;
 	font-size: 29px;
-	/*牌堆数*/
-	filter: drop-shadow(0 0 0.5px #2b1f19) drop-shadow(0 0 0.5px #2b1f19);
-	text-shadow: -1.5px 0px 1.5px #2b1f19, 0px -1.5px 1.5px #2b1f19, 1.5px 0px 1.5px #2b1f19, 0px 1.5px 1.5px #2b1f19;
 	font-weight: 600;
 }
 
@@ -453,9 +446,6 @@
 	font-family: "shousha";
 	font-size: 21px;
 	font-weight: 900;
-	text-shadow: -1.7px 0px 3px #2b1f19, 0px -1.7px 3px #2b1f19, 1.7px 0px 3px #2b1f19, 0px 1.7px 3px #2b1f19;
-	/*这个是文字阴影*/
-	filter: drop-shadow(0 0 0.5px #2b1f19) drop-shadow(0 0 0.5px #2b1f19);
 	white-space: nowrap;
 	color: #97856a;
 }
@@ -772,7 +762,7 @@
 	height: 55px;
 	background-image: url("./images/uibutton/btn-paixu.png");
 	right: 1.2%;
-	bottom: 25%;
+	bottom: 22%;
 	z-index: 5;
 	font-size: 18.1px;
 	background-size: 100% 100%;
@@ -801,12 +791,8 @@
 	border-radius: 1px;
 	width: 68px;
 	height: 55px;
-	/*--w: 68px;
-	--h: calc(var(--w) * 78/91);
-	width: var(--w);
-	height: var(--h);*/
 	background-image: url("./images/uibutton/btn-jilu.png");
-	bottom: 15%;
+	bottom: 12%;
 	z-index: 5;
 }
 
