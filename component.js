@@ -1,9 +1,9 @@
 "use strict";
-decadeModule.import(function (lib, game, ui, get, ai, _status) {
+decadeModule.import(function(lib, game, ui, get, ai, _status) {
 	decadeUI.component = {
 		slider(min, max, value) {
 			var slider = document.createElement("input");
-			var onchange = function () {
+			var onchange = function() {
 				var percent = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
 				slider.style.backgroundSize = percent + "% " + "100%";
 			};
@@ -46,16 +46,17 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
 			box.operation.sticker.innerHTML = "表情";
 			box.operation.send.innerHTML = "发送";
 
-			box.addEntry = function (info) {
+			box.addEntry = function(info) {
 				var text = decadeUI.dialog.create("chat-text", box.content);
-				text.innerHTML = '<span class="sender">' + info[0] + "</span>:" + '<span class="text">' + info[1] + "</span>";
+				text.innerHTML = '<span class="sender">' + info[0] + "</span>:" +
+					'<span class="text">' + info[1] + "</span>";
 				if (box.overrideEntry) box.overrideEntry(info);
 				box.content.scrollTop = box.content.scrollHeight;
 			};
 
 			box.addEntry._origin = box;
 
-			box.sendInputText = function () {
+			box.sendInputText = function() {
 				if (input.value) {
 					var player = game.me;
 					var str = input.value;
@@ -86,7 +87,7 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
 
 			var input = box.operation.input;
 
-			box.operation.fold.addEventListener("click", function () {
+			box.operation.fold.addEventListener("click", function() {
 				if (box.classList.contains("folded")) {
 					box.operation.fold.innerHTML = "<<";
 					box.classList.remove("folded");
@@ -96,16 +97,16 @@ decadeModule.import(function (lib, game, ui, get, ai, _status) {
 				}
 			});
 
-			box.operation.send.addEventListener("click", function () {
+			box.operation.send.addEventListener("click", function() {
 				box.sendInputText();
 				input.focus();
 			});
 
-			input.addEventListener("change", function (e) {
+			input.addEventListener("change", function(e) {
 				_status.chatValue = input.value;
 			});
 
-			input.addEventListener("keydown", function (e) {
+			input.addEventListener("keydown", function(e) {
 				if (e.keyCode == 13) box.sendInputText();
 				e.stopPropagation();
 			});

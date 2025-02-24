@@ -22,8 +22,8 @@
 
 .skill-control>div {
 	display: flex;
-	flex-wrap: wrap;
-	flex-direction: row;
+	flex-wrap: wrap-reverse;
+	flex-direction: row-reverse;
 }
 
 .skill-control>div::after {
@@ -32,16 +32,10 @@
 	clear: both;
 }
 
-.skill-control>.enable {
-	margin: 0 0 0 auto;
-	bottom: 7px;
-	justify-content: right;
-	/*自动向右对齐*/
-}
-
-.skill-control>.trigger {
-	margin: 0 0 0 auto;
-	bottom: 4px;
+.skill-control .trigger,
+.skill-control .enable {
+	height: auto;
+	width: auto;
 	justify-content: right;
 	/*自动向右对齐*/
 }

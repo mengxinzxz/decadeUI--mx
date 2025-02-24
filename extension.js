@@ -9815,6 +9815,7 @@ export default async function() {
 					this.js(decadeUIPath + "skill.js");
 					this.js(decadeUIPath + "content.js");
 					this.js(decadeUIPath + "effect.js");
+					this.js(decadeUIPath + 'meihua.js');
 					this.js(decadeUIPath + "animation.js");
 					this.js(decadeUIPath + "dynamicSkin.js");
 
@@ -11568,6 +11569,11 @@ export default async function() {
 					}
 				},
 			},
+			jiaohuyinxiao: {
+				name: "交互音效",
+				intro: "开启后，对局内点击卡牌或按钮会有交互音效",
+				init: false,
+			},
 			dynamicBackground: {
 				name: "动态背景",
 				init: "skin_xiaosha_default",
@@ -12224,10 +12230,12 @@ export default async function() {
 			};
 			pack.intro = (pack => {
 				let log = [
-					`魔改十周年UI${pack.version}`,
+					`魔改十周年UI ${pack.version}`,
 					"最低适配：v1.10.18",
-					"修复技能靠左排列问题",
+					"修复移动端技能列表排序问题",
 					"修复手杀UI自动整理，UI显示问题",
+					"添加私货meihua.js，交互音效等其他",
+					"添加全选按钮 by咪咪狗奇妙工具",
 					"注释指示线美化，需要自行解除",
 				];
 				return `<a href=${pack.diskURL}>点击前往十周年Github仓库</a><br><p style="color:rgb(210,210,000); font-size:12px; line-height:14px; text-shadow: 0 0 2px black;">${log.join("<br>•")}</p>`;

@@ -1,4 +1,4 @@
-app.import(function (lib, game, ui, get, ai, _status, app) {
+app.import(function(lib, game, ui, get, ai, _status, app) {
 	var plugin = {
 		name: "skill",
 		filter() {
@@ -56,7 +56,6 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 					return ui.skillControl;
 				},
 			});
-
 			Object.assign(ui, {
 				updateSkillControl(player, clear) {
 					var eSkills = player.getSkills("e", true, false).slice(0);
@@ -73,7 +72,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 					var iSkills = player.invisibleSkills.slice(0);
 					game.expandSkills(iSkills);
 					skills.addArray(
-						iSkills.filter(function (skill) {
+						iSkills.filter(function(skill) {
 							var info = get.info(skill);
 							return info && info.enable;
 						})
@@ -89,13 +88,15 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 
 					var juexingji = {};
 					var xiandingji = {};
-					app.get.playerSkills(player).forEach(function (skill) {
+					app.get.playerSkills(player).forEach(function(skill) {
 						var info = get.info(skill);
 						if (!info) return;
-						if (get.is.zhuanhuanji(skill, player) || info.limited || (info.intro && info.intro.content === "limited")) {
+						if (get.is.zhuanhuanji(skill, player) || info.limited || (info
+								.intro && info.intro.content === "limited")) {
 							xiandingji[skill] = player.awakenedSkills.includes(skill);
 						}
-						if (info.juexingji || info.dutySkill) juexingji[skill] = player.awakenedSkills.includes(skill);
+						if (info.juexingji || info.dutySkill) juexingji[skill] = player
+							.awakenedSkills.includes(skill);
 					});
 					plugin.updateSkillMarks(player, xiandingji, juexingji);
 				},
@@ -104,37 +105,37 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 			app.reWriteFunction(lib.element.player, {
 				addSkill: [
 					null,
-					function () {
+					function() {
 						ui.updateSkillControl(this);
 					},
 				],
 				removeSkill: [
 					null,
-					function () {
+					function() {
 						ui.updateSkillControl(this, true);
 					},
 				],
 				addSkillTrigger: [
 					null,
-					function () {
+					function() {
 						ui.updateSkillControl(this);
 					},
 				],
 				removeSkillTrigger: [
 					null,
-					function () {
+					function() {
 						ui.updateSkillControl(this, true);
 					},
 				],
 				awakenSkill: [
 					null,
-					function () {
+					function() {
 						ui.updateSkillControl(this);
 					},
 				],
 				restoreSkill: [
 					null,
-					function () {
+					function() {
 						ui.updateSkillControl(this);
 					},
 				],
@@ -142,7 +143,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 			app.reWriteFunction(lib.element.control, {
 				close: [
 					null,
-					function () {
+					function() {
 						if (this.classList.contains("skillControl")) {
 							ui.skillControl.update();
 						}
@@ -152,7 +153,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 
 			app.reWriteFunction(game, {
 				loop: [
-					function () {
+					function() {
 						if (game.boss && !ui.skillControl) {
 							ui.updateSkillControl(game.me);
 						}
@@ -164,13 +165,13 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				],
 				swapControl: [
 					null,
-					function () {
+					function() {
 						ui.updateSkillControl(game.me, true);
 					},
 				],
 				swapPlayer: [
 					null,
-					function () {
+					function() {
 						ui.updateSkillControl(game.me, true);
 					},
 				],
@@ -187,18 +188,18 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 			add(skill, eSkills) {
 				if (Array.isArray(skill)) {
 					var node = this;
-					skill.forEach(function (item) {
+					skill.forEach(function(item) {
 						node.add(item, eSkills);
 					});
 					return this;
 				}
 
 				var self = this;
-				var skills = game.expandSkills([skill]).map(function (item) {
+				var skills = game.expandSkills([skill]).map(function(item) {
 					return app.get.skillInfo(item);
 				});
 				var hasSame = false;
-				var enableSkills = skills.filter(function (item) {
+				var enableSkills = skills.filter(function(item) {
 					if (item.type !== "enable") return false;
 					if (item.name === skills[0].name) hasSame = true;
 					return true;
@@ -206,19 +207,24 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 
 				if (!hasSame) enableSkills.unshift(skills[0]);
 				var showSkills = enableSkills.length ? enableSkills : skills;
-				showSkills.forEach(function (item) {
+				showSkills.forEach(function(item) {
 					var node = self.querySelector('[data-id="' + item.id + '"]');
 					if (node) return;
 					if (item.type === "enable") {
-						node = ui.create.div(lib.skill[item.id].limited ? ".xiandingji" : ".skillitem", self.node.enable, get.translation(item.name) /*.slice(0, 2)*/); //咸鱼大佬提供代码
+						node = ui.create.div(lib.skill[item.id].limited ? '.xiandingji' :
+							'.skillitem', self.node.enable, get.translation(item.name));
 						node.dataset.id = item.id;
+						node.addEventListener('click', function() {
+							game.playAudio('..', 'extension', '十周年UI', 'audio/SkillBtn');
+						});
 						app.listen(node, plugin.clickSkill);
 						return;
 					}
 					if (!item.info) return;
 					if (!item.translation) return;
 					if (eSkills && eSkills.includes(item.id)) return;
-					node = ui.create.div(".skillitem", self.node[get.is.phoneLayout() ? "trigger" : "enable"], item.name);
+					node = ui.create.div(".skillitem", self.node[get.is.phoneLayout() ? "trigger" :
+						"enable"], item.name);
 					node.dataset.id = item.id;
 				});
 				return this;
@@ -229,7 +235,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				if (ui.skills2) skills.addArray(ui.skills2.skills);
 				if (ui.skills3) skills.addArray(ui.skills3.skills);
 
-				Array.from(this.node.enable.childNodes).forEach(function (item) {
+				Array.from(this.node.enable.childNodes).forEach(function(item) {
 					if (skills.includes(item.dataset.id)) {
 						item.classList.add("usable");
 					} else {
@@ -244,7 +250,8 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				});
 
 				var level1 = Math.min(4, this.node.trigger.childNodes.length);
-				var level2 = this.node.enable.childNodes.length > 2 ? 4 : this.node.enable.childNodes.length > 0 ? 2 : 0;
+				var level2 = this.node.enable.childNodes.length > 2 ? 4 : this.node.enable.childNodes
+					.length > 0 ? 2 : 0;
 				var level = Math.max(level1, level2);
 				ui.arena.dataset.sclevel = level;
 			},
@@ -281,11 +288,12 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 
 			node = ui.create.div(".control.skillControl", ui.skillControlArea);
 			Object.assign(node, lib.element.control);
-			skills.forEach(function (skill) {
+			skills.forEach(function(skill) {
 				var item = ui.create.div(node);
 				item.link = skill;
 				item.dataset.id = skill;
-				item.addEventListener(lib.config.touchscreen ? "touchend" : "click", ui.click.control);
+				item.addEventListener(lib.config.touchscreen ? "touchend" : "click", ui.click
+					.control);
 			});
 			node.skills = skills;
 			node.custom = ui.click.skill;
@@ -297,7 +305,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				node = player.node.xSkillMarks = ui.create.div(".skillMarks", player);
 			}
 
-			Array.from(node.childNodes).forEach(function (item) {
+			Array.from(node.childNodes).forEach(function(item) {
 				if (skills1.hasOwnProperty(item.dataset.id)) return;
 				if (skills2[item.dataset.id]) return;
 				item.remove();
@@ -316,7 +324,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 				item.dataset.id = k;
 			}
 			//这里结束3}
-			Array.from(node.querySelectorAll(".juexingji")).forEach(function (item) {
+			Array.from(node.querySelectorAll(".juexingji")).forEach(function(item) {
 				if (!skills2[item.dataset.id]) {
 					item.remove();
 				}
@@ -337,12 +345,12 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 			app.reWriteFunction(ui.create, {
 				dialog: [
 					null,
-					function (dialog) {
+					function(dialog) {
 						dialog.classList.add("xdialog");
 						app.reWriteFunction(dialog, {
 							hide: [
 								null,
-								function () {
+								function() {
 									app.emit("dialog:change", dialog);
 								},
 							],
@@ -354,13 +362,13 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 			app.reWriteFunction(lib.element.dialog, {
 				open: [
 					null,
-					function () {
+					function() {
 						app.emit("dialog:change", this);
 					},
 				],
 				close: [
 					null,
-					function () {
+					function() {
 						app.emit("dialog:change", this);
 					},
 				],
@@ -368,7 +376,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 
 			app.reWriteFunction(lib.element.player, {
 				markSkill: [
-					function (args, name) {
+					function(args, name) {
 						var info = lib.skill[name];
 						if (!info) return;
 						if (info.limited) return this;
@@ -380,13 +388,13 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 			app.reWriteFunction(lib.configMenu.appearence.config, {
 				update: [
 					null,
-					function (res, config, map) {
+					function(res, config, map) {
 						map.button_press.hide();
 					},
 				],
 			});
 
-			app.on("playerUpdateE", function (player) {
+			app.on("playerUpdateE", function(player) {
 				plugin.updateMark(player);
 			});
 		},
@@ -420,7 +428,7 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 					var str = "";
 
 					if (!Array.isArray(extra)) extra = [extra];
-					extra.forEach(function (item) {
+					extra.forEach(function(item) {
 						if (!item || typeof item !== "string") return this;
 						if (item.indexOf("#") === 0) {
 							item = item.substr(1);
@@ -468,18 +476,21 @@ app.import(function (lib, game, ui, get, ai, _status, app) {
 					if (typeof info.mark == "function") {
 						var stint = info.mark(uiintro, player.storage[node.skill], player);
 						if (stint) {
-							var placetext = uiintro.add('<div class="text" style="display:inline">' + stint + "</div>");
+							var placetext = uiintro.add('<div class="text" style="display:inline">' +
+								stint + "</div>");
 							if (stint.indexOf('<div class="skill"') != 0) {
 								uiintro._place_text = placetext;
 							}
 						}
 					} else {
-						var stint = get.storageintro(info.content, player.storage[node.skill], player, uiintro, node.skill);
+						var stint = get.storageintro(info.content, player.storage[node.skill], player,
+							uiintro, node.skill);
 						if (stint) {
 							if (stint[0] == "@") {
 								uiintro.add('<div class="caption">' + stint.slice(1) + "</div>");
 							} else {
-								var placetext = uiintro.add('<div class="text" style="display:inline">' + stint + "</div>");
+								var placetext = uiintro.add('<div class="text" style="display:inline">' +
+									stint + "</div>");
 								if (stint.indexOf('<div class="skill"') != 0) {
 									uiintro._place_text = placetext;
 								}

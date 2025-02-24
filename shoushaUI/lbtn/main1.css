@@ -161,28 +161,20 @@
 	height: 55px;
 	background-image: url("./images/uibutton/btn-paixu.png");
 	left: 1.6%;
-	bottom: 22%;
+	bottom: 26%;
 	z-index: 5;
-	font-size: 18.1px;
-	/*字体大小*/
+	font-size: 18.1px; /*字体大小*/
 	background-size: 100% 100%;
 	background-color: transparent;
 	line-height: 45px;
-	text-align: center;
-	/*使文本位于元素中心*/
+	text-align: center; /*使文本位于元素中心*/
 	white-space: nowrap;
-	color: #c5af88;
-	/*颜色色值*/
-	font-family: "shousha";
-	/*字体*/
-	font-weight: bold;
-	/*字体加粗*/
-	-webkit-text-stroke: 1.1px rgba(43, 31, 25, 0.5);
-	/*描边*/
-	text-shadow: none;
-	/*文字阴影*/
-	border-radius: 0px;
-	/*元素边缘圆角大小*/
+	color: #c5af88; /*颜色色值*/
+	font-family: "shousha"; /*字体*/
+	font-weight: bold; /*字体加粗*/
+	-webkit-text-stroke: 1.1px rgba(43, 31, 25, 0.5); /*描边*/
+	text-shadow: none; /*文字阴影*/
+	border-radius: 0px; /*元素边缘圆角大小*/
 }
 
 .lbtn-control+.lbtn-control {
@@ -198,8 +190,12 @@
 	border-radius: 1px;
 	width: 68px;
 	height: 55px;
+	/*--w: 68px;
+	--h: calc(var(--w) * 78/91);
+	width: var(--w);
+	height: var(--h);*/
 	background-image: url("./images/uibutton/btn-jilu.png");
-	bottom: 12%;
+	bottom: 15%;
 	z-index: 5;
 }
 
@@ -837,7 +833,7 @@
 	height: 55px;
 	background-image: url("./images/uibutton/btn-paixu.png");
 	right: 1.2%;
-	bottom: 22%;
+	bottom: 25%;
 	z-index: 5;
 	font-size: 18.1px;
 	background-size: 100% 100%;
@@ -866,8 +862,12 @@
 	border-radius: 1px;
 	width: 68px;
 	height: 55px;
+	/*--w: 68px;
+	--h: calc(var(--w) * 78/91);
+	width: var(--w);
+	height: var(--h);*/
 	background-image: url("./images/uibutton/btn-jilu.png");
-	bottom: 12%;
+	bottom: 15%;
 	z-index: 5;
 }
 
